@@ -143,4 +143,17 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 1).nativeUtc);
 		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
 	});
+
+	// Note: This test is environment-dependent, as local timezone may differ
+	it("should construct from native local", () => {
+		expect(LocalDate.fromNativeLocal(new Date(2019, 6, 5))).toEqual(LocalDate.of(2019, JULY, 5));
+	});
+
+	it("should construct from native UTC", () => {
+		expect(LocalDate.fromNativeUtc(new Date(Date.UTC(2019, 6, 5)))).toEqual(LocalDate.of(2019, JULY, 5));
+	});
+
+	it("should construct from string", () => {
+		expect(LocalDate.parse("2019-07-05")).toEqual(LocalDate.of(2019, JULY, 5));
+	});
 });

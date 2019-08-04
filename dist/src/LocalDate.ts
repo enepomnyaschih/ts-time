@@ -216,7 +216,7 @@ class LocalDate {
 	}
 
 	static fromNativeLocal(date: Date) {
-		return LocalDate.of(date.getFullYear(), date.getMonth(), date.getDate());
+		return LocalDate.of(date.getFullYear(), date.getMonth() + 1, date.getDate());
 	}
 
 	static fromNativeUtc(date: Date) {
@@ -228,14 +228,14 @@ class LocalDate {
 		if (!matches) {
 			throw new Error("Invalid date format.");
 		}
-		const year = +matches[0],
-			month = +matches[1],
-			day = +matches[2];
+		const year = +matches[1],
+			month = +matches[2],
+			day = +matches[3];
 		if (isNaN(year) || isNaN(month) || isNaN(day)) {
 			throw new Error("Invalid date format.");
 		}
-		const date = new Date(Date.UTC(year, month, day));
-		if (year !== date.getUTCFullYear() || month !== date.getUTCMonth() || day !== date.getUTCDate()) {
+		const date = new Date(Date.UTC(year, month - 1, day));
+		if (year !== date.getUTCFullYear() || month - 1 !== date.getUTCMonth() || day !== date.getUTCDate()) {
 			throw new Error("Invalid date format.");
 		}
 		return new LocalDate(date);
