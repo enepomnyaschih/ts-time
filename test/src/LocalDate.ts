@@ -113,6 +113,18 @@ describe("LocalDate", () => {
 		expect(date7.weekBasedYear).toBe(2015);
 		expect(date7.weekOfWeekBasedYear).toBe(53);
 		expect(date7.dayOfWeekBasedYear).toBe(371);
+
+		const date8 = LocalDate.of(2014, DECEMBER, 29);
+		expect(date8.dayOfWeek).toBe(MONDAY);
+		expect(date8.weekBasedYear).toBe(2015);
+		expect(date8.weekOfWeekBasedYear).toBe(1);
+		expect(date8.dayOfWeekBasedYear).toBe(1);
+
+		const date9 = LocalDate.of(2014, DECEMBER, 28);
+		expect(date9.dayOfWeek).toBe(SUNDAY);
+		expect(date9.weekBasedYear).toBe(2014);
+		expect(date9.weekOfWeekBasedYear).toBe(52);
+		expect(date9.dayOfWeekBasedYear).toBe(364);
 	});
 
 	it("should construct from week", () => {
@@ -123,6 +135,8 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofWeek(2016, 52, SATURDAY).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
 		expect(LocalDate.ofWeek(2016, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 4).nativeUtc);
 		expect(LocalDate.ofWeek(2015, 53, SUNDAY).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 3).nativeUtc);
+		expect(LocalDate.ofWeek(2015, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 29).nativeUtc);
+		expect(LocalDate.ofWeek(2014, 52, SUNDAY).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 28).nativeUtc);
 	});
 
 	it("should construct from week based year day", () => {
@@ -133,6 +147,8 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofWeekBasedYearDay(2016, 363).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
 		expect(LocalDate.ofWeekBasedYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 4).nativeUtc);
 		expect(LocalDate.ofWeekBasedYearDay(2015, 371).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 3).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2015, 1).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 29).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2014, 364).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 28).nativeUtc);
 	});
 
 	it("should construct from year day", () => {
@@ -142,6 +158,8 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofYearDay(2016, 366).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
 		expect(LocalDate.ofYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 1).nativeUtc);
 		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2015, 1).nativeUtc).toEqual(LocalDate.of(2015, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2014, 365).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 31).nativeUtc);
 	});
 
 	// Note: This test is environment-dependent, as local time zone may differ
