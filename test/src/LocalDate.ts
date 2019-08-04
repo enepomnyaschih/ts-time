@@ -22,30 +22,148 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY} from "../../dist/src/DayOfWeek";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../dist/src/DayOfWeek";
 import {AD, BC} from "../../dist/src/Era";
 import LocalDate, {EPOCH_DATE} from "../../dist/src/LocalDate";
-import {DECEMBER, JANUARY, JULY, SEPTEMBER} from "../../dist/src/Month";
+import {
+	APRIL,
+	AUGUST,
+	DECEMBER,
+	FEBRUARY,
+	JANUARY,
+	JULY,
+	JUNE,
+	MARCH,
+	MAY,
+	NOVEMBER,
+	OCTOBER,
+	SEPTEMBER
+} from "../../dist/src/Month";
 
 // TODO: Add out of bounds tests (e.g. constructors)
+// TODO: Add numeric month/weekday tests
 describe("LocalDate", () => {
-	it("should have proper fields", () => {
-		const date = LocalDate.of(2019, JULY, 5);
-		expect(date.year).toBe(2019);
-		expect(date.month).toBe(JULY);
-		expect(date.dayOfWeek).toBe(FRIDAY);
-		expect(date.dayOfMonth).toBe(5);
-		expect(date.dayOfYear).toBe(31 + 28 + 31 + 30 + 31 + 30 + 5);
-		expect(date.dayOfWeekBasedYear).toBe(1 + 31 + 28 + 31 + 30 + 31 + 30 + 5);
-		expect(date.era).toBe(AD);
-		expect(date.epochDay).toBe(365 * 49 + 12 + date.dayOfYear);
-		expect(date.lengthOfYear).toBe(365);
-		expect(date.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5)));
-		expect(date.nativeLocal).toEqual(new Date(2019, 6, 5));
-		expect(date.quarterOfYear).toBe(3);
-		expect(date.weekBasedYear).toBe(2019);
-		expect(date.weekOfWeekBasedYear).toBe(27);
-		expect(date.yearOfEra).toBe(2019);
+	const july5 = LocalDate.of(2019, JULY, 5);
+
+	it("should return proper year", () => {
+		expect(july5.year).toBe(2019);
+		expect(LocalDate.of(2019, JANUARY, 1).year).toBe(2019);
+		expect(LocalDate.of(2018, DECEMBER, 31).year).toBe(2018);
+		expect(LocalDate.of(2018, JANUARY, 1).year).toBe(2018);
+		expect(LocalDate.of(2017, DECEMBER, 31).year).toBe(2017);
+	});
+
+	it("should return proper month", () => {
+		expect(july5.month).toBe(JULY);
+		expect(LocalDate.of(2019, JULY, 1).month).toBe(JULY);
+		expect(LocalDate.of(2019, JUNE, 30).month).toBe(JUNE);
+		expect(LocalDate.of(2019, JANUARY, 1).month).toBe(JANUARY);
+		expect(LocalDate.of(2018, DECEMBER, 31).month).toBe(DECEMBER);
+	});
+
+	it("should return proper day of week", () => {
+		expect(july5.dayOfWeek).toBe(FRIDAY);
+		expect(LocalDate.of(2019, JULY, 1).dayOfWeek).toBe(MONDAY);
+		expect(LocalDate.of(2019, JUNE, 30).dayOfWeek).toBe(SUNDAY);
+		expect(LocalDate.of(2019, JUNE, 29).dayOfWeek).toBe(SATURDAY);
+		expect(LocalDate.of(2019, JUNE, 28).dayOfWeek).toBe(FRIDAY);
+		expect(LocalDate.of(2019, JUNE, 27).dayOfWeek).toBe(THURSDAY);
+		expect(LocalDate.of(2019, JUNE, 26).dayOfWeek).toBe(WEDNESDAY);
+		expect(LocalDate.of(2019, JUNE, 25).dayOfWeek).toBe(TUESDAY);
+		expect(LocalDate.of(2019, JUNE, 24).dayOfWeek).toBe(MONDAY);
+		expect(LocalDate.of(2019, JUNE, 3).dayOfWeek).toBe(MONDAY);
+		expect(LocalDate.of(2019, JUNE, 2).dayOfWeek).toBe(SUNDAY);
+		expect(LocalDate.of(2019, JUNE, 1).dayOfWeek).toBe(SATURDAY);
+		expect(LocalDate.of(2019, MAY, 31).dayOfWeek).toBe(FRIDAY);
+	});
+
+	it("should return proper day of month", () => {
+		expect(july5.dayOfMonth).toBe(5);
+		expect(LocalDate.of(2019, JULY, 1).dayOfMonth).toBe(1);
+		expect(LocalDate.of(2019, JUNE, 30).dayOfMonth).toBe(30);
+		expect(LocalDate.of(2019, JUNE, 1).dayOfMonth).toBe(1);
+		expect(LocalDate.of(2019, MAY, 31).dayOfMonth).toBe(31);
+	});
+
+	it("should return proper day of year", () => {
+		expect(july5.dayOfYear).toBe(31 + 28 + 31 + 30 + 31 + 30 + 5);
+		expect(LocalDate.of(2019, JANUARY, 1).dayOfYear).toBe(1);
+		expect(LocalDate.of(2018, DECEMBER, 31).dayOfYear).toBe(365);
+		expect(LocalDate.of(2017, JANUARY, 1).dayOfYear).toBe(1);
+		expect(LocalDate.of(2016, DECEMBER, 31).dayOfYear).toBe(366);
+	});
+
+	it("should return proper epoch day", () => {
+		expect(july5.epochDay).toBe(365 * 49 + 12 + july5.dayOfYear);
+		expect(LocalDate.of(1970, JANUARY, 1).epochDay).toBe(1);
+		expect(LocalDate.of(1970, DECEMBER, 31).epochDay).toBe(365);
+		expect(LocalDate.of(1971, JANUARY, 1).epochDay).toBe(366);
+		expect(LocalDate.of(1971, DECEMBER, 31).epochDay).toBe(365 + 365);
+		expect(LocalDate.of(1972, JANUARY, 1).epochDay).toBe(365 + 365 + 1);
+		expect(LocalDate.of(1972, DECEMBER, 31).epochDay).toBe(365 + 365 + 366);
+		expect(LocalDate.of(1973, JANUARY, 1).epochDay).toBe(365 + 365 + 366 + 1);
+		expect(LocalDate.of(1969, DECEMBER, 31).epochDay).toBe(0);
+		expect(LocalDate.of(1969, DECEMBER, 30).epochDay).toBe(-1);
+		expect(LocalDate.of(1969, DECEMBER, 29).epochDay).toBe(-2);
+	});
+
+	it("should return proper length of year", () => {
+		expect(july5.lengthOfYear).toBe(365);
+		expect(LocalDate.of(0, SEPTEMBER, 12).lengthOfYear).toBe(366);
+		expect(LocalDate.of(1, OCTOBER, 15).lengthOfYear).toBe(365);
+		expect(LocalDate.of(2, MARCH, 30).lengthOfYear).toBe(365);
+		expect(LocalDate.of(3, JANUARY, 16).lengthOfYear).toBe(365);
+		expect(LocalDate.of(4, DECEMBER, 20).lengthOfYear).toBe(366);
+		expect(LocalDate.of(5, JULY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(6, JUNE, 5).lengthOfYear).toBe(365);
+		expect(LocalDate.of(7, FEBRUARY, 10).lengthOfYear).toBe(365);
+		expect(LocalDate.of(8, JANUARY, 7).lengthOfYear).toBe(366);
+		expect(LocalDate.of(100, NOVEMBER, 2).lengthOfYear).toBe(365);
+		expect(LocalDate.of(200, AUGUST, 8).lengthOfYear).toBe(365);
+		expect(LocalDate.of(300, MAY, 9).lengthOfYear).toBe(365);
+		expect(LocalDate.of(400, JANUARY, 12).lengthOfYear).toBe(366);
+		expect(LocalDate.of(2000, JANUARY, 1).lengthOfYear).toBe(366);
+		expect(LocalDate.of(2001, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(2002, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(2003, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(2004, JANUARY, 1).lengthOfYear).toBe(366);
+		expect(LocalDate.of(-1, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-2, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-3, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-4, JANUARY, 1).lengthOfYear).toBe(366);
+		expect(LocalDate.of(-100, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-200, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-300, JANUARY, 1).lengthOfYear).toBe(365);
+		expect(LocalDate.of(-400, JANUARY, 1).lengthOfYear).toBe(366);
+	});
+
+	it("should return proper native UTC date", () => {
+		expect(july5.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5)));
+
+		const date = new Date(Date.UTC(0, 0, 1));
+		date.setUTCFullYear(0);
+		expect(LocalDate.of(0, JANUARY, 1).nativeUtc).toEqual(date);
+		expect(LocalDate.of(2014, DECEMBER, 31).nativeUtc).toEqual(new Date(Date.UTC(2014, 11, 31)));
+	});
+
+	// Note: This test is environment-dependent, as local time zone may differ
+	it("should return proper native local date", () => {
+		expect(july5.nativeLocal).toEqual(new Date(2019, 6, 5));
+		expect(LocalDate.of(0, JANUARY, 1).nativeLocal).toEqual(new Date(0, 0, 1));
+		expect(LocalDate.of(2014, DECEMBER, 31).nativeLocal).toEqual(new Date(2014, 11, 31));
+	});
+
+	it("should return proper quarter of year", () => {
+		expect(july5.quarterOfYear).toBe(3);
+		expect(LocalDate.of(2016, JANUARY, 1).quarterOfYear).toBe(1);
+		expect(LocalDate.of(2016, MARCH, 31).quarterOfYear).toBe(1);
+		expect(LocalDate.of(2016, APRIL, 1).quarterOfYear).toBe(2);
+		expect(LocalDate.of(2016, JUNE, 30).quarterOfYear).toBe(2);
+		expect(LocalDate.of(2016, JULY, 1).quarterOfYear).toBe(3);
+		expect(LocalDate.of(2016, SEPTEMBER, 30).quarterOfYear).toBe(3);
+		expect(LocalDate.of(2016, OCTOBER, 1).quarterOfYear).toBe(4);
+		expect(LocalDate.of(2016, DECEMBER, 31).quarterOfYear).toBe(4);
+		expect(LocalDate.of(2017, JANUARY, 1).quarterOfYear).toBe(1);
 	});
 
 	it("should construct from epoch day", () => {
@@ -71,7 +189,12 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofEpochDay(100000).epochDay).toBe(100000);
 	});
 
-	it("should detect week based fields", () => {
+	it("should return week based fields", () => {
+		expect(july5.dayOfWeek).toBe(FRIDAY);
+		expect(july5.dayOfWeekBasedYear).toBe(1 + 31 + 28 + 31 + 30 + 31 + 30 + 5);
+		expect(july5.weekBasedYear).toBe(2019);
+		expect(july5.weekOfWeekBasedYear).toBe(27);
+
 		const date1 = LocalDate.of(2018, JANUARY, 1);
 		expect(date1.dayOfWeek).toBe(MONDAY);
 		expect(date1.weekBasedYear).toBe(2018);
@@ -175,7 +298,10 @@ describe("LocalDate", () => {
 		expect(LocalDate.parse("2019-07-05")).toEqual(LocalDate.of(2019, JULY, 5));
 	});
 
-	it("should support BC era", () => {
+	it("should support two eras", () => {
+		expect(july5.yearOfEra).toBe(2019);
+		expect(july5.era).toBe(AD);
+
 		const date1 = LocalDate.of(1, JANUARY, 1);
 		expect(date1.year).toBe(1);
 		expect(date1.yearOfEra).toBe(1);

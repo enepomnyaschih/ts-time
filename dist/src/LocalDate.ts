@@ -183,6 +183,7 @@ class LocalDate {
 		return (this.dayOfMonth === originalDate.dayOfMonth) ? this : this.minus(Period.ofDays(this.dayOfMonth));
 	}
 
+	// TODO: Find a more efficient implementation and remove cached _weekBasedYear
 	private _computeWeekBasedYear() {
 		for (let i = 1; i >= -1; --i) {
 			const weekBasedYearStart = getWeekBasedYearStart(this.year + i);
