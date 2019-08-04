@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY} from "../../dist/src/DayOfWeek";
-import {AD} from "../../dist/src/Era";
+import {AD, BC} from "../../dist/src/Era";
 import LocalDate, {EPOCH_DATE} from "../../dist/src/LocalDate";
 import {DECEMBER, JANUARY, JULY, SEPTEMBER} from "../../dist/src/Month";
 
@@ -144,7 +144,7 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
 	});
 
-	// Note: This test is environment-dependent, as local timezone may differ
+	// Note: This test is environment-dependent, as local time zone may differ
 	it("should construct from native local", () => {
 		expect(LocalDate.fromNativeLocal(new Date(2019, 6, 5))).toEqual(LocalDate.of(2019, JULY, 5));
 	});
@@ -155,5 +155,42 @@ describe("LocalDate", () => {
 
 	it("should construct from string", () => {
 		expect(LocalDate.parse("2019-07-05")).toEqual(LocalDate.of(2019, JULY, 5));
+	});
+
+	it("should support BC era", () => {
+		const date1 = LocalDate.of(1, JANUARY, 1);
+		expect(date1.year).toBe(1);
+		expect(date1.yearOfEra).toBe(1);
+		expect(date1.era).toBe(AD);
+		expect(date1.month).toBe(JANUARY);
+		expect(date1.dayOfMonth).toBe(1);
+
+		const date2 = LocalDate.of(0, DECEMBER, 31);
+		expect(date2.year).toBe(0);
+		expect(date2.yearOfEra).toBe(0);
+		expect(date2.era).toBe(BC);
+		expect(date2.month).toBe(DECEMBER);
+		expect(date2.dayOfMonth).toBe(31);
+
+		const date3 = LocalDate.of(0, JANUARY, 1);
+		expect(date3.year).toBe(0);
+		expect(date3.yearOfEra).toBe(0);
+		expect(date3.era).toBe(BC);
+		expect(date3.month).toBe(JANUARY);
+		expect(date3.dayOfMonth).toBe(1);
+
+		const date4 = LocalDate.of(-1, DECEMBER, 31);
+		expect(date4.year).toBe(-1);
+		expect(date4.yearOfEra).toBe(1);
+		expect(date4.era).toBe(BC);
+		expect(date4.month).toBe(DECEMBER);
+		expect(date4.dayOfMonth).toBe(31);
+
+		const date5 = LocalDate.of(-1, JANUARY, 1);
+		expect(date5.year).toBe(-1);
+		expect(date5.yearOfEra).toBe(1);
+		expect(date5.era).toBe(BC);
+		expect(date5.month).toBe(JANUARY);
+		expect(date5.dayOfMonth).toBe(1);
 	});
 });

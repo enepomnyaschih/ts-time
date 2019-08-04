@@ -194,7 +194,12 @@ class LocalDate {
 	}
 
 	static of(year: number, month: number | Month, dayOfMonth: number) {
-		return new LocalDate(new Date(Date.UTC(year, Month.of(month).value - 1, dayOfMonth, 0, 0, 0, 0)));
+		const date = new Date(Date.UTC(year, Month.of(month).value - 1, dayOfMonth, 0, 0, 0, 0));
+		if (year >= 0 && year <= 99) {
+			// Work around a REALLY STUPID feature of Date.UTC to treat 00-99 years as 1900-1999
+			date.setUTCFullYear(year);
+		}
+		return new LocalDate(date);
 	}
 
 	static ofEpochDay(epochDay: number) {
