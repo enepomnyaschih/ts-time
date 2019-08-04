@@ -27,6 +27,7 @@ import {AD} from "../../dist/src/Era";
 import LocalDate, {EPOCH_DATE} from "../../dist/src/LocalDate";
 import {DECEMBER, JANUARY, JULY, SEPTEMBER} from "../../dist/src/Month";
 
+// TODO: Add out of bounds tests (e.g. constructors)
 describe("LocalDate", () => {
 	it("should have proper fields", () => {
 		const date = LocalDate.of(2019, JULY, 5);
@@ -70,7 +71,7 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofEpochDay(100000).epochDay).toBe(100000);
 	});
 
-	it("should properly detect week based fields", () => {
+	it("should detect week based fields", () => {
 		const date1 = LocalDate.of(2018, JANUARY, 1);
 		expect(date1.dayOfWeek).toBe(MONDAY);
 		expect(date1.weekBasedYear).toBe(2018);
@@ -112,5 +113,34 @@ describe("LocalDate", () => {
 		expect(date7.weekBasedYear).toBe(2015);
 		expect(date7.weekOfWeekBasedYear).toBe(53);
 		expect(date7.dayOfWeekBasedYear).toBe(371);
+	});
+
+	it("should construct from week", () => {
+		expect(LocalDate.ofWeek(2018, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofWeek(2017, 52, SUNDAY).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofWeek(2017, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 2).nativeUtc);
+		expect(LocalDate.ofWeek(2016, 52, SUNDAY).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofWeek(2016, 52, SATURDAY).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofWeek(2016, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 4).nativeUtc);
+		expect(LocalDate.ofWeek(2015, 53, SUNDAY).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 3).nativeUtc);
+	});
+
+	it("should construct from week based year day", () => {
+		expect(LocalDate.ofWeekBasedYearDay(2018, 1).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2017, 364).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2017, 1).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 2).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2016, 364).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2016, 363).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 4).nativeUtc);
+		expect(LocalDate.ofWeekBasedYearDay(2015, 371).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 3).nativeUtc);
+	});
+
+	it("should construct from year day", () => {
+		expect(LocalDate.ofYearDay(2018, 1).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2017, 365).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2017, 1).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2016, 366).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
 	});
 });
