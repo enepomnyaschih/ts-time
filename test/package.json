@@ -1,0 +1,28 @@
+{
+  "name": "ts-time-tests",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "node_modules/.bin/webpack --config webpack.js",
+    "watch": "node_modules/.bin/webpack --watch --config webpack.js",
+    "karma": "node_modules/.bin/karma start",
+    "karma-run": "node_modules/.bin/karma start --single-run"
+  },
+  "devDependencies": {
+    "@types/jasmine": "2.8.x",
+    "babel-core": "6.26.x",
+    "babel-loader": "7.1.x",
+    "babel-preset-env": "1.7.x",
+    "clean-webpack-plugin": "0.1.x",
+    "jasmine-core": "~3.3.0",
+    "karma": "~4.0.1",
+    "karma-chrome-launcher": "~3.0.0",
+    "karma-jasmine": "~2.0.1",
+    "karma-sourcemap-loader": "~0.3.7",
+    "source-map-loader": "0.2.x",
+    "ts-loader": "~4.5.0",
+    "typescript": "~3.5.3",
+    "webpack": "4.16.x",
+    "webpack-cli": "3.1.x"
+  }
+}

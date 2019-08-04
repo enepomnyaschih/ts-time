@@ -1,0 +1,5 @@
+/node_modules
+/.npmignore
+/clean.sh
+/tsconfig.json
+/webpack.config.js
