@@ -25,6 +25,7 @@ SOFTWARE.
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../dist/src/DayOfWeek";
 import {AD, BC} from "../../dist/src/Era";
 import LocalDate, {EPOCH_DATE} from "../../dist/src/LocalDate";
+import LocalTime, {MIDNIGHT, NOON} from "../../dist/src/LocalTime";
 import {
 	APRIL,
 	AUGUST,
@@ -490,7 +491,13 @@ describe("LocalDate", () => {
 		expect(LocalDate.isAfter(null, null)).toBe(false);
 	});
 
-	it("should return proper start of day", () => {
+	it("should create proper start of day (atStartOfDay)", () => {
 		expect(july5.atStartOfDay.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 0, 0, 0, 0)));
+	});
+
+	it("should create proper moment of day (atTime)", () => {
+		expect(july5.atTime(MIDNIGHT).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 0, 0, 0, 0)));
+		expect(july5.atTime(NOON).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 12, 0, 0, 0)));
+		expect(july5.atTime(LocalTime.of(1, 2, 3, 4)).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 1, 2, 3, 4)));
 	});
 });
