@@ -107,6 +107,36 @@ describe("LocalDate", () => {
 		expect(LocalDate.of(1969, DECEMBER, 29).epochDay).toBe(-2);
 	});
 
+	it("should return proper leap year flag", () => {
+		expect(july5.isLeapYear).toBe(false);
+		expect(LocalDate.of(0, SEPTEMBER, 12).isLeapYear).toBe(true);
+		expect(LocalDate.of(1, OCTOBER, 15).isLeapYear).toBe(false);
+		expect(LocalDate.of(2, MARCH, 30).isLeapYear).toBe(false);
+		expect(LocalDate.of(3, JANUARY, 16).isLeapYear).toBe(false);
+		expect(LocalDate.of(4, DECEMBER, 20).isLeapYear).toBe(true);
+		expect(LocalDate.of(5, JULY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(6, JUNE, 5).isLeapYear).toBe(false);
+		expect(LocalDate.of(7, FEBRUARY, 10).isLeapYear).toBe(false);
+		expect(LocalDate.of(8, JANUARY, 7).isLeapYear).toBe(true);
+		expect(LocalDate.of(100, NOVEMBER, 2).isLeapYear).toBe(false);
+		expect(LocalDate.of(200, AUGUST, 8).isLeapYear).toBe(false);
+		expect(LocalDate.of(300, MAY, 9).isLeapYear).toBe(false);
+		expect(LocalDate.of(400, JANUARY, 12).isLeapYear).toBe(true);
+		expect(LocalDate.of(2000, JANUARY, 1).isLeapYear).toBe(true);
+		expect(LocalDate.of(2001, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(2002, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(2003, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(2004, JANUARY, 1).isLeapYear).toBe(true);
+		expect(LocalDate.of(-1, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-2, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-3, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-4, JANUARY, 1).isLeapYear).toBe(true);
+		expect(LocalDate.of(-100, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-200, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-300, JANUARY, 1).isLeapYear).toBe(false);
+		expect(LocalDate.of(-400, JANUARY, 1).isLeapYear).toBe(true);
+	});
+
 	it("should return proper length of year", () => {
 		expect(july5.lengthOfYear).toBe(365);
 		expect(LocalDate.of(0, SEPTEMBER, 12).lengthOfYear).toBe(366);
@@ -458,5 +488,9 @@ describe("LocalDate", () => {
 		expect(LocalDate.isAfter(july5, null)).toBe(true);
 		expect(LocalDate.isAfter(null, july5)).toBe(false);
 		expect(LocalDate.isAfter(null, null)).toBe(false);
+	});
+
+	it("should return proper start of day", () => {
+		expect(july5.atStartOfDay.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 0, 0, 0, 0)));
 	});
 });

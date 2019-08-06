@@ -93,8 +93,12 @@ class LocalDate {
 		return Math.floor((this.month.value + 2) / 3);
 	}
 
+	get isLeapYear() {
+		return isLeapYear(this.year);
+	}
+
 	get lengthOfYear() {
-		return this.isLeapYear() ? DAYS_PER_LEAP_YEAR : DAYS_PER_NON_LEAP_YEAR;
+		return this.isLeapYear ? DAYS_PER_LEAP_YEAR : DAYS_PER_NON_LEAP_YEAR;
 	}
 
 	compareTo(other: LocalDate) {
@@ -113,11 +117,7 @@ class LocalDate {
 		return LocalDate.isBefore(this, other);
 	}
 
-	isLeapYear() {
-		return isLeapYear(this.year);
-	}
-
-	atStartOfDay() {
+	get atStartOfDay() {
 		return LocalDateTime.of(this, MIDNIGHT);
 	}
 
