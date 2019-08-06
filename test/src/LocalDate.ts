@@ -166,29 +166,6 @@ describe("LocalDate", () => {
 		expect(LocalDate.of(2017, JANUARY, 1).quarterOfYear).toBe(1);
 	});
 
-	it("should construct from epoch day", () => {
-		const date = LocalDate.ofEpochDay(1000); // 365 + 365 + (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 26)
-		expect(date.year).toBe(1972);
-		expect(date.month).toBe(SEPTEMBER);
-		expect(date.dayOfMonth).toBe(26);
-		expect(date.epochDay).toBe(1000);
-	});
-
-	it("should provide epoch date", () => {
-		expect(EPOCH_DATE.year).toBe(1970);
-		expect(EPOCH_DATE.month).toBe(JANUARY);
-		expect(EPOCH_DATE.dayOfYear).toBe(1);
-	});
-
-	it("should have matching epoch constructor and field", () => {
-		expect(LocalDate.ofEpochDay(1).epochDay).toBe(1);
-		expect(LocalDate.ofEpochDay(0).epochDay).toBe(0);
-		expect(LocalDate.ofEpochDay(-1).epochDay).toBe(-1);
-		expect(LocalDate.ofEpochDay(1000).epochDay).toBe(1000);
-		expect(LocalDate.ofEpochDay(-1000).epochDay).toBe(-1000);
-		expect(LocalDate.ofEpochDay(100000).epochDay).toBe(100000);
-	});
-
 	it("should return week based fields", () => {
 		expect(july5.dayOfWeek).toBe(FRIDAY);
 		expect(july5.dayOfWeekBasedYear).toBe(1 + 31 + 28 + 31 + 30 + 31 + 30 + 5);
@@ -250,6 +227,38 @@ describe("LocalDate", () => {
 		expect(date9.dayOfWeekBasedYear).toBe(364);
 	});
 
+	it("should provide epoch date", () => {
+		expect(EPOCH_DATE.year).toBe(1970);
+		expect(EPOCH_DATE.month).toBe(JANUARY);
+		expect(EPOCH_DATE.dayOfYear).toBe(1);
+	});
+
+	it("should construct from epoch day", () => {
+		const date = LocalDate.ofEpochDay(1000); // 365 + 365 + (31 + 29 + 31 + 30 + 31 + 30 + 31 + 31 + 26)
+		expect(date.year).toBe(1972);
+		expect(date.month).toBe(SEPTEMBER);
+		expect(date.dayOfMonth).toBe(26);
+		expect(date.epochDay).toBe(1000);
+
+		expect(LocalDate.ofEpochDay(1).epochDay).toBe(1);
+		expect(LocalDate.ofEpochDay(0).epochDay).toBe(0);
+		expect(LocalDate.ofEpochDay(-1).epochDay).toBe(-1);
+		expect(LocalDate.ofEpochDay(1000).epochDay).toBe(1000);
+		expect(LocalDate.ofEpochDay(-1000).epochDay).toBe(-1000);
+		expect(LocalDate.ofEpochDay(100000).epochDay).toBe(100000);
+	});
+
+	it("should construct from year day", () => {
+		expect(LocalDate.ofYearDay(2018, 1).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2017, 365).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2017, 1).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2016, 366).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.ofYearDay(2015, 1).nativeUtc).toEqual(LocalDate.of(2015, JANUARY, 1).nativeUtc);
+		expect(LocalDate.ofYearDay(2014, 365).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 31).nativeUtc);
+	});
+
 	it("should construct from week", () => {
 		expect(LocalDate.ofWeek(2018, 1, MONDAY).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
 		expect(LocalDate.ofWeek(2017, 52, SUNDAY).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
@@ -272,17 +281,6 @@ describe("LocalDate", () => {
 		expect(LocalDate.ofWeekBasedYearDay(2015, 371).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 3).nativeUtc);
 		expect(LocalDate.ofWeekBasedYearDay(2015, 1).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 29).nativeUtc);
 		expect(LocalDate.ofWeekBasedYearDay(2014, 364).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 28).nativeUtc);
-	});
-
-	it("should construct from year day", () => {
-		expect(LocalDate.ofYearDay(2018, 1).nativeUtc).toEqual(LocalDate.of(2018, JANUARY, 1).nativeUtc);
-		expect(LocalDate.ofYearDay(2017, 365).nativeUtc).toEqual(LocalDate.of(2017, DECEMBER, 31).nativeUtc);
-		expect(LocalDate.ofYearDay(2017, 1).nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 1).nativeUtc);
-		expect(LocalDate.ofYearDay(2016, 366).nativeUtc).toEqual(LocalDate.of(2016, DECEMBER, 31).nativeUtc);
-		expect(LocalDate.ofYearDay(2016, 1).nativeUtc).toEqual(LocalDate.of(2016, JANUARY, 1).nativeUtc);
-		expect(LocalDate.ofYearDay(2015, 365).nativeUtc).toEqual(LocalDate.of(2015, DECEMBER, 31).nativeUtc);
-		expect(LocalDate.ofYearDay(2015, 1).nativeUtc).toEqual(LocalDate.of(2015, JANUARY, 1).nativeUtc);
-		expect(LocalDate.ofYearDay(2014, 365).nativeUtc).toEqual(LocalDate.of(2014, DECEMBER, 31).nativeUtc);
 	});
 
 	// Note: This test is environment-dependent, as local time zone may differ
@@ -336,5 +334,129 @@ describe("LocalDate", () => {
 		expect(date5.era).toBe(BC);
 		expect(date5.month).toBe(JANUARY);
 		expect(date5.dayOfMonth).toBe(1);
+	});
+
+	it("should compare itself", () => {
+		expect(july5.compareTo(LocalDate.of(2018, SEPTEMBER, 10))).toBeGreaterThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, JUNE, 10))).toBeGreaterThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, JULY, 3))).toBeGreaterThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, JULY, 4))).toBeGreaterThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, JULY, 5))).toBe(0);
+		expect(july5.compareTo(july5)).toBe(0);
+		expect(july5.compareTo(LocalDate.of(2019, JULY, 6))).toBeLessThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, JULY, 7))).toBeLessThan(0);
+		expect(july5.compareTo(LocalDate.of(2019, AUGUST, 1))).toBeLessThan(0);
+		expect(july5.compareTo(LocalDate.of(2020, FEBRUARY, 1))).toBeLessThan(0);
+	});
+
+	it("should compare itself statically", () => {
+		expect(LocalDate.compare(july5, LocalDate.of(2018, SEPTEMBER, 10))).toBeGreaterThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JUNE, 10))).toBeGreaterThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JULY, 3))).toBeGreaterThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JULY, 4))).toBeGreaterThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JULY, 5))).toBe(0);
+		expect(LocalDate.compare(july5, july5)).toBe(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JULY, 6))).toBeLessThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, JULY, 7))).toBeLessThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2019, AUGUST, 1))).toBeLessThan(0);
+		expect(LocalDate.compare(july5, LocalDate.of(2020, FEBRUARY, 1))).toBeLessThan(0);
+	});
+
+	it("should compare itself with null", () => {
+		expect(july5.compareTo(null)).toBeGreaterThan(0);
+		expect(LocalDate.compare(july5, null)).toBeGreaterThan(0);
+		expect(LocalDate.compare(null, july5)).toBeLessThan(0);
+		expect(LocalDate.compare(null, null)).toBe(0);
+	});
+
+	it("should check itself for equality", () => {
+		expect(july5.equals(LocalDate.of(2018, SEPTEMBER, 10))).toBe(false);
+		expect(july5.equals(LocalDate.of(2019, JULY, 10))).toBe(false);
+		expect(july5.equals(LocalDate.of(2019, JUNE, 5))).toBe(false);
+		expect(july5.equals(LocalDate.of(2018, JULY, 5))).toBe(false);
+		expect(july5.equals(LocalDate.of(2019, JULY, 5))).toBe(true);
+		expect(july5.equals(july5)).toBe(true);
+	});
+
+	it("should check itself for equality statically", () => {
+		expect(LocalDate.equal(july5, LocalDate.of(2018, SEPTEMBER, 10))).toBe(false);
+		expect(LocalDate.equal(july5, LocalDate.of(2019, JULY, 10))).toBe(false);
+		expect(LocalDate.equal(july5, LocalDate.of(2019, JUNE, 5))).toBe(false);
+		expect(LocalDate.equal(july5, LocalDate.of(2018, JULY, 5))).toBe(false);
+		expect(LocalDate.equal(july5, LocalDate.of(2019, JULY, 5))).toBe(true);
+		expect(LocalDate.equal(july5, july5)).toBe(true);
+	});
+
+	it("should check itself for equality with null", () => {
+		expect(july5.equals(null)).toBe(false);
+		expect(LocalDate.equal(july5, null)).toBe(false);
+		expect(LocalDate.equal(null, july5)).toBe(false);
+		expect(LocalDate.equal(null, null)).toBe(true);
+	});
+
+	it("should compare itself with isBefore method", () => {
+		expect(july5.isBefore(LocalDate.of(2018, SEPTEMBER, 10))).toBe(false);
+		expect(july5.isBefore(LocalDate.of(2019, JUNE, 10))).toBe(false);
+		expect(july5.isBefore(LocalDate.of(2019, JULY, 3))).toBe(false);
+		expect(july5.isBefore(LocalDate.of(2019, JULY, 4))).toBe(false);
+		expect(july5.isBefore(LocalDate.of(2019, JULY, 5))).toBe(false);
+		expect(july5.isBefore(july5)).toBe(false);
+		expect(july5.isBefore(LocalDate.of(2019, JULY, 6))).toBe(true);
+		expect(july5.isBefore(LocalDate.of(2019, JULY, 7))).toBe(true);
+		expect(july5.isBefore(LocalDate.of(2019, AUGUST, 1))).toBe(true);
+		expect(july5.isBefore(LocalDate.of(2020, FEBRUARY, 1))).toBe(true);
+	});
+
+	it("should compare itself with isBefore method statically", () => {
+		expect(LocalDate.isBefore(july5, LocalDate.of(2018, SEPTEMBER, 10))).toBe(false);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JUNE, 10))).toBe(false);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JULY, 3))).toBe(false);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JULY, 4))).toBe(false);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JULY, 5))).toBe(false);
+		expect(LocalDate.isBefore(july5, july5)).toBe(false);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JULY, 6))).toBe(true);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, JULY, 7))).toBe(true);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2019, AUGUST, 1))).toBe(true);
+		expect(LocalDate.isBefore(july5, LocalDate.of(2020, FEBRUARY, 1))).toBe(true);
+	});
+
+	it("should compare itself with null with isBefore method", () => {
+		expect(july5.isBefore(null)).toBe(false);
+		expect(LocalDate.isBefore(july5, null)).toBe(false);
+		expect(LocalDate.isBefore(null, july5)).toBe(true);
+		expect(LocalDate.isBefore(null, null)).toBe(false);
+	});
+
+	it("should compare itself with isAfter method", () => {
+		expect(july5.isAfter(LocalDate.of(2018, SEPTEMBER, 10))).toBe(true);
+		expect(july5.isAfter(LocalDate.of(2019, JUNE, 10))).toBe(true);
+		expect(july5.isAfter(LocalDate.of(2019, JULY, 3))).toBe(true);
+		expect(july5.isAfter(LocalDate.of(2019, JULY, 4))).toBe(true);
+		expect(july5.isAfter(LocalDate.of(2019, JULY, 5))).toBe(false);
+		expect(july5.isAfter(july5)).toBe(false);
+		expect(july5.isAfter(LocalDate.of(2019, JULY, 6))).toBe(false);
+		expect(july5.isAfter(LocalDate.of(2019, JULY, 7))).toBe(false);
+		expect(july5.isAfter(LocalDate.of(2019, AUGUST, 1))).toBe(false);
+		expect(july5.isAfter(LocalDate.of(2020, FEBRUARY, 1))).toBe(false);
+	});
+
+	it("should compare itself with isAfter method statically", () => {
+		expect(LocalDate.isAfter(july5, LocalDate.of(2018, SEPTEMBER, 10))).toBe(true);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JUNE, 10))).toBe(true);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JULY, 3))).toBe(true);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JULY, 4))).toBe(true);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JULY, 5))).toBe(false);
+		expect(LocalDate.isAfter(july5, july5)).toBe(false);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JULY, 6))).toBe(false);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, JULY, 7))).toBe(false);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2019, AUGUST, 1))).toBe(false);
+		expect(LocalDate.isAfter(july5, LocalDate.of(2020, FEBRUARY, 1))).toBe(false);
+	});
+
+	it("should compare itself with null with isAfter method", () => {
+		expect(july5.isAfter(null)).toBe(true);
+		expect(LocalDate.isAfter(july5, null)).toBe(true);
+		expect(LocalDate.isAfter(null, july5)).toBe(false);
+		expect(LocalDate.isAfter(null, null)).toBe(false);
 	});
 });
