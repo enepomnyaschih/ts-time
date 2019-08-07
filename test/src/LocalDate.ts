@@ -576,4 +576,26 @@ describe("LocalDate", () => {
 		expect(LocalDate.of(2019, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, FEBRUARY, 28).nativeUtc);
 		expect(LocalDate.of(2020, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2020, FEBRUARY, 29).nativeUtc);
 	});
+
+	it("should modify year", () => {
+		expect(july5.withYear(1996).nativeUtc).toEqual(LocalDate.of(1996, JULY, 5).nativeUtc);
+		expect(LocalDate.of(2016, FEBRUARY, 29).withYear(2015).nativeUtc).toEqual(LocalDate.of(2015, FEBRUARY, 28).nativeUtc);
+	});
+
+	it("should modify month", () => {
+		expect(july5.withMonth(NOVEMBER).nativeUtc).toEqual(LocalDate.of(2019, NOVEMBER, 5).nativeUtc);
+		expect(LocalDate.of(2015, MARCH, 30).withMonth(FEBRUARY).nativeUtc).toEqual(LocalDate.of(2015, FEBRUARY, 28).nativeUtc);
+	});
+
+	it("should modify day of month", () => {
+		expect(july5.withDayOfMonth(28).nativeUtc).toEqual(LocalDate.of(2019, JULY, 28).nativeUtc);
+	});
+
+	it("should modify day of year", () => {
+		expect(july5.withDayOfYear(31 + 8).nativeUtc).toEqual(LocalDate.of(2019, FEBRUARY, 8).nativeUtc);
+	});
+
+	it("should modify day of week", () => {
+		expect(LocalDate.of(2019, AUGUST, 10).withDayOfWeek(TUESDAY).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 6).nativeUtc);
+	});
 });
