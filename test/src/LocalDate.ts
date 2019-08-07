@@ -40,6 +40,14 @@ import {
 	OCTOBER,
 	SEPTEMBER
 } from "../../dist/src/Month";
+import Period, {
+	DAY_PERIOD,
+	MONTH_PERIOD,
+	NULL_PERIOD,
+	QUARTER_PERIOD,
+	WEEK_PERIOD,
+	YEAR_PERIOD
+} from "../../dist/src/Period";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 // TODO: Add numeric month/weekday tests
@@ -499,5 +507,73 @@ describe("LocalDate", () => {
 		expect(july5.atTime(MIDNIGHT).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 0, 0, 0, 0)));
 		expect(july5.atTime(NOON).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 12, 0, 0, 0)));
 		expect(july5.atTime(LocalTime.of(1, 2, 3, 4)).nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 1, 2, 3, 4)));
+	});
+
+	it("should add a period", () => {
+		expect(july5.plus(YEAR_PERIOD).nativeUtc).toEqual(LocalDate.of(2020, JULY, 5).nativeUtc);
+		expect(july5.plus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 5).nativeUtc);
+		expect(july5.plus(DAY_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JULY, 6).nativeUtc);
+		expect(july5.plus(QUARTER_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, OCTOBER, 5).nativeUtc);
+		expect(july5.plus(WEEK_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JULY, 12).nativeUtc);
+	});
+
+	it("should add zero period", () => {
+		expect(july5.plus(NULL_PERIOD)).toBe(july5);
+	});
+
+	it("should add multiple periods", () => {
+		expect(july5.plus(Period.ofYears(2)).nativeUtc).toEqual(LocalDate.of(2021, JULY, 5).nativeUtc);
+		expect(july5.plus(Period.ofMonths(9)).nativeUtc).toEqual(LocalDate.of(2020, APRIL, 5).nativeUtc);
+		expect(july5.plus(Period.ofDays(30)).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 4).nativeUtc);
+		expect(july5.plus(Period.ofQuarters(3)).nativeUtc).toEqual(LocalDate.of(2020, APRIL, 5).nativeUtc);
+		expect(july5.plus(Period.ofWeeks(5)).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 9).nativeUtc);
+	});
+
+	it("should add negative periods", () => {
+		expect(july5.plus(Period.ofYears(-2)).nativeUtc).toEqual(LocalDate.of(2017, JULY, 5).nativeUtc);
+		expect(july5.plus(Period.ofMonths(-9)).nativeUtc).toEqual(LocalDate.of(2018, OCTOBER, 5).nativeUtc);
+		expect(july5.plus(Period.ofDays(-30)).nativeUtc).toEqual(LocalDate.of(2019, JUNE, 5).nativeUtc);
+		expect(july5.plus(Period.ofQuarters(-3)).nativeUtc).toEqual(LocalDate.of(2018, OCTOBER, 5).nativeUtc);
+		expect(july5.plus(Period.ofWeeks(-5)).nativeUtc).toEqual(LocalDate.of(2019, MAY, 31).nativeUtc);
+	});
+
+	it("should adjust the added month properly", () => {
+		expect(LocalDate.of(2019, MAY, 31).plus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JUNE, 30).nativeUtc);
+		expect(LocalDate.of(2019, JANUARY, 31).plus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, FEBRUARY, 28).nativeUtc);
+		expect(LocalDate.of(2020, JANUARY, 31).plus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2020, FEBRUARY, 29).nativeUtc);
+	});
+
+	it("should subtract a period", () => {
+		expect(july5.minus(YEAR_PERIOD).nativeUtc).toEqual(LocalDate.of(2018, JULY, 5).nativeUtc);
+		expect(july5.minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JUNE, 5).nativeUtc);
+		expect(july5.minus(DAY_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JULY, 4).nativeUtc);
+		expect(july5.minus(QUARTER_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, APRIL, 5).nativeUtc);
+		expect(july5.minus(WEEK_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, JUNE, 28).nativeUtc);
+	});
+
+	it("should subtract zero period", () => {
+		expect(july5.minus(NULL_PERIOD)).toBe(july5);
+	});
+
+	it("should subtract multiple periods", () => {
+		expect(july5.minus(Period.ofYears(2)).nativeUtc).toEqual(LocalDate.of(2017, JULY, 5).nativeUtc);
+		expect(july5.minus(Period.ofMonths(9)).nativeUtc).toEqual(LocalDate.of(2018, OCTOBER, 5).nativeUtc);
+		expect(july5.minus(Period.ofDays(30)).nativeUtc).toEqual(LocalDate.of(2019, JUNE, 5).nativeUtc);
+		expect(july5.minus(Period.ofQuarters(3)).nativeUtc).toEqual(LocalDate.of(2018, OCTOBER, 5).nativeUtc);
+		expect(july5.minus(Period.ofWeeks(5)).nativeUtc).toEqual(LocalDate.of(2019, MAY, 31).nativeUtc);
+	});
+
+	it("should subtract negative periods", () => {
+		expect(july5.minus(Period.ofYears(-2)).nativeUtc).toEqual(LocalDate.of(2021, JULY, 5).nativeUtc);
+		expect(july5.minus(Period.ofMonths(-9)).nativeUtc).toEqual(LocalDate.of(2020, APRIL, 5).nativeUtc);
+		expect(july5.minus(Period.ofDays(-30)).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 4).nativeUtc);
+		expect(july5.minus(Period.ofQuarters(-3)).nativeUtc).toEqual(LocalDate.of(2020, APRIL, 5).nativeUtc);
+		expect(july5.minus(Period.ofWeeks(-5)).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 9).nativeUtc);
+	});
+
+	it("should adjust the added month properly", () => {
+		expect(LocalDate.of(2019, MAY, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, APRIL, 30).nativeUtc);
+		expect(LocalDate.of(2019, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, FEBRUARY, 28).nativeUtc);
+		expect(LocalDate.of(2020, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2020, FEBRUARY, 29).nativeUtc);
 	});
 });
