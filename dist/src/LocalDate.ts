@@ -65,15 +65,15 @@ class LocalDate {
 	}
 
 	get weekOfWeekBasedYear() {
-		return WEEK_PERIOD.between(this.truncateToWeekBasedYear(), this) + 1;
+		return WEEK_PERIOD.between(this.truncateToWeekBasedYear, this) + 1;
 	}
 
 	get dayOfYear() {
-		return DAY_PERIOD.between(this.truncateToYear(), this) + 1;
+		return DAY_PERIOD.between(this.truncateToYear, this) + 1;
 	}
 
 	get dayOfWeekBasedYear() {
-		return DAY_PERIOD.between(this.truncateToWeekBasedYear(), this) + 1;
+		return DAY_PERIOD.between(this.truncateToWeekBasedYear, this) + 1;
 	}
 
 	get dayOfMonth() {
@@ -125,6 +125,22 @@ class LocalDate {
 		return LocalDateTime.of(this, time);
 	}
 
+	get truncateToYear() {
+		return LocalDate.of(this.year, JANUARY, 1);
+	}
+
+	get truncateToWeekBasedYear() {
+		return getWeekBasedYearStart(this.weekBasedYear);
+	}
+
+	get truncateToMonth() {
+		return LocalDate.of(this.year, this.month, 1);
+	}
+
+	get truncateToWeek() {
+		return this.minus(Period.ofDays(this.dayOfWeek.value - 1));
+	}
+
 	format(formatter: DateFormatter) {
 		return formatter.format(this);
 	}
@@ -150,27 +166,11 @@ class LocalDate {
 	}
 
 	withDayOfWeek(dayOfWeek: number | DayOfWeek) {
-		return this.truncateToWeek().plus(Period.ofDays(DayOfWeek.of(dayOfWeek).value - 1));
+		return this.truncateToWeek.plus(Period.ofDays(DayOfWeek.of(dayOfWeek).value - 1));
 	}
 
 	withDayOfYear(dayOfYear: number) {
-		return this.truncateToYear().plus(Period.ofDays(dayOfYear - 1));
-	}
-
-	truncateToYear() {
-		return LocalDate.of(this.year, JANUARY, 1);
-	}
-
-	truncateToWeekBasedYear() {
-		return getWeekBasedYearStart(this.weekBasedYear);
-	}
-
-	truncateToMonth() {
-		return LocalDate.of(this.year, this.month, 1);
-	}
-
-	truncateToWeek() {
-		return this.minus(Period.ofDays(this.dayOfWeek.value - 1));
+		return this.truncateToYear.plus(Period.ofDays(dayOfYear - 1));
 	}
 
 	toString() {

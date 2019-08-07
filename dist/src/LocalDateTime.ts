@@ -200,19 +200,19 @@ class LocalDateTime {
 	}
 
 	truncateToYear() {
-		return new LocalDateTime(this.date.truncateToYear(), MIDNIGHT);
+		return new LocalDateTime(this.date.truncateToYear, MIDNIGHT);
 	}
 
 	truncateToWeekBasedYear() {
-		return new LocalDateTime(this.date.truncateToWeekBasedYear(), MIDNIGHT);
+		return new LocalDateTime(this.date.truncateToWeekBasedYear, MIDNIGHT);
 	}
 
 	truncateToMonth() {
-		return new LocalDateTime(this.date.truncateToMonth(), MIDNIGHT);
+		return new LocalDateTime(this.date.truncateToMonth, MIDNIGHT);
 	}
 
 	truncateToWeek() {
-		return new LocalDateTime(this.date.truncateToWeek(), MIDNIGHT);
+		return new LocalDateTime(this.date.truncateToWeek, MIDNIGHT);
 	}
 
 	truncateToDay() {

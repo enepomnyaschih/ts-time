@@ -598,4 +598,26 @@ describe("LocalDate", () => {
 	it("should modify day of week", () => {
 		expect(LocalDate.of(2019, AUGUST, 10).withDayOfWeek(TUESDAY).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 6).nativeUtc);
 	});
+
+	it("should truncate itself to year", () => {
+		expect(july5.truncateToYear.nativeUtc).toEqual(LocalDate.of(2019, JANUARY, 1).nativeUtc);
+	});
+
+	it("should truncate itself to week based year", () => {
+		expect(july5.truncateToWeekBasedYear.nativeUtc).toEqual(LocalDate.of(2018, DECEMBER, 31).nativeUtc);
+		expect(LocalDate.of(2017, JULY, 5).truncateToWeekBasedYear.nativeUtc).toEqual(LocalDate.of(2017, JANUARY, 2).nativeUtc);
+	});
+
+	it("should truncate itself to month", () => {
+		expect(july5.truncateToMonth.nativeUtc).toEqual(LocalDate.of(2019, JULY, 1).nativeUtc);
+		expect(LocalDate.of(2019, AUGUST, 5).truncateToMonth.nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 1).nativeUtc);
+	});
+
+	it("should truncate itself to week", () => {
+		expect(july5.truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, JULY, 1).nativeUtc);
+		expect(LocalDate.of(2019, JULY, 29).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, JULY, 29).nativeUtc);
+		expect(LocalDate.of(2019, AUGUST, 1).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, JULY, 29).nativeUtc);
+		expect(LocalDate.of(2019, AUGUST, 4).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, JULY, 29).nativeUtc);
+		expect(LocalDate.of(2019, AUGUST, 5).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 5).nativeUtc);
+	});
 });
