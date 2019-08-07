@@ -174,7 +174,7 @@ class LocalDate {
 	}
 
 	toString() {
-		return `${this.nativeUtc.getUTCFullYear()}-${pad(this.nativeUtc.getUTCMonth(), 2)}-${pad(this.nativeUtc.getUTCDate(), 2)}`;
+		return `${this.nativeUtc.getUTCFullYear()}-${pad(this.nativeUtc.getUTCMonth() + 1, 2)}-${pad(this.nativeUtc.getUTCDate(), 2)}`;
 	}
 
 	// Months have different amount of days. When you change year or month value, you should call this method to

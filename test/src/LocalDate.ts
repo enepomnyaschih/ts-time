@@ -620,4 +620,8 @@ describe("LocalDate", () => {
 		expect(LocalDate.of(2019, AUGUST, 4).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, JULY, 29).nativeUtc);
 		expect(LocalDate.of(2019, AUGUST, 5).truncateToWeek.nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 5).nativeUtc);
 	});
+
+	it("should convert itself to string", () => {
+		expect(july5.toString()).toBe("2019-07-05");
+	});
 });
