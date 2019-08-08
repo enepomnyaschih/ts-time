@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "1.7.x",
-    "ts-time": "file:../dist",
+    "ts-time": "file:../core",
     "typescript": "~3.5.3"
   }
 }
