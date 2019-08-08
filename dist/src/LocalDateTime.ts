@@ -25,6 +25,7 @@ SOFTWARE.
 import {compareByNumber, equalBy} from "./_internal";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
+import Era from "./Era";
 import LocalDate from "./LocalDate";
 import LocalTime, {MIDNIGHT} from "./LocalTime";
 import Month from "./Month";
@@ -54,7 +55,7 @@ class LocalDateTime {
 			this.time.hour, this.time.minute, this.time.second, this.time.ms);
 	}
 
-	get era() {
+	get era(): Era {
 		return this.date.era;
 	}
 

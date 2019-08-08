@@ -22,19 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "../_internal";
-import OffsetDateTime from "../OffsetDateTime";
+import {Enum} from "ts-time/_internal";
+import ZonedDateTime from "ts-time/ZonedDateTime";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
-export interface OffsetDateTimeCompiler extends TemporalCompiler<OffsetDateTime> {
+export interface ZonedDateTimeCompiler extends TemporalCompiler<ZonedDateTime> {
 }
 
-// TODO: Extract AbstractDelegateCompiler
-class DateTimeDelegateCompiler implements OffsetDateTimeCompiler {
+class DateTimeDelegateCompiler implements ZonedDateTimeCompiler {
 
 	constructor(private delegated: DateTimeCompiler) {
 	}
@@ -47,12 +46,12 @@ class DateTimeDelegateCompiler implements OffsetDateTimeCompiler {
 		return this.delegated.maxLength;
 	}
 
-	compile(value: OffsetDateTime, length: number, context: any): string {
+	compile(value: ZonedDateTime, length: number, context: any): string {
 		return this.delegated.compile(value.dateTime, length, context);
 	}
 }
 
-class OffsetDelegateCompiler implements OffsetDateTimeCompiler {
+class OffsetDelegateCompiler implements ZonedDateTimeCompiler {
 
 	constructor(private delegated: OffsetCompiler) {
 	}
@@ -65,25 +64,25 @@ class OffsetDelegateCompiler implements OffsetDateTimeCompiler {
 		return this.delegated.maxLength;
 	}
 
-	compile(value: OffsetDateTime, length: number): string {
+	compile(value: ZonedDateTime, length: number): string {
 		return this.delegated.compile(value.offset, length);
 	}
 }
 
-export const OFFSET_DATE_TIME_COMPILERS = new Enum<OffsetDateTimeCompiler>([
+export const Zoned_DATE_TIME_COMPILERS = new Enum<ZonedDateTimeCompiler>([
 	...DATE_TIME_COMPILERS.array.map(delegated => new DateTimeDelegateCompiler(delegated)),
 	...OFFSET_COMPILERS.array.map(delegated => new OffsetDelegateCompiler(delegated))
 ], compiler => compiler.char);
 
-class OffsetDateTimeFormatter extends TemporalFormatter<OffsetDateTime> {
+class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {
 
-	static of(components: TemporalFormatComponent<OffsetDateTime>[]) {
-		return new OffsetDateTimeFormatter(components);
+	static of(components: TemporalFormatComponent<ZonedDateTime>[]) {
+		return new ZonedDateTimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<OffsetDateTimeCompiler> = OFFSET_DATE_TIME_COMPILERS) {
-		return new OffsetDateTimeFormatter(parsePattern(pattern, compilers));
+	static ofPattern(pattern: string, compilers: Enum<ZonedDateTimeCompiler> = Zoned_DATE_TIME_COMPILERS) {
+		return new ZonedDateTimeFormatter(parsePattern(pattern, compilers));
 	}
 }
 
-export default OffsetDateTimeFormatter;
+export default ZonedDateTimeFormatter;

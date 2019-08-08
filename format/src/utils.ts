@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "../_internal";
+import {Enum} from "ts-time/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {CompiledFormatComponent, LiteralFormatComponent, TemporalFormatComponent} from "./TemporalFormatter";
 

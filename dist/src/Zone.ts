@@ -61,7 +61,7 @@ export abstract class ZoneId {
 				throw new Error("Invalid time zone ID.");
 			}
 			const fixedId = id.substr(0, offsetStart) + offset.id;
-			return getCached(fixedId, () => new FixedOffsetZone(fixedId, offset.totalSeconds));
+			return getCached(fixedId, () => new FixedOffsetZoneConstructor(fixedId, offset.totalSeconds));
 		}
 		return getCached(id, () => {
 			try {
@@ -81,9 +81,9 @@ export abstract class ZoneId {
 	}
 }
 
-class FixedOffsetZone extends ZoneId {
+export class FixedOffsetZone extends ZoneId {
 
-	constructor(id: string, readonly totalSeconds: number) {
+	protected constructor(id: string, readonly totalSeconds: number) {
 		super(id);
 	}
 
@@ -93,6 +93,13 @@ class FixedOffsetZone extends ZoneId {
 
 	offsetAtLocalDateTime(_localDateTime: LocalDateTime): ZoneOffset {
 		return ZoneOffset.ofTotalSeconds(this.totalSeconds);
+	}
+}
+
+class FixedOffsetZoneConstructor extends FixedOffsetZone {
+
+	constructor(id: string, totalSeconds: number) {
+		super(id, totalSeconds);
 	}
 }
 

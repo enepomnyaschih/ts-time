@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad} from "../_internal";
-import {HOURS_PER_DAY} from "../constants";
-import LocalTime from "../LocalTime";
-import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "../TimeField";
+import {Enum, pad} from "ts-time/_internal";
+import {HOURS_PER_DAY} from "ts-time/constants";
+import LocalTime from "ts-time/LocalTime";
+import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "ts-time/TimeField";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
 import {parsePattern} from "./utils";

@@ -23,8 +23,13 @@ SOFTWARE.
 */
 
 import {MS_PER_SECOND} from "./constants";
+import DayOfWeek from "./DayOfWeek";
+import Era from "./Era";
 import Instant from "./Instant";
+import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
+import LocalTime from "./LocalTime";
+import Month from "./Month";
 import {ZoneOffset} from "./Zone";
 
 class OffsetDateTime {
@@ -38,11 +43,11 @@ class OffsetDateTime {
 		return this._dateTime = this._dateTime || this._computeDateTime();
 	}
 
-	get date() {
+	get date(): LocalDate {
 		return this.dateTime.date;
 	}
 
-	get time() {
+	get time(): LocalTime {
 		return this.dateTime.time;
 	}
 
@@ -54,7 +59,7 @@ class OffsetDateTime {
 		return this.instant.epochMs;
 	}
 
-	get era() {
+	get era(): Era {
 		return this.dateTime.era;
 	}
 
@@ -70,7 +75,7 @@ class OffsetDateTime {
 		return this.dateTime.weekBasedYear;
 	}
 
-	get month() {
+	get month(): Month {
 		return this.dateTime.month;
 	}
 
@@ -90,7 +95,7 @@ class OffsetDateTime {
 		return this.dateTime.dayOfMonth;
 	}
 
-	get dayOfWeek() {
+	get dayOfWeek(): DayOfWeek {
 		return this.dateTime.dayOfWeek;
 	}
 

@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "../_internal";
-import LocalDate from "../LocalDate";
-import LocalDateTime from "../LocalDateTime";
-import LocalTime from "../LocalTime";
+import {Enum} from "ts-time/_internal";
+import LocalDate from "ts-time/LocalDate";
+import LocalDateTime from "ts-time/LocalDateTime";
+import LocalTime from "ts-time/LocalTime";
 import {DATE_COMPILERS} from "./DateFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";

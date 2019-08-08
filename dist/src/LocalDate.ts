@@ -25,7 +25,7 @@ SOFTWARE.
 import {compareByNumber, equalBy, pad} from "./_internal";
 import {DAYS_PER_LEAP_YEAR, DAYS_PER_NON_LEAP_YEAR} from "./constants";
 import DayOfWeek, {THURSDAY} from "./DayOfWeek";
-import {AD, BC} from "./Era";
+import Era, {AD, BC} from "./Era";
 import LocalDateTime from "./LocalDateTime";
 import LocalTime, {MIDNIGHT} from "./LocalTime";
 import Month, {JANUARY} from "./Month";
@@ -43,7 +43,7 @@ class LocalDate {
 		return new Date(this.nativeUtc.getUTCFullYear(), this.nativeUtc.getUTCMonth(), this.nativeUtc.getUTCDate());
 	}
 
-	get era() {
+	get era(): Era {
 		return this.year > 0 ? AD : BC;
 	}
 
