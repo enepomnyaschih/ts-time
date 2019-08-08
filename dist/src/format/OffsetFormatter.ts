@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad, parsePattern} from "./_internal";
+import {Enum, pad} from "../_internal";
+import {ZoneOffset} from "../Zone";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
-import {ZoneOffset} from "./Zone";
+import {parsePattern} from "./utils";
 
 export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
 

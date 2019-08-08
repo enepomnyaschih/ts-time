@@ -22,14 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, parsePattern} from "./_internal";
+import {Enum} from "../_internal";
+import LocalDate from "../LocalDate";
+import LocalDateTime from "../LocalDateTime";
+import LocalTime from "../LocalTime";
 import {DATE_COMPILERS} from "./DateFormatter";
-import LocalDate from "./LocalDate";
-import LocalDateTime from "./LocalDateTime";
-import LocalTime from "./LocalTime";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
 import {TIME_COMPILERS} from "./TimeFormatter";
+import {parsePattern} from "./utils";
 
 export interface DateTimeCompiler extends TemporalCompiler<LocalDateTime> {
 }

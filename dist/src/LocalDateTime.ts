@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import DateTimeFormatter from "./DateTimeFormatter";
+import {compareByNumber, equalBy} from "./_internal";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
 import LocalDate from "./LocalDate";
@@ -30,7 +30,6 @@ import LocalTime, {MIDNIGHT} from "./LocalTime";
 import Month from "./Month";
 import OffsetDateTime from "./OffsetDateTime";
 import Period from "./Period";
-import {compareByNumber, equalBy} from "./_internal";
 import {ZoneId, ZoneOffset} from "./Zone";
 import ZonedDateTime from "./ZonedDateTime";
 
@@ -145,10 +144,6 @@ class LocalDateTime {
 
 	atOffset(offset: ZoneOffset) {
 		return OffsetDateTime.ofDateTime(this, offset);
-	}
-
-	format(formatter: DateTimeFormatter, context?: any) {
-		return formatter.format(this, context);
 	}
 
 	plus(duration: Duration | Period) {

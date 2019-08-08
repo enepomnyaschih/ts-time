@@ -22,11 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {MS_PER_SECOND} from "./constants";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
-import {MS_PER_SECOND} from "./constants";
 import {ZoneId, ZoneOffset} from "./Zone";
-import ZonedDateTimeFormatter from "./ZonedDateTimeFormatter";
 
 class ZonedDateTime {
 
@@ -134,10 +133,6 @@ class ZonedDateTime {
 
 	equals(other: ZonedDateTime) {
 		return ZonedDateTime.equal(this, other);
-	}
-
-	format(formatter: ZonedDateTimeFormatter, context?: any) {
-		return formatter.format(this, context);
 	}
 
 	private _computeDateTime() {

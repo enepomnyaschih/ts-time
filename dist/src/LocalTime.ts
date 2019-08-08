@@ -36,7 +36,6 @@ import Duration from "./Duration";
 import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
 import TimeField from "./TimeField";
-import TimeFormatter from "./TimeFormatter";
 
 class LocalTime {
 
@@ -81,10 +80,6 @@ class LocalTime {
 
 	atDate(date: LocalDate) {
 		return LocalDateTime.of(date, this);
-	}
-
-	format(formatter: TimeFormatter, context?: any) {
-		return formatter.format(this, context);
 	}
 
 	plus(duration: Duration) {

@@ -24,7 +24,6 @@ SOFTWARE.
 
 import {compareByNumber, equalBy, pad} from "./_internal";
 import {DAYS_PER_LEAP_YEAR, DAYS_PER_NON_LEAP_YEAR} from "./constants";
-import DateFormatter from "./DateFormatter";
 import DayOfWeek, {THURSDAY} from "./DayOfWeek";
 import {AD, BC} from "./Era";
 import LocalDateTime from "./LocalDateTime";
@@ -139,10 +138,6 @@ class LocalDate {
 
 	get truncateToWeek() {
 		return this.minus(Period.ofDays(this.dayOfWeek.value - 1));
-	}
-
-	format(formatter: DateFormatter, context?: any) {
-		return formatter.format(this, context);
 	}
 
 	plus(period: Period) {

@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {compareByNumber, equalBy, pad} from "./_internal";
 import Duration from "./Duration";
 import OffsetDateTime from "./OffsetDateTime";
-import {compareByNumber, equalBy, pad} from "./_internal";
 import {ZoneId, ZoneOffset} from "./Zone";
 import ZonedDateTime from "./ZonedDateTime";
 

@@ -22,12 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad, parsePattern} from "./_internal";
-import {HOURS_PER_DAY} from "./constants";
-import LocalTime from "./LocalTime";
+import {Enum, pad} from "../_internal";
+import {HOURS_PER_DAY} from "../constants";
+import LocalTime from "../LocalTime";
+import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "../TimeField";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
-import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "./TimeField";
+import {parsePattern} from "./utils";
 
 export interface TimeCompiler extends TemporalCompiler<LocalTime> {
 }

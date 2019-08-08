@@ -25,7 +25,6 @@ SOFTWARE.
 import {MS_PER_SECOND} from "./constants";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
-import OffsetDateTimeFormatter from "./OffsetDateTimeFormatter";
 import {ZoneOffset} from "./Zone";
 
 class OffsetDateTime {
@@ -137,10 +136,6 @@ class OffsetDateTime {
 
 	isBefore(other: OffsetDateTime) {
 		return OffsetDateTime.isBefore(this, other);
-	}
-
-	format(formatter: OffsetDateTimeFormatter, context?: any) {
-		return formatter.format(this, context);
 	}
 
 	private _computeDateTime() {
