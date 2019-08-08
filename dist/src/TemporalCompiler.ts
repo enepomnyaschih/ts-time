@@ -27,5 +27,5 @@ export interface TemporalCompiler<T> {
 	readonly char: string;
 	readonly maxLength: number;
 
-	compile(value: T, length: number): string;
+	compile(value: T, length: number, context: any): string;
 }

@@ -147,8 +147,8 @@ class LocalDateTime {
 		return OffsetDateTime.ofDateTime(this, offset);
 	}
 
-	format(formatter: DateTimeFormatter) {
-		return formatter.format(this);
+	format(formatter: DateTimeFormatter, context?: any) {
+		return formatter.format(this, context);
 	}
 
 	plus(duration: Duration | Period) {

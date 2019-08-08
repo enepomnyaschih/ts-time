@@ -83,8 +83,8 @@ class LocalTime {
 		return LocalDateTime.of(date, this);
 	}
 
-	format(formatter: TimeFormatter) {
-		return formatter.format(this);
+	format(formatter: TimeFormatter, context?: any) {
+		return formatter.format(this, context);
 	}
 
 	plus(duration: Duration) {

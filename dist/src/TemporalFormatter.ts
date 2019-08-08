@@ -25,7 +25,7 @@ SOFTWARE.
 import {TemporalCompiler} from "./TemporalCompiler";
 
 export interface TemporalFormatComponent<T> {
-	write(value: T): string;
+	write(value: T, context: any): string;
 }
 
 export class LiteralFormatComponent<T> implements TemporalFormatComponent<T> {
@@ -33,7 +33,7 @@ export class LiteralFormatComponent<T> implements TemporalFormatComponent<T> {
 	constructor(private literal: string) {
 	}
 
-	write(_value: T): string {
+	write(): string {
 		return this.literal;
 	}
 }
@@ -43,8 +43,8 @@ export class CompiledFormatComponent<T> implements TemporalFormatComponent<T> {
 	constructor(private compiler: TemporalCompiler<T>, private length: number) {
 	}
 
-	write(value: T): string {
-		return this.compiler.compile(value, this.length);
+	write(value: T, context: any): string {
+		return this.compiler.compile(value, this.length, context);
 	}
 }
 
@@ -53,7 +53,7 @@ export class TemporalFormatter<T> {
 	constructor(readonly components: TemporalFormatComponent<T>[]) {
 	}
 
-	format(value: T): string {
-		return this.components.reduce((acc, component) => acc + component.write(value), "");
+	format(value: T, context: any): string {
+		return this.components.reduce((acc, component) => acc + component.write(value, context), "");
 	}
 }

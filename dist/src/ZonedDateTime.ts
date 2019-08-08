@@ -136,8 +136,8 @@ class ZonedDateTime {
 		return ZonedDateTime.equal(this, other);
 	}
 
-	format(formatter: ZonedDateTimeFormatter) {
-		return formatter.format(this);
+	format(formatter: ZonedDateTimeFormatter, context?: any) {
+		return formatter.format(this, context);
 	}
 
 	private _computeDateTime() {

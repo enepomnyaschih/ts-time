@@ -141,8 +141,8 @@ class LocalDate {
 		return this.minus(Period.ofDays(this.dayOfWeek.value - 1));
 	}
 
-	format(formatter: DateFormatter) {
-		return formatter.format(this);
+	format(formatter: DateFormatter, context?: any) {
+		return formatter.format(this, context);
 	}
 
 	plus(period: Period) {

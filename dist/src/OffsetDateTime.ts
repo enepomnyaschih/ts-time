@@ -139,8 +139,8 @@ class OffsetDateTime {
 		return OffsetDateTime.isBefore(this, other);
 	}
 
-	format(formatter: OffsetDateTimeFormatter) {
-		return formatter.format(this);
+	format(formatter: OffsetDateTimeFormatter, context?: any) {
+		return formatter.format(this, context);
 	}
 
 	private _computeDateTime() {

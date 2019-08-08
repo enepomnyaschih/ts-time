@@ -49,8 +49,8 @@ abstract class AbstractDelegateCompiler<T> implements DateTimeCompiler {
 
 	abstract getDelegatedValue(value: LocalDateTime): T;
 
-	compile(value: LocalDateTime, length: number): string {
-		return this.delegated.compile(this.getDelegatedValue(value), length);
+	compile(value: LocalDateTime, length: number, context: any): string {
+		return this.delegated.compile(this.getDelegatedValue(value), length, context);
 	}
 }
 

@@ -48,3 +48,17 @@ export const MONTHS_PER_YEAR = MONTHS_PER_QUARTER * QUARTERS_PER_YEAR;
 
 export const DAYS_PER_NON_LEAP_YEAR = 365;
 export const DAYS_PER_LEAP_YEAR = 366;
+
+export const DEFAULT_TEMPORAL_CONTEXT: any = {
+	eraNames: ["Before Christ", "Anno Domini"],
+	eraShortNames: ["BC", "AD"],
+	eraAbbreviations: ["B", "A"],
+	monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+	monthShortNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+	monthAbbreviations: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+	dayOfWeekNames: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+	dayOfWeekShortNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+	dayOfWeekAbbreviations: ["M", "T", "W", "T", "F", "S", "S"],
+	quarterNames: ["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"],
+	quarterShortNames: ["Q1", "Q2", "Q3", "Q4"]
+};

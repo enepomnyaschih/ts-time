@@ -32,6 +32,7 @@ import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
 export interface OffsetDateTimeCompiler extends TemporalCompiler<OffsetDateTime> {
 }
 
+// TODO: Extract AbstractDelegateCompiler
 class DateTimeDelegateCompiler implements OffsetDateTimeCompiler {
 
 	constructor(private delegated: DateTimeCompiler) {
@@ -45,8 +46,8 @@ class DateTimeDelegateCompiler implements OffsetDateTimeCompiler {
 		return this.delegated.maxLength;
 	}
 
-	compile(value: OffsetDateTime, length: number): string {
-		return this.delegated.compile(value.dateTime, length);
+	compile(value: OffsetDateTime, length: number, context: any): string {
+		return this.delegated.compile(value.dateTime, length, context);
 	}
 }
 
