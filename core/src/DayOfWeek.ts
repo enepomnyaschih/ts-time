@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy} from "./_internal";
+import {compareByNumber} from "./_internal";
 
 class DayOfWeek {
 
@@ -31,10 +31,6 @@ class DayOfWeek {
 
 	compareTo(other: DayOfWeek) {
 		return DayOfWeek.compare(this, other);
-	}
-
-	equals(other: DayOfWeek) {
-		return DayOfWeek.equal(this, other);
 	}
 
 	isBefore(other: DayOfWeek) {
@@ -58,10 +54,6 @@ class DayOfWeek {
 
 	static compare(x: DayOfWeek, y: DayOfWeek) {
 		return compareByNumber(x, y, t => t.value);
-	}
-
-	static equal(x: DayOfWeek, y: DayOfWeek) {
-		return equalBy(x, y, t => t.value);
 	}
 
 	static isBefore(x: DayOfWeek, y: DayOfWeek) {
