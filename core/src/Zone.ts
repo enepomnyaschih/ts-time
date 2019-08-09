@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareBy, Dictionary, equalBy, pad, spread, toInt} from "./_internal";
+import {compareBy, Dictionary, pad, spread, toInt} from "./_internal";
 import {MINUTES_PER_HOUR, SECONDS_PER_HOUR, SECONDS_PER_MINUTE} from "./constants";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
@@ -36,10 +36,6 @@ export abstract class ZoneId {
 	abstract offsetAtInstant(instant: Instant): ZoneOffset;
 
 	abstract offsetAtLocalDateTime(localDateTime: LocalDateTime): ZoneOffset;
-
-	equals(other: ZoneId) {
-		return ZoneId.equal(this, other);
-	}
 
 	static of(id: string): ZoneId {
 		const totalSeconds = parseOffset(id);
@@ -75,16 +71,24 @@ export abstract class ZoneId {
 	static compareById(x: ZoneId, y: ZoneId) {
 		return compareBy(x, y, t => t.id);
 	}
-
-	static equal(x: ZoneId, y: ZoneId) {
-		return equalBy(x, y, t => t.id);
-	}
 }
 
 export class FixedOffsetZone extends ZoneId {
 
 	protected constructor(id: string, readonly totalSeconds: number) {
 		super(id);
+	}
+
+	get hours() {
+		return toInt(this.totalSeconds / SECONDS_PER_HOUR);
+	}
+
+	get minutes() {
+		return Math.floor(Math.abs(this.totalSeconds) / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR;
+	}
+
+	get seconds() {
+		return Math.abs(this.totalSeconds) % SECONDS_PER_MINUTE;
 	}
 
 	offsetAtInstant(_instant: Instant): ZoneOffset {
@@ -110,23 +114,11 @@ export class ZoneOffset extends FixedOffsetZone {
 		offsetCache[this.totalSeconds] = this;
 	}
 
-	get hours() {
-		return toInt(this.totalSeconds / SECONDS_PER_HOUR);
-	}
-
-	get minutes() {
-		return Math.floor(Math.abs(this.totalSeconds) / SECONDS_PER_MINUTE) % MINUTES_PER_HOUR;
-	}
-
-	get seconds() {
-		return Math.abs(this.totalSeconds) % SECONDS_PER_MINUTE;
-	}
-
-	offsetAtInstant(_instant: Instant): ZoneOffset {
+	offsetAtInstant(_instant?: Instant): ZoneOffset {
 		return this;
 	}
 
-	offsetAtLocalDateTime(_localDateTime: LocalDateTime): ZoneOffset {
+	offsetAtLocalDateTime(_localDateTime?: LocalDateTime): ZoneOffset {
 		return this;
 	}
 
@@ -245,17 +237,16 @@ function parseOffset(id: string): number {
 		return 0;
 	}
 	{
-		const matches = /^(-+)(\d{1,2,4,6})$/.exec(id);
-		if (matches) {
-			return (matches[1] === "+" ? 1 : -1)
+		if (/^[-+]\d+$/.test(id) && [2, 3, 5, 7].indexOf(id.length) !== -1) {
+			return (id.charAt(0) === "+" ? 1 : -1)
 				* ((+id.substr(1, 2) || 0) * 3600 + (+id.substr(3, 2) || 0) * 60 + (+id.substr(5, 2) || 0));
 		}
 	}
 	{
-		const matches = /^(-+)(\d\d):(\d\d)(?::(\d\d))$/.exec(id);
+		const matches = /^[-+](\d\d):(\d\d)(?::(\d\d))?$/.exec(id);
 		if (matches) {
-			return (matches[1] === "+" ? 1 : -1)
-				* ((+matches[2] || 0) * 3600 + (+matches[3] || 0) * 60 + (+matches[4] || 0));
+			return (id.charAt(0) === "+" ? 1 : -1)
+				* ((+matches[1] || 0) * 3600 + (+matches[2] || 0) * 60 + (+matches[3] || 0));
 		}
 	}
 	return null;
