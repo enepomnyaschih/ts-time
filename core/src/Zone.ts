@@ -122,6 +122,7 @@ export class ZoneOffset extends FixedOffsetZone {
 		return this;
 	}
 
+	// TODO: Rename to ofId, add of(hours, minutes, seconds).
 	static of(id: string): ZoneOffset {
 		return ZoneOffset.ofTotalSeconds(parseOffset(id));
 	}
@@ -134,7 +135,7 @@ export class ZoneOffset extends FixedOffsetZone {
 	}
 
 	static compare(x: ZoneOffset, y: ZoneOffset) {
-		return x.totalSeconds - y.totalSeconds;
+		return compareBy(x, y, t => t.totalSeconds);
 	}
 }
 
