@@ -160,7 +160,7 @@ class ZonedDateTime {
 	}
 
 	static equal(x: ZonedDateTime, y: ZonedDateTime) {
-		return Instant.equal(x.instant, y.instant) && ZoneId.equal(x.zone, y.zone);
+		return Instant.equal(x.instant, y.instant) && x.zone === y.zone;
 	}
 }
 

@@ -96,6 +96,8 @@ class FixedMonth extends Month {
 	}
 }
 
+export default Month;
+
 export const JANUARY: Month = new FixedMonth(1, 31);
 export const FEBRUARY: Month = new February();
 export const MARCH: Month = new FixedMonth(3, 31);
@@ -111,5 +113,3 @@ export const DECEMBER: Month = new FixedMonth(12, 31);
 
 export const MONTHS: Month[] =
 	[JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER];
-
-export default Month;

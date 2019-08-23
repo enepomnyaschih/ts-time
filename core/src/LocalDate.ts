@@ -259,6 +259,8 @@ class LocalDate {
 	}
 }
 
+export default LocalDate;
+
 function getWeekBasedYearStart(year: number) {
 	const firstDay = LocalDate.of(year, JANUARY, 1),
 		dayOfWeek = firstDay.dayOfWeek;
@@ -268,5 +270,3 @@ function getWeekBasedYearStart(year: number) {
 }
 
 export const EPOCH_DATE = LocalDate.of(1970, 1, 1);
-
-export default LocalDate;

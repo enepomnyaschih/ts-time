@@ -72,6 +72,8 @@ class DayOfWeekConstructor extends DayOfWeek {
 	}
 }
 
+export default DayOfWeek;
+
 export const MONDAY: DayOfWeek = new DayOfWeekConstructor(1);
 export const TUESDAY: DayOfWeek = new DayOfWeekConstructor(2);
 export const WEDNESDAY: DayOfWeek = new DayOfWeekConstructor(3);
@@ -81,5 +83,3 @@ export const SATURDAY: DayOfWeek = new DayOfWeekConstructor(6);
 export const SUNDAY: DayOfWeek = new DayOfWeekConstructor(7);
 
 export const DAYS_OF_WEEK: DayOfWeek[] = [MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY];
-
-export default DayOfWeek;

@@ -87,10 +87,10 @@ class MsField implements TimeField {
 	}
 }
 
+export default TimeField;
+
 export const HOUR_FIELD: TimeField = new HourField();
 export const HOUR12_FIELD: TimeField = new Hour12Field();
 export const MINUTE_FIELD: TimeField = new MinuteField();
 export const SECOND_FIELD: TimeField = new SecondField();
 export const MS_FIELD: TimeField = new MsField();
-
-export default TimeField;

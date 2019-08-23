@@ -132,6 +132,6 @@ class Instant {
 	}
 }
 
-export const EPOCH = Instant.ofEpochMs(0);
-
 export default Instant;
+
+export const EPOCH = Instant.ofEpochMs(0);

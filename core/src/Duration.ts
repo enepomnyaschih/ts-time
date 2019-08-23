@@ -62,6 +62,8 @@ class Duration {
 	}
 }
 
+export default Duration;
+
 export const NULL_DURATION = Duration.ofMs(0);
 export const MS_DURATION = Duration.ofMs(1);
 export const SECOND_DURATION = Duration.ofMs(MS_PER_SECOND);
@@ -69,5 +71,3 @@ export const MINUTE_DURATION = Duration.ofMs(MS_PER_MINUTE);
 export const HOUR_DURATION = Duration.ofMs(MS_PER_HOUR);
 export const DAY_DURATION = Duration.ofMs(MS_PER_DAY);
 export const WEEK_DURATION = Duration.ofMs(MS_PER_WEEK);
-
-export default Duration;

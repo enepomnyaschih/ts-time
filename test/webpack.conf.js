@@ -34,7 +34,7 @@ const supportedOptions = [
 ];
 
 const initOptions = () => {
-	const script = "webpack.js";
+	const script = "webpack.conf.js";
 	const options = cli.parseCliArguments(process.argv.slice(process.argv.indexOf(script) + 1), supportedOptions);
 	if (options.help) {
 		cli.showCliHelp("webpack --config " + script, supportedOptions);

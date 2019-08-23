@@ -162,7 +162,7 @@ class OffsetDateTime {
 	}
 
 	static equal(x: OffsetDateTime, y: OffsetDateTime) {
-		return Instant.equal(x.instant, y.instant) && ZoneOffset.equal(x.offset, y.offset);
+		return Instant.equal(x.instant, y.instant) && x.offset === y.offset;
 	}
 
 	static isAfter(x: OffsetDateTime, y: OffsetDateTime) {
