@@ -189,7 +189,7 @@ class LocalDate {
 		return null;
 	}
 
-	static of(year: number, month: number | Month, dayOfMonth: number) {
+	static of(year: number, month: number | Month = JANUARY, dayOfMonth: number = 1) {
 		const date = new Date(Date.UTC(year, Month.of(month).value - 1, dayOfMonth, 0, 0, 0, 0));
 		if (year >= 0 && year <= 99) {
 			// Work around a REALLY STUPID feature of Date.UTC to treat 00-99 years as 1900-1999

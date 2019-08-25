@@ -145,7 +145,7 @@ class OffsetDateTime {
 
 	private _computeDateTime() {
 		return LocalDateTime.fromNativeUtc(
-			new Date(this.instant.native.getTime() - this.offset.totalSeconds * MS_PER_SECOND));
+			new Date(this.instant.epochMs + this.offset.totalSeconds * MS_PER_SECOND));
 	}
 
 	static ofInstant(instant: Instant, offset: ZoneOffset) {
@@ -153,7 +153,7 @@ class OffsetDateTime {
 	}
 
 	static ofDateTime(localDateTime: LocalDateTime, offset: ZoneOffset) {
-		const instant = Instant.ofEpochMs(localDateTime.epochMs + offset.totalSeconds * MS_PER_SECOND);
+		const instant = Instant.ofEpochMs(localDateTime.epochMsUtc - offset.totalSeconds * MS_PER_SECOND);
 		return new OffsetDateTime(instant, offset);
 	}
 

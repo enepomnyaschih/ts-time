@@ -122,7 +122,7 @@ class LocalTime {
 		return `${pad(this.hour, 2)}:${pad(this.minute, 2)}:${pad(this.second, 2)}.${pad(this.ms, 3)}`;
 	}
 
-	static of(hour: number, minute: number, second: number, ms: number) {
+	static of(hour: number, minute: number = 0, second: number = 0, ms: number = 0) {
 		return LocalTime.ofTotalMs(hour * MS_PER_HOUR + minute * MS_PER_MINUTE + second * MS_PER_SECOND + ms);
 	}
 

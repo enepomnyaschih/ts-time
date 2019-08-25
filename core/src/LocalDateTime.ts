@@ -28,7 +28,7 @@ import Duration from "./Duration";
 import Era from "./Era";
 import LocalDate from "./LocalDate";
 import LocalTime, {MIDNIGHT} from "./LocalTime";
-import Month from "./Month";
+import Month, {JANUARY} from "./Month";
 import OffsetDateTime from "./OffsetDateTime";
 import Period from "./Period";
 import {ZoneId, ZoneOffset} from "./Zone";
@@ -46,10 +46,10 @@ class LocalDateTime {
 	}
 
 	get nativeUtc() {
-		return new Date(this.epochMs);
+		return new Date(this.epochMsUtc);
 	}
 
-	get epochMs() {
+	get epochMsUtc() {
 		return Date.UTC(
 			this.date.year, this.date.month.value - 1, this.date.dayOfMonth,
 			this.time.hour, this.time.minute, this.time.second, this.time.ms);
@@ -235,8 +235,8 @@ class LocalDateTime {
 		return new LocalDateTime(date, time);
 	}
 
-	static ofEpochMs(epochMs: number) {
-		return LocalDateTime.fromNativeUtc(new Date(epochMs));
+	static of7(year: number, month: Month | number = JANUARY, dayOfMonth: number = 1, hour: number = 0, minute: number = 0, second: number = 0, ms: number = 0) {
+		return new LocalDateTime(LocalDate.of(year, month, dayOfMonth), LocalTime.of(hour, minute, second, ms));
 	}
 
 	static fromNativeLocal(date: Date) {
@@ -255,11 +255,11 @@ class LocalDateTime {
 	}
 
 	static compare(x: LocalDateTime, y: LocalDateTime) {
-		return compareByNumber(x, y, t => t.epochMs);
+		return compareByNumber(x, y, t => t.epochMsUtc);
 	}
 
 	static equal(x: LocalDateTime, y: LocalDateTime) {
-		return equalBy(x, y, t => t.epochMs);
+		return equalBy(x, y, t => t.epochMsUtc);
 	}
 
 	static isAfter(x: LocalDateTime, y: LocalDateTime) {

@@ -74,7 +74,7 @@ class Instant {
 	}
 
 	toString() {
-		return `${this.native.getUTCFullYear()}-${pad(this.native.getUTCMonth(), 2)}-${pad(this.native.getUTCDate(), 2)}`
+		return `${this.native.getUTCFullYear()}-${pad(this.native.getUTCMonth() + 1, 2)}-${pad(this.native.getUTCDate(), 2)}`
 			+ `T${pad(this.native.getUTCHours(), 2)}:${pad(this.native.getUTCMinutes(), 2)}`
 			+ `:${pad(this.native.getUTCSeconds(), 2)}.${pad(this.native.getUTCMilliseconds(), 3)}Z`;
 	}

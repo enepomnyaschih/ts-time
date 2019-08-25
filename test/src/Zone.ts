@@ -1,3 +1,4 @@
+import {MARCH, NOVEMBER, OCTOBER} from "../../core/Month";
 import Instant from "../../core/src/Instant";
 import LocalDateTime from "../../core/src/LocalDateTime";
 import {UTC, ZoneId, ZoneOffset} from "../../core/src/Zone";
@@ -131,13 +132,16 @@ describe("ZoneId", () => {
 		expect(ZoneId.of("-03:25:45")).toBe(ZoneOffset.of("-03:25:45"));
 	});
 
-	it("should have id", () => {
-		expect(utcp3.id).toBe("UTC+3");
-		expect(utcm3.id).toBe("UTC-3");
-		expect(utp3.id).toBe("UT+3");
-		expect(utm3.id).toBe("UT-3");
-		expect(gmtp3.id).toBe("GMT+3");
-		expect(gmtm3.id).toBe("GMT-3");
+	it("should have normalized id if starts with UTC, UT or GMT", () => {
+		expect(utcp3.id).toBe("UTC+03:00");
+		expect(utcm3.id).toBe("UTC-03:00");
+		expect(utp3.id).toBe("UT+03:00");
+		expect(utm3.id).toBe("UT-03:00");
+		expect(gmtp3.id).toBe("GMT+03:00");
+		expect(gmtm3.id).toBe("GMT-03:00");
+	});
+
+	it("should have specified id if named", () => {
 		expect(omsk.id).toBe("Asia/Omsk");
 		expect(berlin.id).toBe("Europe/Berlin");
 		expect(newYork.id).toBe("America/New_York");
@@ -152,20 +156,32 @@ describe("ZoneId", () => {
 		expect(gmtm3.offsetAtInstant(winterInstant)).toBe(ZoneOffset.of("-3"));
 	});
 
-	it("should return non-DST offset by instant", () => {
+	it("should return winter offset by instant", () => {
 		expect(omsk.offsetAtInstant(winterInstant)).toBe(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtInstant(winterInstant)).toBe(ZoneOffset.of("+1"));
-		expect(newYork.offsetAtInstant(winterInstant)).toBe(ZoneOffset.of("-2"));
+		expect(newYork.offsetAtInstant(winterInstant)).toBe(ZoneOffset.of("-5"));
 	});
 
-	it("should return DST offset by instant", () => {
-		expect(omsk.offsetAtInstant(summerInstant)).toBe(ZoneOffset.of("+7"));
+	it("should return summer offset by instant", () => {
+		expect(omsk.offsetAtInstant(summerInstant)).toBe(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtInstant(summerInstant)).toBe(ZoneOffset.of("+2"));
-		expect(newYork.offsetAtInstant(summerInstant)).toBe(ZoneOffset.of("-1"));
+		expect(newYork.offsetAtInstant(summerInstant)).toBe(ZoneOffset.of("-4"));
 	});
 
 	it("should return edge offset by instant", () => {
-		// TODO: Test right before and after DST change
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 0, 59)))).toBe(ZoneOffset.of("+1"));
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 1, 0)))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 1, 1)))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 9, 27, 0, 59)))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 9, 27, 1, 0)))).toBe(ZoneOffset.of("+1"));
+		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 9, 27, 1, 1)))).toBe(ZoneOffset.of("+1"));
+
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 10, 6, 59)))).toBe(ZoneOffset.of("-5"));
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 10, 7, 0)))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 10, 7, 1)))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 10, 3, 5, 59)))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 10, 3, 6, 0)))).toBe(ZoneOffset.of("-5"));
+		expect(newYork.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 10, 3, 6, 1)))).toBe(ZoneOffset.of("-5"));
 	});
 
 	it("should return fixed offset by local date/time", () => {
@@ -177,19 +193,33 @@ describe("ZoneId", () => {
 		expect(gmtm3.offsetAtLocalDateTime(winterDateTime)).toBe(ZoneOffset.of("-3"));
 	});
 
-	it("should return non-DST offset by local date/time", () => {
+	it("should return winter offset by local date/time", () => {
 		expect(omsk.offsetAtLocalDateTime(winterDateTime)).toBe(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtLocalDateTime(winterDateTime)).toBe(ZoneOffset.of("+1"));
-		expect(newYork.offsetAtLocalDateTime(winterDateTime)).toBe(ZoneOffset.of("-2"));
+		expect(newYork.offsetAtLocalDateTime(winterDateTime)).toBe(ZoneOffset.of("-5"));
 	});
 
-	it("should return DST offset by local date/time", () => {
-		expect(omsk.offsetAtLocalDateTime(summerDateTime)).toBe(ZoneOffset.of("+7"));
+	it("should return summer offset by local date/time", () => {
+		expect(omsk.offsetAtLocalDateTime(summerDateTime)).toBe(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtLocalDateTime(summerDateTime)).toBe(ZoneOffset.of("+2"));
-		expect(newYork.offsetAtLocalDateTime(summerDateTime)).toBe(ZoneOffset.of("-1"));
+		expect(newYork.offsetAtLocalDateTime(summerDateTime)).toBe(ZoneOffset.of("-4"));
 	});
 
-	it("should prefer earlier instant by local date/time", () => {
-		// TODO: Test in an hour of DST change
+	it("should prefer earlier offset by local date/time", () => {
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 2, 0))).toBe(ZoneOffset.of("+1"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 2, 30))).toBe(ZoneOffset.of("+1")); // gap
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 3, 0))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 1, 59))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 2, 0))).toBe(ZoneOffset.of("+2")); // overlap starts
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 2, 59))).toBe(ZoneOffset.of("+2")); // overlap goes
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 3, 0))).toBe(ZoneOffset.of("+1")); // overlap finishes
+
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 2, 0))).toBe(ZoneOffset.of("-5"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 2, 30))).toBe(ZoneOffset.of("-5")); // gap
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 3, 0))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 0, 59))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 0))).toBe(ZoneOffset.of("-4")); // overlap starts
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 59))).toBe(ZoneOffset.of("-4")); // overlap goes
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 2, 0))).toBe(ZoneOffset.of("-5")); // overlap finishes
 	});
 });

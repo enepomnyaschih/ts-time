@@ -23,10 +23,11 @@ SOFTWARE.
 */
 
 import {compareBy, Dictionary, pad, spread, toInt} from "./_internal";
-import {MINUTES_PER_HOUR, SECONDS_PER_HOUR, SECONDS_PER_MINUTE} from "./constants";
+import {MINUTES_PER_HOUR, MS_PER_SECOND, SECONDS_PER_HOUR, SECONDS_PER_MINUTE} from "./constants";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
 import OffsetDateTime from "./OffsetDateTime";
+import {DAY_PERIOD} from "./Period";
 
 export abstract class ZoneId {
 
@@ -176,13 +177,25 @@ class CustomZone extends ZoneId {
 		const zonedTime = utcFromComponents(parts);
 		let instantTime = instant.native.getTime();
 		instantTime -= instantTime % 1000;
-		return ZoneOffset.ofTotalSeconds((zonedTime - instantTime) / 1000);
+		return ZoneOffset.ofTotalSeconds((zonedTime - instantTime) / MS_PER_SECOND);
 	}
 
 	offsetAtLocalDateTime(localDateTime: LocalDateTime): ZoneOffset {
-		const provisionalOffset = UTC.offsetAtLocalDateTime(localDateTime);
-		const instant = OffsetDateTime.ofDateTime(localDateTime, provisionalOffset).instant;
-		return ZoneOffset.ofTotalSeconds(this.offsetAtInstant(instant).totalSeconds);
+		// Note: The implementation assumes that there are no 2 transitions within 2 consequent days.
+		const beforeOffset = this.offsetAtInstant(
+			OffsetDateTime.ofDateTime(localDateTime.minus(DAY_PERIOD), UTC).instant);
+		const afterOffset = this.offsetAtInstant(
+			OffsetDateTime.ofDateTime(localDateTime.plus(DAY_PERIOD), UTC).instant);
+		if (beforeOffset === afterOffset) {
+			return beforeOffset;
+		}
+		if (this.offsetAtInstant(OffsetDateTime.ofDateTime(localDateTime, beforeOffset).instant) === beforeOffset) {
+			return beforeOffset;
+		}
+		if (this.offsetAtInstant(OffsetDateTime.ofDateTime(localDateTime, afterOffset).instant) === afterOffset) {
+			return afterOffset;
+		}
+		return beforeOffset;
 	}
 }
 

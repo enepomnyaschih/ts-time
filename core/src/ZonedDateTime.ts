@@ -151,7 +151,7 @@ class ZonedDateTime {
 
 	static ofDateTime(localDateTime: LocalDateTime, zone: ZoneId) {
 		const instant = Instant.ofEpochMs(
-			localDateTime.epochMs + zone.offsetAtLocalDateTime(localDateTime).totalSeconds);
+			localDateTime.epochMsUtc + zone.offsetAtLocalDateTime(localDateTime).totalSeconds);
 		return new ZonedDateTime(instant, zone);
 	}
 

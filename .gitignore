@@ -1,7 +1,6 @@
 $CACHE_FILE$
 *.iml
-/.idea/dictionaries/User.xml
-/.idea/workspace.xml
+/.idea
 node_modules
 /test/dist
 /test/src/all.js
