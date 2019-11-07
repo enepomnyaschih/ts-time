@@ -327,12 +327,25 @@ describe("LocalDate", () => {
 		expect(LocalDate.fromNativeLocal(new Date(2019, 6, 5))).toEqual(LocalDate.of(2019, JULY, 5));
 	});
 
+	it("should return null by native local null", () => {
+		expect(LocalDate.fromNativeLocal(null)).toBeNull(null);
+	});
+
 	it("should construct from native UTC", () => {
 		expect(LocalDate.fromNativeUtc(new Date(Date.UTC(2019, 6, 5)))).toEqual(LocalDate.of(2019, JULY, 5));
 	});
 
+	it("should return null by native UTC null", () => {
+		expect(LocalDate.fromNativeUtc(null)).toBeNull(null);
+	});
+
 	it("should construct from string", () => {
 		expect(LocalDate.parse("2019-07-05")).toEqual(LocalDate.of(2019, JULY, 5));
+		expect(LocalDate.parse("2019-7-5")).toEqual(LocalDate.of(2019, JULY, 5));
+	});
+
+	it("should throw an error by invalid string", () => {
+		expect(() => LocalDate.parse("abc")).toThrow(new Error("Invalid date format."));
 	});
 
 	it("should support two eras", () => {

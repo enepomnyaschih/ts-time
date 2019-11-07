@@ -47,7 +47,7 @@ class DayOfWeek {
 		}
 		const dayOfWeek = DAYS_OF_WEEK[value - 1];
 		if (!dayOfWeek) {
-			throw new Error("Invalid day of week value.")
+			throw new Error("Invalid day of week value.");
 		}
 		return dayOfWeek;
 	}

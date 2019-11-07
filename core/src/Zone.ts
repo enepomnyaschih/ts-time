@@ -38,7 +38,14 @@ export abstract class ZoneId {
 
 	abstract offsetAtLocalDateTime(localDateTime: LocalDateTime): ZoneOffset;
 
+	toString() {
+		return this.id;
+	}
+
 	static of(id: string): ZoneId {
+		if (id == null) {
+			return null;
+		}
 		const totalSeconds = parseOffset(id);
 		if (Number.isFinite(totalSeconds)) {
 			return ZoneOffset.ofTotalSeconds(totalSeconds);
@@ -125,25 +132,18 @@ export class ZoneOffset extends FixedOffsetZone {
 
 	// TODO: Rename to ofId, add of(hours, minutes, seconds).
 	static of(id: string): ZoneOffset {
-		return ZoneOffset.ofTotalSeconds(parseOffset(id));
+		return id != null ? ZoneOffset.ofTotalSeconds(parseOffset(id)) : null;
 	}
 
 	static ofTotalSeconds(totalSeconds: number): ZoneOffset {
 		if (!Number.isFinite(totalSeconds)) {
 			throw new Error("Invalid time zone offset.");
 		}
-		return offsetCache[totalSeconds] || new ZoneOffsetConstructor(totalSeconds);
+		return offsetCache[totalSeconds] || new ZoneOffset(totalSeconds);
 	}
 
 	static compare(x: ZoneOffset, y: ZoneOffset) {
 		return compareBy(x, y, t => t.totalSeconds);
-	}
-}
-
-class ZoneOffsetConstructor extends ZoneOffset {
-
-	constructor(totalSeconds: number) {
-		super(totalSeconds);
 	}
 }
 
@@ -171,11 +171,12 @@ class CustomZone extends ZoneId {
 	}
 
 	offsetAtInstant(instant: Instant): ZoneOffset {
+		const native = instant.native;
 		const parts: number[] = this.formatter.formatToParts
-			? partsOffset(this.formatter, instant.native)
-			: hackyOffset(this.formatter, instant.native);
+			? partsOffset(this.formatter, native)
+			: hackyOffset(this.formatter, native);
 		const zonedTime = utcFromComponents(parts);
-		let instantTime = instant.native.getTime();
+		let instantTime = native.getTime();
 		instantTime -= instantTime % 1000;
 		return ZoneOffset.ofTotalSeconds((zonedTime - instantTime) / MS_PER_SECOND);
 	}
@@ -285,4 +286,4 @@ function getCached(id: string, supplier: () => ZoneId): ZoneId {
 const offsetCache: Dictionary<ZoneOffset> = {}; // from totalSeconds
 const zoneCache: Dictionary<ZoneId> = {}; // from id
 
-export const UTC = ZoneOffset.of(null);
+export const UTC = ZoneOffset.of("Z");

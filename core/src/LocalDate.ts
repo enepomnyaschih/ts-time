@@ -217,11 +217,11 @@ class LocalDate {
 	}
 
 	static fromNativeLocal(date: Date) {
-		return LocalDate.of(date.getFullYear(), date.getMonth() + 1, date.getDate());
+		return date != null ? LocalDate.of(date.getFullYear(), date.getMonth() + 1, date.getDate()) : null;
 	}
 
 	static fromNativeUtc(date: Date) {
-		return new LocalDate(date);
+		return date != null ? new LocalDate(date) : null;
 	}
 
 	static parse(str: string) {

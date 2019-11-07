@@ -155,6 +155,16 @@ class ZonedDateTime {
 		return new ZonedDateTime(instant, zone);
 	}
 
+	static parse(str: string) {
+		const matches = /[Z+\- ]/i.exec(str);
+		if (!matches) {
+			throw new Error("Invalid zoned date/time format.");
+		}
+		return ZonedDateTime.ofDateTime(
+			LocalDateTime.parse(str.substr(0, matches.index)),
+			ZoneId.of(str.substr(matches[0] === " " ? matches.index + 1 : matches.index)));
+	}
+
 	static compare(x: ZonedDateTime, y: ZonedDateTime) {
 		return Instant.compare(x.instant, y.instant) || ZoneId.compareById(x.zone, y.zone);
 	}

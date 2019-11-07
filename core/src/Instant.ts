@@ -30,11 +30,11 @@ import ZonedDateTime from "./ZonedDateTime";
 
 class Instant {
 
-	private constructor(readonly native: Date) {
+	private constructor(readonly epochMs: number) {
 	}
 
-	get epochMs() {
-		return this.native.getTime();
+	get native() {
+		return new Date(this.epochMs);
 	}
 
 	atOffset(offset: ZoneOffset) {
@@ -74,45 +74,27 @@ class Instant {
 	}
 
 	toString() {
-		return `${this.native.getUTCFullYear()}-${pad(this.native.getUTCMonth() + 1, 2)}-${pad(this.native.getUTCDate(), 2)}`
-			+ `T${pad(this.native.getUTCHours(), 2)}:${pad(this.native.getUTCMinutes(), 2)}`
-			+ `:${pad(this.native.getUTCSeconds(), 2)}.${pad(this.native.getUTCMilliseconds(), 3)}Z`;
+		const native = this.native;
+		return `${native.getUTCFullYear()}-${pad(native.getUTCMonth() + 1, 2)}-${pad(native.getUTCDate(), 2)}`
+			+ `T${pad(native.getUTCHours(), 2)}:${pad(native.getUTCMinutes(), 2)}`
+			+ `:${pad(native.getUTCSeconds(), 2)}.${pad(native.getUTCMilliseconds(), 3)}Z`;
 	}
 
 	static now() {
-		return new Instant(new Date());
+		return new Instant(new Date().getTime());
 	}
 
 	static ofEpochMs(epochMs: number) {
-		return new Instant(new Date(epochMs));
+		return new Instant(epochMs);
 	}
 
 	static fromNative(native: Date) {
-		return new Instant(native);
+		return new Instant(native.getTime());
 	}
 
 	static parse(str: string) {
-		const matches = /^(\d+)-(\d+)-(\d+)T(\d+):(\d+):(\d+).(\d+)Z$/i.exec(str);
-		if (!matches) {
-			throw new Error("Invalid instant format.");
-		}
-		const year = +matches[0],
-			month = +matches[1],
-			day = +matches[2],
-			hour = +matches[3],
-			minute = +matches[4],
-			second = +matches[5],
-			ms = +matches[6];
-		if (isNaN(year) || isNaN(month) || isNaN(day) || isNaN(hour) || isNaN(minute) || isNaN(second) || isNaN(ms)) {
-			throw new Error("Invalid instant format.");
-		}
-		const date = new Date(Date.UTC(year, month, day, hour, minute, second, ms));
-		if (year !== date.getUTCFullYear() || month !== date.getUTCMonth() || day !== date.getUTCDate()
-			|| hour !== date.getUTCHours() || minute !== date.getUTCMinutes() || second !== date.getUTCSeconds()
-			|| ms !== date.getUTCMilliseconds()) {
-			throw new Error("Invalid instant format.");
-		}
-		return new Instant(date);
+		const dateTime = ZonedDateTime.parse(str);
+		return dateTime != null ? dateTime.instant : null;
 	}
 
 	static compare(x: Instant, y: Instant) {

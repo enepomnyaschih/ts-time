@@ -89,6 +89,20 @@ describe("ZoneOffset", () => {
 		expect(ZoneOffset.of("-03:25:45").totalSeconds).toBe(-12345);
 	});
 
+	it("should return null by null ID", () => {
+		expect(ZoneOffset.of(null)).toBeNull();
+	});
+
+	it("should throw error by invalid ID", () => {
+		expect(() => ZoneOffset.of("abc")).toThrow(new Error("Invalid time zone offset."));
+	});
+
+	it("should convert itself to string", () => {
+		expect(UTC.toString()).toBe("Z");
+		expect(p12345.toString()).toBe("+03:25:45");
+		expect(m12345.toString()).toBe("-03:25:45");
+	});
+
 	// TODO: Test compare
 });
 
@@ -221,5 +235,26 @@ describe("ZoneId", () => {
 		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 0))).toBe(ZoneOffset.of("-4")); // overlap starts
 		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 59))).toBe(ZoneOffset.of("-4")); // overlap goes
 		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 2, 0))).toBe(ZoneOffset.of("-5")); // overlap finishes
+	});
+
+	it("should return null by null ID", () => {
+		expect(ZoneId.of(null)).toBeNull();
+	});
+
+	it("should throw error by invalid ID", () => {
+		expect(() => ZoneId.of("abc")).toThrow(new Error("Invalid time zone ID."));
+	});
+
+	it("should convert itself to a string", () => {
+		expect(utcp3.toString()).toBe("UTC+03:00");
+		expect(utcm3.toString()).toBe("UTC-03:00");
+		expect(utp3.toString()).toBe("UT+03:00");
+		expect(utm3.toString()).toBe("UT-03:00");
+		expect(gmtp3.toString()).toBe("GMT+03:00");
+		expect(gmtm3.toString()).toBe("GMT-03:00");
+
+		expect(omsk.toString()).toBe("Asia/Omsk");
+		expect(berlin.toString()).toBe("Europe/Berlin");
+		expect(newYork.toString()).toBe("America/New_York");
 	});
 });

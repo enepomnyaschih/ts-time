@@ -143,6 +143,10 @@ class OffsetDateTime {
 		return OffsetDateTime.isBefore(this, other);
 	}
 
+	toString() {
+		return `${this.dateTime.toString()}${this.offset.toString()}`;
+	}
+
 	private _computeDateTime() {
 		return LocalDateTime.fromNativeUtc(
 			new Date(this.instant.epochMs + this.offset.totalSeconds * MS_PER_SECOND));
@@ -155,6 +159,16 @@ class OffsetDateTime {
 	static ofDateTime(localDateTime: LocalDateTime, offset: ZoneOffset) {
 		const instant = Instant.ofEpochMs(localDateTime.epochMsUtc - offset.totalSeconds * MS_PER_SECOND);
 		return new OffsetDateTime(instant, offset);
+	}
+
+	static parse(str: string) {
+		const matches = /[Z+\-]/i.exec(str);
+		if (!matches) {
+			throw new Error("Invalid offset date/time format.");
+		}
+		return OffsetDateTime.ofDateTime(
+			LocalDateTime.parse(str.substr(0, matches.index)),
+			ZoneOffset.of(str.substr(matches.index)));
 	}
 
 	static compare(x: OffsetDateTime, y: OffsetDateTime) {

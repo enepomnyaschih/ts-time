@@ -21,6 +21,11 @@ describe("DayOfWeek", () => {
 		expect(DayOfWeek.of(7)).toBe(SUNDAY);
 	});
 
+	it("should throw an error if value is out of range", () => {
+		expect(() => DayOfWeek.of(0)).toThrow(new Error("Invalid day of week value."));
+		expect(() => DayOfWeek.of(8)).toThrow(new Error("Invalid day of week value."));
+	});
+
 	it("should be returned by instance", () => {
 		expect(DayOfWeek.of(MONDAY)).toBe(MONDAY);
 		expect(DayOfWeek.of(TUESDAY)).toBe(TUESDAY);
@@ -29,6 +34,10 @@ describe("DayOfWeek", () => {
 		expect(DayOfWeek.of(FRIDAY)).toBe(FRIDAY);
 		expect(DayOfWeek.of(SATURDAY)).toBe(SATURDAY);
 		expect(DayOfWeek.of(SUNDAY)).toBe(SUNDAY);
+	});
+
+	it("should return null by null", () => {
+		expect(DayOfWeek.of(null)).toBeNull();
 	});
 
 	it("should compare itself", () => {

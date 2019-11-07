@@ -14,6 +14,10 @@ describe("Duration", () => {
 		expect(Duration.ofWeeks(12).ms).toBe(7257600000);
 	});
 
+	it("should return null by null", () => {
+		expect(Duration.of(null)).toBeNull();
+	});
+
 	it("should multiply itself", () => {
 		expect(Duration.ofSeconds(12).multiply(5).ms).toBe(60000);
 	});
