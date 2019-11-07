@@ -90,6 +90,8 @@ class LocalTime {
 		return LocalTime.ofTotalMs(this.totalMs - duration.ms);
 	}
 
+	// TODO: until(time: LocalTime): Duration
+
 	withHour(hour: number) {
 		return LocalTime.of(hour, this.minute, this.second, this.ms);
 	}
@@ -145,10 +147,10 @@ class LocalTime {
 		if (!matches) {
 			throw new Error("Invalid time format.");
 		}
-		const hour = +matches[0],
-			minute = +matches[1],
-			second = +matches[2] || 0,
-			ms = +matches[3] || 0;
+		const hour = +matches[1],
+			minute = +matches[2],
+			second = +matches[3] || 0,
+			ms = +matches[4] || 0;
 		if (isNaN(hour) || isNaN(minute) || isNaN(second) || isNaN(ms) || hour >= HOURS_PER_DAY
 			|| minute >= MINUTES_PER_HOUR || second >= SECONDS_PER_MINUTE || ms >= MS_PER_SECOND) {
 			throw new Error("Invalid time format.");

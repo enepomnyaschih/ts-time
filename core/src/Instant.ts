@@ -93,8 +93,11 @@ class Instant {
 	}
 
 	static parse(str: string) {
-		const dateTime = ZonedDateTime.parse(str);
-		return dateTime != null ? dateTime.instant : null;
+		try {
+			return ZonedDateTime.parse(str).instant;
+		} catch (e) {
+			throw new Error("Invalid instant format.");
+		}
 	}
 
 	static compare(x: Instant, y: Instant) {

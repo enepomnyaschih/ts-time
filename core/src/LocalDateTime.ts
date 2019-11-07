@@ -147,6 +147,7 @@ class LocalDateTime {
 		return OffsetDateTime.ofDateTime(this, offset);
 	}
 
+	// TODO: Split to plusDuration and plusPeriod
 	plus(duration: Duration | Period) {
 		return (duration instanceof Duration)
 			? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() + duration.ms))
@@ -158,6 +159,8 @@ class LocalDateTime {
 			? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() - duration.ms))
 			: LocalDateTime.of(this.date.minus(duration), this.time);
 	}
+
+	// TODO: until(date: LocalDateTime): DateTimePeriod
 
 	withYear(year: number) {
 		return new LocalDateTime(this.date.withYear(year), this.time);

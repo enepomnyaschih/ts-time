@@ -148,6 +148,8 @@ class LocalDate {
 		return period.addTo(this, -1);
 	}
 
+	// TODO: until(date: LocalDate): Period
+
 	withYear(year: number) {
 		return LocalDate.of(year, this.month, this.dayOfMonth)._normalizeMonth(this);
 	}

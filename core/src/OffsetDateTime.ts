@@ -162,13 +162,17 @@ class OffsetDateTime {
 	}
 
 	static parse(str: string) {
-		const matches = /[Z+\-]/i.exec(str);
+		const t = str.indexOf("T");
+		if (t === -1) {
+			throw new Error("Invalid offset date/time format.");
+		}
+		const matches = /[Z+\-]/i.exec(str.substr(t));
 		if (!matches) {
 			throw new Error("Invalid offset date/time format.");
 		}
 		return OffsetDateTime.ofDateTime(
-			LocalDateTime.parse(str.substr(0, matches.index)),
-			ZoneOffset.of(str.substr(matches.index)));
+			LocalDateTime.parse(str.substr(0, t + matches.index)),
+			ZoneOffset.of(str.substr(t + matches.index)));
 	}
 
 	static compare(x: OffsetDateTime, y: OffsetDateTime) {

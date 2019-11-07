@@ -30,12 +30,14 @@ import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
 import LocalTime from "./LocalTime";
 import Month from "./Month";
+import OffsetDateTime from "./OffsetDateTime";
 import {ZoneId, ZoneOffset} from "./Zone";
 
 class ZonedDateTime {
 
 	private _dateTime: LocalDateTime;
 	private _offset: ZoneOffset;
+	private _offsetDateTime: OffsetDateTime;
 
 	private constructor(readonly instant: Instant, readonly zone: ZoneId) {
 	}
@@ -132,6 +134,10 @@ class ZonedDateTime {
 		return this._offset = this._offset || this.zone.offsetAtInstant(this.instant);
 	}
 
+	get offsetDateTime() {
+		return this._offsetDateTime = this._offsetDateTime || OffsetDateTime.ofDateTime(this.dateTime, this.offset);
+	}
+
 	compareTo(other: ZonedDateTime) {
 		return ZonedDateTime.compare(this, other);
 	}
@@ -140,9 +146,13 @@ class ZonedDateTime {
 		return ZonedDateTime.equal(this, other);
 	}
 
+	toString() {
+		return `${this.offsetDateTime.toString()}${this.zone !== this.offset ? `[${this.zone.id}]` : ""}`;
+	}
+
 	private _computeDateTime() {
 		return LocalDateTime.fromNativeUtc(
-			new Date(this.instant.native.getTime() - this.offset.totalSeconds * MS_PER_SECOND));
+			new Date(this.instant.native.getTime() + this.offset.totalSeconds * MS_PER_SECOND));
 	}
 
 	static ofInstant(instant: Instant, zone: ZoneId) {
@@ -151,18 +161,19 @@ class ZonedDateTime {
 
 	static ofDateTime(localDateTime: LocalDateTime, zone: ZoneId) {
 		const instant = Instant.ofEpochMs(
-			localDateTime.epochMsUtc + zone.offsetAtLocalDateTime(localDateTime).totalSeconds);
+			localDateTime.epochMsUtc - zone.offsetAtLocalDateTime(localDateTime).totalSeconds * MS_PER_SECOND);
 		return new ZonedDateTime(instant, zone);
 	}
 
 	static parse(str: string) {
-		const matches = /[Z+\- ]/i.exec(str);
-		if (!matches) {
-			throw new Error("Invalid zoned date/time format.");
+		const t = str.indexOf("["),
+			offsetDateTime = OffsetDateTime.parse(t !== -1 ? str.substr(0, t) : str),
+			zoneId = t !== -1 ? ZoneId.of(str.substr(t + 1, str.length - t - 2)) : offsetDateTime.offset,
+			zonedDateTime = ZonedDateTime.ofDateTime(offsetDateTime.dateTime, zoneId);
+		if (zonedDateTime.offset !== offsetDateTime.offset) {
+			throw new Error("The specified offset doesn't match zone ID.");
 		}
-		return ZonedDateTime.ofDateTime(
-			LocalDateTime.parse(str.substr(0, matches.index)),
-			ZoneId.of(str.substr(matches[0] === " " ? matches.index + 1 : matches.index)));
+		return zonedDateTime;
 	}
 
 	static compare(x: ZonedDateTime, y: ZonedDateTime) {

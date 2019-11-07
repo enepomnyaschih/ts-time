@@ -29,6 +29,14 @@ class Duration {
 	private constructor(readonly ms: number) {
 	}
 
+	plus(value: number | Duration): Duration {
+		return new Duration(this.ms + Duration.of(value).ms);
+	}
+
+	minus(value: number | Duration): Duration {
+		return new Duration(this.ms - Duration.of(value).ms);
+	}
+
 	multiply(multiplier: number): Duration {
 		return Duration.ofMs(this.ms * multiplier);
 	}
@@ -59,6 +67,10 @@ class Duration {
 
 	static ofWeeks(weeks: number) {
 		return new Duration(weeks * MS_PER_WEEK);
+	}
+
+	static ofComponents(days: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0) {
+		return new Duration(days * MS_PER_DAY + hours * MS_PER_HOUR + minutes * MS_PER_MINUTE + seconds * MS_PER_SECOND + ms);
 	}
 }
 
