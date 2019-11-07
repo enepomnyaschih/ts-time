@@ -179,5 +179,6 @@ export default LocalTime;
 
 export const MIN_TIME = LocalTime.ofTotalMs(0);
 export const MAX_TIME = LocalTime.ofTotalMs(MS_PER_DAY - 1);
+export const MAX_TIME12 = LocalTime.ofTotalMs(MS_PER_DAY / 2 - 1);
 export const MIDNIGHT = MIN_TIME;
 export const NOON = LocalTime.ofTotalMs(MS_PER_DAY / 2);
