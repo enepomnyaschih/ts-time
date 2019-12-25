@@ -246,7 +246,7 @@ class LocalDateTime {
 		return new LocalDateTime(date, time);
 	}
 
-	static of7(year: number, month: Month | number = JANUARY, dayOfMonth: number = 1, hour: number = 0, minute: number = 0, second: number = 0, ms: number = 0) {
+	static ofComponents(year: number, month: Month | number = JANUARY, dayOfMonth: number = 1, hour: number = 0, minute: number = 0, second: number = 0, ms: number = 0) {
 		return new LocalDateTime(LocalDate.of(year, month, dayOfMonth), LocalTime.of(hour, minute, second, ms));
 	}
 

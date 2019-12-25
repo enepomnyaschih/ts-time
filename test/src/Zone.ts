@@ -226,21 +226,21 @@ describe("ZoneId", () => {
 	});
 
 	it("should prefer earlier offset by local date/time", () => {
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 2, 0))).toBe(ZoneOffset.of("+1"));
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 2, 30))).toBe(ZoneOffset.of("+1")); // gap
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 31, 3, 0))).toBe(ZoneOffset.of("+2"));
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 1, 59))).toBe(ZoneOffset.of("+2"));
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 2, 0))).toBe(ZoneOffset.of("+2")); // overlap starts
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 2, 59))).toBe(ZoneOffset.of("+2")); // overlap goes
-		expect(berlin.offsetAtLocalDateTime(LocalDateTime.of7(2019, OCTOBER, 27, 3, 0))).toBe(ZoneOffset.of("+1")); // overlap finishes
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 2, 0))).toBe(ZoneOffset.of("+1"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 2, 30))).toBe(ZoneOffset.of("+1")); // gap
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 3, 0))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 1, 59))).toBe(ZoneOffset.of("+2"));
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 2, 0))).toBe(ZoneOffset.of("+2")); // overlap starts
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 2, 59))).toBe(ZoneOffset.of("+2")); // overlap goes
+		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 3, 0))).toBe(ZoneOffset.of("+1")); // overlap finishes
 
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 2, 0))).toBe(ZoneOffset.of("-5"));
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 2, 30))).toBe(ZoneOffset.of("-5")); // gap
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, MARCH, 10, 3, 0))).toBe(ZoneOffset.of("-4"));
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 0, 59))).toBe(ZoneOffset.of("-4"));
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 0))).toBe(ZoneOffset.of("-4")); // overlap starts
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 1, 59))).toBe(ZoneOffset.of("-4")); // overlap goes
-		expect(newYork.offsetAtLocalDateTime(LocalDateTime.of7(2019, NOVEMBER, 3, 2, 0))).toBe(ZoneOffset.of("-5")); // overlap finishes
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 10, 2, 0))).toBe(ZoneOffset.of("-5"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 10, 2, 30))).toBe(ZoneOffset.of("-5")); // gap
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 10, 3, 0))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, NOVEMBER, 3, 0, 59))).toBe(ZoneOffset.of("-4"));
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, NOVEMBER, 3, 1, 0))).toBe(ZoneOffset.of("-4")); // overlap starts
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, NOVEMBER, 3, 1, 59))).toBe(ZoneOffset.of("-4")); // overlap goes
+		expect(newYork.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, NOVEMBER, 3, 2, 0))).toBe(ZoneOffset.of("-5")); // overlap finishes
 	});
 
 	it("should return null by null ID", () => {
