@@ -22,7 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy} from "./_internal";
+import {compareByNumber, equalBy, utc} from "./_internal";
+import {MS_PER_DAY} from "./constants";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
 import Era from "./Era";
@@ -50,9 +51,9 @@ class LocalDateTime {
 	}
 
 	get epochMsUtc() {
-		return Date.UTC(
+		return utc(
 			this.date.year, this.date.month.value - 1, this.date.dayOfMonth,
-			this.time.hour, this.time.minute, this.time.second, this.time.ms);
+			this.time.hour, this.time.minute, this.time.second, this.time.ms).getTime();
 	}
 
 	get era(): Era {
@@ -103,6 +104,10 @@ class LocalDateTime {
 		return this.date.quarterOfYear;
 	}
 
+	get isLeapYear() {
+		return this.date.isLeapYear;
+	}
+
 	get lengthOfYear() {
 		return this.date.lengthOfYear;
 	}
@@ -147,17 +152,20 @@ class LocalDateTime {
 		return OffsetDateTime.ofDateTime(this, offset);
 	}
 
-	// TODO: Split to plusDuration and plusPeriod
-	plus(duration: Duration | Period) {
-		return (duration instanceof Duration)
-			? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() + duration.ms))
-			: LocalDateTime.of(this.date.plus(duration), this.time);
+	plusDuration(duration: Duration) {
+		return LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() + duration.ms));
 	}
 
-	minus(duration: Duration | Period) {
-		return (duration instanceof Duration)
-			? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() - duration.ms))
-			: LocalDateTime.of(this.date.minus(duration), this.time);
+	plusPeriod(period: Period) {
+		return period.addToDateTime(this, 1);
+	}
+
+	minusDuration(duration: Duration) {
+		return LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() - duration.ms));
+	}
+
+	minusPeriod(period: Period) {
+		return period.addToDateTime(this, -1);
 	}
 
 	// TODO: until(date: LocalDateTime): DateTimePeriod
@@ -198,35 +206,35 @@ class LocalDateTime {
 		return new LocalDateTime(this.date, this.time.withMs(ms));
 	}
 
-	truncateToYear() {
+	get truncateToYear() {
 		return new LocalDateTime(this.date.truncateToYear, MIDNIGHT);
 	}
 
-	truncateToWeekBasedYear() {
+	get truncateToWeekBasedYear() {
 		return new LocalDateTime(this.date.truncateToWeekBasedYear, MIDNIGHT);
 	}
 
-	truncateToMonth() {
+	get truncateToMonth() {
 		return new LocalDateTime(this.date.truncateToMonth, MIDNIGHT);
 	}
 
-	truncateToWeek() {
+	get truncateToWeek() {
 		return new LocalDateTime(this.date.truncateToWeek, MIDNIGHT);
 	}
 
-	truncateToDay() {
+	get truncateToDay() {
 		return new LocalDateTime(this.date, MIDNIGHT);
 	}
 
-	truncateToHour() {
+	get truncateToHour() {
 		return new LocalDateTime(this.date, this.time.truncateToHour());
 	}
 
-	truncateToMinute() {
+	get truncateToMinute() {
 		return new LocalDateTime(this.date, this.time.truncateToMinute());
 	}
 
-	truncateToSecond() {
+	get truncateToSecond() {
 		return new LocalDateTime(this.date, this.time.truncateToSecond());
 	}
 
@@ -242,12 +250,18 @@ class LocalDateTime {
 		return new LocalDateTime(LocalDate.of(year, month, dayOfMonth), LocalTime.of(hour, minute, second, ms));
 	}
 
+	static ofEpochMsUtc(ms: number) {
+		return new LocalDateTime(
+			LocalDate.ofEpochDay(Math.floor(ms / MS_PER_DAY)),
+			LocalTime.ofTotalMs(ms % MS_PER_DAY));
+	}
+
 	static fromNativeLocal(date: Date) {
-		return LocalDateTime.of(LocalDate.fromNativeLocal(date), LocalTime.fromNativeLocal(date));
+		return date != null ? LocalDateTime.of(LocalDate.fromNativeLocal(date), LocalTime.fromNativeLocal(date)) : null;
 	}
 
 	static fromNativeUtc(date: Date) {
-		return LocalDateTime.of(LocalDate.fromNativeUtc(date), LocalTime.fromNativeUtc(date));
+		return date != null ? LocalDateTime.of(LocalDate.fromNativeUtc(date), LocalTime.fromNativeUtc(date)) : null;
 	}
 
 	static parse(str: string) {

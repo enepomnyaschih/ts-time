@@ -24,13 +24,18 @@ SOFTWARE.
 
 import {DAYS_PER_WEEK, MONTHS_PER_QUARTER, MONTHS_PER_YEAR, MS_PER_DAY} from "./constants";
 import LocalDate from "./LocalDate";
+import LocalDateTime from "./LocalDateTime";
 import Month from "./Month";
 
 abstract class Period {
 
-	abstract addTo(date: LocalDate, amount: number): LocalDate;
+	abstract addToDate(date: LocalDate, amount: number): LocalDate;
 
 	abstract between(start: LocalDate, end: LocalDate): number;
+
+	addToDateTime(dateTime: LocalDateTime, amount: number): LocalDateTime {
+		return LocalDateTime.of(this.addToDate(dateTime.date, amount), dateTime.time);
+	}
 
 	multiply(multiplier: number): Period {
 		return (multiplier === 0) ? NULL_PERIOD : (multiplier == 1) ? this : new MultipliedPeriod(this, multiplier);
@@ -59,8 +64,12 @@ abstract class Period {
 
 class NullPeriod extends Period {
 
-	addTo(date: LocalDate, _amount: number): LocalDate {
+	addToDate(date: LocalDate, _amount: number): LocalDate {
 		return date;
+	}
+
+	addToDateTime(dateTime: LocalDateTime, _amount: number): LocalDateTime {
+		return dateTime;
 	}
 
 	between(_start: LocalDate, _end: LocalDate): number {
@@ -74,7 +83,7 @@ class NullPeriod extends Period {
 
 class DayPeriod extends Period {
 
-	addTo(date: LocalDate, amount: number): LocalDate {
+	addToDate(date: LocalDate, amount: number): LocalDate {
 		return LocalDate.of(date.year, date.month, date.dayOfMonth + amount);
 	}
 
@@ -85,7 +94,7 @@ class DayPeriod extends Period {
 
 class MonthPeriod extends Period {
 
-	addTo(date: LocalDate, amount: number): LocalDate {
+	addToDate(date: LocalDate, amount: number): LocalDate {
 		const value = date.month.value + amount - 1, // month values are 1-based, but we need a 0-based value
 			yearShift = Math.floor(value / MONTHS_PER_YEAR),
 			year = date.year + yearShift,
@@ -95,19 +104,19 @@ class MonthPeriod extends Period {
 
 	between(start: LocalDate, end: LocalDate): number {
 		const provisionalResult = 12 * (end.year - start.year) + end.month.value - start.month.value;
-		return provisionalResult - (this.addTo(start, provisionalResult).isAfter(end) ? 1 : 0);
+		return provisionalResult - (this.addToDate(start, provisionalResult).isAfter(end) ? 1 : 0);
 	}
 }
 
 class YearPeriod extends Period {
 
-	addTo(date: LocalDate, amount: number): LocalDate {
+	addToDate(date: LocalDate, amount: number): LocalDate {
 		return LocalDate.of(date.year + amount, date.month, date.dayOfMonth)._normalizeMonth(date);
 	}
 
 	between(start: LocalDate, end: LocalDate): number {
 		const provisionalResult = end.year - start.year;
-		return provisionalResult - (this.addTo(start, provisionalResult).isAfter(end) ? 1 : 0);
+		return provisionalResult - (this.addToDate(start, provisionalResult).isAfter(end) ? 1 : 0);
 	}
 }
 
@@ -117,8 +126,8 @@ class MultipliedPeriod extends Period {
 		super();
 	}
 
-	addTo(date: LocalDate, amount: number): LocalDate {
-		return this.nested.addTo(date, amount * this.multiplier);
+	addToDate(date: LocalDate, amount: number): LocalDate {
+		return this.nested.addToDate(date, amount * this.multiplier);
 	}
 
 	between(start: LocalDate, end: LocalDate): number {

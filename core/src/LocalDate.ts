@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, pad} from "./_internal";
+import {compareByNumber, equalBy, pad, utc} from "./_internal";
 import {DAYS_PER_LEAP_YEAR, DAYS_PER_NON_LEAP_YEAR} from "./constants";
 import DayOfWeek, {THURSDAY} from "./DayOfWeek";
 import Era, {AD, BC} from "./Era";
@@ -141,11 +141,11 @@ class LocalDate {
 	}
 
 	plus(period: Period) {
-		return period.addTo(this, 1);
+		return period.addToDate(this, 1);
 	}
 
 	minus(period: Period) {
-		return period.addTo(this, -1);
+		return period.addToDate(this, -1);
 	}
 
 	// TODO: until(date: LocalDate): Period
@@ -192,12 +192,7 @@ class LocalDate {
 	}
 
 	static of(year: number, month: number | Month = JANUARY, dayOfMonth: number = 1) {
-		const date = new Date(Date.UTC(year, Month.of(month).value - 1, dayOfMonth, 0, 0, 0, 0));
-		if (year >= 0 && year <= 99) {
-			// Work around a REALLY STUPID feature of Date.UTC to treat 00-99 years as 1900-1999
-			date.setUTCFullYear(year);
-		}
-		return new LocalDate(date);
+		return new LocalDate(utc(year, Month.of(month).value - 1, dayOfMonth, 0, 0, 0, 0));
 	}
 
 	static ofEpochDay(epochDay: number) {

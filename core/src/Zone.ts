@@ -184,9 +184,9 @@ class CustomZone extends ZoneId {
 	offsetAtLocalDateTime(localDateTime: LocalDateTime): ZoneOffset {
 		// Note: The implementation assumes that there are no 2 transitions within 2 consequent days.
 		const beforeOffset = this.offsetAtInstant(
-			OffsetDateTime.ofDateTime(localDateTime.minus(DAY_PERIOD), UTC).instant);
+			OffsetDateTime.ofDateTime(localDateTime.minusPeriod(DAY_PERIOD), UTC).instant);
 		const afterOffset = this.offsetAtInstant(
-			OffsetDateTime.ofDateTime(localDateTime.plus(DAY_PERIOD), UTC).instant);
+			OffsetDateTime.ofDateTime(localDateTime.plusPeriod(DAY_PERIOD), UTC).instant);
 		if (beforeOffset === afterOffset) {
 			return beforeOffset;
 		}
