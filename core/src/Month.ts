@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy} from "./_internal";
+import {compareByNumber} from "./_internal";
 
 abstract class Month {
 
@@ -32,10 +32,6 @@ abstract class Month {
 
 	compareTo(other: Month) {
 		return Month.compare(this, other);
-	}
-
-	equals(other: Month) {
-		return Month.equal(this, other);
 	}
 
 	isBefore(other: Month) {
@@ -59,10 +55,6 @@ abstract class Month {
 
 	static compare(x: Month, y: Month) {
 		return compareByNumber(x, y, t => t.value);
-	}
-
-	static equal(x: Month, y: Month) {
-		return equalBy(x, y, t => t.value);
 	}
 
 	static isBefore(x: Month, y: Month) {
