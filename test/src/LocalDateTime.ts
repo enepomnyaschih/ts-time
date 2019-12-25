@@ -55,6 +55,7 @@ import Period, {
 	WEEK_PERIOD,
 	YEAR_PERIOD
 } from "../../core/src/Period";
+import {UTC, ZoneId, ZoneOffset} from "../../core/src/Zone";
 
 describe("LocalDateTime", () => {
 	const dateTime = LocalDateTime.of7(2019, JULY, 5, 18, 30, 15, 225);
@@ -753,5 +754,16 @@ describe("LocalDateTime", () => {
 	it("should convert itself to string", () => {
 		expect(dateTime.toString()).toBe("2019-07-05T18:30:15.225");
 		expect(LocalDateTime.of7(2019, JULY, 5, 8, 3, 5, 16).toString()).toBe("2019-07-05T08:03:05.016");
+	});
+
+	it("should create proper offset date/time (atOffset)", () => {
+		expect(dateTime.atOffset(UTC).toString()).toBe("2019-07-05T18:30:15.225Z");
+		expect(dateTime.atOffset(ZoneOffset.ofComponents(3)).toString()).toBe("2019-07-05T18:30:15.225+03:00");
+		expect(dateTime.atOffset(ZoneOffset.ofComponents(-3)).toString()).toBe("2019-07-05T18:30:15.225-03:00");
+	});
+
+	it("should create proper zoned date/time (atZone)", () => {
+		expect(dateTime.atZone(UTC).toString()).toBe("2019-07-05T18:30:15.225Z");
+		expect(dateTime.atZone(ZoneId.of("Europe/Berlin")).toString()).toBe("2019-07-05T18:30:15.225+02:00[Europe/Berlin]");
 	});
 });

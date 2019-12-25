@@ -135,6 +135,10 @@ export class ZoneOffset extends FixedOffsetZone {
 		return id != null ? ZoneOffset.ofTotalSeconds(parseOffset(id)) : null;
 	}
 
+	static ofComponents(hours: number, minutes: number = 0, seconds: number = 0): ZoneOffset {
+		return ZoneOffset.ofTotalSeconds(SECONDS_PER_HOUR * hours + SECONDS_PER_MINUTE * minutes + seconds);
+	}
+
 	static ofTotalSeconds(totalSeconds: number): ZoneOffset {
 		if (!Number.isFinite(totalSeconds)) {
 			throw new Error("Invalid time zone offset.");

@@ -66,6 +66,12 @@ describe("ZoneOffset", () => {
 		expect(ZoneOffset.ofTotalSeconds(-12345)).toBe(m12345);
 	});
 
+	it("should return cached instances by components", () => {
+		expect(ZoneOffset.ofComponents(0)).toBe(UTC);
+		expect(ZoneOffset.ofComponents(3, 25, 45)).toBe(p12345);
+		expect(ZoneOffset.ofComponents(-3, -25, -45)).toBe(m12345);
+	});
+
 	it("should get parsed from string", () => {
 		expect(ZoneOffset.of("+3").totalSeconds).toBe(10800);
 		expect(ZoneOffset.of("+03").totalSeconds).toBe(10800);
