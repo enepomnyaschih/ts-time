@@ -24,6 +24,13 @@ SOFTWARE.
 
 import {MS_PER_DAY} from "../../core/src/constants";
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../core/src/DayOfWeek";
+import Duration, {
+	DAY_DURATION,
+	HOUR_DURATION,
+	MINUTE_DURATION,
+	MS_DURATION,
+	SECOND_DURATION
+} from "../../core/src/Duration";
 import {AD, BC} from "../../core/src/Era";
 import LocalDateTime from "../../core/src/LocalDateTime";
 import {
@@ -124,6 +131,26 @@ describe("LocalDateTime", () => {
 		expect(LocalDateTime.of7(2001, JANUARY, 1).lengthOfYear).toBe(365);
 		expect(LocalDateTime.of7(-300, JANUARY, 1).lengthOfYear).toBe(365);
 		expect(LocalDateTime.of7(-400, JANUARY, 1).lengthOfYear).toBe(366);
+	});
+
+	it("should return proper hour", () => {
+		expect(dateTime.hour).toBe(18);
+	});
+
+	it("should return proper minute", () => {
+		expect(dateTime.minute).toBe(30);
+	});
+
+	it("should return proper second", () => {
+		expect(dateTime.second).toBe(15);
+	});
+
+	it("should return proper millisecond", () => {
+		expect(dateTime.ms).toBe(225);
+	});
+
+	it("should return proper total millisecond", () => {
+		expect(dateTime.epochMsUtc).toBe(Date.UTC(2019, 6, 5, 18, 30, 15, 225));
 	});
 
 	it("should return proper native UTC date", () => {
@@ -274,6 +301,10 @@ describe("LocalDateTime", () => {
 			.toEqual(LocalDateTime.of7(2019, JULY, 5).nativeUtc);
 		expect(LocalDateTime.parse("2019-7-5").nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, JULY, 5).nativeUtc);
+		expect(LocalDateTime.parse("2019-07-05T18:30").nativeUtc)
+			.toEqual(LocalDateTime.of7(2019, JULY, 5, 18, 30).nativeUtc);
+		expect(LocalDateTime.parse("2019-07-05T18:30:15").nativeUtc)
+			.toEqual(LocalDateTime.of7(2019, JULY, 5, 18, 30, 15).nativeUtc);
 		expect(LocalDateTime.parse("2019-07-05T18:30:15.225").nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, JULY, 5, 18, 30, 15, 225).nativeUtc);
 		expect(LocalDateTime.parse("2019-7-5T8:3:5.16").nativeUtc)
@@ -550,6 +581,20 @@ describe("LocalDateTime", () => {
 			.toEqual(LocalDateTime.of7(2020, FEBRUARY, 29, 18, 30, 15, 225).nativeUtc);
 	});
 
+	it("should add duration", () => {
+		expect(dateTime.plusDuration(MS_DURATION).toString()).toBe("2019-07-05T18:30:15.226");
+		expect(dateTime.plusDuration(SECOND_DURATION).toString()).toBe("2019-07-05T18:30:16.225");
+		expect(dateTime.plusDuration(MINUTE_DURATION).toString()).toBe("2019-07-05T18:31:15.225");
+		expect(dateTime.plusDuration(HOUR_DURATION).toString()).toBe("2019-07-05T19:30:15.225");
+		expect(dateTime.plusDuration(DAY_DURATION).toString()).toBe("2019-07-06T18:30:15.225");
+		expect(dateTime.plusDuration(Duration.ofDays(5)).toString()).toBe("2019-07-10T18:30:15.225");
+		expect(dateTime.plusDuration(Duration.ofDays(31)).toString()).toBe("2019-08-05T18:30:15.225");
+		expect(dateTime.plusDuration(Duration.ofDays(366)).toString()).toBe("2020-07-05T18:30:15.225");
+		expect(dateTime.plusDuration(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("2019-07-06T20:33:19.230");
+		expect(dateTime.plusDuration(Duration.of(-1)).toString()).toBe("2019-07-05T18:30:15.224");
+		expect(dateTime.plusDuration(Duration.ofDays(-365)).toString()).toBe("2018-07-05T18:30:15.225");
+	});
+
 	it("should subtract a period", () => {
 		expect(dateTime.minusPeriod(YEAR_PERIOD).nativeUtc)
 			.toEqual(LocalDateTime.of7(2018, JULY, 5, 18, 30, 15, 225).nativeUtc);
@@ -593,13 +638,27 @@ describe("LocalDateTime", () => {
 			.toEqual(LocalDateTime.of7(2019, AUGUST, 9, 18, 30, 15, 225).nativeUtc);
 	});
 
-	it("should adjust the added month properly", () => {
+	it("should adjust the subtracted month properly", () => {
 		expect(LocalDateTime.of7(2019, MAY, 31, 18, 30, 15, 225).minusPeriod(MONTH_PERIOD).nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, APRIL, 30, 18, 30, 15, 225).nativeUtc);
 		expect(LocalDateTime.of7(2019, MARCH, 31, 18, 30, 15, 225).minusPeriod(MONTH_PERIOD).nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, FEBRUARY, 28, 18, 30, 15, 225).nativeUtc);
 		expect(LocalDateTime.of7(2020, MARCH, 31, 18, 30, 15, 225).minusPeriod(MONTH_PERIOD).nativeUtc)
 			.toEqual(LocalDateTime.of7(2020, FEBRUARY, 29, 18, 30, 15, 225).nativeUtc);
+	});
+
+	it("should subtract duration", () => {
+		expect(dateTime.minusDuration(MS_DURATION).toString()).toBe("2019-07-05T18:30:15.224");
+		expect(dateTime.minusDuration(SECOND_DURATION).toString()).toBe("2019-07-05T18:30:14.225");
+		expect(dateTime.minusDuration(MINUTE_DURATION).toString()).toBe("2019-07-05T18:29:15.225");
+		expect(dateTime.minusDuration(HOUR_DURATION).toString()).toBe("2019-07-05T17:30:15.225");
+		expect(dateTime.minusDuration(DAY_DURATION).toString()).toBe("2019-07-04T18:30:15.225");
+		expect(dateTime.minusDuration(Duration.ofDays(5)).toString()).toBe("2019-06-30T18:30:15.225");
+		expect(dateTime.minusDuration(Duration.ofDays(30)).toString()).toBe("2019-06-05T18:30:15.225");
+		expect(dateTime.minusDuration(Duration.ofDays(365)).toString()).toBe("2018-07-05T18:30:15.225");
+		expect(dateTime.minusDuration(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("2019-07-04T16:27:11.220");
+		expect(dateTime.minusDuration(Duration.of(-1)).toString()).toBe("2019-07-05T18:30:15.226");
+		expect(dateTime.minusDuration(Duration.ofDays(-366)).toString()).toBe("2020-07-05T18:30:15.225");
 	});
 
 	it("should modify year", () => {
@@ -629,6 +688,22 @@ describe("LocalDateTime", () => {
 	it("should modify day of week", () => {
 		expect(LocalDateTime.of7(2019, AUGUST, 10, 18, 30, 15, 225).withDayOfWeek(TUESDAY).nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, AUGUST, 6, 18, 30, 15, 225).nativeUtc);
+	});
+
+	it("should modify hour", () => {
+		expect(dateTime.withHour(15).toString()).toBe("2019-07-05T15:30:15.225");
+	});
+
+	it("should modify minute", () => {
+		expect(dateTime.withMinute(15).toString()).toBe("2019-07-05T18:15:15.225");
+	});
+
+	it("should modify second", () => {
+		expect(dateTime.withSecond(12).toString()).toBe("2019-07-05T18:30:12.225");
+	});
+
+	it("should modify millisecond", () => {
+		expect(dateTime.withMs(15).toString()).toBe("2019-07-05T18:30:15.015");
 	});
 
 	it("should truncate itself to year", () => {
@@ -661,6 +736,18 @@ describe("LocalDateTime", () => {
 			.toEqual(LocalDateTime.of7(2019, JULY, 29).nativeUtc);
 		expect(LocalDateTime.of7(2019, AUGUST, 5).truncateToWeek.nativeUtc)
 			.toEqual(LocalDateTime.of7(2019, AUGUST, 5).nativeUtc);
+	});
+
+	it("should truncate itself to hour", () => {
+		expect(dateTime.truncateToHour.toString()).toBe("2019-07-05T18:00:00.000");
+	});
+
+	it("should truncate itself to minute", () => {
+		expect(dateTime.truncateToMinute.toString()).toBe("2019-07-05T18:30:00.000");
+	});
+
+	it("should truncate itself to second", () => {
+		expect(dateTime.truncateToSecond.toString()).toBe("2019-07-05T18:30:15.000");
 	});
 
 	it("should convert itself to string", () => {

@@ -227,15 +227,15 @@ class LocalDateTime {
 	}
 
 	get truncateToHour() {
-		return new LocalDateTime(this.date, this.time.truncateToHour());
+		return new LocalDateTime(this.date, this.time.truncateToHour);
 	}
 
 	get truncateToMinute() {
-		return new LocalDateTime(this.date, this.time.truncateToMinute());
+		return new LocalDateTime(this.date, this.time.truncateToMinute);
 	}
 
 	get truncateToSecond() {
-		return new LocalDateTime(this.date, this.time.truncateToSecond());
+		return new LocalDateTime(this.date, this.time.truncateToSecond);
 	}
 
 	toString() {

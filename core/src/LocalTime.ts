@@ -108,15 +108,15 @@ class LocalTime {
 		return LocalTime.of(this.hour, this.minute, this.second, ms);
 	}
 
-	truncateToHour() {
+	get truncateToHour() {
 		return LocalTime.ofTotalMs(Math.floor(this.totalMs / MS_PER_HOUR) * MS_PER_HOUR);
 	}
 
-	truncateToMinute() {
+	get truncateToMinute() {
 		return LocalTime.ofTotalMs(Math.floor(this.totalMs / MS_PER_MINUTE) * MS_PER_MINUTE);
 	}
 
-	truncateToSecond() {
+	get truncateToSecond() {
 		return LocalTime.ofTotalMs(Math.floor(this.totalMs / MS_PER_SECOND) * MS_PER_SECOND);
 	}
 

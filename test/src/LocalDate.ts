@@ -586,7 +586,7 @@ describe("LocalDate", () => {
 		expect(july5.minus(Period.ofWeeks(-5)).nativeUtc).toEqual(LocalDate.of(2019, AUGUST, 9).nativeUtc);
 	});
 
-	it("should adjust the added month properly", () => {
+	it("should adjust the subtracted month properly", () => {
 		expect(LocalDate.of(2019, MAY, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, APRIL, 30).nativeUtc);
 		expect(LocalDate.of(2019, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2019, FEBRUARY, 28).nativeUtc);
 		expect(LocalDate.of(2020, MARCH, 31).minus(MONTH_PERIOD).nativeUtc).toEqual(LocalDate.of(2020, FEBRUARY, 29).nativeUtc);

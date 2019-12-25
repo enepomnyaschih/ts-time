@@ -256,14 +256,14 @@ describe("LocalTime", () => {
 	});
 
 	it("should truncate itself to hour", () => {
-		expect(time.truncateToHour().toString()).toBe("18:00:00.000");
+		expect(time.truncateToHour.toString()).toBe("18:00:00.000");
 	});
 
 	it("should truncate itself to minute", () => {
-		expect(time.truncateToMinute().toString()).toBe("18:30:00.000");
+		expect(time.truncateToMinute.toString()).toBe("18:30:00.000");
 	});
 
 	it("should truncate itself to second", () => {
-		expect(time.truncateToSecond().toString()).toBe("18:30:15.000");
+		expect(time.truncateToSecond.toString()).toBe("18:30:15.000");
 	});
 });
