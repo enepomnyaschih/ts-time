@@ -33,6 +33,7 @@ import Duration, {
 	SECOND_DURATION
 } from "../../core/src/Duration";
 import {AD, BC} from "../../core/src/Era";
+import Instant from "../../core/src/Instant";
 import LocalDateTime from "../../core/src/LocalDateTime";
 import {
 	APRIL,
@@ -261,6 +262,16 @@ describe("OffsetDateTime", () => {
 		expect(date9.weekBasedYear).toBe(2014);
 		expect(date9.weekOfWeekBasedYear).toBe(52);
 		expect(date9.dayOfWeekBasedYear).toBe(364);
+	});
+
+	it("should construct from instant", () => {
+		expect(OffsetDateTime.ofInstant(Instant.fromNative(utc(2019, 6, 5, 15, 30, 15, 225)), offset).toString())
+			.toBe("2019-07-05T18:30:15.225+03:00");
+	});
+
+	it("should construct from date/time", () => {
+		expect(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset).toString())
+			.toBe("2019-07-05T18:30:15.225+03:00");
 	});
 
 	it("should construct from string", () => {
