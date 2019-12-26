@@ -326,6 +326,8 @@ describe("LocalDate", () => {
 	it("should construct from native local", () => {
 		expect(LocalDate.fromNativeLocal(new Date(2019, 6, 5)).nativeUtc)
 			.toEqual(LocalDate.of(2019, JULY, 5).nativeUtc);
+		expect(LocalDate.fromNativeLocal(new Date(2019, 6, 5, 18, 30, 15, 225)).nativeUtc)
+			.toEqual(LocalDate.of(2019, JULY, 5).nativeUtc);
 	});
 
 	it("should return null by native local null", () => {
@@ -334,6 +336,8 @@ describe("LocalDate", () => {
 
 	it("should construct from native UTC", () => {
 		expect(LocalDate.fromNativeUtc(new Date(Date.UTC(2019, 6, 5))).nativeUtc)
+			.toEqual(LocalDate.of(2019, JULY, 5).nativeUtc);
+		expect(LocalDate.fromNativeUtc(new Date(Date.UTC(2019, 6, 5, 18, 30, 15, 225))).nativeUtc)
 			.toEqual(LocalDate.of(2019, JULY, 5).nativeUtc);
 	});
 

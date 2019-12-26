@@ -218,7 +218,7 @@ class LocalDate {
 	}
 
 	static fromNativeUtc(date: Date) {
-		return date != null ? new LocalDate(date) : null;
+		return date != null ? LocalDate.of(date.getUTCFullYear(), date.getUTCMonth() + 1, date.getUTCDate()) : null;
 	}
 
 	static parse(str: string) {

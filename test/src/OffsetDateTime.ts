@@ -64,6 +64,26 @@ describe("OffsetDateTime", () => {
 		local = LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225),
 		dateTime = OffsetDateTime.ofDateTime(local, offset);
 
+	it("should return proper date/time", () => {
+		expect(dateTime.dateTime.nativeUtc).toEqual(utc(2019, 6, 5, 18, 30, 15, 225));
+	});
+
+	it("should return proper date", () => {
+		expect(dateTime.date.nativeUtc).toEqual(utc(2019, 6, 5, 0, 0, 0, 0));
+	});
+
+	it("should return proper time", () => {
+		expect(dateTime.time.totalMs).toBe(66615225);
+	});
+
+	it("should return proper instant", () => {
+		expect(dateTime.instant.native).toEqual(utc(2019, 6, 5, 15, 30, 15, 225));
+	});
+
+	it("should return proper offset", () => {
+		expect(dateTime.offset).toBe(offset);
+	});
+
 	it("should return proper year", () => {
 		expect(dateTime.year).toBe(2019);
 		expect(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JANUARY, 1), offset).year).toBe(2019);
