@@ -22,15 +22,18 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {compare} from "./_internal";
 import {MS_PER_SECOND} from "./constants";
 import DayOfWeek from "./DayOfWeek";
+import Duration from "./Duration";
 import Era from "./Era";
 import Instant from "./Instant";
 import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
 import LocalTime from "./LocalTime";
 import Month from "./Month";
-import {ZoneOffset} from "./Zone";
+import Period from "./Period";
+import {UTC, ZoneOffset} from "./Zone";
 
 class OffsetDateTime {
 
@@ -107,6 +110,10 @@ class OffsetDateTime {
 		return this.dateTime.quarterOfYear;
 	}
 
+	get isLeapYear() {
+		return this.dateTime.isLeapYear;
+	}
+
 	get lengthOfYear() {
 		return this.dateTime.lengthOfYear;
 	}
@@ -143,6 +150,58 @@ class OffsetDateTime {
 		return OffsetDateTime.isBefore(this, other);
 	}
 
+	plusDuration(duration: Duration) {
+		return duration.ms !== 0 ? new OffsetDateTime(this.instant.plus(duration), this.offset) : this;
+	}
+
+	plusPeriod(period: Period) {
+		return period.empty ? this : OffsetDateTime.ofDateTime(this.dateTime.plusPeriod(period), this.offset);
+	}
+
+	minusDuration(duration: Duration) {
+		return duration.ms !== 0 ? new OffsetDateTime(this.instant.minus(duration), this.offset) : this;
+	}
+
+	minusPeriod(period: Period) {
+		return period.empty ? this : OffsetDateTime.ofDateTime(this.dateTime.minusPeriod(period), this.offset);
+	}
+
+	withYear(year: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withYear(year), this.offset);
+	}
+
+	withMonth(month: number | Month) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withMonth(month), this.offset);
+	}
+
+	withDayOfMonth(dayOfMonth: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withDayOfMonth(dayOfMonth), this.offset);
+	}
+
+	withDayOfWeek(dayOfWeek: number | DayOfWeek) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withDayOfWeek(dayOfWeek), this.offset);
+	}
+
+	withDayOfYear(dayOfYear: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withDayOfYear(dayOfYear), this.offset);
+	}
+
+	withHour(hour: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withHour(hour), this.offset);
+	}
+
+	withMinute(minute: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withMinute(minute), this.offset);
+	}
+
+	withSecond(second: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withSecond(second), this.offset);
+	}
+
+	withMs(ms: number) {
+		return OffsetDateTime.ofDateTime(this.dateTime.withMs(ms), this.offset);
+	}
+
 	toString() {
 		return `${this.dateTime.toString()}${this.offset.toString()}`;
 	}
@@ -164,11 +223,11 @@ class OffsetDateTime {
 	static parse(str: string) {
 		const t = str.indexOf("T");
 		if (t === -1) {
-			throw new Error("Invalid offset date/time format.");
+			return OffsetDateTime.ofDateTime(LocalDateTime.parse(str), UTC);
 		}
 		const matches = /[Z+\-]/i.exec(str.substr(t));
 		if (!matches) {
-			throw new Error("Invalid offset date/time format.");
+			return OffsetDateTime.ofDateTime(LocalDateTime.parse(str), UTC);
 		}
 		return OffsetDateTime.ofDateTime(
 			LocalDateTime.parse(str.substr(0, t + matches.index)),
@@ -176,10 +235,20 @@ class OffsetDateTime {
 	}
 
 	static compare(x: OffsetDateTime, y: OffsetDateTime) {
-		return Instant.compare(x.instant, y.instant) || ZoneOffset.compare(x.offset, y.offset);
+		if (x == null && y == null) {
+			return 0;
+		}
+		return compare(x != null, y != null)
+			|| Instant.compare(x.instant, y.instant) || ZoneOffset.compare(x.offset, y.offset);
 	}
 
 	static equal(x: OffsetDateTime, y: OffsetDateTime) {
+		if (x == null && y == null) {
+			return true;
+		}
+		if (x == null || y == null) {
+			return false;
+		}
 		return Instant.equal(x.instant, y.instant) && x.offset === y.offset;
 	}
 

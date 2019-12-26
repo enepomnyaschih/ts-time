@@ -22,13 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {utc} from "../../core/src/_internal";
 import {MS_PER_DAY} from "../../core/src/constants";
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../core/src/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
 	MINUTE_DURATION,
-	MS_DURATION,
+	MS_DURATION, NULL_DURATION,
 	SECOND_DURATION
 } from "../../core/src/Duration";
 import {AD, BC} from "../../core/src/Era";
@@ -157,8 +158,7 @@ describe("LocalDateTime", () => {
 	it("should return proper native UTC date", () => {
 		expect(dateTime.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5, 18, 30, 15, 225)));
 
-		const date = new Date(Date.UTC(0, 0, 1));
-		date.setUTCFullYear(0);
+		const date = utc(0, 0, 1, 0, 0, 0, 0);
 		expect(LocalDateTime.ofComponents(0, JANUARY, 1).nativeUtc).toEqual(date);
 		expect(LocalDateTime.ofComponents(2014, DECEMBER, 31, 23, 59, 59, 999).nativeUtc)
 			.toEqual(new Date(Date.UTC(2014, 11, 31, 23, 59, 59, 999)));
@@ -596,6 +596,10 @@ describe("LocalDateTime", () => {
 		expect(dateTime.plusDuration(Duration.ofDays(-365)).toString()).toBe("2018-07-05T18:30:15.225");
 	});
 
+	it("should add zero duration", () => {
+		expect(dateTime.plusDuration(NULL_DURATION)).toBe(dateTime);
+	});
+
 	it("should subtract a period", () => {
 		expect(dateTime.minusPeriod(YEAR_PERIOD).nativeUtc)
 			.toEqual(LocalDateTime.ofComponents(2018, JULY, 5, 18, 30, 15, 225).nativeUtc);
@@ -660,6 +664,10 @@ describe("LocalDateTime", () => {
 		expect(dateTime.minusDuration(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("2019-07-04T16:27:11.220");
 		expect(dateTime.minusDuration(Duration.of(-1)).toString()).toBe("2019-07-05T18:30:15.226");
 		expect(dateTime.minusDuration(Duration.ofDays(-366)).toString()).toBe("2020-07-05T18:30:15.225");
+	});
+
+	it("should subtract zero duration", () => {
+		expect(dateTime.minusDuration(NULL_DURATION)).toBe(dateTime);
 	});
 
 	it("should modify year", () => {

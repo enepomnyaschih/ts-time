@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {utc} from "../../core/src/_internal";
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../core/src/DayOfWeek";
 import {AD, BC} from "../../core/src/Era";
 import LocalDate, {EPOCH_DATE} from "../../core/src/LocalDate";
@@ -179,8 +180,7 @@ describe("LocalDate", () => {
 	it("should return proper native UTC date", () => {
 		expect(july5.nativeUtc).toEqual(new Date(Date.UTC(2019, 6, 5)));
 
-		const date = new Date(Date.UTC(0, 0, 1));
-		date.setUTCFullYear(0);
+		const date = utc(0, 0, 1, 0, 0, 0, 0);
 		expect(LocalDate.of(0, JANUARY, 1).nativeUtc).toEqual(date);
 		expect(LocalDate.of(2014, DECEMBER, 31).nativeUtc).toEqual(new Date(Date.UTC(2014, 11, 31)));
 	});

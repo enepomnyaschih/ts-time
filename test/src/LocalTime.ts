@@ -26,7 +26,7 @@ import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
 	MINUTE_DURATION,
-	MS_DURATION,
+	MS_DURATION, NULL_DURATION,
 	SECOND_DURATION
 } from "../../core/src/Duration";
 import LocalDate from "../../core/src/LocalDate";
@@ -225,6 +225,10 @@ describe("LocalTime", () => {
 		expect(time.plus(Duration.of(-1)).toString()).toBe("18:30:15.224");
 	});
 
+	it("should add zero duration", () => {
+		expect(time.plus(NULL_DURATION)).toBe(time);
+	});
+
 	it("should subtract duration", () => {
 		expect(time.minus(MS_DURATION).toString()).toBe("18:30:15.224");
 		expect(time.minus(SECOND_DURATION).toString()).toBe("18:30:14.225");
@@ -233,6 +237,10 @@ describe("LocalTime", () => {
 		expect(time.minus(DAY_DURATION).toString()).toBe("18:30:15.225");
 		expect(time.minus(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("16:27:11.220");
 		expect(time.minus(Duration.of(-1)).toString()).toBe("18:30:15.226");
+	});
+
+	it("should subtract zero duration", () => {
+		expect(time.minus(NULL_DURATION)).toBe(time);
 	});
 
 	it("should modify hour", () => {

@@ -24,7 +24,6 @@ SOFTWARE.
 
 import {DAYS_PER_WEEK, MONTHS_PER_QUARTER, MONTHS_PER_YEAR, MS_PER_DAY} from "./constants";
 import LocalDate from "./LocalDate";
-import LocalDateTime from "./LocalDateTime";
 import Month from "./Month";
 
 abstract class Period {
@@ -33,12 +32,12 @@ abstract class Period {
 
 	abstract between(start: LocalDate, end: LocalDate): number;
 
-	addToDateTime(dateTime: LocalDateTime, amount: number): LocalDateTime {
-		return LocalDateTime.of(this.addToDate(dateTime.date, amount), dateTime.time);
-	}
-
 	multiply(multiplier: number): Period {
 		return (multiplier === 0) ? NULL_PERIOD : (multiplier == 1) ? this : new MultipliedPeriod(this, multiplier);
+	}
+
+	get empty() {
+		return false;
 	}
 
 	static ofYears(years: number): Period {
@@ -68,16 +67,16 @@ class NullPeriod extends Period {
 		return date;
 	}
 
-	addToDateTime(dateTime: LocalDateTime, _amount: number): LocalDateTime {
-		return dateTime;
-	}
-
 	between(_start: LocalDate, _end: LocalDate): number {
 		return NaN;
 	}
 
 	multiply(_multiplier: number): Period {
 		return this;
+	}
+
+	get empty() {
+		return true;
 	}
 }
 

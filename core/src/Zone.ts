@@ -22,13 +22,15 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareBy, Dictionary, pad, spread, toInt} from "./_internal";
+import {compareBy, Dictionary, pad, spread, toInt, utc} from "./_internal";
 import {MINUTES_PER_HOUR, MS_PER_SECOND, SECONDS_PER_HOUR, SECONDS_PER_MINUTE} from "./constants";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
 import OffsetDateTime from "./OffsetDateTime";
 import {DAY_PERIOD} from "./Period";
 
+// TODO: Auto-detect local time zone
+// TODO: List all available time zones
 export abstract class ZoneId {
 
 	protected constructor(readonly id: string) {
@@ -234,12 +236,7 @@ function hackyOffset(formatter: Intl.DateTimeFormat, date: Date): number[] {
 }
 
 function utcFromComponents(arr: number[]) {
-	let d: any = Date.UTC(arr[0], arr[1] - 1, arr[2], arr[3] || 0, arr[4] || 0, arr[5] || 0, arr[6] || 0);
-	if (arr[0] < 100 && arr[0] >= 0) {
-		d = new Date(d);
-		d.setUTCFullYear(d.getUTCFullYear() - 1900);
-	}
-	return +d;
+	return utc(arr[0], arr[1] - 1, arr[2], arr[3] || 0, arr[4] || 0, arr[5] || 0, arr[6] || 0).getTime();
 }
 
 function getNormalizedOffsetId(totalSeconds: number) {

@@ -83,11 +83,11 @@ class LocalTime {
 	}
 
 	plus(duration: Duration) {
-		return LocalTime.ofTotalMs(this.totalMs + duration.ms);
+		return duration.ms !== 0 ? LocalTime.ofTotalMs(this.totalMs + duration.ms) : this;
 	}
 
 	minus(duration: Duration) {
-		return LocalTime.ofTotalMs(this.totalMs - duration.ms);
+		return duration.ms !== 0 ? LocalTime.ofTotalMs(this.totalMs - duration.ms) : this;
 	}
 
 	// TODO: until(time: LocalTime): Duration

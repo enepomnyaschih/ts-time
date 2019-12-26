@@ -153,22 +153,20 @@ class LocalDateTime {
 	}
 
 	plusDuration(duration: Duration) {
-		return LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() + duration.ms));
+		return duration.ms !== 0 ? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() + duration.ms)) : this;
 	}
 
 	plusPeriod(period: Period) {
-		return period.addToDateTime(this, 1);
+		return period.empty ? this : new LocalDateTime(this.date.plus(period), this.time);
 	}
 
 	minusDuration(duration: Duration) {
-		return LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() - duration.ms));
+		return duration.ms !== 0 ? LocalDateTime.fromNativeUtc(new Date(this.nativeUtc.getTime() - duration.ms)) : this;
 	}
 
 	minusPeriod(period: Period) {
-		return period.addToDateTime(this, -1);
+		return period.empty ? this : new LocalDateTime(this.date.minus(period), this.time);
 	}
-
-	// TODO: until(date: LocalDateTime): DateTimePeriod
 
 	withYear(year: number) {
 		return new LocalDateTime(this.date.withYear(year), this.time);
