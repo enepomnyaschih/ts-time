@@ -83,8 +83,16 @@ describe("ZonedDateTime", () => {
 		expect(dateTime.instant.native).toEqual(utc(2019, 6, 5, 16, 30, 15, 225));
 	});
 
+	it("should return proper zone", () => {
+		expect(dateTime.zone).toBe(berlin);
+	});
+
 	it("should return proper offset", () => {
 		expect(dateTime.offset).toBe(ZoneOffset.ofComponents(2));
+	});
+
+	it("should return proper offset date/time", () => {
+		expect(dateTime.offsetDateTime.toString()).toBe("2019-07-05T18:30:15.225+02:00");
 	});
 
 	it("should return proper year", () => {
