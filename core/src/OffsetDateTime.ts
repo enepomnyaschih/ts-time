@@ -33,7 +33,7 @@ import LocalDateTime from "./LocalDateTime";
 import LocalTime from "./LocalTime";
 import Month from "./Month";
 import Period from "./Period";
-import {UTC, ZoneOffset} from "./Zone";
+import {ZoneOffset} from "./Zone";
 
 class OffsetDateTime {
 
@@ -142,14 +142,6 @@ class OffsetDateTime {
 		return OffsetDateTime.equal(this, other);
 	}
 
-	isAfter(other: OffsetDateTime) {
-		return OffsetDateTime.isAfter(this, other);
-	}
-
-	isBefore(other: OffsetDateTime) {
-		return OffsetDateTime.isBefore(this, other);
-	}
-
 	plusDuration(duration: Duration) {
 		return duration.ms !== 0 ? new OffsetDateTime(this.instant.plus(duration), this.offset) : this;
 	}
@@ -223,11 +215,11 @@ class OffsetDateTime {
 	static parse(str: string) {
 		const t = str.indexOf("T");
 		if (t === -1) {
-			return OffsetDateTime.ofDateTime(LocalDateTime.parse(str), UTC);
+			throw new Error("Invalid date format.")
 		}
 		const matches = /[Z+\-]/i.exec(str.substr(t));
 		if (!matches) {
-			return OffsetDateTime.ofDateTime(LocalDateTime.parse(str), UTC);
+			throw new Error("Invalid date format.")
 		}
 		return OffsetDateTime.ofDateTime(
 			LocalDateTime.parse(str.substr(0, t + matches.index)),
@@ -250,14 +242,6 @@ class OffsetDateTime {
 			return false;
 		}
 		return Instant.equal(x.instant, y.instant) && x.offset === y.offset;
-	}
-
-	static isAfter(x: OffsetDateTime, y: OffsetDateTime) {
-		return OffsetDateTime.compare(x, y) > 0;
-	}
-
-	static isBefore(x: OffsetDateTime, y: OffsetDateTime) {
-		return OffsetDateTime.compare(x, y) < 0;
 	}
 }
 

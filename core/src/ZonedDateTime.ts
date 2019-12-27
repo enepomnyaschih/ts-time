@@ -22,8 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {compare} from "./_internal";
 import {MS_PER_SECOND} from "./constants";
 import DayOfWeek from "./DayOfWeek";
+import Duration from "./Duration";
 import Era from "./Era";
 import Instant from "./Instant";
 import LocalDate from "./LocalDate";
@@ -31,6 +33,7 @@ import LocalDateTime from "./LocalDateTime";
 import LocalTime from "./LocalTime";
 import Month from "./Month";
 import OffsetDateTime from "./OffsetDateTime";
+import Period from "./Period";
 import {ZoneId, ZoneOffset} from "./Zone";
 
 class ZonedDateTime {
@@ -110,6 +113,10 @@ class ZonedDateTime {
 		return this.dateTime.quarterOfYear;
 	}
 
+	get isLeapYear() {
+		return this.dateTime.isLeapYear;
+	}
+
 	get lengthOfYear() {
 		return this.dateTime.lengthOfYear;
 	}
@@ -146,6 +153,58 @@ class ZonedDateTime {
 		return ZonedDateTime.equal(this, other);
 	}
 
+	plusDuration(duration: Duration) {
+		return duration.ms !== 0 ? new ZonedDateTime(this.instant.plus(duration), this.zone) : this;
+	}
+
+	plusPeriod(period: Period) {
+		return period.empty ? this : ZonedDateTime.ofDateTime(this.dateTime.plusPeriod(period), this.zone);
+	}
+
+	minusDuration(duration: Duration) {
+		return duration.ms !== 0 ? new ZonedDateTime(this.instant.minus(duration), this.zone) : this;
+	}
+
+	minusPeriod(period: Period) {
+		return period.empty ? this : ZonedDateTime.ofDateTime(this.dateTime.minusPeriod(period), this.zone);
+	}
+
+	withYear(year: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withYear(year), this.zone);
+	}
+
+	withMonth(month: number | Month) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withMonth(month), this.zone);
+	}
+
+	withDayOfMonth(dayOfMonth: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withDayOfMonth(dayOfMonth), this.zone);
+	}
+
+	withDayOfWeek(dayOfWeek: number | DayOfWeek) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withDayOfWeek(dayOfWeek), this.zone);
+	}
+
+	withDayOfYear(dayOfYear: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withDayOfYear(dayOfYear), this.zone);
+	}
+
+	withHour(hour: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withHour(hour), this.zone);
+	}
+
+	withMinute(minute: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withMinute(minute), this.zone);
+	}
+
+	withSecond(second: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withSecond(second), this.zone);
+	}
+
+	withMs(ms: number) {
+		return ZonedDateTime.ofDateTime(this.dateTime.withMs(ms), this.zone);
+	}
+
 	toString() {
 		return `${this.offsetDateTime.toString()}${this.zone !== this.offset ? `[${this.zone.id}]` : ""}`;
 	}
@@ -177,10 +236,20 @@ class ZonedDateTime {
 	}
 
 	static compare(x: ZonedDateTime, y: ZonedDateTime) {
-		return Instant.compare(x.instant, y.instant) || ZoneId.compareById(x.zone, y.zone);
+		if (x == null && y == null) {
+			return 0;
+		}
+		return compare(x != null, y != null)
+			|| Instant.compare(x.instant, y.instant) || ZoneId.compareById(x.zone, y.zone);
 	}
 
 	static equal(x: ZonedDateTime, y: ZonedDateTime) {
+		if (x == null && y == null) {
+			return true;
+		}
+		if (x == null || y == null) {
+			return false;
+		}
 		return Instant.equal(x.instant, y.instant) && x.zone === y.zone;
 	}
 }

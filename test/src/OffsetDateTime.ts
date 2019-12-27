@@ -275,25 +275,23 @@ describe("OffsetDateTime", () => {
 	});
 
 	it("should construct from string", () => {
-		expect(OffsetDateTime.parse("2019-07-05").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), UTC).native);
-		expect(OffsetDateTime.parse("2019-7-5").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), UTC).native);
-		expect(OffsetDateTime.parse("2019-07-05T18:30").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30), UTC).native);
-		expect(OffsetDateTime.parse("2019-07-05T18:30:15").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15), UTC).native);
-		expect(OffsetDateTime.parse("2019-07-05T18:30:15.225").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), UTC).native);
-		expect(OffsetDateTime.parse("2019-7-5T8:3:5.16").native)
-			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 8, 3, 5, 16), UTC).native);
 		expect(OffsetDateTime.parse("2019-07-05T18:30:15.225Z").native)
 			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), UTC).native);
+		expect(OffsetDateTime.parse("2019-07-05T18:30+03:00").native)
+			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30), offset).native);
+		expect(OffsetDateTime.parse("2019-07-05T18:30:15+03:00").native)
+			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15), offset).native);
 		expect(OffsetDateTime.parse("2019-07-05T18:30:15.225+03:00").native)
 			.toEqual(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset).native);
 	});
 
 	it("should throw an error by invalid string", () => {
+		expect(() => OffsetDateTime.parse("2019-07-05").native).toThrow(new Error("Invalid date format."));
+		expect(() => OffsetDateTime.parse("2019-7-5").native).toThrow(new Error("Invalid date format."));
+		expect(() => OffsetDateTime.parse("2019-07-05T18:30").native).toThrow(new Error("Invalid date format."));
+		expect(() => OffsetDateTime.parse("2019-07-05T18:30:15").native).toThrow(new Error("Invalid date format."));
+		expect(() => OffsetDateTime.parse("2019-07-05T18:30:15.225").native).toThrow(new Error("Invalid date format."));
+		expect(() => OffsetDateTime.parse("2019-7-5T8:3:5.16").native).toThrow(new Error("Invalid date format."));
 		expect(() => OffsetDateTime.parse("abc")).toThrow(new Error("Invalid date format."));
 	});
 
@@ -445,112 +443,6 @@ describe("OffsetDateTime", () => {
 		expect(OffsetDateTime.equal(dateTime, null)).toBe(false);
 		expect(OffsetDateTime.equal(null, dateTime)).toBe(false);
 		expect(OffsetDateTime.equal(null, null)).toBe(true);
-	});
-
-	it("should compare itself with isBefore method", () => {
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), UTC))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JUNE, 10), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 3), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 4), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 224), offset))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 17, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset))).toBe(false);
-		expect(dateTime.isBefore(dateTime)).toBe(false);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 19, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 226), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 23, 59, 59, 999), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 6), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 7), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, AUGUST, 1), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), offset))).toBe(true);
-		expect(dateTime.isBefore(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), UTC))).toBe(true);
-	});
-
-	it("should compare itself with isBefore method statically", () => {
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), UTC))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JUNE, 10), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 3), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 4), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 224), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 17, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset))).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, dateTime)).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 19, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 226), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 23, 59, 59, 999), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 6), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 7), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, AUGUST, 1), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), offset))).toBe(true);
-		expect(OffsetDateTime.isBefore(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), UTC))).toBe(true);
-	});
-
-	it("should compare itself with null with isBefore method", () => {
-		expect(dateTime.isBefore(null)).toBe(false);
-		expect(OffsetDateTime.isBefore(dateTime, null)).toBe(false);
-		expect(OffsetDateTime.isBefore(null, dateTime)).toBe(true);
-		expect(OffsetDateTime.isBefore(null, null)).toBe(false);
-	});
-
-	it("should compare itself with isAfter method", () => {
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), UTC))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JUNE, 10), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 3), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 4), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 224), offset))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 17, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(true);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset))).toBe(false);
-		expect(dateTime.isAfter(dateTime)).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 19, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 226), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 23, 59, 59, 999), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 6), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 7), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, AUGUST, 1), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), offset))).toBe(false);
-		expect(dateTime.isAfter(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), UTC))).toBe(false);
-	});
-
-	it("should compare itself with isAfter method statically", () => {
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), UTC))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2018, SEPTEMBER, 10), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JUNE, 10), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 3), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 4), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 224), offset))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 17, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, dateTime)).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 19, 30, 15, 225), ZoneOffset.ofComponents(4)))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(2)))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 226), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 23, 59, 59, 999), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 6), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 7), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, AUGUST, 1), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), offset))).toBe(false);
-		expect(OffsetDateTime.isAfter(dateTime, OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2020, FEBRUARY, 1), UTC))).toBe(false);
-	});
-
-	it("should compare itself with null with isAfter method", () => {
-		expect(dateTime.isAfter(null)).toBe(true);
-		expect(OffsetDateTime.isAfter(dateTime, null)).toBe(true);
-		expect(OffsetDateTime.isAfter(null, dateTime)).toBe(false);
-		expect(OffsetDateTime.isAfter(null, null)).toBe(false);
 	});
 
 	it("should add a period", () => {

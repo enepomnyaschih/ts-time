@@ -167,7 +167,8 @@ class CustomZone extends ZoneId {
 			day: "2-digit",
 			hour: "2-digit",
 			minute: "2-digit",
-			second: "2-digit"
+			second: "2-digit",
+			era: "narrow"
 		});
 	}
 
@@ -178,13 +179,8 @@ class CustomZone extends ZoneId {
 
 	offsetAtInstant(instant: Instant): ZoneOffset {
 		const native = instant.native;
-		const parts: number[] = this.formatter.formatToParts
-			? partsOffset(this.formatter, native)
-			: hackyOffset(this.formatter, native);
-		const zonedTime = utcFromComponents(parts);
-		let instantTime = native.getTime();
-		instantTime -= instantTime % 1000;
-		return ZoneOffset.ofTotalSeconds((zonedTime - instantTime) / MS_PER_SECOND);
+		const components = getComponents(this.formatter, native);
+		return ZoneOffset.ofTotalSeconds((components.getTime() - native.getTime()) / MS_PER_SECOND);
 	}
 
 	offsetAtLocalDateTime(localDateTime: LocalDateTime): ZoneOffset {
@@ -206,37 +202,11 @@ class CustomZone extends ZoneId {
 	}
 }
 
-const typeToPos: Dictionary<number> = {
-	year: 0,
-	month: 1,
-	day: 2,
-	hour: 3,
-	minute: 4,
-	second: 5
-};
-
-function partsOffset(formatter: any, date: Date): number[] {
-	const formatted = formatter.formatToParts(date),
-		filled: number[] = [];
-	for (let i = 0; i < formatted.length; i++) {
-		const {type, value} = formatted[i],
-			pos = typeToPos[type];
-		if (pos != null) {
-			filled[pos] = parseInt(value, 10);
-		}
-	}
-	return filled;
-}
-
-function hackyOffset(formatter: Intl.DateTimeFormat, date: Date): number[] {
-	const formatted = formatter.format(date).replace(/\u200E/g, ""),
-		matches = /(\d+)\/(\d+)\/(\d+),? (\d+):(\d+):(\d+)/.exec(formatted),
-		[, fMonth, fDay, fYear, fHour, fMinute, fSecond] = matches;
-	return [+fYear, +fMonth, +fDay, +fHour, +fMinute, +fSecond];
-}
-
-function utcFromComponents(arr: number[]) {
-	return utc(arr[0], arr[1] - 1, arr[2], arr[3] || 0, arr[4] || 0, arr[5] || 0, arr[6] || 0).getTime();
+function getComponents(formatter: Intl.DateTimeFormat, date: Date): Date {
+	const matches = /^(\d+) (\d+), (\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)),
+		[, month, dayOfMonth, year, era, hour, minute, second] = matches;
+	return utc((era === "A") ? +year : (-year + 1),
+		+month - 1, +dayOfMonth, +hour, +minute, +second, date.getUTCMilliseconds());
 }
 
 function getNormalizedOffsetId(totalSeconds: number) {
