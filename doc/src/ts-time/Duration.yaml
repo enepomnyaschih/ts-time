@@ -1,0 +1,155 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a fixed time interval in milliseconds. As opposed to %Period, it can't comprise a variable-length
+      interval such as month, because month duration varies from 28 to 31 days. %Duration is mainly involved to
+      manipulate %Instant objects. In particular, %ZonedDateTime.%plusDuration method adds the duration to a respective
+      instant, not date/time. It means that if you add %DAY_DURATION to a %ZonedDateTime, you may receive a different
+      %LocalTime if time zone offset changes during this day:
+      <pre>
+      const berlin = %ZoneId.%ofZone("Europe/Berlin"),
+        dateTime = %ZonedDateTime.%ofDateTime(%LocalDateTime.%ofDateTimeComponents(2019, %OCTOBER, 27, 0), berlin);
+      expect(dateTime.%plusDuration(%DAY_DURATION).toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+      </pre>
+      To ascertain same %LocalTime, you are supposed to use %plusPeriod method:
+      <pre>
+      expect(dateTime.%plusPeriod(%DAY_PERIOD).toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+      </pre>
+
+    properties:
+      ms:
+        modifiers: readonly
+        type: number
+        description: Duration in milliseconds.
+
+    methods:
+      plus:
+        signature: |
+          plus(value: number | %Duration): %Duration
+        params:
+          value: Duration to add, or milliseconds.
+        returns: Sum of two durations.
+
+      minus:
+        signature: |
+          minus(value: number | %Duration): %Duration
+        params:
+          value: Duration to subtract, or milliseconds.
+        returns: Difference of two durations.
+
+      multiply:
+        signature: |
+          multiply(multiplier: number): %Duration
+        params:
+          multiplier: Multiplier of the duration.
+        returns: Duration taken the specified number of times.
+
+    staticMethods:
+      of:
+        signature: |
+          of(value: number | %Duration): %Duration
+        params:
+          value: Duration as object or number of milliseconds.
+        returns: '%Duration instance.'
+
+      ofMs:
+        signature: |
+          ofMs(ms: number): %Duration
+        params:
+          ms: Duration in milliseconds.
+        returns: '%Duration instance.'
+
+      ofSeconds:
+        signature: |
+          ofSeconds(seconds: number): %Duration
+        params:
+          ms: Duration in seconds.
+        returns: '%Duration instance.'
+
+      ofMinutes:
+        signature: |
+          ofMinutes(minutes: number): %Duration
+        params:
+          ms: Duration in minutes.
+        returns: '%Duration instance.'
+
+      ofHours:
+        signature: |
+          ofHours(hours: number): %Duration
+        params:
+          ms: Duration in hours.
+        returns: '%Duration instance.'
+
+      ofDays:
+        signature: |
+          ofDays(days: number): %Duration
+        params:
+          ms: Duration in days.
+        returns: '%Duration instance.'
+
+      ofWeeks:
+        signature: |
+          ofWeeks(weeks: number): %Duration
+        params:
+          ms: Duration in weeks.
+        returns: '%Duration instance.'
+
+      ofComponents:
+        signature: |
+          ofComponents(days: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0): %Duration
+        params:
+          days: Number of days.
+          hours: Number of hours.
+          minutes: Number of minutes.
+          seconds: Number of seconds.
+          ms: Number of milliseconds.
+        returns: '%Duration instance.'
+
+  NULL_DURATION:
+    type: '%Duration'
+    description: '%Duration representing an empty interval (0 milliseconds).'
+
+  MS_DURATION:
+    type: '%Duration'
+    description: '%Duration representing a millisecond interval of real time.'
+
+  SECOND_DURATION:
+    type: '%Duration'
+    description: '%Duration representing a second interval of real time.'
+
+  MINUTE_DURATION:
+    type: '%Duration'
+    description: '%Duration representing a minute interval of real time.'
+
+  HOUR_DURATION:
+    type: '%Duration'
+    description: '%Duration representing an hour interval of real time.'
+
+  DAY_DURATION:
+    type: '%Duration'
+    description: '%Duration representing a day interval of real time.'
+
+  WEEK_DURATION:
+    type: '%Duration'
+    description: '%Duration representing a week interval of real time.'
+
+references:
+  plusDuration:
+    file: ts-time/ZonedDateTime
+    member: plusDuration
+
+  plusPeriod:
+    file: ts-time/ZonedDateTime
+    member: plusPeriod
+
+  ofDateTime:
+    file: ts-time/ZonedDateTime
+    member: ofDateTime
+    static: true
+
+  ofDateTimeComponents:
+    file: ts-time/LocalDateTime
+    member: ofComponents
+    static: true
+    label: ofComponents

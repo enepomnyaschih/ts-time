@@ -507,6 +507,11 @@ describe("ZonedDateTime", () => {
 			.plusPeriod(MONTH_PERIOD).toString()).toBe("2020-02-29T18:30:15.225+01:00[Europe/Berlin]");
 	});
 
+	it("should add period with respect to date/time, not instant", () => {
+		expect(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 0), berlin)
+			.plusPeriod(DAY_PERIOD).toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+	});
+
 	it("should add duration", () => {
 		expect(dateTime.plusDuration(MS_DURATION).toString()).toBe("2019-07-05T18:30:15.226+02:00[Europe/Berlin]");
 		expect(dateTime.plusDuration(SECOND_DURATION).toString()).toBe("2019-07-05T18:30:16.225+02:00[Europe/Berlin]");
@@ -519,6 +524,11 @@ describe("ZonedDateTime", () => {
 		expect(dateTime.plusDuration(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("2019-07-06T20:33:19.230+02:00[Europe/Berlin]");
 		expect(dateTime.plusDuration(Duration.of(-1)).toString()).toBe("2019-07-05T18:30:15.224+02:00[Europe/Berlin]");
 		expect(dateTime.plusDuration(Duration.ofDays(-365)).toString()).toBe("2018-07-05T18:30:15.225+02:00[Europe/Berlin]");
+	});
+
+	it("should add duration with respect to instant, not date/time", () => {
+		expect(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 0), berlin)
+			.plusDuration(DAY_DURATION).toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
 	});
 
 	it("should add zero duration", () => {

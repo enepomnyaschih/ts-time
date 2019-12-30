@@ -5,3 +5,11 @@ output: dist
 statics:
   - src: static
     dest: .
+
+references:
+  ofZone:
+    file: ts-time/Zone
+    symbol: ZoneId
+    member: of
+    static: true
+    label: of
