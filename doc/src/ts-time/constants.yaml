@@ -1,4 +1,83 @@
+description: |
+  Various useful constants.
+
 symbols:
   MS_PER_SECOND:
     type: number
-    description: Number of milliseconds in a second.
+    description: Number of milliseconds in a second (1000).
+
+  SECONDS_PER_MINUTE:
+    type: number
+    description: Number of seconds in a minute (60).
+
+  MS_PER_MINUTE:
+    type: number
+    description: Number of milliseconds in a minute.
+
+  MINUTES_PER_HOUR:
+    type: number
+    description: Number of minutes in an hour (60).
+
+  SECONDS_PER_HOUR:
+    type: number
+    description: Number of seconds in an hour.
+
+  MS_PER_HOUR:
+    type: number
+    description: Number of milliseconds in an hour.
+
+  HOURS_PER_DAY:
+    type: number
+    description: Number of hours in a day (24).
+
+  MINUTES_PER_DAY:
+    type: number
+    description: Number of minutes in a day.
+
+  SECONDS_PER_DAY:
+    type: number
+    description: Number of seconds in a day.
+
+  MS_PER_DAY:
+    type: number
+    description: Number of milliseconds in a day.
+
+  DAYS_PER_WEEK:
+    type: number
+    description: Number of days in a week (7).
+
+  HOURS_PER_WEEK:
+    type: number
+    description: Number of hours in a week.
+
+  MINUTES_PER_WEEK:
+    type: number
+    description: Number of minutes in a week.
+
+  SECONDS_PER_WEEK:
+    type: number
+    description: Number of seconds in a week.
+
+  MS_PER_WEEK:
+    type: number
+    description: Number of milliseconds in a week.
+
+  QUARTERS_PER_YEAR:
+    type: number
+    description: Number of quarters in a year (4).
+
+  MONTHS_PER_QUARTER:
+    type: number
+    description: Number of months in a quarter (3).
+
+  MONTHS_PER_YEAR:
+    type: number
+    description: Number of months in a year (12).
+
+  DAYS_PER_NON_LEAP_YEAR:
+    type: number
+    description: Number of days in a non-leap year (365).
+
+  DAYS_PER_LEAP_YEAR:
+    type: number
+    description: Number of days in a leap year (366).
