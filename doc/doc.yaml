@@ -1,6 +1,7 @@
 name: ts-time
 input: src
 output: dist
+docTitle: Modules
 
 statics:
   - src: static
@@ -106,3 +107,22 @@ includes:
   experimental: |
     <p class="text-danger">This is an experimental API. There's a higher chance that the authors of the library may
     remove or change it in future releases.</p>
+
+  DocumentationIndex: |
+    <ul>
+      <li>%constants</li>
+      <li>%DayOfWeek</li>
+      <li>%Duration</li>
+      <li>%Era</li>
+      <li>%Instant</li>
+      <li>%LocalDate</li>
+      <li>%LocalDateTime</li>
+      <li>%LocalTime</li>
+      <li>%Month</li>
+      <li>%OffsetDateTime</li>
+      <li>%Period</li>
+      <li>%TimeField</li>
+      <li>%utils</li>
+      <li>%Zone</li>
+      <li>%ZonedDateTime</li>
+    </ul>
