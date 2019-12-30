@@ -1,0 +1,28 @@
+symbols:
+  default:
+    kind: interface
+    description: |
+      There are exactly 2 eras, with respective numeric values and text identifiers:
+      <ol start="0">
+        <li>%BC, id = "bc"</li>
+        <li>%AD, id = "ad"</li>
+      </ol>
+
+    properties:
+      id:
+        modifiers: readonly
+        type: string
+        description: Text identifier of the era.
+
+      value:
+        modifiers: readonly
+        type: number
+        description: Numeric value of the era.
+
+  BC:
+    type: '%Era'
+    description: '%Era representation of BC. Has numeric value of 0 and text identifier of "bc".'
+
+  AD:
+    type: '%Era'
+    description: '%Era representation of AD. Has numeric value of 1 and text identifier of "ad".'
