@@ -1,0 +1,155 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      There are exactly 12 months, with respective numeric values:
+      <ol>
+        <li>%JANUARY</li>
+        <li>%FEBRUARY</li>
+        <li>%MARCH</li>
+        <li>%APRIL</li>
+        <li>%MAY</li>
+        <li>%JUNE</li>
+        <li>%JULY</li>
+        <li>%AUGUST</li>
+        <li>%SEPTEMBER</li>
+        <li>%OCTOBER</li>
+        <li>%NOVEMBER</li>
+        <li>%DECEMBER</li>
+      </ol>
+      You can't construct new months, you can only get an existing month directly or with %of method. With
+      that said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
+      check.
+
+    properties:
+      value:
+        modifiers: readonly
+        type: number
+        description: Numeric value of the month.
+
+    methods:
+      length:
+        signature: |
+          (leapYear: boolean): number
+        params:
+          leapYear: Is it a leap year?
+        returns: Number of days in the month.
+
+      compareTo:
+        signature: |
+          (other: %Month): number
+        params:
+          other: Month to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same month;</li>
+            <li>positive value if this month goes after %other;</li>
+            <li>negative value if this month goes before %other.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+      isBefore:
+        signature: |
+          (other: %Month): boolean
+        params:
+          other: Month to compare to.
+        returns: |
+          True if this month goes before %other. Null and undefined go before anything, except each other. %%null
+
+      isAfter:
+        signature: |
+          (other: %Month): boolean
+        params:
+          other: Month to compare to.
+        returns: |
+          True if this month goes after %other. Null and undefined go before anything, except each other. %%null
+
+    staticMethods:
+      of:
+        signature: |
+          (value: number | %Month): %Month
+        params:
+          value: Numeric value of the month.
+        returns: '%Month representation of the month.'
+
+      compareTo:
+        signature: |
+          (x: %Month, y: %Month): number
+        params:
+          x: One month.
+          y: Another month.
+        returns: |
+          <ul>
+            <li>0 if this is %x === %y;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+
+      isBefore:
+        signature: |
+          (x: %Month, y: %Month): boolean
+        params:
+          x: One month.
+          y: Another month.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          (x: %Month, y: %Month): boolean
+        params:
+          x: One month.
+          y: Another month.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
+
+  JANUARY:
+    type: '%Month'
+    description: '%Month representation of January. Has numeric value of 1 and length of 31 days.'
+
+  FEBRUARY:
+    type: '%Month'
+    description: '%Month representation of February. Has numeric value of 2 and length of 28/29 days (non-leap/leap years).'
+
+  MARCH:
+    type: '%Month'
+    description: '%Month representation of March. Has numeric value of 3 and length of 31 days.'
+
+  APRIL:
+    type: '%Month'
+    description: '%Month representation of April. Has numeric value of 4 and length of 30 days.'
+
+  MAY:
+    type: '%Month'
+    description: '%Month representation of May. Has numeric value of 5 and length of 31 days.'
+
+  JUNE:
+    type: '%Month'
+    description: '%Month representation of June. Has numeric value of 6 and length of 30 days.'
+
+  JULY:
+    type: '%Month'
+    description: '%Month representation of July. Has numeric value of 7 and length of 31 days.'
+
+  AUGUST:
+    type: '%Month'
+    description: '%Month representation of August. Has numeric value of 8 and length of 31 days.'
+
+  SEPTEMBER:
+    type: '%Month'
+    description: '%Month representation of September. Has numeric value of 9 and length of 30 days.'
+
+  OCTOBER:
+    type: '%Month'
+    description: '%Month representation of October. Has numeric value of 10 and length of 31 days.'
+
+  NOVEMBER:
+    type: '%Month'
+    description: '%Month representation of November. Has numeric value of 11 and length of 30 days.'
+
+  DECEMBER:
+    type: '%Month'
+    description: '%Month representation of December. Has numeric value of 12 and length of 31 days.'
+
+  MONTHS:
+    type: '%Month[]'
+    description: Array of all months, from %JANUARY to %DECEMBER.

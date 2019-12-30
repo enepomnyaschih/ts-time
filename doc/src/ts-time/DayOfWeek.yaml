@@ -12,8 +12,8 @@ symbols:
         <li>%SATURDAY</li>
         <li>%SUNDAY</li>
       </ol>
-      You can't construct new days of week, you can only get an existing day of week directly with %of method. With
-      this said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
+      You can't construct new days of week, you can only get an existing day of week directly or with %of method. With
+      that said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
       check.
 
     properties:
@@ -117,3 +117,7 @@ symbols:
   SUNDAY:
     type: '%DayOfWeek'
     description: '%DayOfWeek representation of Sunday. Has numeric value of 7.'
+
+  DAYS_OF_WEEK:
+    type: '%DayOfWeek[]'
+    description: Array of all days of week, from %MONDAY to %SUNDAY.
