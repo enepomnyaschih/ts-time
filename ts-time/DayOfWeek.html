@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/DayOfWeek - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/DayOfWeek</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--value">value</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--compareTo">compareTo</a>
+<a class="nav-link" href="#default--isBefore">isBefore</a>
+<a class="nav-link" href="#default--isAfter">isAfter</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--compareTo-static">compareTo</a>
+<a class="nav-link" href="#default--isBefore-static">isBefore</a>
+<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+</nav>
+
+<a class="nav-link" href="#MONDAY">MONDAY</a>
+
+
+<a class="nav-link" href="#TUESDAY">TUESDAY</a>
+
+
+<a class="nav-link" href="#WEDNESDAY">WEDNESDAY</a>
+
+
+<a class="nav-link" href="#THURSDAY">THURSDAY</a>
+
+
+<a class="nav-link" href="#FRIDAY">FRIDAY</a>
+
+
+<a class="nav-link" href="#SATURDAY">SATURDAY</a>
+
+
+<a class="nav-link" href="#SUNDAY">SUNDAY</a>
+
+
+<a class="nav-link" href="#DAYS_OF_WEEK">DAYS_OF_WEEK</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/DayOfWeek</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import DayOfWeek, {MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY, DAYS_OF_WEEK} from "ts-time/DayOfWeek";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>DayOfWeek</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+There are exactly 7 days of week, with respective numeric values:
+<ol>
+  <li><a href="#MONDAY" target="_parent">MONDAY</a></li>
+  <li><a href="#TUESDAY" target="_parent">TUESDAY</a></li>
+  <li><a href="#WEDNESDAY" target="_parent">WEDNESDAY</a></li>
+  <li><a href="#THURSDAY" target="_parent">THURSDAY</a></li>
+  <li><a href="#FRIDAY" target="_parent">FRIDAY</a></li>
+  <li><a href="#SATURDAY" target="_parent">SATURDAY</a></li>
+  <li><a href="#SUNDAY" target="_parent">SUNDAY</a></li>
+</ol>
+You can't construct new days of week, you can only get an existing day of week directly or with <a href="#default--of-static" target="_parent">of</a> method. With
+that said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
+check.
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--value"></span>value<a class="anchorjs-link" href="#default--value" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly value: number</code></p>
+Numeric value of the day.
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--compareTo"></span>compareTo<a class="anchorjs-link" href="#default--compareTo" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>DayOfWeek</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Day of week to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same day of week;</li>
+  <li>positive value if this day goes after <b>other</b>;</li>
+  <li>negative value if this day goes before <b>other</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>DayOfWeek</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Day of week to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this day goes before <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>DayOfWeek</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Day of week to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this day goes after <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: number | <b>DayOfWeek</b>): <b>DayOfWeek</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Numeric value of the day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>DayOfWeek</b> representation of the day.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compareTo-static"></span>compareTo<a class="anchorjs-link" href="#default--compareTo-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>DayOfWeek</b>, y: <b>DayOfWeek</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One day.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is <b>x</b> === <b>y</b>;</li>
+  <li>positive value if <b>x</b> goes after <b>y</b>;</li>
+  <li>negative value if <b>x</b> goes before <b>y</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>DayOfWeek</b>, y: <b>DayOfWeek</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One day.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>DayOfWeek</b>, y: <b>DayOfWeek</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One day.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="MONDAY"></span>MONDAY<a class="anchorjs-link" href="#MONDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MONDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Monday. Has numeric value of 1.
+</div>
+<h3><span id="TUESDAY"></span>TUESDAY<a class="anchorjs-link" href="#TUESDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>TUESDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Tuesday. Has numeric value of 2.
+</div>
+<h3><span id="WEDNESDAY"></span>WEDNESDAY<a class="anchorjs-link" href="#WEDNESDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>WEDNESDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Wednesday. Has numeric value of 3.
+</div>
+<h3><span id="THURSDAY"></span>THURSDAY<a class="anchorjs-link" href="#THURSDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>THURSDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Thursday. Has numeric value of 4.
+</div>
+<h3><span id="FRIDAY"></span>FRIDAY<a class="anchorjs-link" href="#FRIDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>FRIDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Friday. Has numeric value of 5.
+</div>
+<h3><span id="SATURDAY"></span>SATURDAY<a class="anchorjs-link" href="#SATURDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>SATURDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Saturday. Has numeric value of 6.
+</div>
+<h3><span id="SUNDAY"></span>SUNDAY<a class="anchorjs-link" href="#SUNDAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>SUNDAY: <b>DayOfWeek</b></code></p>
+<b>DayOfWeek</b> representation of Sunday. Has numeric value of 7.
+</div>
+<h3><span id="DAYS_OF_WEEK"></span>DAYS_OF_WEEK<a class="anchorjs-link" href="#DAYS_OF_WEEK" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAYS_OF_WEEK: <b>DayOfWeek</b>[]</code></p>
+Array of all days of week, from <a href="#MONDAY" target="_parent">MONDAY</a> to <a href="#SUNDAY" target="_parent">SUNDAY</a>.
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><b>DayOfWeek</b></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

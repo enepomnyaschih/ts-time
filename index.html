@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time</title>
+		<link rel="stylesheet" type="text/css" href="bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href=".">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href=".">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			<div class="container">
+  <div class="jumbotron">
+    <h1 class="display-4">ts-time</h1>
+    <p class="lead">TypeScript library of immutable date/time models with time zone support.</p>
+    <hr class="my-4">
+    <p>This library mimics <a href="https://www.baeldung.com/java-8-date-time-intro" target="_blank">Java 8 Date/Time API</a>,
+    adjusting its API to the best practices of TypeScript and JavaScript. It uses <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" target="_blank">Intl.DateTimeFormat</a>
+    API to detect time zone offsets, providing efficient and reliable time zone support in your client code.</p>
+  </div>
+  <p>ts-time is available as <a href="https://www.npmjs.com/package/ts-time" target="_blank">npm package</a>.</p>
+  <pre>
+  npm install --save ts-time</pre>
+  <p>ts-time features:</p>
+  <ul>
+    <li>Various useful <a href="ts-time/constants.html" target="_parent">constants</a>.</li>
+    <li><a href="ts-time/Instant.html" target="_parent">Instant</a> class representing an instant of time without time zone relation.</li>
+    <li><a href="ts-time/LocalDate.html" target="_parent">LocalDate</a>, <a href="ts-time/LocalTime.html" target="_parent">LocalTime</a>, <a href="ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a> classes representing dates and times without time zone relation.</li>
+    <li><a href="ts-time/Zone.html#ZoneId" target="_parent">ZoneId</a>, <a href="ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a> classes representing time zones and time zone offsets.</li>
+    <li><a href="ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a> and <a href="ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a> classes representing an instant of time in a specific time zone or time zone offset.</li>
+    <li><a href="ts-time/Duration.html" target="_parent">Duration</a> and <a href="ts-time/Period.html" target="_parent">Period</a> classes representing time intervals.</li>
+    <li><a href="ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a>, <a href="ts-time/Month.html" target="_parent">Month</a> and <a href="ts-time/Era.html" target="_parent">Era</a> classes and constants representing certain calendar terms.</li>
+    <li>and many other...</li>
+  </ul>
+  <p>ts-time is a pure definitely-typed object-oriented solution. Any code fragment developed with ts-time is easy to
+  read, understand and maintain, because it manipulates data structures serving specific purposes:</p>
+  <pre>
+  import <a href="ts-time/LocalDate.html" target="_parent">LocalDate</a> from &quot;ts-time/LocalDate&quot;;
+  import <a href="ts-time/Period.html" target="_parent">Period</a> from &quot;ts-time/Period&quot;;
+
+  function buildGraduation(from: <a href="ts-time/LocalDate.html" target="_parent">LocalDate</a>, to: <a href="ts-time/LocalDate.html" target="_parent">LocalDate</a>, step: <a href="ts-time/Period.html" target="_parent">Period</a>) {
+    const result: <a href="ts-time/LocalDate.html" target="_parent">LocalDate</a>[] = [];
+    while (from.<a href="ts-time/LocalDate.html#default--isBefore" target="_parent">isBefore</a>(to)) {
+      result.push(from);
+      from = to.<a href="ts-time/LocalDate.html#default--plus" target="_parent">plus</a>(step);
+    }
+    return result;
+  }</pre>
+  <p>All data structures defined in ts-time are immutable. Thanks to this, you can be sure that your values never get
+  spoiled when you pass them to a third party function or component. For third parties that don't support ts-time
+  data structures, you may convert the structures to native Date or milliseconds and back.</p>
+  <p>None of the defined data structures has public constructors. You should use static methods to initialize them.
+  Methods starting with "of" create new instances by parameters. Methods starting with "from" convert the structures
+  to each other. Methods "parse" create new instances by strings, that are always compatible with "toString".</p>
+  <p>Project license is <a href="https://github.com/enepomnyaschih/ts-time/blob/master/LICENSE" target="_blank">MIT</a>.</p>
+  <p>Find source code and bug tracker at <a href="https://github.com/enepomnyaschih/ts-time" target="_blank">GitHub</a>.</p>
+</div>
+<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="ts-time/constants.html" target="_parent">constants</a></li>
+  <li><a href="ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="ts-time/Duration.html" target="_parent">Duration</a></li>
+  <li><a href="ts-time/Era.html" target="_parent">Era</a></li>
+  <li><a href="ts-time/Instant.html" target="_parent">Instant</a></li>
+  <li><a href="ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="ts-time/Month.html" target="_parent">Month</a></li>
+  <li><a href="ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="ts-time/Period.html" target="_parent">Period</a></li>
+  <li><a href="ts-time/TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="ts-time/utils.html" target="_parent">utils</a></li>
+  <li><a href="ts-time/Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
+	</body>
+</html>

@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/LocalTime - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/LocalTime</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--totalMs">totalMs</a>
+<a class="nav-link" href="#default--hour">hour</a>
+<a class="nav-link" href="#default--minute">minute</a>
+<a class="nav-link" href="#default--second">second</a>
+<a class="nav-link" href="#default--ms">ms</a>
+<a class="nav-link" href="#default--truncateToHour">truncateToHour</a>
+<a class="nav-link" href="#default--truncateToMinute">truncateToMinute</a>
+<a class="nav-link" href="#default--truncateToSecond">truncateToSecond</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--get">get</a>
+<a class="nav-link" href="#default--compareTo">compareTo</a>
+<a class="nav-link" href="#default--equals">equals</a>
+<a class="nav-link" href="#default--isBefore">isBefore</a>
+<a class="nav-link" href="#default--isAfter">isAfter</a>
+<a class="nav-link" href="#default--atDate">atDate</a>
+<a class="nav-link" href="#default--plus">plus</a>
+<a class="nav-link" href="#default--minus">minus</a>
+<a class="nav-link" href="#default--withHour">withHour</a>
+<a class="nav-link" href="#default--withMinute">withMinute</a>
+<a class="nav-link" href="#default--withSecond">withSecond</a>
+<a class="nav-link" href="#default--withMs">withMs</a>
+<a class="nav-link" href="#default--toString">toString</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--ofTotalMs-static">ofTotalMs</a>
+<a class="nav-link" href="#default--fromNativeLocal-static">fromNativeLocal</a>
+<a class="nav-link" href="#default--fromNativeUtc-static">fromNativeUtc</a>
+<a class="nav-link" href="#default--parse-static">parse</a>
+<a class="nav-link" href="#default--compare-static">compare</a>
+<a class="nav-link" href="#default--equal-static">equal</a>
+<a class="nav-link" href="#default--isBefore-static">isBefore</a>
+<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+</nav>
+
+<a class="nav-link" href="#MIN_TIME">MIN_TIME</a>
+
+
+<a class="nav-link" href="#MAX_TIME">MAX_TIME</a>
+
+
+<a class="nav-link" href="#MAX_TIME12">MAX_TIME12</a>
+
+
+<a class="nav-link" href="#MIDNIGHT">MIDNIGHT</a>
+
+
+<a class="nav-link" href="#NOON">NOON</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/LocalTime</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import LocalTime, {MIN_TIME, MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "ts-time/LocalTime";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>LocalTime</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Comprises a specific time, without date and time zone relation. In other words, this is a tuple of (hour, minute,
+second, millisecond), or a number of milliseconds since day start (from 0 inclusive to <a href="constants.html#MS_PER_DAY" target="_parent">MS_PER_DAY</a> exclusive).
+You may bind time to a date with <a href="#default--atDate" target="_parent">atDate</a> method.
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--totalMs"></span>totalMs<a class="anchorjs-link" href="#default--totalMs" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly totalMs: number</code></p>
+Total number of milliseconds since day start (from 0 inclusive to <a href="constants.html#MS_PER_DAY" target="_parent">MS_PER_DAY</a> exclusive).
+</div>
+
+<h5><span id="default--hour"></span>hour<a class="anchorjs-link" href="#default--hour" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly hour: number</code></p>
+Hour of a day (0-23).
+</div>
+
+<h5><span id="default--minute"></span>minute<a class="anchorjs-link" href="#default--minute" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly minute: number</code></p>
+Minute of an hour (0-59).
+</div>
+
+<h5><span id="default--second"></span>second<a class="anchorjs-link" href="#default--second" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly second: number</code></p>
+Second of a minute (0-59).
+</div>
+
+<h5><span id="default--ms"></span>ms<a class="anchorjs-link" href="#default--ms" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly ms: number</code></p>
+Millisecond of a second (0-999).
+</div>
+
+<h5><span id="default--truncateToHour"></span>truncateToHour<a class="anchorjs-link" href="#default--truncateToHour" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly truncateToHour: <b>LocalTime</b></code></p>
+Start of the hour (i.e. 0 minutes, 0 seconds, 0 milliseconds).
+</div>
+
+<h5><span id="default--truncateToMinute"></span>truncateToMinute<a class="anchorjs-link" href="#default--truncateToMinute" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly truncateToMinute: <b>LocalTime</b></code></p>
+Start of the minute (i.e. 0 seconds, 0 milliseconds).
+</div>
+
+<h5><span id="default--truncateToSecond"></span>truncateToSecond<a class="anchorjs-link" href="#default--truncateToSecond" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly truncateToSecond: <b>LocalTime</b></code></p>
+Start of the second (i.e. 0 milliseconds).
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--get"></span>get<a class="anchorjs-link" href="#default--get" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(field: <a href="TimeField.html" target="_parent">TimeField</a>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">field</dt><dd class="col-lg-10 col-sm-9">Field to get.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Value of the specified field.</dd>
+</dl>
+<p class="text-danger">This is an experimental API. There's a higher chance that the authors of the library may
+remove or change it in future releases.</p>
+
+</div>
+
+<h5><span id="default--compareTo"></span>compareTo<a class="anchorjs-link" href="#default--compareTo" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>LocalTime</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Local time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same local time;</li>
+  <li>positive value if this local time goes after <b>other</b>;</li>
+  <li>negative value if this local time goes before <b>other</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equals"></span>equals<a class="anchorjs-link" href="#default--equals" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Local time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this local time is equal to <b>other</b>. Null and undefined are only equal to each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Local time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this local time goes before <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Local time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this local time goes after <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--atDate"></span>atDate<a class="anchorjs-link" href="#default--atDate" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(date: <a href="LocalDate.html" target="_parent">LocalDate</a>): <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">date</dt><dd class="col-lg-10 col-sm-9">Local date.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">This time on the specified date.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--plus"></span>plus<a class="anchorjs-link" href="#default--plus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(duration: <a href="Duration.html" target="_parent">Duration</a>): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">duration</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> to add.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> shifted onwards from this one by the specified duration.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--minus"></span>minus<a class="anchorjs-link" href="#default--minus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(duration: <a href="Duration.html" target="_parent">Duration</a>): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">duration</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> to subtract.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> shifted backwards from this one by the specified duration.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withHour"></span>withHour<a class="anchorjs-link" href="#default--withHour" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(hour: number): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">hour</dt><dd class="col-lg-10 col-sm-9">Hour of a day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> with the specified hour of a day. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withMinute"></span>withMinute<a class="anchorjs-link" href="#default--withMinute" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(minute: number): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">minute</dt><dd class="col-lg-10 col-sm-9">Minute of an hour.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> with the specified minute of an hour. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withSecond"></span>withSecond<a class="anchorjs-link" href="#default--withSecond" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(second: number): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">second</dt><dd class="col-lg-10 col-sm-9">Second of a minute.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> with the specified second of a minute. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withMs"></span>withMs<a class="anchorjs-link" href="#default--withMs" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(ms: number): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Millisecond of a second.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>LocalTime</b> with the specified millisecond of a second. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--toString"></span>toString<a class="anchorjs-link" href="#default--toString" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">String representation of the time in ISO format, such as "18:30:15.225".</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(hour: number, minute: number = 0, second: number = 0, ms: number = 0): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">hour</dt><dd class="col-lg-10 col-sm-9">Hour of day.</dd>
+<dt class="col-lg-2 col-sm-3">minute</dt><dd class="col-lg-10 col-sm-9">Minute of hour.</dd>
+<dt class="col-lg-2 col-sm-3">second</dt><dd class="col-lg-10 col-sm-9">Second of minute.</dd>
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Millisecond of second.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>LocalTime</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofTotalMs-static"></span>ofTotalMs<a class="anchorjs-link" href="#default--ofTotalMs-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(totalMs: number): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">totalMs</dt><dd class="col-lg-10 col-sm-9">Total number of milliseconds since start of the day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>LocalTime</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--fromNativeLocal-static"></span>fromNativeLocal<a class="anchorjs-link" href="#default--fromNativeLocal-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(date: Date): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">date</dt><dd class="col-lg-10 col-sm-9">Native JS date.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>LocalTime</b> representation of time of <b>date</b> in the browser time zone,
+for compatibility with native and third party API.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--fromNativeUtc-static"></span>fromNativeUtc<a class="anchorjs-link" href="#default--fromNativeUtc-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(date: Date): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">date</dt><dd class="col-lg-10 col-sm-9">Native JS date.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>LocalTime</b> representation of time of <b>date</b> in <a href="Zone.html#UTC" target="_parent">UTC</a>,
+for compatibility with native and third party API.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--parse-static"></span>parse<a class="anchorjs-link" href="#default--parse-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(str: string): <b>LocalTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">str</dt><dd class="col-lg-10 col-sm-9">String representation of a local time in ISO format, such as '18:30:15.225'.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>LocalTime</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compare-static"></span>compare<a class="anchorjs-link" href="#default--compare-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>LocalTime</b>, y: <b>LocalTime</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One local time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another local time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this <b>x</b> and <b>y</b> are the same local dates;</li>
+  <li>positive value if <b>x</b> goes after <b>y</b>;</li>
+  <li>negative value if <b>x</b> goes before <b>y</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equal-static"></span>equal<a class="anchorjs-link" href="#default--equal-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>LocalTime</b>, y: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One local time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another local time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> is equal to <b>y</b>. Null and undefined are only equal to each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>LocalTime</b>, y: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One local time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another local time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>LocalTime</b>, y: <b>LocalTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One local time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another local time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="MIN_TIME"></span>MIN_TIME<a class="anchorjs-link" href="#MIN_TIME" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MIN_TIME: <b>LocalTime</b></code></p>
+Minimal <b>LocalTime</b> (00:00:00.000).
+</div>
+<h3><span id="MAX_TIME"></span>MAX_TIME<a class="anchorjs-link" href="#MAX_TIME" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MAX_TIME: <b>LocalTime</b></code></p>
+Maximum <b>LocalTime</b> (23:59:59.999).
+</div>
+<h3><span id="MAX_TIME12"></span>MAX_TIME12<a class="anchorjs-link" href="#MAX_TIME12" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MAX_TIME12: <b>LocalTime</b></code></p>
+Maximum <b>LocalTime</b> in 12-hour system (11:59:59.999).
+</div>
+<h3><span id="MIDNIGHT"></span>MIDNIGHT<a class="anchorjs-link" href="#MIDNIGHT" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MIDNIGHT: <b>LocalTime</b></code></p>
+Midnight (00:00:00.000).
+</div>
+<h3><span id="NOON"></span>NOON<a class="anchorjs-link" href="#NOON" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>NOON: <b>LocalTime</b></code></p>
+Noon (12:00:00.000).
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><b>LocalTime</b></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/Period - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/Period</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--empty">empty</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--addToDate">addToDate</a>
+<a class="nav-link" href="#default--between">between</a>
+<a class="nav-link" href="#default--multiply">multiply</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--ofYears-static">ofYears</a>
+<a class="nav-link" href="#default--ofQuarters-static">ofQuarters</a>
+<a class="nav-link" href="#default--ofMonths-static">ofMonths</a>
+<a class="nav-link" href="#default--ofWeeks-static">ofWeeks</a>
+<a class="nav-link" href="#default--ofDays-static">ofDays</a></nav>
+</nav>
+
+<a class="nav-link" href="#NULL_PERIOD">NULL_PERIOD</a>
+
+
+<a class="nav-link" href="#DAY_PERIOD">DAY_PERIOD</a>
+
+
+<a class="nav-link" href="#WEEK_PERIOD">WEEK_PERIOD</a>
+
+
+<a class="nav-link" href="#MONTH_PERIOD">MONTH_PERIOD</a>
+
+
+<a class="nav-link" href="#QUARTER_PERIOD">QUARTER_PERIOD</a>
+
+
+<a class="nav-link" href="#YEAR_PERIOD">YEAR_PERIOD</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/Period</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import Period, {NULL_PERIOD, DAY_PERIOD, WEEK_PERIOD, MONTH_PERIOD, QUARTER_PERIOD, YEAR_PERIOD} from "ts-time/Period";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>abstract class <b>Period</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<p>Comprises a fixed date/time interval in certain units of measurement. As opposed to <a href="Duration.html" target="_parent">Duration</a>, it can comprise a
+variable-length interval such as month. Month <b>duration</b> varies from 28 to 31 days, but in terms of
+<b>periods</b>, month is a valid unit. <b>Period</b> is mainly involved to manipulate date/time-related objects such as
+<a href="LocalDate.html" target="_parent">LocalDate</a>, <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>, <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> and <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>. In particular, <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--plusPeriod" target="_parent">plusPeriod</a> method
+adds the period to a respective date/time, not instant. It means that if you add <a href="#DAY_PERIOD" target="_parent">DAY_PERIOD</a> to a <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>,
+the real time shift will not be 24 hours if time zone offset changes during this day, while <a href="LocalTime.html" target="_parent">LocalTime</a> will truly
+stay the same:</p>
+<pre>
+const start = <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--parse-static" target="_parent">parse</a>(&quot;2019-10-27T00:00:00.000+02:00[Europe/Berlin]&quot;),
+  end = start.<a href="ZonedDateTime.html#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="#DAY_PERIOD" target="_parent">DAY_PERIOD</a>);
+expect(end.<a href="ZonedDateTime.html#default--toString" target="_parent">toString</a>()).toBe(&quot;2019-10-28T00:00:00.000+01:00[Europe/Berlin]&quot;);
+expect(end.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a> - start.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a>).toBe(25 * <a href="constants.html#MS_PER_HOUR" target="_parent">MS_PER_HOUR</a>);</pre>
+<p>To ascertain a predictable fixed real time shift, you are supposed to add a <a href="Duration.html" target="_parent">Duration</a>.</p>
+<p><b>Period</b> doesn't support alignment out of the box. For example, <a href="#WEEK_PERIOD" target="_parent">WEEK_PERIOD</a> won't automatically snap your
+dates to <a href="DayOfWeek.html#MONDAY" target="_parent">MONDAY</a>.</p>
+<p>Current API doesn't support complex periods such as 1 month + 1 day, as their application depends on the order,
+and use cases of such periods are unclear.</p>
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--empty"></span>empty<a class="anchorjs-link" href="#default--empty" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly empty: boolean</code></p>
+Indicates if this period is empty, i.e. an attempt to add it to any date any number of times always returns
+the same date.
+
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--addToDate"></span>addToDate<a class="anchorjs-link" href="#default--addToDate" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>abstract (date: <a href="LocalDate.html" target="_parent">LocalDate</a>, amount: number): <a href="LocalDate.html" target="_parent">LocalDate</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">date</dt><dd class="col-lg-10 col-sm-9">Date to add the periods to.</dd>
+<dt class="col-lg-2 col-sm-3">amount</dt><dd class="col-lg-10 col-sm-9">Number of period to add.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Date shifted from <b>date</b> onwards by the specified number of these periods.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--between"></span>between<a class="anchorjs-link" href="#default--between" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>abstract (start: <a href="LocalDate.html" target="_parent">LocalDate</a>, end: <a href="LocalDate.html" target="_parent">LocalDate</a>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">start</dt><dd class="col-lg-10 col-sm-9">Start date.</dd>
+<dt class="col-lg-2 col-sm-3">end</dt><dd class="col-lg-10 col-sm-9">End date.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Integer number of periods fitting between the specified dates, with the highest absolute value. If
+end date stands before start date, the result will not be positive. If this period is <a href="#default--empty" target="_parent">empty</a>, the methods
+always returns NaN.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--multiply"></span>multiply<a class="anchorjs-link" href="#default--multiply" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(multiplier: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">multiplier</dt><dd class="col-lg-10 col-sm-9">Multiplier of the period.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">This period taken the specified number of times.</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--ofYears-static"></span>ofYears<a class="anchorjs-link" href="#default--ofYears-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(years: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">years</dt><dd class="col-lg-10 col-sm-9">Number of years.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Period</b> representing the specified number of years.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofQuarters-static"></span>ofQuarters<a class="anchorjs-link" href="#default--ofQuarters-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(quarters: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">quarters</dt><dd class="col-lg-10 col-sm-9">Number of quarters.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Period</b> representing the specified number of quarters.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofMonths-static"></span>ofMonths<a class="anchorjs-link" href="#default--ofMonths-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(months: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">months</dt><dd class="col-lg-10 col-sm-9">Number of months.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Period</b> representing the specified number of months.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofWeeks-static"></span>ofWeeks<a class="anchorjs-link" href="#default--ofWeeks-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(weeks: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">weeks</dt><dd class="col-lg-10 col-sm-9">Number of weeks.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Period</b> representing the specified number of weeks.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofDays-static"></span>ofDays<a class="anchorjs-link" href="#default--ofDays-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(days: number): <b>Period</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">days</dt><dd class="col-lg-10 col-sm-9">Number of days.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Period</b> representing the specified number of days.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="NULL_PERIOD"></span>NULL_PERIOD<a class="anchorjs-link" href="#NULL_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>NULL_PERIOD: <b>Period</b></code></p>
+Null (empty) period. An attempt to add it to any date results in the same date.
+</div>
+<h3><span id="DAY_PERIOD"></span>DAY_PERIOD<a class="anchorjs-link" href="#DAY_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_PERIOD: <b>Period</b></code></p>
+Period representing a calendar day.
+</div>
+<h3><span id="WEEK_PERIOD"></span>WEEK_PERIOD<a class="anchorjs-link" href="#WEEK_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>WEEK_PERIOD: <b>Period</b></code></p>
+Period representing a calendar week (7 days).
+</div>
+<h3><span id="MONTH_PERIOD"></span>MONTH_PERIOD<a class="anchorjs-link" href="#MONTH_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MONTH_PERIOD: <b>Period</b></code></p>
+Period representing a calendar month.
+</div>
+<h3><span id="QUARTER_PERIOD"></span>QUARTER_PERIOD<a class="anchorjs-link" href="#QUARTER_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>QUARTER_PERIOD: <b>Period</b></code></p>
+Period representing a calendar quarter (3 months).
+</div>
+<h3><span id="YEAR_PERIOD"></span>YEAR_PERIOD<a class="anchorjs-link" href="#YEAR_PERIOD" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>YEAR_PERIOD: <b>Period</b></code></p>
+Period representing a calendar year.
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><b>Period</b></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

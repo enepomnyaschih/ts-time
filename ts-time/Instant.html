@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/Instant - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/Instant</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--epochMs">epochMs</a>
+<a class="nav-link" href="#default--native">native</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--atOffset">atOffset</a>
+<a class="nav-link" href="#default--atZone">atZone</a>
+<a class="nav-link" href="#default--compareTo">compareTo</a>
+<a class="nav-link" href="#default--equals">equals</a>
+<a class="nav-link" href="#default--isBefore">isBefore</a>
+<a class="nav-link" href="#default--isAfter">isAfter</a>
+<a class="nav-link" href="#default--plus">plus</a>
+<a class="nav-link" href="#default--minus">minus</a>
+<a class="nav-link" href="#default--until">until</a>
+<a class="nav-link" href="#default--toString">toString</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--now-static">now</a>
+<a class="nav-link" href="#default--ofEpochMs-static">ofEpochMs</a>
+<a class="nav-link" href="#default--fromNative-static">fromNative</a>
+<a class="nav-link" href="#default--parse-static">parse</a>
+<a class="nav-link" href="#default--compare-static">compare</a>
+<a class="nav-link" href="#default--equal-static">equal</a>
+<a class="nav-link" href="#default--isBefore-static">isBefore</a>
+<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+</nav>
+
+<a class="nav-link" href="#EPOCH">EPOCH</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/Instant</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import Instant, {EPOCH} from "ts-time/Instant";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>Instant</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Represents an instant of time. Lacking time zone and offset information, it doesn't return any particular
+date/time indication. In order to obtain a particular date/time, you must call <a href="#default--atZone" target="_parent">atZone</a> or <a href="#default--atOffset" target="_parent">atOffset</a> method.
+<b>Instant</b> object is determined by <a href="#default--epochMs" target="_parent">epochMs</a> - number of milliseconds since ECMAScript epoch (1st of <a href="Month.html#JANUARY" target="_parent">JANUARY</a> 1970
+UTC).
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--epochMs"></span>epochMs<a class="anchorjs-link" href="#default--epochMs" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly epochMs: number</code></p>
+Number of milliseconds since epoch.
+</div>
+
+<h5><span id="default--native"></span>native<a class="anchorjs-link" href="#default--native" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly native: Date</code></p>
+Native JS representation of the <b>Instant</b>, for compatibility with native and third party API.
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--atOffset"></span>atOffset<a class="anchorjs-link" href="#default--atOffset" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(offset: <a href="../ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>): <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">offset</dt><dd class="col-lg-10 col-sm-9">Time zone offset.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Date/time indication of the instant in the specified time zone offset.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--atZone"></span>atZone<a class="anchorjs-link" href="#default--atZone" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(zone: <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>): <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">offset</dt><dd class="col-lg-10 col-sm-9">Time zone.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Date/time indication of the instant in the specified time zone.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compareTo"></span>compareTo<a class="anchorjs-link" href="#default--compareTo" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Instant</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Instant to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same instant;</li>
+  <li>positive value if this instant goes after <b>other</b>;</li>
+  <li>negative value if this instant goes before <b>other</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equals"></span>equals<a class="anchorjs-link" href="#default--equals" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Instant to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this instant is equal to <b>other</b>. Null and undefined are only equal to each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Instant to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this instant goes before <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Instant to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this instant goes after <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--plus"></span>plus<a class="anchorjs-link" href="#default--plus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(ms: number | <a href="Duration.html" target="_parent">Duration</a>): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> or number of milliseconds to add.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>Instant</b> shifted onwards from this one by the specified duration.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--minus"></span>minus<a class="anchorjs-link" href="#default--minus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(ms: number | <a href="Duration.html" target="_parent">Duration</a>): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> or number of milliseconds to subtract.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>Instant</b> shifted backwards from this one by the specified duration.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--until"></span>until<a class="anchorjs-link" href="#default--until" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(instant: <b>Instant</b>): <a href="Duration.html" target="_parent">Duration</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">instant</dt><dd class="col-lg-10 col-sm-9">Another <b>Instant</b>.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> from this instant to the specified one.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--toString"></span>toString<a class="anchorjs-link" href="#default--toString" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">String representation of the instant in ISO format in <a href="Zone.html#UTC" target="_parent">UTC</a>, such as "2019-12-30T14:49:50.254Z".</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--now-static"></span>now<a class="anchorjs-link" href="#default--now-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Current instant.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofEpochMs-static"></span>ofEpochMs<a class="anchorjs-link" href="#default--ofEpochMs-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(epochMs: number): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">epochMs</dt><dd class="col-lg-10 col-sm-9">Number of milliseconds since epoch.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Instant</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--fromNative-static"></span>fromNative<a class="anchorjs-link" href="#default--fromNative-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(native: Date): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">native</dt><dd class="col-lg-10 col-sm-9">Native JS Date.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Instant</b> representation, for compatibility with native and third party API.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--parse-static"></span>parse<a class="anchorjs-link" href="#default--parse-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(str: string): <b>Instant</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">str</dt><dd class="col-lg-10 col-sm-9">String representation of an instant in ISO format in any time zone or offset.
+See <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="../ZonedDateTime.html#default--parse-static" target="_parent">parse</a> for details.
+</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Instant</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compare-static"></span>compare<a class="anchorjs-link" href="#default--compare-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Instant</b>, y: <b>Instant</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One instant.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this <b>x</b> and <b>y</b> are the same instants;</li>
+  <li>positive value if <b>x</b> goes after <b>y</b>;</li>
+  <li>negative value if <b>x</b> goes before <b>y</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equal-static"></span>equal<a class="anchorjs-link" href="#default--equal-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Instant</b>, y: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One instant.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> is equal to <b>y</b>. Null and undefined are only equal to each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Instant</b>, y: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One instant.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Instant</b>, y: <b>Instant</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One instant.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="EPOCH"></span>EPOCH<a class="anchorjs-link" href="#EPOCH" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>EPOCH: <b>Instant</b></code></p>
+<b>Instant</b> with <a href="#default--epochMs" target="_parent">epochMs</a> = 0, i.e. representing ECMAScript epoch (1st of <a href="Month.html#JANUARY" target="_parent">JANUARY</a> 1970 UTC).
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><b>Instant</b></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

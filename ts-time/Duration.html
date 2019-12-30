@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/Duration - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/Duration</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--ms">ms</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--plus">plus</a>
+<a class="nav-link" href="#default--minus">minus</a>
+<a class="nav-link" href="#default--multiply">multiply</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--ofMs-static">ofMs</a>
+<a class="nav-link" href="#default--ofSeconds-static">ofSeconds</a>
+<a class="nav-link" href="#default--ofMinutes-static">ofMinutes</a>
+<a class="nav-link" href="#default--ofHours-static">ofHours</a>
+<a class="nav-link" href="#default--ofDays-static">ofDays</a>
+<a class="nav-link" href="#default--ofWeeks-static">ofWeeks</a>
+<a class="nav-link" href="#default--ofComponents-static">ofComponents</a></nav>
+</nav>
+
+<a class="nav-link" href="#NULL_DURATION">NULL_DURATION</a>
+
+
+<a class="nav-link" href="#MS_DURATION">MS_DURATION</a>
+
+
+<a class="nav-link" href="#SECOND_DURATION">SECOND_DURATION</a>
+
+
+<a class="nav-link" href="#MINUTE_DURATION">MINUTE_DURATION</a>
+
+
+<a class="nav-link" href="#HOUR_DURATION">HOUR_DURATION</a>
+
+
+<a class="nav-link" href="#DAY_DURATION">DAY_DURATION</a>
+
+
+<a class="nav-link" href="#WEEK_DURATION">WEEK_DURATION</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/Duration</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import Duration, {NULL_DURATION, MS_DURATION, SECOND_DURATION, MINUTE_DURATION, HOUR_DURATION, DAY_DURATION, WEEK_DURATION} from "ts-time/Duration";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>Duration</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Comprises a fixed time interval in milliseconds. As opposed to <a href="Period.html" target="_parent">Period</a>, it can't comprise a variable-length
+interval such as month, because month duration varies from 28 to 31 days. <b>Duration</b> is mainly involved to
+manipulate <a href="Instant.html" target="_parent">Instant</a> objects. In particular, <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--plusDuration" target="_parent">plusDuration</a> method adds the duration to a respective
+instant, not date/time. It means that if you add <a href="#DAY_DURATION" target="_parent">DAY_DURATION</a> to a <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>, you may receive a different
+<a href="LocalTime.html" target="_parent">LocalTime</a> if time zone offset changes during this day, while real time difference will truly be 24 hours:
+<pre>
+const start = <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--parse-static" target="_parent">parse</a>(&quot;2019-10-27T00:00:00.000+02:00[Europe/Berlin]&quot;),
+  end = start.<a href="ZonedDateTime.html#default--plusDuration" target="_parent">plusDuration</a>(<a href="#DAY_DURATION" target="_parent">DAY_DURATION</a>);
+expect(end.<a href="ZonedDateTime.html#default--toString" target="_parent">toString</a>()).toBe(&quot;2019-10-27T23:00:00.000+01:00[Europe/Berlin]&quot;);
+expect(end.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a> - start.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a>).toBe(24 * <a href="constants.html#MS_PER_HOUR" target="_parent">MS_PER_HOUR</a>);</pre>
+To ascertain same <a href="LocalTime.html" target="_parent">LocalTime</a>, you are supposed to add a <a href="Period.html" target="_parent">Period</a>.
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--ms"></span>ms<a class="anchorjs-link" href="#default--ms" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly ms: number</code></p>
+Duration in milliseconds.
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--plus"></span>plus<a class="anchorjs-link" href="#default--plus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: number | <b>Duration</b>): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Duration to add, or milliseconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Sum of two durations.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--minus"></span>minus<a class="anchorjs-link" href="#default--minus" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: number | <b>Duration</b>): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Duration to subtract, or milliseconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Difference of two durations.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--multiply"></span>multiply<a class="anchorjs-link" href="#default--multiply" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(multiplier: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">multiplier</dt><dd class="col-lg-10 col-sm-9">Multiplier of the duration.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">This duration taken the specified number of times.</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: number | <b>Duration</b>): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Duration as object or number of milliseconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofMs-static"></span>ofMs<a class="anchorjs-link" href="#default--ofMs-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(ms: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in milliseconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofSeconds-static"></span>ofSeconds<a class="anchorjs-link" href="#default--ofSeconds-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(seconds: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in seconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofMinutes-static"></span>ofMinutes<a class="anchorjs-link" href="#default--ofMinutes-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(minutes: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in minutes.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofHours-static"></span>ofHours<a class="anchorjs-link" href="#default--ofHours-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(hours: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in hours.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofDays-static"></span>ofDays<a class="anchorjs-link" href="#default--ofDays-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(days: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in days.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofWeeks-static"></span>ofWeeks<a class="anchorjs-link" href="#default--ofWeeks-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(weeks: number): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Duration in weeks.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofComponents-static"></span>ofComponents<a class="anchorjs-link" href="#default--ofComponents-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(days: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0): <b>Duration</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">days</dt><dd class="col-lg-10 col-sm-9">Number of days.</dd>
+<dt class="col-lg-2 col-sm-3">hours</dt><dd class="col-lg-10 col-sm-9">Number of hours.</dd>
+<dt class="col-lg-2 col-sm-3">minutes</dt><dd class="col-lg-10 col-sm-9">Number of minutes.</dd>
+<dt class="col-lg-2 col-sm-3">seconds</dt><dd class="col-lg-10 col-sm-9">Number of seconds.</dd>
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Number of milliseconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Duration</b> instance.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="NULL_DURATION"></span>NULL_DURATION<a class="anchorjs-link" href="#NULL_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>NULL_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing an empty interval (0 milliseconds).
+</div>
+<h3><span id="MS_DURATION"></span>MS_DURATION<a class="anchorjs-link" href="#MS_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MS_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing a millisecond interval of real time.
+</div>
+<h3><span id="SECOND_DURATION"></span>SECOND_DURATION<a class="anchorjs-link" href="#SECOND_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>SECOND_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing a second interval of real time.
+</div>
+<h3><span id="MINUTE_DURATION"></span>MINUTE_DURATION<a class="anchorjs-link" href="#MINUTE_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MINUTE_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing a minute interval of real time.
+</div>
+<h3><span id="HOUR_DURATION"></span>HOUR_DURATION<a class="anchorjs-link" href="#HOUR_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>HOUR_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing an hour interval of real time.
+</div>
+<h3><span id="DAY_DURATION"></span>DAY_DURATION<a class="anchorjs-link" href="#DAY_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing a day interval of real time.
+</div>
+<h3><span id="WEEK_DURATION"></span>WEEK_DURATION<a class="anchorjs-link" href="#WEEK_DURATION" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>WEEK_DURATION: <b>Duration</b></code></p>
+<b>Duration</b> representing a week interval of real time.
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><b>Duration</b></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

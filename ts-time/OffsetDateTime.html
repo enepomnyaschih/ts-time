@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/OffsetDateTime - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/OffsetDateTime</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--dateTime">dateTime</a>
+<a class="nav-link" href="#default--instant">instant</a>
+<a class="nav-link" href="#default--offset">offset</a>
+<a class="nav-link" href="#default--date">date</a>
+<a class="nav-link" href="#default--time">time</a>
+<a class="nav-link" href="#default--native">native</a>
+<a class="nav-link" href="#default--epochMs">epochMs</a>
+<a class="nav-link" href="#default--era">era</a>
+<a class="nav-link" href="#default--year">year</a>
+<a class="nav-link" href="#default--yearOfEra">yearOfEra</a>
+<a class="nav-link" href="#default--weekBasedYear">weekBasedYear</a>
+<a class="nav-link" href="#default--month">month</a>
+<a class="nav-link" href="#default--weekOfWeekBasedYear">weekOfWeekBasedYear</a>
+<a class="nav-link" href="#default--dayOfYear">dayOfYear</a>
+<a class="nav-link" href="#default--dayOfWeekBasedYear">dayOfWeekBasedYear</a>
+<a class="nav-link" href="#default--dayOfMonth">dayOfMonth</a>
+<a class="nav-link" href="#default--dayOfWeek">dayOfWeek</a>
+<a class="nav-link" href="#default--epochDay">epochDay</a>
+<a class="nav-link" href="#default--quarterOfYear">quarterOfYear</a>
+<a class="nav-link" href="#default--isLeapYear">isLeapYear</a>
+<a class="nav-link" href="#default--lengthOfYear">lengthOfYear</a>
+<a class="nav-link" href="#default--hour">hour</a>
+<a class="nav-link" href="#default--minute">minute</a>
+<a class="nav-link" href="#default--second">second</a>
+<a class="nav-link" href="#default--ms">ms</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--compareTo">compareTo</a>
+<a class="nav-link" href="#default--equals">equals</a>
+<a class="nav-link" href="#default--isBefore">isBefore</a>
+<a class="nav-link" href="#default--isAfter">isAfter</a>
+<a class="nav-link" href="#default--plusDuration">plusDuration</a>
+<a class="nav-link" href="#default--plusPeriod">plusPeriod</a>
+<a class="nav-link" href="#default--minusDuration">minusDuration</a>
+<a class="nav-link" href="#default--minusPeriod">minusPeriod</a>
+<a class="nav-link" href="#default--withYear">withYear</a>
+<a class="nav-link" href="#default--withMonth">withMonth</a>
+<a class="nav-link" href="#default--withDayOfMonth">withDayOfMonth</a>
+<a class="nav-link" href="#default--withDayOfWeek">withDayOfWeek</a>
+<a class="nav-link" href="#default--withDayOfYear">withDayOfYear</a>
+<a class="nav-link" href="#default--withHour">withHour</a>
+<a class="nav-link" href="#default--withMinute">withMinute</a>
+<a class="nav-link" href="#default--withSecond">withSecond</a>
+<a class="nav-link" href="#default--withMs">withMs</a>
+<a class="nav-link" href="#default--toString">toString</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--ofInstant-static">ofInstant</a>
+<a class="nav-link" href="#default--ofDateTime-static">ofDateTime</a>
+<a class="nav-link" href="#default--parse-static">parse</a>
+<a class="nav-link" href="#default--compare-static">compare</a>
+<a class="nav-link" href="#default--equal-static">equal</a>
+<a class="nav-link" href="#default--isBefore-static">isBefore</a>
+<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+</nav>
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/OffsetDateTime</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import OffsetDateTime from "ts-time/OffsetDateTime";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>OffsetDateTime</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
+(<a href="Instant.html" target="_parent">Instant</a>, <a href="../ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>). Unambiguously identifies a <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>.
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--dateTime"></span>dateTime<a class="anchorjs-link" href="#default--dateTime" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly dateTime: <a href="LocalDateTime.html" target="_parent">LocalDateTime</a></code></p>
+Date/time representing <a href="#default--instant" target="_parent">instant</a> in <a href="#default--offset" target="_parent">offset</a>.
+</div>
+
+<h5><span id="default--instant"></span>instant<a class="anchorjs-link" href="#default--instant" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly instant: <a href="Instant.html" target="_parent">Instant</a></code></p>
+Instant representing <a href="#default--dateTime" target="_parent">dateTime</a> in <a href="#default--offset" target="_parent">offset</a>.
+</div>
+
+<h5><span id="default--offset"></span>offset<a class="anchorjs-link" href="#default--offset" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly offset: <a href="../ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></code></p>
+Time zone offset. Connection between <a href="#default--instant" target="_parent">instant</a> and <a href="#default--dateTime" target="_parent">dateTime</a>.
+</div>
+
+<h5><span id="default--date"></span>date<a class="anchorjs-link" href="#default--date" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly date: <a href="LocalDate.html" target="_parent">LocalDate</a></code></p>
+Date part.
+</div>
+
+<h5><span id="default--time"></span>time<a class="anchorjs-link" href="#default--time" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly time: <a href="LocalTime.html" target="_parent">LocalTime</a></code></p>
+Time part.
+</div>
+
+<h5><span id="default--native"></span>native<a class="anchorjs-link" href="#default--native" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly native: Date</code></p>
+Native JS Date representing <a href="#default--instant" target="_parent">instant</a>, for compatibility with native and third party API.
+</div>
+
+<h5><span id="default--epochMs"></span>epochMs<a class="anchorjs-link" href="#default--epochMs" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly epochMs: number</code></p>
+Number of milliseconds since epoch.
+</div>
+
+<h5><span id="default--era"></span>era<a class="anchorjs-link" href="#default--era" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly era: <a href="Era.html" target="_parent">Era</a></code></p>
+Era.
+</div>
+
+<h5><span id="default--year"></span>year<a class="anchorjs-link" href="#default--year" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly year: number</code></p>
+Absolute year.
+</div>
+
+<h5><span id="default--yearOfEra"></span>yearOfEra<a class="anchorjs-link" href="#default--yearOfEra" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly yearOfEra: number</code></p>
+Year in <a href="#default--era" target="_parent">era</a>. See <a href="Era.html" target="_parent">Era</a> for details.
+</div>
+
+<h5><span id="default--weekBasedYear"></span>weekBasedYear<a class="anchorjs-link" href="#default--weekBasedYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly weekBasedYear: number</code></p>
+Absolute week based year. <p class="text-secondary">By definition, the 1st week of week based year contains the 1st Thursday of the year, and
+the week based year starts from the Monday of this week.</p>
+
+</div>
+
+<h5><span id="default--month"></span>month<a class="anchorjs-link" href="#default--month" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly month: <a href="Month.html" target="_parent">Month</a></code></p>
+Month.
+</div>
+
+<h5><span id="default--weekOfWeekBasedYear"></span>weekOfWeekBasedYear<a class="anchorjs-link" href="#default--weekOfWeekBasedYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly weekOfWeekBasedYear: number</code></p>
+1-based week of week-based year. <p class="text-secondary">By definition, the 1st week of week based year contains the 1st Thursday of the year, and
+the week based year starts from the Monday of this week.</p>
+
+</div>
+
+<h5><span id="default--dayOfYear"></span>dayOfYear<a class="anchorjs-link" href="#default--dayOfYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly dayOfYear: number</code></p>
+1-based day of year.
+</div>
+
+<h5><span id="default--dayOfWeekBasedYear"></span>dayOfWeekBasedYear<a class="anchorjs-link" href="#default--dayOfWeekBasedYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly dayOfWeekBasedYear: number</code></p>
+1-based day of week-based year. <p class="text-secondary">By definition, the 1st week of week based year contains the 1st Thursday of the year, and
+the week based year starts from the Monday of this week.</p>
+
+</div>
+
+<h5><span id="default--dayOfMonth"></span>dayOfMonth<a class="anchorjs-link" href="#default--dayOfMonth" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly dayOfMonth: number</code></p>
+1-based day of month.
+</div>
+
+<h5><span id="default--dayOfWeek"></span>dayOfWeek<a class="anchorjs-link" href="#default--dayOfWeek" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly dayOfWeek: <a href="DayOfWeek.html" target="_parent">DayOfWeek</a></code></p>
+Day of week.
+</div>
+
+<h5><span id="default--epochDay"></span>epochDay<a class="anchorjs-link" href="#default--epochDay" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly epochDay: number</code></p>
+1-based day since epoch (i.e. 1st of <a href="Month.html#JANUARY" target="_parent">JANUARY</a> 1970 is the 1st epoch day).
+</div>
+
+<h5><span id="default--quarterOfYear"></span>quarterOfYear<a class="anchorjs-link" href="#default--quarterOfYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly quarterOfYear: number</code></p>
+1-based quarter of year.
+</div>
+
+<h5><span id="default--isLeapYear"></span>isLeapYear<a class="anchorjs-link" href="#default--isLeapYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly isLeapYear: boolean</code></p>
+True if belongs to a leap year.
+</div>
+
+<h5><span id="default--lengthOfYear"></span>lengthOfYear<a class="anchorjs-link" href="#default--lengthOfYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly lengthOfYear: number</code></p>
+Number of days in year (365 for non-leap, 366 for leap).
+</div>
+
+<h5><span id="default--hour"></span>hour<a class="anchorjs-link" href="#default--hour" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly hour: number</code></p>
+Hour of a day (0-23).
+</div>
+
+<h5><span id="default--minute"></span>minute<a class="anchorjs-link" href="#default--minute" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly minute: number</code></p>
+Minute of an hour (0-59).
+</div>
+
+<h5><span id="default--second"></span>second<a class="anchorjs-link" href="#default--second" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly second: number</code></p>
+Second of a minute (0-59).
+</div>
+
+<h5><span id="default--ms"></span>ms<a class="anchorjs-link" href="#default--ms" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly ms: number</code></p>
+Millisecond of a second (0-999).
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--compareTo"></span>compareTo<a class="anchorjs-link" href="#default--compareTo" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>OffsetDateTime</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same offset date/time;</li>
+  <li>positive value if this offset date/time goes after <b>other</b>;</li>
+  <li>negative value if this offset date/time goes before <b>other</b>.</li>
+</ul>
+The objects are first compared by instant, and then by offset.
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equals"></span>equals<a class="anchorjs-link" href="#default--equals" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time is equal to <b>other</b>, i.e. all components are equal.
+Null and undefined are only equal to each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time goes before <b>other</b>.
+The objects are first compared by instant, and then by offset.
+Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time goes after <b>other</b>.
+The objects are first compared by instant, and then by offset.
+Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--plusDuration"></span>plusDuration<a class="anchorjs-link" href="#default--plusDuration" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(duration: <a href="Duration.html" target="_parent">Duration</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">duration</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> to add.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> shifted onwards from this one by the specified duration in the same <a href="#default--offset" target="_parent">offset</a>.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--plusPeriod"></span>plusPeriod<a class="anchorjs-link" href="#default--plusPeriod" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(period: <a href="Period.html" target="_parent">Period</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">period</dt><dd class="col-lg-10 col-sm-9"><a href="Period.html" target="_parent">Period</a> to add.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> shifted onwards from this one by the specified period in the same <a href="#default--offset" target="_parent">offset</a>.
+The algorithm respects <a href="#default--dateTime" target="_parent">dateTime</a> to align periods.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--minusDuration"></span>minusDuration<a class="anchorjs-link" href="#default--minusDuration" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(duration: <a href="Duration.html" target="_parent">Duration</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">duration</dt><dd class="col-lg-10 col-sm-9"><a href="Duration.html" target="_parent">Duration</a> to subtract.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> shifted backwards from this one by the specified duration in the same <a href="#default--offset" target="_parent">offset</a>.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--minusPeriod"></span>minusPeriod<a class="anchorjs-link" href="#default--minusPeriod" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(period: <a href="Period.html" target="_parent">Period</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">period</dt><dd class="col-lg-10 col-sm-9"><a href="Period.html" target="_parent">Period</a> to subtract.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> shifted backwards from this one by the specified period in the same <a href="#default--offset" target="_parent">offset</a>.
+The algorithm respects <a href="#default--dateTime" target="_parent">dateTime</a> to align periods.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withYear"></span>withYear<a class="anchorjs-link" href="#default--withYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(year: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">year</dt><dd class="col-lg-10 col-sm-9">Absolute year.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified year and its current month/day of month/time/offset. If such date doesn't
+exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 29th of <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a> in 2019,
+18:30, UTC+3 gets shifted to 28th of <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 18:30, UTC+3).
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withMonth"></span>withMonth<a class="anchorjs-link" href="#default--withMonth" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(month: number | <a href="Month.html" target="_parent">Month</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">month</dt><dd class="col-lg-10 col-sm-9">Month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified month and its current year/day of month/time/offset. If such date doesn't
+exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 31st of <a href="Month.html#APRIL" target="_parent">APRIL</a>, 18:30, UTC+3 gets
+shifted to 30th of <a href="Month.html#APRIL" target="_parent">APRIL</a>, 18:30, UTC+3).
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withDayOfMonth"></span>withDayOfMonth<a class="anchorjs-link" href="#default--withDayOfMonth" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(dayOfMonth: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">dayOfMonth</dt><dd class="col-lg-10 col-sm-9">1-based day of month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified day of month and its current year/month/time/offset.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withDayOfWeek"></span>withDayOfWeek<a class="anchorjs-link" href="#default--withDayOfWeek" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(dayOfWeek: number | <a href="DayOfWeek.html" target="_parent">DayOfWeek</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">dayOfWeek</dt><dd class="col-lg-10 col-sm-9">Day of week or its numeric value</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified day of week and its current week/time/offset.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withDayOfYear"></span>withDayOfYear<a class="anchorjs-link" href="#default--withDayOfYear" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(dayOfYear: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">dayOfYear</dt><dd class="col-lg-10 col-sm-9">1-based day of year.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified day of year and its current year/time/offset.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withHour"></span>withHour<a class="anchorjs-link" href="#default--withHour" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(hour: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">hour</dt><dd class="col-lg-10 col-sm-9">Hour of a day.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified hour of a day. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withMinute"></span>withMinute<a class="anchorjs-link" href="#default--withMinute" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(minute: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">minute</dt><dd class="col-lg-10 col-sm-9">Minute of an hour.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified minute of an hour. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withSecond"></span>withSecond<a class="anchorjs-link" href="#default--withSecond" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(second: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">second</dt><dd class="col-lg-10 col-sm-9">Second of a minute.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified second of a minute. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--withMs"></span>withMs<a class="anchorjs-link" href="#default--withMs" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(ms: number): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">ms</dt><dd class="col-lg-10 col-sm-9">Millisecond of a second.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> with the specified millisecond of a second. All other properties don't change.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--toString"></span>toString<a class="anchorjs-link" href="#default--toString" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">String representation of the offset date/time in ISO format, such as "2019-12-30T18:30:15.225+03:00".</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--ofInstant-static"></span>ofInstant<a class="anchorjs-link" href="#default--ofInstant-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(instant: <a href="Instant.html" target="_parent">Instant</a>, offset: <a href="../ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">instant</dt><dd class="col-lg-10 col-sm-9">Instant.</dd>
+<dt class="col-lg-2 col-sm-3">offset</dt><dd class="col-lg-10 col-sm-9">Time zone offset.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> representing <b>instant</b> in <b>offset</b>.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--ofDateTime-static"></span>ofDateTime<a class="anchorjs-link" href="#default--ofDateTime-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(localDateTime: <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>, offset: <a href="../ts/time/Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">localDateTime</dt><dd class="col-lg-10 col-sm-9">Local date/time.</dd>
+<dt class="col-lg-2 col-sm-3">offset</dt><dd class="col-lg-10 col-sm-9">Time zone offset.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">New <b>OffsetDateTime</b> representing <a href="#default--dateTime" target="_parent">dateTime</a> in <b>offset</b>.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--parse-static"></span>parse<a class="anchorjs-link" href="#default--parse-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(str: string): <b>OffsetDateTime</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">str</dt><dd class="col-lg-10 col-sm-9">String representation of offset date/time in ISO format, such as '2019-12-30T18:30:15.225+03:00'.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>OffsetDateTime</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compare-static"></span>compare<a class="anchorjs-link" href="#default--compare-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this <b>x</b> and <b>y</b> are the same offset date/time;</li>
+  <li>positive value if <b>x</b> goes after <b>y</b>;</li>
+  <li>negative value if <b>x</b> goes before <b>y</b>.</li>
+</ul>
+The objects are first compared by instant, and then by offset.
+Null and undefined are considered less than anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--equal-static"></span>equal<a class="anchorjs-link" href="#default--equal-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> is equal to <b>y</b>, i.e. all components are equal.
+Null and undefined are only equal to each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>.
+The objects are first compared by instant, and then by offset.
+Null and undefined go before anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>.
+The objects are first compared by instant, and then by offset.
+Null and undefined go before anything, except each other.
+</dd>
+</dl>
+
+</div>
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><b>OffsetDateTime</b></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

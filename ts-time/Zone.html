@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/Zone - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/Zone</a>
+						
+<a class="nav-link" href="#ZoneId">ZoneId</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#ZoneId---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#ZoneId---description">Description</a>
+
+
+
+<a class="nav-link" href="#ZoneId---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#ZoneId--id">id</a></nav>
+
+<a class="nav-link" href="#ZoneId---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#ZoneId--offsetAtInstant">offsetAtInstant</a>
+<a class="nav-link" href="#ZoneId--offsetAtLocalDateTime">offsetAtLocalDateTime</a>
+<a class="nav-link" href="#ZoneId--toString">toString</a></nav>
+
+
+<a class="nav-link" href="#ZoneId---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#ZoneId--of-static">of</a>
+<a class="nav-link" href="#ZoneId--compareById-static">compareById</a></nav>
+</nav>
+
+<a class="nav-link" href="#ZoneOffset">ZoneOffset</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#ZoneOffset---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#ZoneOffset---description">Description</a>
+
+
+
+<a class="nav-link" href="#ZoneOffset---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#ZoneOffset--id">id</a>
+<a class="nav-link" href="#ZoneOffset--totalSeconds">totalSeconds</a>
+<a class="nav-link" href="#ZoneOffset--hours">hours</a>
+<a class="nav-link" href="#ZoneOffset--minutes">minutes</a>
+<a class="nav-link" href="#ZoneOffset--seconds">seconds</a></nav>
+
+<a class="nav-link" href="#ZoneOffset---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#ZoneOffset--offsetAtInstant">offsetAtInstant</a>
+<a class="nav-link font-italic" href="#ZoneOffset--offsetAtLocalDateTime">offsetAtLocalDateTime</a>
+<a class="nav-link font-italic" href="#ZoneOffset--toString">toString</a></nav>
+
+
+<a class="nav-link" href="#ZoneOffset---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#ZoneOffset--of-static">of</a>
+<a class="nav-link" href="#ZoneOffset--ofComponents-static">ofComponents</a>
+<a class="nav-link" href="#ZoneOffset--ofTotalSeconds-static">ofTotalSeconds</a>
+<a class="nav-link" href="#ZoneOffset--compare-static">compare</a>
+<a class="nav-link font-italic" href="#ZoneOffset--compareById-static">compareById</a></nav>
+</nav>
+
+<a class="nav-link" href="#UTC">UTC</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/Zone</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import * as Zone from "ts-time/Zone";</pre>
+						
+<h3><span id="ZoneId"></span>ZoneId<a class="anchorjs-link" href="#ZoneId" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="ZoneId---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#ZoneId---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>abstract class <b>ZoneId</b></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#ZoneOffset">ZoneOffset</a></li>
+
+</ul>
+<h4><span id="ZoneId---description"></span>Description<a class="anchorjs-link" href="#ZoneId---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<p>Represents a time zone. All time zone instances get cached in the memory upon initialization, so an attempt to
+obtain the same time zone twice results in the same instance of an object.</p>
+
+
+
+
+<h4><span id="ZoneId---properties"></span>Fields<a class="anchorjs-link" href="#ZoneId---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneId--id"></span>id<a class="anchorjs-link" href="#ZoneId--id" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly id: string</code></p>
+Zone text identifier.
+</div>
+
+<h4><span id="ZoneId---methods"></span>Methods<a class="anchorjs-link" href="#ZoneId---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneId--offsetAtInstant"></span>offsetAtInstant<a class="anchorjs-link" href="#ZoneId--offsetAtInstant" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(instant: <a href="Instant.html" target="_parent">Instant</a>): <a href="#ZoneOffset" target="_parent">ZoneOffset</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">instant</dt><dd class="col-lg-10 col-sm-9">Instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Offset of this time zone at a specified instant.</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneId--offsetAtLocalDateTime"></span>offsetAtLocalDateTime<a class="anchorjs-link" href="#ZoneId--offsetAtLocalDateTime" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(localDateTime: <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>): <a href="#ZoneOffset" target="_parent">ZoneOffset</a>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">localDateTime</dt><dd class="col-lg-10 col-sm-9">Date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Offset of this time zone at a specified date/time. If there are multiple possible values (in case of time
+overlap caused by offset shift), returns the earlier offset (i.e. one right before the shift).
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneId--toString"></span>toString<a class="anchorjs-link" href="#ZoneId--toString" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><a href="#ZoneId--id" target="_parent">id</a></dd>
+</dl>
+
+</div>
+
+
+<h4><span id="ZoneId---staticMethods"></span>Static methods<a class="anchorjs-link" href="#ZoneId---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneId--of-static"></span>of<a class="anchorjs-link" href="#ZoneId--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(id: string): <b>ZoneId</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">id</dt><dd class="col-lg-10 col-sm-9">Zone text identifier.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>ZoneId</b> representing this identifier.</dd>
+</dl>
+<p>This method parses the ID producing a <b>ZoneId</b> or <a href="#ZoneOffset" target="_parent">ZoneOffset</a>.
+<a href="#ZoneOffset" target="_parent">ZoneOffset</a> is returned if the <b>id</b> is 'Z', or starts with '+' or '-'.</p>
+<p>Parsing matches the zone <b>id</b> step by step as follows.</p>
+<ol>
+<li>If the zone <b>id</b> equals 'Z', the result is <a href="#UTC" target="_parent">UTC</a>.</li>
+<li>If the zone <b>id</b> consists of a single letter, the zone <b>id</b> is invalid, and Error is thrown.</li>
+<li>If the zone <b>id</b> starts with '+' or '-', the <b>id</b> is parsed as a <a href="#ZoneOffset" target="_parent">ZoneOffset</a> using <a href="#ZoneOffset" target="_parent">ZoneOffset</a>.<a href="#ZoneOffset--of-static" target="_parent">of</a>.</li>
+<li>If the zone <b>id</b> equals 'GMT', 'UTC' or 'UT' then the result is a <b>ZoneId</b> with the same <b>id</b> and rules
+  equivalent to <a href="#UTC" target="_parent">UTC</a>.</li>
+<li>If the zone <b>id</b> starts with 'UTC+', 'UTC-', 'GMT+', 'GMT-', 'UT+' or 'UT-' then the <b>id</b> is a prefixed
+  offset-based <b>id</b>. The <b>id</b> is split in two, with a two or three letter prefix and a suffix starting with the
+  sign. The suffix is parsed as a <a href="#ZoneOffset" target="_parent">ZoneOffset</a>. The result will be a <b>ZoneId</b> with the specified UTC/GMT/UT
+  prefix and the normalized offset <b>id</b> as per <a href="#ZoneOffset" target="_parent">ZoneOffset</a>.<a href="#ZoneOffset--id" target="_parent">id</a>. The rules of the returned <b>ZoneId</b> will
+  be equivalent to the parsed <a href="#ZoneOffset" target="_parent">ZoneOffset</a>.</li>
+<li>All other <b>id</b>'s are parsed as custom zone <b>id</b>'s. Their offsets get computed with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" target="_blank">Intl.DateTimeFormat</a> browser
+  API on demand.</li>
+</ol>
+
+</div>
+
+<h5><span id="ZoneId--compareById-static"></span>compareById<a class="anchorjs-link" href="#ZoneId--compareById-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>ZoneId</b>, y: <b>ZoneId</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One time zone.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another time zone.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same zone;</li>
+  <li>positive value if <b>x</b>.<a href="#ZoneId--id" target="_parent">id</a> is higher than <b>y</b>.<a href="#ZoneId--id" target="_parent">id</a>;</li>
+  <li>negative value if <b>x</b>.<a href="#ZoneId--id" target="_parent">id</a> is lower than <b>y</b>.<a href="#ZoneId--id" target="_parent">id</a>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="ZoneOffset"></span>ZoneOffset<a class="anchorjs-link" href="#ZoneOffset" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="ZoneOffset---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#ZoneOffset---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>abstract class <a href="#ZoneId">ZoneId</a></li>
+<li><span style="margin-left: 2em"></span>class <b>ZoneOffset</b></li>
+
+</ul>
+<h4><span id="ZoneOffset---description"></span>Description<a class="anchorjs-link" href="#ZoneOffset---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<p>Represents a fixed time zone offset. All offset instances get cached in the memory upon initialization, so an
+attempt to obtain the same time zone offset twice results in the same instance of an object.</p>
+
+
+
+
+<h4><span id="ZoneOffset---properties"></span>Fields<a class="anchorjs-link" href="#ZoneOffset---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneOffset--id"></span>id<a class="anchorjs-link" href="#ZoneOffset--id" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly id: string</code></p>
+<p>Normalized text identifier of the offset:</p>
+<ul>
+<li>Z - for UTC (ISO-8601)</li>
+<li>+hh:mm or -hh:mm - if the seconds are zero (ISO-8601)</li>
+<li>+hh:mm:ss or -hh:mm:ss - if the seconds are non-zero (not ISO-8601)</li>
+</ul>
+
+</div>
+
+<h5><span id="ZoneOffset--totalSeconds"></span>totalSeconds<a class="anchorjs-link" href="#ZoneOffset--totalSeconds" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly totalSeconds: number</code></p>
+Total number of seconds.
+</div>
+
+<h5><span id="ZoneOffset--hours"></span>hours<a class="anchorjs-link" href="#ZoneOffset--hours" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly hours: number</code></p>
+Number of hours in the offset. Can be positive or negative.
+</div>
+
+<h5><span id="ZoneOffset--minutes"></span>minutes<a class="anchorjs-link" href="#ZoneOffset--minutes" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly minutes: number</code></p>
+Number of minutes in the offset. Always positive.
+</div>
+
+<h5><span id="ZoneOffset--seconds"></span>seconds<a class="anchorjs-link" href="#ZoneOffset--seconds" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly seconds: number</code></p>
+Number of seconds in the offset. Always positive.
+</div>
+
+<h4><span id="ZoneOffset---methods"></span>Methods<a class="anchorjs-link" href="#ZoneOffset---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneOffset--offsetAtInstant"></span><i>offsetAtInstant</i> <span class="doc-inherit-mark">(inherited from <a href="#ZoneId" target="_parent">ZoneId</a>)</span><a class="anchorjs-link" href="#ZoneOffset--offsetAtInstant" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(instant: <a href="Instant.html" target="_parent">Instant</a>): <b>ZoneOffset</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">instant</dt><dd class="col-lg-10 col-sm-9">Instant.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Offset of this time zone at a specified instant.</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneOffset--offsetAtLocalDateTime"></span><i>offsetAtLocalDateTime</i> <span class="doc-inherit-mark">(inherited from <a href="#ZoneId" target="_parent">ZoneId</a>)</span><a class="anchorjs-link" href="#ZoneOffset--offsetAtLocalDateTime" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(localDateTime: <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>): <b>ZoneOffset</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">localDateTime</dt><dd class="col-lg-10 col-sm-9">Date/time.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Offset of this time zone at a specified date/time. If there are multiple possible values (in case of time
+overlap caused by offset shift), returns the earlier offset (i.e. one right before the shift).
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneOffset--toString"></span><i>toString</i> <span class="doc-inherit-mark">(inherited from <a href="#ZoneId" target="_parent">ZoneId</a>)</span><a class="anchorjs-link" href="#ZoneOffset--toString" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><a href="#ZoneOffset--id" target="_parent">id</a></dd>
+</dl>
+
+</div>
+
+
+<h4><span id="ZoneOffset---staticMethods"></span>Static methods<a class="anchorjs-link" href="#ZoneOffset---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="ZoneOffset--of-static"></span>of<a class="anchorjs-link" href="#ZoneOffset--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(id: string): <b>ZoneOffset</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">id</dt><dd class="col-lg-10 col-sm-9">Time zone offset identifier.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>ZoneOffset</b> representing this identifier.</dd>
+</dl>
+<p>This method parses the string <b>id</b> of a <b>ZoneOffset</b> to return an instance. The parsing accepts the
+following formats:</p>
+<ul>
+<li>Z - for <a href="#UTC" target="_parent">UTC</a></li>
+<li>±h</li>
+<li>±hh</li>
+<li>±hh:mm</li>
+<li>±hhmm</li>
+<li>±hh:mm:ss</li>
+<li>±hhmmss</li>
+</ul>
+<p>Note that ± means either the plus or minus symbol.</p>
+<p>The <a href="#ZoneOffset--id" target="_parent">id</a> of the returned offset will be normalized to one of the formats described there.</li>
+
+</div>
+
+<h5><span id="ZoneOffset--ofComponents-static"></span>ofComponents<a class="anchorjs-link" href="#ZoneOffset--ofComponents-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(hours: number, minutes: number = 0, seconds: number = 0): <b>ZoneOffset</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">hours</dt><dd class="col-lg-10 col-sm-9">Hourly part of the offset.</dd>
+<dt class="col-lg-2 col-sm-3">minutes</dt><dd class="col-lg-10 col-sm-9">Minutely part of the offset.</dd>
+<dt class="col-lg-2 col-sm-3">seconds</dt><dd class="col-lg-10 col-sm-9">Secondly part of the offset.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>ZoneOffset</b> representation.</dd>
+</dl>
+<p>In order to obtain a negative offset, all parts must be reversed:</p>
+<pre>
+expect(<b>ZoneOffset</b>.<b>ofComponents</b>(-3, -25, -45)).toBe(<b>ZoneOffset</b>.<a href="#ZoneOffset--ofTotalSeconds-static" target="_parent">ofTotalSeconds</a>(-12345));</pre>
+
+</div>
+
+<h5><span id="ZoneOffset--ofTotalSeconds-static"></span>ofTotalSeconds<a class="anchorjs-link" href="#ZoneOffset--ofTotalSeconds-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(totalSeconds: number): <b>ZoneOffset</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">totalSeconds</dt><dd class="col-lg-10 col-sm-9">Total number of seconds.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>ZoneOffset</b> representation.</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneOffset--compare-static"></span>compare<a class="anchorjs-link" href="#ZoneOffset--compare-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>ZoneOffset</b>, y: <b>ZoneOffset</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same offset;</li>
+  <li>positive value if <b>x</b>.<a href="#ZoneOffset--totalSeconds" target="_parent">totalSeconds</a> is higher than <b>y</b>.<a href="#ZoneOffset--totalSeconds" target="_parent">totalSeconds</a>;</li>
+  <li>negative value if <b>x</b>.<a href="#ZoneOffset--totalSeconds" target="_parent">totalSeconds</a> is lower than <b>y</b>.<a href="#ZoneOffset--totalSeconds" target="_parent">totalSeconds</a>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="ZoneOffset--compareById-static"></span><i>compareById</i> <span class="doc-inherit-mark">(inherited from <a href="#ZoneId" target="_parent">ZoneId</a>)</span><a class="anchorjs-link" href="#ZoneOffset--compareById-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(x: <a href="#ZoneId" target="_parent">ZoneId</a>, y: <a href="#ZoneId" target="_parent">ZoneId</a>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One time zone.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another time zone.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same zone;</li>
+  <li>positive value if <b>x</b>.<a href="#ZoneOffset--id" target="_parent">id</a> is higher than <b>y</b>.<a href="#ZoneOffset--id" target="_parent">id</a>;</li>
+  <li>negative value if <b>x</b>.<a href="#ZoneOffset--id" target="_parent">id</a> is lower than <b>y</b>.<a href="#ZoneOffset--id" target="_parent">id</a>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="UTC"></span>UTC<a class="anchorjs-link" href="#UTC" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>UTC: <a href="#ZoneOffset" target="_parent">ZoneOffset</a></code></p>
+UTC time zone having a constant 0 offset.
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><a href="Month.html" target="_parent">Month</a></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><b>Zone</b></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

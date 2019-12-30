@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/Month - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/Month</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--value">value</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--length">length</a>
+<a class="nav-link" href="#default--compareTo">compareTo</a>
+<a class="nav-link" href="#default--isBefore">isBefore</a>
+<a class="nav-link" href="#default--isAfter">isAfter</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--compareTo-static">compareTo</a>
+<a class="nav-link" href="#default--isBefore-static">isBefore</a>
+<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+</nav>
+
+<a class="nav-link" href="#JANUARY">JANUARY</a>
+
+
+<a class="nav-link" href="#FEBRUARY">FEBRUARY</a>
+
+
+<a class="nav-link" href="#MARCH">MARCH</a>
+
+
+<a class="nav-link" href="#APRIL">APRIL</a>
+
+
+<a class="nav-link" href="#MAY">MAY</a>
+
+
+<a class="nav-link" href="#JUNE">JUNE</a>
+
+
+<a class="nav-link" href="#JULY">JULY</a>
+
+
+<a class="nav-link" href="#AUGUST">AUGUST</a>
+
+
+<a class="nav-link" href="#SEPTEMBER">SEPTEMBER</a>
+
+
+<a class="nav-link" href="#OCTOBER">OCTOBER</a>
+
+
+<a class="nav-link" href="#NOVEMBER">NOVEMBER</a>
+
+
+<a class="nav-link" href="#DECEMBER">DECEMBER</a>
+
+
+<a class="nav-link" href="#MONTHS">MONTHS</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/Month</h1>
+						
+						<h3>Consumption</h3>
+						<pre>import Month, {JANUARY, FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER, MONTHS} from "ts-time/Month";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>Month</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+There are exactly 12 months, with respective numeric values:
+<ol>
+  <li><a href="#JANUARY" target="_parent">JANUARY</a></li>
+  <li><a href="#FEBRUARY" target="_parent">FEBRUARY</a></li>
+  <li><a href="#MARCH" target="_parent">MARCH</a></li>
+  <li><a href="#APRIL" target="_parent">APRIL</a></li>
+  <li><a href="#MAY" target="_parent">MAY</a></li>
+  <li><a href="#JUNE" target="_parent">JUNE</a></li>
+  <li><a href="#JULY" target="_parent">JULY</a></li>
+  <li><a href="#AUGUST" target="_parent">AUGUST</a></li>
+  <li><a href="#SEPTEMBER" target="_parent">SEPTEMBER</a></li>
+  <li><a href="#OCTOBER" target="_parent">OCTOBER</a></li>
+  <li><a href="#NOVEMBER" target="_parent">NOVEMBER</a></li>
+  <li><a href="#DECEMBER" target="_parent">DECEMBER</a></li>
+</ol>
+You can't construct new months, you can only get an existing month directly or with <a href="#default--of-static" target="_parent">of</a> method. With
+that said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
+check.
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--value"></span>value<a class="anchorjs-link" href="#default--value" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly value: number</code></p>
+Numeric value of the month.
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--length"></span>length<a class="anchorjs-link" href="#default--length" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(leapYear: boolean): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">leapYear</dt><dd class="col-lg-10 col-sm-9">Is it a leap year?</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Number of days in the month.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compareTo"></span>compareTo<a class="anchorjs-link" href="#default--compareTo" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Month</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Month to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is the same month;</li>
+  <li>positive value if this month goes after <b>other</b>;</li>
+  <li>negative value if this month goes before <b>other</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Month</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Month to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this month goes before <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(other: <b>Month</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Month to compare to.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this month goes after <b>other</b>. Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+</dd>
+</dl>
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: number | <b>Month</b>): <b>Month</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Numeric value of the month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><b>Month</b> representation of the month.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--compareTo-static"></span>compareTo<a class="anchorjs-link" href="#default--compareTo-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Month</b>, y: <b>Month</b>): number
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One month.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9"><ul>
+  <li>0 if this is <b>x</b> === <b>y</b>;</li>
+  <li>positive value if <b>x</b> goes after <b>y</b>;</li>
+  <li>negative value if <b>x</b> goes before <b>y</b>.</li>
+</ul>
+Null and undefined are considered less than anything, except each other.
+</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Month</b>, y: <b>Month</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One month.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+
+<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(x: <b>Month</b>, y: <b>Month</b>): boolean
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One month.</dd>
+<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another month.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>. Null and undefined go before anything, except each other.</dd>
+</dl>
+
+</div>
+</div>
+<h3><span id="JANUARY"></span>JANUARY<a class="anchorjs-link" href="#JANUARY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>JANUARY: <b>Month</b></code></p>
+<b>Month</b> representation of January. Has numeric value of 1 and length of 31 days.
+</div>
+<h3><span id="FEBRUARY"></span>FEBRUARY<a class="anchorjs-link" href="#FEBRUARY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>FEBRUARY: <b>Month</b></code></p>
+<b>Month</b> representation of February. Has numeric value of 2 and length of 28/29 days (non-leap/leap years).
+</div>
+<h3><span id="MARCH"></span>MARCH<a class="anchorjs-link" href="#MARCH" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MARCH: <b>Month</b></code></p>
+<b>Month</b> representation of March. Has numeric value of 3 and length of 31 days.
+</div>
+<h3><span id="APRIL"></span>APRIL<a class="anchorjs-link" href="#APRIL" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>APRIL: <b>Month</b></code></p>
+<b>Month</b> representation of April. Has numeric value of 4 and length of 30 days.
+</div>
+<h3><span id="MAY"></span>MAY<a class="anchorjs-link" href="#MAY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MAY: <b>Month</b></code></p>
+<b>Month</b> representation of May. Has numeric value of 5 and length of 31 days.
+</div>
+<h3><span id="JUNE"></span>JUNE<a class="anchorjs-link" href="#JUNE" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>JUNE: <b>Month</b></code></p>
+<b>Month</b> representation of June. Has numeric value of 6 and length of 30 days.
+</div>
+<h3><span id="JULY"></span>JULY<a class="anchorjs-link" href="#JULY" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>JULY: <b>Month</b></code></p>
+<b>Month</b> representation of July. Has numeric value of 7 and length of 31 days.
+</div>
+<h3><span id="AUGUST"></span>AUGUST<a class="anchorjs-link" href="#AUGUST" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>AUGUST: <b>Month</b></code></p>
+<b>Month</b> representation of August. Has numeric value of 8 and length of 31 days.
+</div>
+<h3><span id="SEPTEMBER"></span>SEPTEMBER<a class="anchorjs-link" href="#SEPTEMBER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>SEPTEMBER: <b>Month</b></code></p>
+<b>Month</b> representation of September. Has numeric value of 9 and length of 30 days.
+</div>
+<h3><span id="OCTOBER"></span>OCTOBER<a class="anchorjs-link" href="#OCTOBER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>OCTOBER: <b>Month</b></code></p>
+<b>Month</b> representation of October. Has numeric value of 10 and length of 31 days.
+</div>
+<h3><span id="NOVEMBER"></span>NOVEMBER<a class="anchorjs-link" href="#NOVEMBER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>NOVEMBER: <b>Month</b></code></p>
+<b>Month</b> representation of November. Has numeric value of 11 and length of 30 days.
+</div>
+<h3><span id="DECEMBER"></span>DECEMBER<a class="anchorjs-link" href="#DECEMBER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DECEMBER: <b>Month</b></code></p>
+<b>Month</b> representation of December. Has numeric value of 12 and length of 31 days.
+</div>
+<h3><span id="MONTHS"></span>MONTHS<a class="anchorjs-link" href="#MONTHS" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MONTHS: <b>Month</b>[]</code></p>
+Array of all months, from <a href="#JANUARY" target="_parent">JANUARY</a> to <a href="#DECEMBER" target="_parent">DECEMBER</a>.
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><ul>
+  <li><a href="constants.html" target="_parent">constants</a></li>
+  <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+  <li><a href="Duration.html" target="_parent">Duration</a></li>
+  <li><a href="Era.html" target="_parent">Era</a></li>
+  <li><a href="Instant.html" target="_parent">Instant</a></li>
+  <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+  <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+  <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+  <li><b>Month</b></li>
+  <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+  <li><a href="Period.html" target="_parent">Period</a></li>
+  <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+  <li><a href="utils.html" target="_parent">utils</a></li>
+  <li><a href="Zone.html" target="_parent">Zone</a></li>
+  <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+</ul>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>
