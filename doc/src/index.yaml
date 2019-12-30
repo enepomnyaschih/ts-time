@@ -29,6 +29,9 @@ description: |
     <p>ts-time is a pure definitely-typed object-oriented solution. Any code fragment developed with ts-time is easy to
     read, understand and maintain, because it manipulates data structures serving specific purposes:</p>
     <pre>
+    import %LocalDate from "ts-time/LocalDate";
+    import %Period from "ts-time/Period";
+
     function buildGraduation(from: %LocalDate, to: %LocalDate, step: %Period) {
       const result: %LocalDate[] = [];
       while (from.%isBefore(to)) {
@@ -41,6 +44,9 @@ description: |
     <p>All data structures defined in ts-time are immutable. Thanks to this, you can be sure that your values never get
     spoiled when you pass them to a third party function or component. For third parties that don't support ts-time
     data structures, you may convert the structures to native Date or milliseconds and back.</p>
+    <p>None of the defined data structures has public constructors. You should use static methods to initialize them.
+    Methods starting with "of" create new instances by parameters. Methods starting with "from" convert the structures
+    to each other. Methods "parse" create new instances by strings, that are always compatible with "toString".</p>
     <p>Project license is <a href="https://github.com/enepomnyaschih/ts-time/blob/master/LICENSE" target="_blank">MIT</a>.</p>
     <p>Find source code and bug tracker at <a href="https://github.com/enepomnyaschih/ts-time" target="_blank">GitHub</a>.</p>
   </div>

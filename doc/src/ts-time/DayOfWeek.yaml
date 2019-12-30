@@ -12,7 +12,9 @@ symbols:
         <li>%SATURDAY</li>
         <li>%SUNDAY</li>
       </ol>
-      You can't construct new days of week, you can only get an existing day of week directly with %of method.
+      You can't construct new days of week, you can only get an existing day of week directly with %of method. With
+      this said, the class doesn't provide <b>equals</b> method, as you can merely use JS operator === for equality
+      check.
 
     properties:
       value:
@@ -32,20 +34,29 @@ symbols:
             <li>positive value if this day goes after %other;</li>
             <li>negative value if this day goes before %other.</li>
           </ul>
+          Null and undefined are considered less than anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
 
       isBefore:
         signature: |
           isBefore(other: %DayOfWeek): boolean
         params:
           other: Day of week to compare to.
-        returns: True if this day goes before %other.
+        returns: |
+          True if this day goes before %other. Null and undefined go before anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
 
       isAfter:
         signature: |
           isafter(other: %DayOfWeek): boolean
         params:
           other: Day of week to compare to.
-        returns: True if this day goes after %other.
+        returns: |
+          True if this day goes after %other. Null and undefined go before anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
 
     staticMethods:
       of:
@@ -67,6 +78,7 @@ symbols:
             <li>positive value if %x goes after %y;</li>
             <li>negative value if %x goes before %y.</li>
           </ul>
+          Null and undefined are considered less than anything, except each other.
 
       isBefore:
         signature: |
@@ -74,7 +86,7 @@ symbols:
         params:
           x: One day.
           y: Another day.
-        returns: True if %x goes before %y.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
 
       isAfter:
         signature: |
@@ -82,7 +94,7 @@ symbols:
         params:
           x: One day.
           y: Another day.
-        returns: True if %x goes after %y.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
 
   MONDAY:
     type: '%DayOfWeek'

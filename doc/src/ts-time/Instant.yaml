@@ -1,0 +1,186 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Represents an instant of time. Lacking time zone and offset information, it doesn't return any particular
+      date/time indication. In order to obtain a particular date/time, you must call %atZone or %atOffset method.
+      %Instant object is determined by %epochMs - number of milliseconds since ECMAScript epoch (1st of January 1970
+      UTC).
+
+    properties:
+      epochMs:
+        modifiers: readonly
+        type: number
+        description: Number of milliseconds since epoch.
+
+      native:
+        modifiers: readonly
+        type: Date
+        description: Native JS representation of the %Instant, for compatibility with native and third party API.
+
+    methods:
+      atOffset:
+        signature: |
+          atOffset(offset: %ZoneOffset): %OffsetDateTime
+        params:
+          offset: Time zone offset.
+        returns: Date/time indication of the instant in the specified time zone offset.
+
+      atZone:
+        signature: |
+          atZone(zone: %ZoneId): %ZonedDateTime
+        params:
+          offset: Time zone.
+        returns: Date/time indication of the instant in the specified time zone.
+
+      compareTo:
+        signature: |
+          compareTo(other: %Instant): number
+        params:
+          other: Instant to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same instant;</li>
+            <li>positive value if this instant goes after %other;</li>
+            <li>negative value if this instant goes before %other.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+      equals:
+        signature: |
+          equals(other: %Instant): boolean
+        params:
+          other: Instant to compare to.
+        returns: |
+          True if this instant is equal to %other. Null and undefined are only equal to each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+      isBefore:
+        signature: |
+          isBefore(other: %Instant): boolean
+        params:
+          other: Instant to compare to.
+        returns: |
+          True if this instant goes before %other. Null and undefined go before anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+      isAfter:
+        signature: |
+          isafter(other: %Instant): boolean
+        params:
+          other: Instant to compare to.
+        returns: |
+          True if this instant goes after %other. Null and undefined go before anything, except each other.
+          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+      plus:
+        signature: |
+          plus(ms: number | %Duration): %Instant
+        params:
+          ms: '%Duration or number of milliseconds to add.'
+        returns: New %Instant shifted onwards from this one by the specified duration.
+
+      minus:
+        signature: |
+          minus(ms: number | %Duration): %Instant
+        params:
+          ms: '%Duration or number of milliseconds to subtract.'
+        returns: New %Instant shifted backwards from this one by the specified duration.
+
+      until:
+        signature: |
+          until(instant: %Instant): %Duration
+        params:
+          instant: Another %Instant.
+        returns: '%Duration from this instant to the specified one.'
+
+      toString:
+        signature: |
+          toString(): string
+        returns: String representation of the instant in ISO format in %UTC, such as "2019-12-30T14:49:50.254Z".
+
+    staticMethods:
+      now:
+        signature: |
+          now(): %Instant
+        returns: Current instant.
+
+      ofEpochMs:
+        signature: |
+          ofEpochMs(epochMs: number): %Instant
+        params:
+          epochMs: Number of milliseconds since epoch.
+        returns: '%Instant representation.'
+
+      fromNative:
+        signature: |
+          fromNative(native: Date): %Instant
+        params:
+          native: Native JS Date.
+        returns: '%Instant representation, for compatibility with native and third party API.'
+
+      parse:
+        signature: |
+          parse(str: string): %Instant
+        params:
+          str: |
+            String representation of an instant in ISO format in any time zone or offset.
+            See %ZonedDateTime.%parseZoned for details.
+        returns: '%Instant representation.'
+        references:
+          parseZoned:
+            file: ZonedDateTime
+            member: parse
+            static: true
+            label: parse
+
+      compare:
+        signature: |
+          compare(x: %Instant, y: %Instant): number
+        params:
+          x: One instant.
+          y: Another instant.
+        returns: |
+          <ul>
+            <li>0 if this %x and %y are the same instants;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+
+      equals:
+        signature: |
+          equals(x: %Instant, y: %Instant): boolean
+        params:
+          x: One instant.
+          y: Another instant.
+        returns: True if %x is equal to %y. Null and undefined are only equal to each other.
+
+      isBefore:
+        signature: |
+          isBefore(x: %Instant, y: %Instant): boolean
+        params:
+          x: One instant.
+          y: Another instant.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          isafter(x: %Instant, y: %Instant): boolean
+        params:
+          x: One instant.
+          y: Another instant.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
+
+  EPOCH:
+    type: '%Instant'
+    description: '%Instant with %epochMs = 0, i.e. representing ECMAScript epoch (1st of January 1970 UTC).'
+    references:
+      epochMs:
+        symbol: default
+        member: epochMs
