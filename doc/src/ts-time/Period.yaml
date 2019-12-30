@@ -1,21 +1,98 @@
 symbols:
   default:
-    kind: class
+    kind: abstract class
     description: |
-      Comprises a fixed date/time interval in certain units of measurement. As opposed to %Duration, it can comprise a
+      <p>Comprises a fixed date/time interval in certain units of measurement. As opposed to %Duration, it can comprise a
       variable-length interval such as month. Month <b>duration</b> varies from 28 to 31 days, but in terms of
       <b>periods</b>, month is a valid unit. %Period is mainly involved to manipulate date/time-related objects such as
       %LocalDate, %LocalDateTime, %OffsetDateTime and %ZonedDateTime. In particular, %ZonedDateTime.%plusPeriod method
       adds the period to a respective date/time, not instant. It means that if you add %DAY_PERIOD to a %ZonedDateTime,
       the real time shift will not be 24 hours if time zone offset changes during this day, while %LocalTime will truly
-      stay the same:
+      stay the same:</p>
       <pre>
       const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
         end = start.%plusPeriod(%DAY_PERIOD);
       expect(end.%toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
       expect(end.%epochMs - start.%epochMs).toBe(25 * %MS_PER_HOUR);
       </pre>
-      To ascertain a predictable fixed real time shift, you are supposed to add a %Duration.
+      <p>To ascertain a predictable fixed real time shift, you are supposed to add a %Duration.</p>
+      <p>%Period doesn't support alignment out of the box. For example, %WEEK_PERIOD won't automatically snap your
+      dates to %MONDAY.</p>
+      <p>Current API doesn't support complex periods such as 1 month + 1 day, as their application depends on the order,
+      and use cases of such periods are unclear.</p>
+
+    properties:
+      empty:
+        modifiers: readonly
+        type: boolean
+        description: |
+          Indicates if this period is empty, i.e. an attempt to add it to any date any number of times always returns
+          the same date.
+
+    methods:
+      addToDate:
+        modifiers: abstract
+        signature: |
+          (date: %LocalDate, amount: number): %LocalDate
+        params:
+          date: Date to add the periods to.
+          amount: Number of period to add.
+        returns: Date shifted from %date onwards by the specified number of these periods.
+
+      between:
+        modifiers: abstract
+        signature: |
+          (start: %LocalDate, end: %LocalDate): number
+        params:
+          start: Start date.
+          end: End date.
+        returns: |
+          Integer number of periods fitting between the specified dates, with the highest absolute value. If
+          end date stands before start date, the result will not be positive. If this period is %empty, the methods
+          always returns NaN.
+
+      multiply:
+        signature: |
+          (multiplier: number): %Period
+        params:
+          multiplier: Multiplier of the period.
+        returns: This period taken the specified number of times.
+
+    staticMethods:
+      ofYears:
+        signature: |
+          (years: number): %Period
+        params:
+          years: Number of years.
+        returns: '%Period representing the specified number of years.'
+
+      ofQuarters:
+        signature: |
+          (quarters: number): %Period
+        params:
+          quarters: Number of quarters.
+        returns: '%Period representing the specified number of quarters.'
+
+      ofMonths:
+        signature: |
+          (months: number): %Period
+        params:
+          months: Number of months.
+        returns: '%Period representing the specified number of months.'
+
+      ofWeeks:
+        signature: |
+          (weeks: number): %Period
+        params:
+          weeks: Number of weeks.
+        returns: '%Period representing the specified number of weeks.'
+
+      ofDays:
+        signature: |
+          (days: number): %Period
+        params:
+          days: Number of days.
+        returns: '%Period representing the specified number of days.'
 
     references:
       parse:
@@ -34,3 +111,27 @@ symbols:
       epochMs:
         file: ts-time/ZonedDateTime
         member: epochMs
+
+  NULL_PERIOD:
+    type: '%Period'
+    description: Null (empty) period. An attempt to add it to any date results in the same date.
+
+  DAY_PERIOD:
+    type: '%Period'
+    description: Period representing a calendar day.
+
+  WEEK_PERIOD:
+    type: '%Period'
+    description: Period representing a calendar week (7 days).
+
+  MONTH_PERIOD:
+    type: '%Period'
+    description: Period representing a calendar month.
+
+  QUARTER_PERIOD:
+    type: '%Period'
+    description: Period representing a calendar quarter (3 months).
+
+  YEAR_PERIOD:
+    type: '%Period'
+    description: Period representing a calendar year.

@@ -41,7 +41,7 @@ symbols:
           (multiplier: number): %Duration
         params:
           multiplier: Multiplier of the duration.
-        returns: Duration taken the specified number of times.
+        returns: This duration taken the specified number of times.
 
     staticMethods:
       of:
