@@ -26,21 +26,21 @@ symbols:
     methods:
       plus:
         signature: |
-          plus(value: number | %Duration): %Duration
+          (value: number | %Duration): %Duration
         params:
           value: Duration to add, or milliseconds.
         returns: Sum of two durations.
 
       minus:
         signature: |
-          minus(value: number | %Duration): %Duration
+          (value: number | %Duration): %Duration
         params:
           value: Duration to subtract, or milliseconds.
         returns: Difference of two durations.
 
       multiply:
         signature: |
-          multiply(multiplier: number): %Duration
+          (multiplier: number): %Duration
         params:
           multiplier: Multiplier of the duration.
         returns: Duration taken the specified number of times.
@@ -48,56 +48,56 @@ symbols:
     staticMethods:
       of:
         signature: |
-          of(value: number | %Duration): %Duration
+          (value: number | %Duration): %Duration
         params:
           value: Duration as object or number of milliseconds.
         returns: '%Duration instance.'
 
       ofMs:
         signature: |
-          ofMs(ms: number): %Duration
+          (ms: number): %Duration
         params:
           ms: Duration in milliseconds.
         returns: '%Duration instance.'
 
       ofSeconds:
         signature: |
-          ofSeconds(seconds: number): %Duration
+          (seconds: number): %Duration
         params:
           ms: Duration in seconds.
         returns: '%Duration instance.'
 
       ofMinutes:
         signature: |
-          ofMinutes(minutes: number): %Duration
+          (minutes: number): %Duration
         params:
           ms: Duration in minutes.
         returns: '%Duration instance.'
 
       ofHours:
         signature: |
-          ofHours(hours: number): %Duration
+          (hours: number): %Duration
         params:
           ms: Duration in hours.
         returns: '%Duration instance.'
 
       ofDays:
         signature: |
-          ofDays(days: number): %Duration
+          (days: number): %Duration
         params:
           ms: Duration in days.
         returns: '%Duration instance.'
 
       ofWeeks:
         signature: |
-          ofWeeks(weeks: number): %Duration
+          (weeks: number): %Duration
         params:
           ms: Duration in weeks.
         returns: '%Duration instance.'
 
       ofComponents:
         signature: |
-          ofComponents(days: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0): %Duration
+          (days: number, hours: number = 0, minutes: number = 0, seconds: number = 0, ms: number = 0): %Duration
         params:
           days: Number of days.
           hours: Number of hours.

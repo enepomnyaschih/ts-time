@@ -170,6 +170,9 @@ class LocalDate {
 		return this.truncateToYear.plus(Period.ofDays(dayOfYear - 1));
 	}
 
+	// TODO: Other with* methods. See getter list.
+	// TODO: Test and document out-of-bounds examples.
+
 	toString() {
 		return `${this.nativeUtc.getUTCFullYear()}-${pad(this.nativeUtc.getUTCMonth() + 1, 2)}-${pad(this.nativeUtc.getUTCDate(), 2)}`;
 	}

@@ -2,10 +2,10 @@ symbols:
   default:
     kind: interface
     description: |
-      There are exactly 2 eras, with respective numeric values and text identifiers:
+      There are exactly 2 eras, with respective numeric values:
       <ol start="0">
-        <li>%BC, id = "bc"</li>
-        <li>%AD, id = "ad"</li>
+        <li>%BC</li>
+        <li>%AD</li>
       </ol>
 
     properties:
@@ -21,8 +21,38 @@ symbols:
 
   BC:
     type: '%Era'
-    description: '%Era representation of BC. Has numeric value of 0 and text identifier of "bc".'
+    description: |
+      %Era representation of BC. Has numeric value of 0 and text identifier of "bc". Represents all dates when
+      absolute year <= 0, but relative years of this era start at 1. Examples:
+      <table class="table" style="width: 300px">
+        <thead>
+          <tr>
+            <th>Absolute year</th>
+            <th>Year of era</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>0</td><td>1</td></tr>
+          <tr><td>-1</td><td>2</td></tr>
+          <tr><td>-2</td><td>3</td></tr>
+        </tbody>
+      </table>
 
   AD:
     type: '%Era'
-    description: '%Era representation of AD. Has numeric value of 1 and text identifier of "ad".'
+    description: |
+      %Era representation of AD. Has numeric value of 1 and text identifier of "ad". Represents all dates when
+      absolute year > 0, and relative years of this era start as well at 1. Examples:
+      <table class="table" style="width: 300px">
+        <thead>
+          <tr>
+            <th>Absolute year</th>
+            <th>Year of era</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1</td><td>1</td></tr>
+          <tr><td>2</td><td>2</td></tr>
+          <tr><td>3</td><td>3</td></tr>
+        </tbody>
+      </table>

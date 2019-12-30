@@ -13,3 +13,12 @@ references:
     member: of
     static: true
     label: of
+
+includes:
+  null: |
+    <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
+    So, if your variable may contain null or undefined, use the respective static method instead.</p>
+
+  weekBased: |
+    <p class="text-secondary">By definition, the 1st week of week based year contains the 1st Thursday of the year, and
+    the week based year starts from the Monday of this week.</p>

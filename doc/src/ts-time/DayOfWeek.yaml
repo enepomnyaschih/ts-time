@@ -25,7 +25,7 @@ symbols:
     methods:
       compareTo:
         signature: |
-          compareTo(other: %DayOfWeek): number
+          (other: %DayOfWeek): number
         params:
           other: Day of week to compare to.
         returns: |
@@ -34,41 +34,35 @@ symbols:
             <li>positive value if this day goes after %other;</li>
             <li>negative value if this day goes before %other.</li>
           </ul>
-          Null and undefined are considered less than anything, except each other.
-          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
-          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+          Null and undefined are considered less than anything, except each other. %%null
 
       isBefore:
         signature: |
-          isBefore(other: %DayOfWeek): boolean
+          (other: %DayOfWeek): boolean
         params:
           other: Day of week to compare to.
         returns: |
-          True if this day goes before %other. Null and undefined go before anything, except each other.
-          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
-          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+          True if this day goes before %other. Null and undefined go before anything, except each other. %%null
 
       isAfter:
         signature: |
-          isafter(other: %DayOfWeek): boolean
+          (other: %DayOfWeek): boolean
         params:
           other: Day of week to compare to.
         returns: |
-          True if this day goes after %other. Null and undefined go before anything, except each other.
-          <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
-          So, if your variable may contain null or undefined, use the respective static method instead.</p>
+          True if this day goes after %other. Null and undefined go before anything, except each other. %%null
 
     staticMethods:
       of:
         signature: |
-          of(value: number | %DayOfWeek): %DayOfWeek
+          (value: number | %DayOfWeek): %DayOfWeek
         params:
           value: Numeric value of the day.
         returns: '%DayOfWeek representation of the day.'
 
       compareTo:
         signature: |
-          compareTo(x: %DayOfWeek, y: %DayOfWeek): number
+          (x: %DayOfWeek, y: %DayOfWeek): number
         params:
           x: One day.
           y: Another day.
@@ -82,7 +76,7 @@ symbols:
 
       isBefore:
         signature: |
-          isBefore(x: %DayOfWeek, y: %DayOfWeek): boolean
+          (x: %DayOfWeek, y: %DayOfWeek): boolean
         params:
           x: One day.
           y: Another day.
@@ -90,7 +84,7 @@ symbols:
 
       isAfter:
         signature: |
-          isafter(x: %DayOfWeek, y: %DayOfWeek): boolean
+          (x: %DayOfWeek, y: %DayOfWeek): boolean
         params:
           x: One day.
           y: Another day.

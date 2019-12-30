@@ -1,0 +1,336 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a specific date, merely as a tuple of (absolute year, month, day of month).
+
+    properties:
+      nativeLocal:
+        modifiers: readonly
+        type: Date
+        description: |
+          Native JS Date representing this local date in the browser time zone at %MIDNIGHT,
+          for compatibility with native and third party API.
+
+      nativeUtc:
+        modifiers: readonly
+        type: Date
+        description: |
+          Native JS Date representing this local date in %UTC at %MIDNIGHT,
+          for compatibility with native and third party API.
+
+      era:
+        modifiers: readonly
+        type: '%Era'
+        description: Era of this local date.
+
+      year:
+        modifiers: readonly
+        type: number
+        description: Absolute year.
+
+      yearOfEra:
+        modifiers: readonly
+        type: number
+        description: Absolute year of era. See %Era for details.
+
+      weekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          Absolute week based year. %%weekBased
+
+      month:
+        modifiers: readonly
+        type: '%Month'
+        description: Month.
+
+      weekOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          1-based week of week-based year. %%weekBased
+
+      dayOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based day of year.
+
+      dayOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          1-based day of week-based year. %%weekBased
+
+      dayOfMonth:
+        modifiers: readonly
+        type: number
+        description: 1-based day of month.
+
+      dayOfWeek:
+        modifiers: readonly
+        type: '%DayOfWeek'
+        description: Day of week.
+
+      epochDay:
+        modifiers: readonly
+        type: number
+        description: 1-based day since epoch (i.e. 1st of January 1970 is the 1st epoch day).
+
+      quarterOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based quarter of year.
+
+      isLeapYear:
+        modifiers: readonly
+        type: boolean
+        description: True if this is a leap year.
+
+      lengthOfYear:
+        modifiers: readonly
+        type: number
+        description: Number of days in this year (365 for non-leap, 366 for leap).
+
+      atStartOfDay:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the day (i.e. %MIDNIGHT).
+
+      truncateToYear:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: Start of the year (i.e. the 1st of January).
+
+      truncateToWeekBasedYear:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: |
+          Start of the week-based year. %%weekBased
+
+      truncateToMonth:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: Start of the month (i.e. 1st day of one).
+
+      truncateToWeek:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: Start of the week (i.e. Monday).
+
+    methods:
+      compareTo:
+        signature: |
+          (other: %LocalDate): number
+        params:
+          other: Local date to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same local date;</li>
+            <li>positive value if this local date goes after %other;</li>
+            <li>negative value if this local date goes before %other.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+      equals:
+        signature: |
+          (other: %LocalDate): boolean
+        params:
+          other: Local date to compare to.
+        returns: |
+          True if this local date is equal to %other. Null and undefined are only equal to each other. %%null
+
+      isBefore:
+        signature: |
+          (other: %LocalDate): boolean
+        params:
+          other: Local date to compare to.
+        returns: |
+          True if this local date goes before %other. Null and undefined go before anything, except each other. %%null
+
+      isAfter:
+        signature: |
+          (other: %LocalDate): boolean
+        params:
+          other: Local date to compare to.
+        returns: |
+          True if this local date goes after %other. Null and undefined go before anything, except each other. %%null
+
+      atTime:
+        signature: |
+          (time: %LocalTime): %LocalDateTime
+        params:
+          time: Local time.
+        returns: Local date/time at the specified time.
+
+      plus:
+        signature: |
+          (period: %Period): %LocalDate
+        params:
+          period: '%Period to add.'
+        returns: New %LocalDate shifted onwards from this one by the specified period.
+
+      minus:
+        signature: |
+          (period: %Period): %LocalDate
+        params:
+          period: '%Period to subtract.'
+        returns: New %LocalDate shifted backwards from this one by the specified period.
+
+      withYear:
+        signature: |
+          (year: number): %LocalDate
+        params:
+          year: Absolute year.
+        returns: |
+          New %LocalDate with the specified year and its current month/day of month. If such date doesn't exist, it
+          shifts the date back to the nearest valid one (e.g. 29th of February in 2019 gets shifted to 28th of
+          February).
+
+      withMonth:
+        signature: |
+          (month: number | %Month): %LocalDate
+        params:
+          month: Month.
+        returns: |
+          New %LocalDate with the specified month and its current year/day of month. If such date doesn't exist, it
+          shifts the date back to the nearest valid one (e.g. 31st of April gets shifted to 30th of April).
+
+      withDayOfMonth:
+        signature: |
+          (dayOfMonth: number): %LocalDate
+        params:
+          dayOfMonth: 1-based day of month.
+        returns: New %LocalDate with the specified day of month and its current year/month.
+
+      withDayOfWeek:
+        signature: |
+          (dayOfWeek: number | %DayOfWeek): %LocalDate
+        params:
+          dayOfWeek: Day of week or its numeric value
+        returns: New %LocalDate with the specified day of week and its current week.
+
+      withDayOfYear:
+        signature: |
+          (dayOfYear: number): %LocalDate
+        params:
+          dayOfYear: 1-based day of year.
+        returns: New %LocalDate with the specified day of year and its current year.
+
+      toString:
+        signature: |
+          (): string
+        returns: String representation of the date in ISO format, such as "2019-12-30".
+
+    staticMethods:
+      of:
+        signature: |
+          (year: number, month: number | %Month = %JANUARY, dayOfMonth: number = 1): %LocalDate
+        params:
+          year: Absolute year.
+          month: Month or its numeric value.
+          dayOfMonth: 1-based day of month.
+        returns: '%LocalDate representation.'
+
+      ofEpochDay:
+        signature: |
+          (epochDay: number): %LocalDate
+        params:
+          epochDay: 1-based epoch day (i.e. 1st of January 1970 is the 1st epoch day).
+        returns: '%LocalDate representation.'
+
+      ofYearDay:
+        signature: |
+          (year: number, dayOfYear: number): %LocalDate
+        params:
+          year: Absolute year.
+          dayOfYear: 1-based day of year.
+        returns: '%LocalDate representation.'
+
+      ofWeek:
+        signature: |
+          (year: number, week: number, dayOfWeek: number | %DayOfWeek): %LocalDate
+        params:
+          year: Absolute week based year.
+          week: 1-based week of the year.
+          dayOfWeek: Day of week or its numeric value.
+        returns: '%LocalDate representation.'
+        description: '%%weekBased'
+
+      ofWeekBasedYearDay:
+        signature: |
+          (year: number, dayOfWeekBasedYear: number): %LocalDate
+        params:
+          year: Absolute week based year.
+          dayOfWeekBasedYear: 1-based day of the week based year.
+        returns: '%LocalDate representation.'
+        description: '%%weekBased'
+
+      fromNativeLocal:
+        signature: |
+          (date: Date): %LocalDate
+        params:
+          date: Native JS date.
+        returns: |
+          %LocalDate representation of %date in the browser time zone,
+          for compatibility with native and third party API.
+
+      fromNativeUtc:
+        signature: |
+          (date: Date): %LocalDate
+        params:
+          date: Native JS date.
+        returns: '%LocalDate representation of %date in %UTC, for compatibility with native and third party API.'
+
+      parse:
+        signature: |
+          (str: string): %LocalDate
+        params:
+          str: String representation of a local date in ISO format, such as '2019-12-30'.
+        returns: '%LocalDate representation.'
+
+      compare:
+        signature: |
+          (x: %LocalDate, y: %LocalDate): number
+        params:
+          x: One local date.
+          y: Another local date.
+        returns: |
+          <ul>
+            <li>0 if this %x and %y are the same local dates;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+
+      equals:
+        signature: |
+          (x: %LocalDate, y: %LocalDate): boolean
+        params:
+          x: One local date.
+          y: Another local date.
+        returns: True if %x is equal to %y. Null and undefined are only equal to each other.
+
+      isBefore:
+        signature: |
+          (x: %LocalDate, y: %LocalDate): boolean
+        params:
+          x: One local date.
+          y: Another local date.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          (x: %LocalDate, y: %LocalDate): boolean
+        params:
+          x: One local date.
+          y: Another local date.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
+
+  EPOCH_DATE:
+    type: '%LocalDate'
+    description: '%LocalDate with %epochDay = 1, i.e. representing ECMAScript epoch (1st of January 1970).'
+    references:
+      epochDay:
+        symbol: default
+        member: epochDay
