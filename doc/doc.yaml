@@ -81,7 +81,7 @@ references:
     symbol: ZoneId
 
   ZoneOffset:
-    file: ts/time/Zone
+    file: ts-time/Zone
     symbol: ZoneOffset
 
   ofZone:
