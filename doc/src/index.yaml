@@ -1,0 +1,55 @@
+title: ts-time
+
+description: |
+  <div class="container">
+    <div class="jumbotron">
+      <h1 class="display-4">ts-time</h1>
+      <p class="lead">TypeScript library of immutable date/time models with time zone support.</p>
+      <hr class="my-4">
+      <p>This library mimics <a href="https://www.baeldung.com/java-8-date-time-intro" target="_blank">Java 8 Date/Time API</a>,
+      adjusting its API to the best practices of TypeScript and JavaScript. It uses
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" target="_blank">Intl.DateTimeFormat</a>
+      API to detect time zone offsets, providing efficient and reliable time zone support in your client code.</p>
+    </div>
+    <p>ts-time is available as <a href="https://www.npmjs.com/package/ts-time" target="_blank">npm package</a>.</p>
+    <pre>
+    npm install --save ts-time
+    </pre>
+    <p>ts-time features:</p>
+    <ul>
+      <li>Various useful %constants.</li>
+      <li>%Instant class representing an instant of time without time zone relation.</li>
+      <li>%LocalDate, %LocalTime, %LocalDateTime classes representing dates and times without time zone relation.</li>
+      <li>%ZoneId, %ZoneOffset classes representing time zones and time zone offsets.</li>
+      <li>%ZonedDateTime and %OffsetDateTime classes representing an instant of time in a specific time zone or time zone offset.</li>
+      <li>%Duration and %Period classes representing time intervals.</li>
+      <li>%DayOfWeek, %Month and %Era classes and constants representing certain calendar terms.</li>
+      <li>and many other...</li>
+    </ul>
+    <p>ts-time is a pure definitely-typed object-oriented solution. Any code fragment developed with ts-time is easy to
+    read, understand and maintain, because it manipulates data structures serving specific purposes:</p>
+    <pre>
+    function buildGraduation(from: %LocalDate, to: %LocalDate, step: %Period) {
+      const result: %LocalDate[] = [];
+      while (from.%isBefore(to)) {
+        result.push(from);
+        from = to.%plus(step);
+      }
+      return result;
+    }
+    </pre>
+    <p>All data structures defined in ts-time are immutable. Thanks to this, you can be sure that your values never get
+    spoiled when you pass them to a third party function or component. For third parties that don't support ts-time
+    data structures, you may convert the structures to native Date or milliseconds and back.</p>
+    <p>Project license is <a href="https://github.com/enepomnyaschih/ts-time/blob/master/LICENSE" target="_blank">MIT</a>.</p>
+    <p>Find source code and bug tracker at <a href="https://github.com/enepomnyaschih/ts-time" target="_blank">GitHub</a>.</p>
+  </div>
+
+references:
+  isBefore:
+    file: ts-time/LocalDate
+    member: isBefore
+
+  plus:
+    file: ts-time/LocalDate
+    member: plus

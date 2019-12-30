@@ -1,0 +1,4 @@
+symbols:
+  MS_PER_SECOND:
+    type: number
+    description: Number of milliseconds in a second.

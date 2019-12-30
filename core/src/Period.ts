@@ -27,6 +27,7 @@ import {DAYS_PER_WEEK, MONTHS_PER_QUARTER, MONTHS_PER_YEAR, MS_PER_DAY} from "./
 import LocalDate from "./LocalDate";
 import Month from "./Month";
 
+// TODO: Split to DatePeriod and DateTimePeriod
 abstract class Period {
 
 	abstract addToDate(date: LocalDate, amount: number): LocalDate;

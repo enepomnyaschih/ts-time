@@ -1,0 +1,7 @@
+name: ts-time
+input: src
+output: dist
+
+statics:
+  - src: static
+    dest: .
