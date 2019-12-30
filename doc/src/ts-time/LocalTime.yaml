@@ -1,0 +1,248 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a specific time, without date and time zone relation. In other words, this is a tuple of (hour, minute,
+      second, millisecond), or a number of milliseconds since day start (from 0 inclusive to %MS_PER_DAY exclusive).
+      You may bind time to a date with %atDate method.
+
+    properties:
+      totalMs:
+        modifiers: readonly
+        type: number
+        description: Total number of milliseconds since day start (from 0 inclusive to %MS_PER_DAY exclusive).
+
+      hour:
+        modifiers: readonly
+        type: number
+        description: Hour of a day (0-23).
+
+      minute:
+        modifiers: readonly
+        type: number
+        description: Minute of an hour (0-59).
+
+      second:
+        modifiers: readonly
+        type: number
+        description: Second of a minute (0-59).
+
+      ms:
+        modifiers: readonly
+        type: number
+        description: Millisecond of a second (0-999).
+
+      truncateToHour:
+        modifiers: readonly
+        type: '%LocalTime'
+        description: Start of the hour (i.e. 0 minutes, 0 seconds, 0 milliseconds).
+
+      truncateToMinute:
+        modifiers: readonly
+        type: '%LocalTime'
+        description: Start of the minute (i.e. 0 seconds, 0 milliseconds).
+
+      truncateToSecond:
+        modifiers: readonly
+        type: '%LocalTime'
+        description: Start of the second (i.e. 0 milliseconds).
+
+    methods:
+      get:
+        signature: |
+          (field: %TimeField): number
+        params:
+          field: Field to get.
+        returns: Value of the specified field.
+
+      compareTo:
+        signature: |
+          (other: %LocalTime): number
+        params:
+          other: Local time to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same local time;</li>
+            <li>positive value if this local time goes after %other;</li>
+            <li>negative value if this local time goes before %other.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+      equals:
+        signature: |
+          (other: %LocalTime): boolean
+        params:
+          other: Local time to compare to.
+        returns: |
+          True if this local time is equal to %other. Null and undefined are only equal to each other. %%null
+
+      isBefore:
+        signature: |
+          (other: %LocalTime): boolean
+        params:
+          other: Local time to compare to.
+        returns: |
+          True if this local time goes before %other. Null and undefined go before anything, except each other. %%null
+
+      isAfter:
+        signature: |
+          (other: %LocalTime): boolean
+        params:
+          other: Local time to compare to.
+        returns: |
+          True if this local time goes after %other. Null and undefined go before anything, except each other. %%null
+
+      atDate:
+        signature: |
+          (date: %LocalDate): %LocalDateTime
+        params:
+          date: Local date.
+        returns: This time on the specified date.
+
+      plus:
+        signature: |
+          (duration: %Duration): %LocalTime
+        params:
+          duration: '%Duration to add.'
+        returns: New %LocalTime shifted onwards from this one by the specified duration.
+
+      minus:
+        signature: |
+          (duration: %Duration): %LocalTime
+        params:
+          duration: '%Duration to subtract.'
+        returns: New %LocalTime shifted backwards from this one by the specified duration.
+
+      withHour:
+        signature: |
+          (hour: number): %LocalTime
+        params:
+          hour: Hour of a day.
+        returns: New %LocalTime with the specified hour of a day. All other properties don't change.
+
+      withMinute:
+        signature: |
+          (minute: number): %LocalTime
+        params:
+          minute: Minute of an hour.
+        returns: New %LocalTime with the specified minute of an hour. All other properties don't change.
+
+      withSecond:
+        signature: |
+          (second: number): %LocalTime
+        params:
+          second: Second of a minute.
+        returns: New %LocalTime with the specified second of a minute. All other properties don't change.
+
+      withMs:
+        signature: |
+          (ms: number): %LocalTime
+        params:
+          ms: Millisecond of a second.
+        returns: New %LocalTime with the specified millisecond of a second. All other properties don't change.
+
+      toString:
+        signature: |
+          (): string
+        returns: String representation of the time in ISO format, such as "18:30:15.225".
+
+    staticMethods:
+      of:
+        signature: |
+          (hour: number, minute: number = 0, second: number = 0, ms: number = 0): %LocalTime
+        params:
+          hour: Hour of day.
+          minute: Minute of hour.
+          second: Second of minute.
+          ms: Millisecond of second.
+        returns: '%LocalTime representation.'
+
+      ofTotalMs:
+        signature: |
+          (totalMs: number): %LocalTime
+        params:
+          totalMs: Total number of milliseconds since start of the day.
+        returns: '%LocalTime representation.'
+
+      fromNativeLocal:
+        signature: |
+          (date: Date): %LocalTime
+        params:
+          date: Native JS date.
+        returns: |
+          %LocalTime representation of time of %date in the browser time zone,
+          for compatibility with native and third party API.
+
+      fromNativeUtc:
+        signature: |
+          (date: Date): %LocalTime
+        params:
+          date: Native JS date.
+        returns: |
+          %LocalTime representation of time of %date in %UTC,
+          for compatibility with native and third party API.
+
+      parse:
+        signature: |
+          (str: string): %LocalTime
+        params:
+          str: String representation of a local time in ISO format, such as '18:30:15.225'.
+        returns: '%LocalTime representation.'
+
+      compare:
+        signature: |
+          (x: %LocalTime, y: %LocalTime): number
+        params:
+          x: One local time.
+          y: Another local time.
+        returns: |
+          <ul>
+            <li>0 if this %x and %y are the same local dates;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+
+      equals:
+        signature: |
+          (x: %LocalTime, y: %LocalTime): boolean
+        params:
+          x: One local time.
+          y: Another local time.
+        returns: True if %x is equal to %y. Null and undefined are only equal to each other.
+
+      isBefore:
+        signature: |
+          (x: %LocalTime, y: %LocalTime): boolean
+        params:
+          x: One local time.
+          y: Another local time.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          (x: %LocalTime, y: %LocalTime): boolean
+        params:
+          x: One local time.
+          y: Another local time.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
+
+  MIN_TIME:
+    type: '%LocalTime'
+    description: Minimal %LocalTime (00:00:00.000).
+
+  MAX_TIME:
+    type: '%LocalTime'
+    description: Maximum %LocalTime (23:59:59.999).
+
+  MAX_TIME12:
+    type: '%LocalTime'
+    description: Maximum %LocalTime in 12-hour system (11:59:59.999).
+
+  MIDNIGHT:
+    type: '%LocalTime'
+    description: Midnight (00:00:00.000).
+
+  NOON:
+    type: '%LocalTime'
+    description: Noon (12:00:00.000).

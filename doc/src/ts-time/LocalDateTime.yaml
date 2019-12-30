@@ -363,7 +363,7 @@ symbols:
 
       fromNativeUtc:
         signature: |
-          (date: Date): %LocalDate
+          (date: Date): %LocalDateTime
         params:
           date: Native JS date.
         returns: '%LocalDateTime representation of %date in %UTC, for compatibility with native and third party API.'
@@ -372,7 +372,7 @@ symbols:
         signature: |
           (str: string): %LocalDateTime
         params:
-          str: String representation of a local date/time in ISO format, such as '2019-12-30T18:30.15.225'.
+          str: String representation of a local date/time in ISO format, such as '2019-12-30T18:30:15.225'.
         returns: '%LocalDateTime representation.'
 
       compare:

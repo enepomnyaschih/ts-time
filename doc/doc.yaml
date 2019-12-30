@@ -7,6 +7,10 @@ statics:
     dest: .
 
 references:
+  MS_PER_DAY:
+    file: ts-time/constants
+    symbol: MS_PER_DAY
+
   ofZone:
     file: ts-time/Zone
     symbol: ZoneId
