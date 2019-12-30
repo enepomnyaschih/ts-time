@@ -11,6 +11,10 @@ references:
     file: ts-time/constants
     symbol: MS_PER_DAY
 
+  MS_PER_HOUR:
+    file: ts-time/constants
+    symbol: MS_PER_HOUR
+
   MIDNIGHT:
     file: ts-time/LocalTime
     symbol: MIDNIGHT

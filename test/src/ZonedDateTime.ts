@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import {utc} from "../../core/src/_internal";
+import {MS_PER_HOUR} from "../../core/src/constants";
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../core/src/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
@@ -508,8 +509,10 @@ describe("ZonedDateTime", () => {
 	});
 
 	it("should add period with respect to date/time, not instant", () => {
-		expect(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 0), berlin)
-			.plusPeriod(DAY_PERIOD).toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+		const start = ZonedDateTime.parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+			end = start.plusPeriod(DAY_PERIOD);
+		expect(end.toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+		expect(end.epochMs - start.epochMs).toBe(25 * MS_PER_HOUR);
 	});
 
 	it("should add duration", () => {
@@ -527,8 +530,10 @@ describe("ZonedDateTime", () => {
 	});
 
 	it("should add duration with respect to instant, not date/time", () => {
-		expect(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, OCTOBER, 27, 0), berlin)
-			.plusDuration(DAY_DURATION).toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+		const start = ZonedDateTime.parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+			end = start.plusDuration(DAY_DURATION);
+		expect(end.toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+		expect(end.epochMs - start.epochMs).toBe(24 * MS_PER_HOUR);
 	});
 
 	it("should add zero duration", () => {

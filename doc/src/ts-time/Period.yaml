@@ -1,0 +1,36 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a fixed date/time interval in certain units of measurement. As opposed to %Duration, it can comprise a
+      variable-length interval such as month. Month <b>duration</b> varies from 28 to 31 days, but in terms of
+      <b>periods</b>, month is a valid unit. %Period is mainly involved to manipulate date/time-related objects such as
+      %LocalDate, %LocalDateTime, %OffsetDateTime and %ZonedDateTime. In particular, %ZonedDateTime.%plusPeriod method
+      adds the period to a respective date/time, not instant. It means that if you add %DAY_PERIOD to a %ZonedDateTime,
+      the real time shift will not be 24 hours if time zone offset changes during this day, while %LocalTime will truly
+      stay the same:
+      <pre>
+      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+        end = start.%plusPeriod(%DAY_PERIOD);
+      expect(end.%toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+      expect(end.%epochMs - start.%epochMs).toBe(25 * %MS_PER_HOUR);
+      </pre>
+      To ascertain a predictable fixed real time shift, you are supposed to add a %Duration.
+
+    references:
+      parse:
+        file: ts-time/ZonedDateTime
+        member: parse
+        static: true
+
+      plusPeriod:
+        file: ts-time/ZonedDateTime
+        member: plusPeriod
+
+      toString:
+        file: ts-time/ZonedDateTime
+        member: toString
+
+      epochMs:
+        file: ts-time/ZonedDateTime
+        member: epochMs

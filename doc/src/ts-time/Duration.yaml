@@ -6,16 +6,14 @@ symbols:
       interval such as month, because month duration varies from 28 to 31 days. %Duration is mainly involved to
       manipulate %Instant objects. In particular, %ZonedDateTime.%plusDuration method adds the duration to a respective
       instant, not date/time. It means that if you add %DAY_DURATION to a %ZonedDateTime, you may receive a different
-      %LocalTime if time zone offset changes during this day:
+      %LocalTime if time zone offset changes during this day, while real time difference will truly be 24 hours:
       <pre>
-      const berlin = %ZoneId.%ofZone("Europe/Berlin"),
-        dateTime = %ZonedDateTime.%ofDateTime(%LocalDateTime.%ofDateTimeComponents(2019, %OCTOBER, 27, 0), berlin);
-      expect(dateTime.%plusDuration(%DAY_DURATION).toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+        end = start.%plusDuration(%DAY_DURATION);
+      expect(end.%toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+      expect(end.%epochMs - start.%epochMs).toBe(24 * %MS_PER_HOUR);
       </pre>
-      To ascertain same %LocalTime, you are supposed to use %plusPeriod method:
-      <pre>
-      expect(dateTime.%plusPeriod(%DAY_PERIOD).toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
-      </pre>
+      To ascertain same %LocalTime, you are supposed to add a %Period.
 
     properties:
       ms:
@@ -106,6 +104,24 @@ symbols:
           ms: Number of milliseconds.
         returns: '%Duration instance.'
 
+    references:
+      parse:
+        file: ts-time/ZonedDateTime
+        member: parse
+        static: true
+
+      plusDuration:
+        file: ts-time/ZonedDateTime
+        member: plusDuration
+
+      toString:
+        file: ts-time/ZonedDateTime
+        member: toString
+
+      epochMs:
+        file: ts-time/ZonedDateTime
+        member: epochMs
+
   NULL_DURATION:
     type: '%Duration'
     description: '%Duration representing an empty interval (0 milliseconds).'
@@ -133,23 +149,3 @@ symbols:
   WEEK_DURATION:
     type: '%Duration'
     description: '%Duration representing a week interval of real time.'
-
-references:
-  plusDuration:
-    file: ts-time/ZonedDateTime
-    member: plusDuration
-
-  plusPeriod:
-    file: ts-time/ZonedDateTime
-    member: plusPeriod
-
-  ofDateTime:
-    file: ts-time/ZonedDateTime
-    member: ofDateTime
-    static: true
-
-  ofDateTimeComponents:
-    file: ts-time/LocalDateTime
-    member: ofComponents
-    static: true
-    label: ofComponents
