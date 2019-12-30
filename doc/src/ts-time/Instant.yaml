@@ -145,7 +145,7 @@ symbols:
           </ul>
           Null and undefined are considered less than anything, except each other.
 
-      equals:
+      equal:
         signature: |
           (x: %Instant, y: %Instant): boolean
         params:

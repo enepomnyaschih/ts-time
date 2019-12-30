@@ -48,7 +48,7 @@ symbols:
       yearOfEra:
         modifiers: readonly
         type: number
-        description: Absolute year of era. See %Era for details.
+        description: Year of era. See %Era for details.
 
       weekBasedYear:
         modifiers: readonly
@@ -383,13 +383,13 @@ symbols:
           y: Another local date/time.
         returns: |
           <ul>
-            <li>0 if this %x and %y are the same local dates;</li>
+            <li>0 if this %x and %y are the same local date/time;</li>
             <li>positive value if %x goes after %y;</li>
             <li>negative value if %x goes before %y.</li>
           </ul>
           Null and undefined are considered less than anything, except each other.
 
-      equals:
+      equal:
         signature: |
           (x: %LocalDateTime, y: %LocalDateTime): boolean
         params:

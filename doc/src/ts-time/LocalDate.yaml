@@ -32,7 +32,7 @@ symbols:
       yearOfEra:
         modifiers: readonly
         type: number
-        description: Absolute year of era. See %Era for details.
+        description: Year of era. See %Era for details.
 
       weekBasedYear:
         modifiers: readonly
@@ -304,7 +304,7 @@ symbols:
           </ul>
           Null and undefined are considered less than anything, except each other.
 
-      equals:
+      equal:
         signature: |
           (x: %LocalDate, y: %LocalDate): boolean
         params:

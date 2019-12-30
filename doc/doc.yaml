@@ -11,6 +11,62 @@ references:
     file: ts-time/constants
     symbol: MS_PER_DAY
 
+  MIDNIGHT:
+    file: ts-time/LocalTime
+    symbol: MIDNIGHT
+
+  MONDAY:
+    file: ts-time/DayOfWeek
+    symbol: MONDAY
+
+  JANUARY:
+    file: ts-time/Month
+    symbol: JANUARY
+
+  FEBRUARY:
+    file: ts-time/Month
+    symbol: FEBRUARY
+
+  MARCH:
+    file: ts-time/Month
+    symbol: MARCH
+
+  APRIL:
+    file: ts-time/Month
+    symbol: APRIL
+
+  MAY:
+    file: ts-time/Month
+    symbol: MAY
+
+  JUNE:
+    file: ts-time/Month
+    symbol: JUNE
+
+  JULY:
+    file: ts-time/Month
+    symbol: JULY
+
+  AUGUST:
+    file: ts-time/Month
+    symbol: AUGUST
+
+  SEPTEMBER:
+    file: ts-time/Month
+    symbol: SEPTEMBER
+
+  OCTOBER:
+    file: ts-time/Month
+    symbol: OCTOBER
+
+  NOVEMBER:
+    file: ts-time/Month
+    symbol: NOVEMBER
+
+  DECEMBER:
+    file: ts-time/Month
+    symbol: DECEMBER
+
   ofZone:
     file: ts-time/Zone
     symbol: ZoneId

@@ -1,0 +1,353 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
+      (%Instant, %ZoneOffset). Unambiguously identifies a %LocalDateTime.
+
+    properties:
+      dateTime:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Date/time representing %instant in %offset.
+
+      instant:
+        modifiers: readonly
+        type: '%Instant'
+        description: Instant representing %dateTime in %offset.
+
+      offset:
+        modifiers: readonly
+        type: '%ZoneOffset'
+        description: Time zone offset. Connection between %instant and %dateTime.
+
+      date:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: Date part.
+
+      time:
+        modifiers: readonly
+        type: '%LocalTime'
+        description: Time part.
+
+      native:
+        modifiers: readonly
+        type: Date
+        description: Native JS Date representing %instant, for compatibility with native and third party API.
+
+      epochMs:
+        modifiers: readonly
+        type: number
+        description: Number of milliseconds since epoch.
+
+      era:
+        modifiers: readonly
+        type: '%Era'
+        description: Era.
+
+      year:
+        modifiers: readonly
+        type: number
+        description: Absolute year.
+
+      yearOfEra:
+        modifiers: readonly
+        type: number
+        description: Year in %era. See %Era for details.
+
+      weekBasedYear:
+        modifiers: readonly
+        type: number
+        description: Absolute week based year. %%weekBased
+
+      month:
+        modifiers: readonly
+        type: '%Month'
+        description: Month.
+
+      weekOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: 1-based week of week-based year. %%weekBased
+
+      dayOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based day of year.
+
+      dayOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: 1-based day of week-based year. %%weekBased
+
+      dayOfMonth:
+        modifiers: readonly
+        type: number
+        description: 1-based day of month.
+
+      dayOfWeek:
+        modifiers: readonly
+        type: '%DayOfWeek'
+        description: Day of week.
+
+      epochDay:
+        modifiers: readonly
+        type: number
+        description: 1-based day since epoch (i.e. 1st of %JANUARY 1970 is the 1st epoch day).
+
+      quarterOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based quarter of year.
+
+      isLeapYear:
+        modifiers: readonly
+        type: boolean
+        description: True if belongs to a leap year.
+
+      lengthOfYear:
+        modifiers: readonly
+        type: number
+        description: Number of days in year (365 for non-leap, 366 for leap).
+
+      hour:
+        modifiers: readonly
+        type: number
+        description: Hour of a day (0-23).
+
+      minute:
+        modifiers: readonly
+        type: number
+        description: Minute of an hour (0-59).
+
+      second:
+        modifiers: readonly
+        type: number
+        description: Second of a minute (0-59).
+
+      ms:
+        modifiers: readonly
+        type: number
+        description: Millisecond of a second (0-999).
+
+    methods:
+      compareTo:
+        signature: |
+          (other: %OffsetDateTime): number
+        params:
+          other: Offset date/time to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same offset date/time;</li>
+            <li>positive value if this offset date/time goes after %other;</li>
+            <li>negative value if this offset date/time goes before %other.</li>
+          </ul>
+          The objects are first compared by instant, and then by offset.
+          Null and undefined are considered less than anything, except each other. %%null
+
+      equals:
+        signature: |
+          (other: %OffsetDateTime): boolean
+        params:
+          other: Offset date/time to compare to.
+        returns: |
+          True if this offset date/time is equal to %other, i.e. all components are equal.
+          Null and undefined are only equal to each other. %%null
+
+      isBefore:
+        signature: |
+          (other: %OffsetDateTime): boolean
+        params:
+          other: Offset date/time to compare to.
+        returns: |
+          True if this offset date/time goes before %other.
+          The objects are first compared by instant, and then by offset.
+          Null and undefined go before anything, except each other. %%null
+
+      isAfter:
+        signature: |
+          (other: %OffsetDateTime): boolean
+        params:
+          other: Offset date/time to compare to.
+        returns: |
+          True if this offset date/time goes after %other.
+          The objects are first compared by instant, and then by offset.
+          Null and undefined go before anything, except each other. %%null
+
+      plusDuration:
+        signature: |
+          (duration: %Duration): %OffsetDateTime
+        params:
+          duration: '%Duration to add.'
+        returns: New %OffsetDateTime shifted onwards from this one by the specified duration in the same %offset.
+
+      plusPeriod:
+        signature: |
+          (period: %Period): %OffsetDateTime
+        params:
+          period: '%Period to add.'
+        returns: |
+          New %OffsetDateTime shifted onwards from this one by the specified period in the same %offset.
+          The algorithm respects %dateTime to align periods.
+
+      minusDuration:
+        signature: |
+          (duration: %Duration): %OffsetDateTime
+        params:
+          duration: '%Duration to subtract.'
+        returns: New %OffsetDateTime shifted backwards from this one by the specified duration in the same %offset.
+
+      minusPeriod:
+        signature: |
+          (period: %Period): %OffsetDateTime
+        params:
+          period: '%Period to subtract.'
+        returns: |
+          New %OffsetDateTime shifted backwards from this one by the specified period in the same %offset.
+          The algorithm respects %dateTime to align periods.
+
+      withYear:
+        signature: |
+          (year: number): %OffsetDateTime
+        params:
+          year: Absolute year.
+        returns: |
+          New %OffsetDateTime with the specified year and its current month/day of month/time/offset. If such date doesn't
+          exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 29th of %FEBRUARY in 2019,
+          18:30, UTC+3 gets shifted to 28th of %FEBRUARY, 18:30, UTC+3).
+
+      withMonth:
+        signature: |
+          (month: number | %Month): %OffsetDateTime
+        params:
+          month: Month.
+        returns: |
+          New %OffsetDateTime with the specified month and its current year/day of month/time/offset. If such date doesn't
+          exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 31st of %APRIL, 18:30, UTC+3 gets
+          shifted to 30th of %APRIL, 18:30, UTC+3).
+
+      withDayOfMonth:
+        signature: |
+          (dayOfMonth: number): %OffsetDateTime
+        params:
+          dayOfMonth: 1-based day of month.
+        returns: New %OffsetDateTime with the specified day of month and its current year/month/time/offset.
+
+      withDayOfWeek:
+        signature: |
+          (dayOfWeek: number | %DayOfWeek): %OffsetDateTime
+        params:
+          dayOfWeek: Day of week or its numeric value
+        returns: New %OffsetDateTime with the specified day of week and its current week/time/offset.
+
+      withDayOfYear:
+        signature: |
+          (dayOfYear: number): %OffsetDateTime
+        params:
+          dayOfYear: 1-based day of year.
+        returns: New %OffsetDateTime with the specified day of year and its current year/time/offset.
+
+      withHour:
+        signature: |
+          (hour: number): %OffsetDateTime
+        params:
+          hour: Hour of a day.
+        returns: New %OffsetDateTime with the specified hour of a day. All other properties don't change.
+
+      withMinute:
+        signature: |
+          (minute: number): %OffsetDateTime
+        params:
+          minute: Minute of an hour.
+        returns: New %OffsetDateTime with the specified minute of an hour. All other properties don't change.
+
+      withSecond:
+        signature: |
+          (second: number): %OffsetDateTime
+        params:
+          second: Second of a minute.
+        returns: New %OffsetDateTime with the specified second of a minute. All other properties don't change.
+
+      withMs:
+        signature: |
+          (ms: number): %OffsetDateTime
+        params:
+          ms: Millisecond of a second.
+        returns: New %OffsetDateTime with the specified millisecond of a second. All other properties don't change.
+
+      toString:
+        signature: |
+          (): string
+        returns: String representation of the offset date/time in ISO format, such as "2019-12-30T18:30:15.225+03:00".
+
+    staticMethods:
+      ofInstant:
+        signature: |
+          (instant: %Instant, offset: %ZoneOffset): %OffsetDateTime
+        params:
+          instant: Instant.
+          offset: Time zone offset.
+        returns: New %OffsetDateTime representing %instant in %offset.
+
+      ofDateTime:
+        signature: |
+          (localDateTime: %LocalDateTime, offset: %ZoneOffset): %OffsetDateTime
+        params:
+          localDateTime: Local date/time.
+          offset: Time zone offset.
+        returns: New %OffsetDateTime representing %dateTime in %offset.
+
+      parse:
+        signature: |
+          (str: string): %OffsetDateTime
+        params:
+          str: String representation of offset date/time in ISO format, such as '2019-12-30T18:30:15.225+03:00'.
+        returns: '%OffsetDateTime representation.'
+
+      compare:
+        signature: |
+          (x: %OffsetDateTime, y: %OffsetDateTime): number
+        params:
+          x: One offset date/time.
+          y: Another offset date/time.
+        returns: |
+          <ul>
+            <li>0 if this %x and %y are the same offset date/time;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          The objects are first compared by instant, and then by offset.
+          Null and undefined are considered less than anything, except each other.
+
+      equal:
+        signature: |
+          (x: %OffsetDateTime, y: %OffsetDateTime): boolean
+        params:
+          x: One offset date/time.
+          y: Another offset date/time.
+        returns: |
+          True if %x is equal to %y, i.e. all components are equal.
+          Null and undefined are only equal to each other.
+
+      isBefore:
+        signature: |
+          (x: %OffsetDateTime, y: %OffsetDateTime): boolean
+        params:
+          x: One offset date/time.
+          y: Another offset date/time.
+        returns: |
+          True if %x goes before %y.
+          The objects are first compared by instant, and then by offset.
+          Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          (x: %OffsetDateTime, y: %OffsetDateTime): boolean
+        params:
+          x: One offset date/time.
+          y: Another offset date/time.
+        returns: |
+          True if %x goes after %y.
+          The objects are first compared by instant, and then by offset.
+          Null and undefined go before anything, except each other.

@@ -137,6 +137,8 @@ class ZonedDateTime {
 		return this.dateTime.ms;
 	}
 
+	// TODO: Add truncates?
+
 	get offset() {
 		return this._offset = this._offset || this.zone.offsetAtInstant(this.instant);
 	}

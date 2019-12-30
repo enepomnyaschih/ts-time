@@ -134,6 +134,8 @@ class OffsetDateTime {
 		return this.dateTime.ms;
 	}
 
+	// TODO: Add truncates?
+
 	compareTo(other: OffsetDateTime) {
 		return OffsetDateTime.compare(this, other);
 	}
