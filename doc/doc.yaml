@@ -71,6 +71,10 @@ references:
     file: ts-time/Month
     symbol: DECEMBER
 
+  UTC:
+    file: ts-time/Zone
+    symbol: UTC
+
   ZoneId:
     file: ts-time/Zone
     symbol: ZoneId
