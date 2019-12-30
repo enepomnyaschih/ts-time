@@ -71,12 +71,24 @@ references:
     file: ts-time/Month
     symbol: DECEMBER
 
+  ZoneId:
+    file: ts-time/Zone
+    symbol: ZoneId
+
+  ZoneOffset:
+    file: ts/time/Zone
+    symbol: ZoneOffset
+
   ofZone:
     file: ts-time/Zone
     symbol: ZoneId
     member: of
     static: true
     label: of
+
+  DateTimeFormat:
+    label: Intl.DateTimeFormat
+    href: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
 
 includes:
   null: |

@@ -1,0 +1,191 @@
+symbols:
+  ZoneId:
+    kind: abstract class
+    description: |
+      <p>Represents a time zone. All time zone instances get cached in the memory upon initialization, so an attempt to
+      obtain the same time zone twice results in the same instance of an object.</p>
+
+    properties:
+      id:
+        modifiers: readonly
+        type: string
+        description: Zone text identifier.
+
+    methods:
+      offsetAtInstant:
+        signature: |
+          (instant: %Instant): %ZoneOffset
+        params:
+          instant: Instant.
+        returns: Offset of this time zone at a specified instant.
+
+      offsetAtLocalDateTime:
+        signature: |
+          (localDateTime: %LocalDateTime): %ZoneOffset
+        params:
+          localDateTime: Date/time.
+        returns: |
+          Offset of this time zone at a specified date/time. If there are multiple possible values (in case of time
+          overlap caused by offset shift), returns the earlier offset (i.e. one right before the shift).
+
+      toString:
+        signature: |
+          (): string
+        returns: '%id'
+
+    staticMethods:
+      of:
+        signature: |
+          (id: string): %ZoneId
+        params:
+          id: Zone text identifier.
+        returns: '%ZoneId representing this identifier.'
+        description: |
+          <p>This method parses the ID producing a %ZoneId or %ZoneOffset.
+          %ZoneOffset is returned if the %id is 'Z', or starts with '+' or '-'.</p>
+          <p>Parsing matches the zone %id step by step as follows.</p>
+          <ol>
+          <li>If the zone %id equals 'Z', the result is %UTC.</li>
+          <li>If the zone %id consists of a single letter, the zone %id is invalid, and Error is thrown.</li>
+          <li>If the zone %id starts with '+' or '-', the %id is parsed as a %ZoneOffset using %ZoneOffset.%ofOffset.</li>
+          <li>If the zone %id equals 'GMT', 'UTC' or 'UT' then the result is a %ZoneId with the same %id and rules
+            equivalent to %UTC.</li>
+          <li>If the zone %id starts with 'UTC+', 'UTC-', 'GMT+', 'GMT-', 'UT+' or 'UT-' then the %id is a prefixed
+            offset-based %id. The %id is split in two, with a two or three letter prefix and a suffix starting with the
+            sign. The suffix is parsed as a %ZoneOffset. The result will be a %ZoneId with the specified UTC/GMT/UT
+            prefix and the normalized offset %id as per %ZoneOffset.%offsetId. The rules of the returned %ZoneId will
+            be equivalent to the parsed %ZoneOffset.</li>
+          <li>All other %id's are parsed as custom zone %id's. Their offsets get computed with %DateTimeFormat browser
+            API on demand.</li>
+          </ol>
+        references:
+          ofOffset:
+            symbol: ZoneOffset
+            member: of
+            static: true
+            label: of
+          offsetId:
+            symbol: ZoneOffset
+            member: id
+            label: id
+
+      compareById:
+        signature: |
+          (x: %ZoneId, y: %ZoneId): number
+        params:
+          x: One time zone.
+          y: Another time zone.
+        returns: |
+          <ul>
+            <li>0 if this is the same zone;</li>
+            <li>positive value if %x.%id is higher than %y.%id;</li>
+            <li>negative value if %x.%id is lower than %y.%id.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+  ZoneOffset:
+    kind: class
+    extends:
+      - file: ts-time/Zone
+        symbol: ZoneId
+    description: |
+      <p>Represents a fixed time zone offset. All offset instances get cached in the memory upon initialization, so an
+      attempt to obtain the same time zone offset twice results in the same instance of an object.</p>
+
+    properties:
+      id:
+        modifiers: readonly
+        type: string
+        description: |
+          <p>Normalized text identifier of the offset:</p>
+          <ul>
+          <li>Z - for UTC (ISO-8601)</li>
+          <li>+hh:mm or -hh:mm - if the seconds are zero (ISO-8601)</li>
+          <li>+hh:mm:ss or -hh:mm:ss - if the seconds are non-zero (not ISO-8601)</li>
+          </ul>
+
+      totalSeconds:
+        modifiers: readonly
+        type: number
+        description: Total number of seconds.
+
+      hours:
+        modifiers: readonly
+        type: number
+        description: Number of hours in the offset. Can be positive or negative.
+
+      minutes:
+        modifiers: readonly
+        type: number
+        description: Number of minutes in the offset. Always positive.
+
+      seconds:
+        modifiers: readonly
+        type: number
+        description: Number of seconds in the offset. Always positive.
+
+    staticMethods:
+      of:
+        signature: |
+          (id: string): %ZoneOffset
+        params:
+          id: Time zone offset identifier.
+        returns: '%ZoneOffset representing this identifier.'
+        description: |
+          <p>This method parses the string %id of a %ZoneOffset to return an instance. The parsing accepts the
+          following formats:</p>
+          <ul>
+          <li>Z - for %UTC</li>
+          <li>±h</li>
+          <li>±hh</li>
+          <li>±hh:mm</li>
+          <li>±hhmm</li>
+          <li>±hh:mm:ss</li>
+          <li>±hhmmss</li>
+          </ul>
+          <p>Note that ± means either the plus or minus symbol.</p>
+          <p>The %getId of the returned offset will be normalized to one of the formats described there.</li>
+        references:
+          getId:
+            symbol: ZoneOffset
+            member: id
+            label: id
+
+      ofComponents:
+        signature: |
+          (hours: number, minutes: number = 0, seconds: number = 0): %ZoneOffset
+        params:
+          hours: Hourly part of the offset.
+          minutes: Minutely part of the offset.
+          seconds: Secondly part of the offset.
+        returns: '%ZoneOffset representation.'
+        description: |
+          <p>In order to obtain a negative offset, all parts must be reversed:</p>
+          <pre>
+          expect(%ZoneOffset.%ofComponents(-3, -25, -45)).toBe(%ZoneOffset.%ofTotalSeconds(-12345));
+          </pre>
+
+      ofTotalSeconds:
+        signature: |
+          (totalSeconds: number): %ZoneOffset
+        params:
+          totalSeconds: Total number of seconds.
+        returns: '%ZoneOffset representation.'
+
+      compare:
+        signature: |
+          (x: %ZoneOffset, y: %ZoneOffset): number
+        params:
+          x: One offset.
+          y: Another offset.
+        returns: |
+          <ul>
+            <li>0 if this is the same offset;</li>
+            <li>positive value if %x.%totalSeconds is higher than %y.%totalSeconds;</li>
+            <li>negative value if %x.%totalSeconds is lower than %y.%totalSeconds.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+  UTC:
+    type: '%ZoneOffset'
+    description: UTC time zone having a constant 0 offset.

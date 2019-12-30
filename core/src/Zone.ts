@@ -83,7 +83,7 @@ export abstract class ZoneId {
 	}
 }
 
-export class FixedOffsetZone extends ZoneId {
+class FixedOffsetZone extends ZoneId {
 
 	protected constructor(id: string, readonly totalSeconds: number) {
 		super(id);

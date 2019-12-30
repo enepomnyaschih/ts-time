@@ -7,8 +7,7 @@ description: |
       <p class="lead">TypeScript library of immutable date/time models with time zone support.</p>
       <hr class="my-4">
       <p>This library mimics <a href="https://www.baeldung.com/java-8-date-time-intro" target="_blank">Java 8 Date/Time API</a>,
-      adjusting its API to the best practices of TypeScript and JavaScript. It uses
-      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat" target="_blank">Intl.DateTimeFormat</a>
+      adjusting its API to the best practices of TypeScript and JavaScript. It uses %DateTimeFormat
       API to detect time zone offsets, providing efficient and reliable time zone support in your client code.</p>
     </div>
     <p>ts-time is available as <a href="https://www.npmjs.com/package/ts-time" target="_blank">npm package</a>.</p>
