@@ -54,6 +54,7 @@ symbols:
         params:
           field: Field to get.
         returns: Value of the specified field.
+        description: '%%experimental'
 
       compareTo:
         signature: |

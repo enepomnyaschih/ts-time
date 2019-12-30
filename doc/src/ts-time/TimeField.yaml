@@ -1,0 +1,38 @@
+symbols:
+  default:
+    kind: interface
+    description: Polymorph interface of a numeric linearly-distributed field of %LocalTime. %%experimental
+    simple: true
+
+    methods:
+      get:
+        signature: |
+          (time: %LocalTime): number
+        params:
+          time: Time to obtain a field from.
+        returns: Field value.
+
+      getDuration:
+        signature: |
+          (): %Duration
+        returns: '%Duration between two respective values of the field.'
+
+  HOUR_FIELD:
+    type: '%TimeField'
+    description: Hour field (0-23).
+
+  HOUR12_FIELD:
+    type: '%TimeField'
+    description: 12-hour field (0-11).
+
+  MINUTE_FIELD:
+    type: '%TimeField'
+    description: Minute field (0-59).
+
+  SECOND_FIELD:
+    type: '%TimeField'
+    description: Second field (0-59).
+
+  MS_FIELD:
+    type: '%TimeField'
+    description: Millisecond field (0-999).

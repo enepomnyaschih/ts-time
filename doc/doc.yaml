@@ -86,3 +86,7 @@ includes:
   weekBased: |
     <p class="text-secondary">By definition, the 1st week of week based year contains the 1st Thursday of the year, and
     the week based year starts from the Monday of this week.</p>
+
+  experimental: |
+    <p class="text-danger">This is an experimental API. There's a higher chance that the authors of the library may
+    remove or change it in future releases.</p>
