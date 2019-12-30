@@ -75,7 +75,7 @@ symbols:
       epochDay:
         modifiers: readonly
         type: number
-        description: 1-based day since epoch (i.e. 1st of January 1970 is the 1st epoch day).
+        description: 1-based day since epoch (i.e. 1st of %JANUARY 1970 is the 1st epoch day).
 
       quarterOfYear:
         modifiers: readonly
@@ -100,13 +100,12 @@ symbols:
       truncateToYear:
         modifiers: readonly
         type: '%LocalDate'
-        description: Start of the year (i.e. the 1st of January).
+        description: Start of the year (i.e. the 1st of %JANUARY).
 
       truncateToWeekBasedYear:
         modifiers: readonly
         type: '%LocalDate'
-        description: |
-          Start of the week-based year. %%weekBased
+        description: Start of the week-based year (i.e. %MONDAY, %MIDNIGHT). %%weekBased
 
       truncateToMonth:
         modifiers: readonly
@@ -184,8 +183,8 @@ symbols:
           year: Absolute year.
         returns: |
           New %LocalDate with the specified year and its current month/day of month. If such date doesn't exist, it
-          shifts the date back to the nearest valid one (e.g. 29th of February in 2019 gets shifted to 28th of
-          February).
+          shifts the date back to the nearest valid one (e.g. 29th of %FEBRUARY in 2019 gets shifted to 28th of
+          %FEBRUARY).
 
       withMonth:
         signature: |
@@ -194,7 +193,7 @@ symbols:
           month: Month.
         returns: |
           New %LocalDate with the specified month and its current year/day of month. If such date doesn't exist, it
-          shifts the date back to the nearest valid one (e.g. 31st of April gets shifted to 30th of April).
+          shifts the date back to the nearest valid one (e.g. 31st of %APRIL gets shifted to 30th of %APRIL).
 
       withDayOfMonth:
         signature: |
@@ -236,7 +235,7 @@ symbols:
         signature: |
           (epochDay: number): %LocalDate
         params:
-          epochDay: 1-based epoch day (i.e. 1st of January 1970 is the 1st epoch day).
+          epochDay: 1-based epoch day (i.e. 1st of %JANUARY 1970 is the 1st epoch day).
         returns: '%LocalDate representation.'
 
       ofYearDay:
@@ -272,7 +271,7 @@ symbols:
         params:
           date: Native JS date.
         returns: |
-          %LocalDate representation of %date in the browser time zone,
+          %LocalDate representation of %date at %MIDNIGHT in the browser time zone,
           for compatibility with native and third party API.
 
       fromNativeUtc:
@@ -280,7 +279,9 @@ symbols:
           (date: Date): %LocalDate
         params:
           date: Native JS date.
-        returns: '%LocalDate representation of %date in %UTC, for compatibility with native and third party API.'
+        returns: |
+          %LocalDate representation of %date at %MIDNIGHT in %UTC,
+          for compatibility with native and third party API.
 
       parse:
         signature: |
@@ -329,7 +330,7 @@ symbols:
 
   EPOCH_DATE:
     type: '%LocalDate'
-    description: '%LocalDate with %epochDay = 1, i.e. representing ECMAScript epoch (1st of January 1970).'
+    description: '%LocalDate with %epochDay = 1, i.e. representing ECMAScript epoch (1st of %JANUARY 1970).'
     references:
       epochDay:
         symbol: default

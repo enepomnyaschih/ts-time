@@ -4,7 +4,7 @@ symbols:
     description: |
       Represents an instant of time. Lacking time zone and offset information, it doesn't return any particular
       date/time indication. In order to obtain a particular date/time, you must call %atZone or %atOffset method.
-      %Instant object is determined by %epochMs - number of milliseconds since ECMAScript epoch (1st of January 1970
+      %Instant object is determined by %epochMs - number of milliseconds since ECMAScript epoch (1st of %JANUARY 1970
       UTC).
 
     properties:
@@ -171,7 +171,7 @@ symbols:
 
   EPOCH:
     type: '%Instant'
-    description: '%Instant with %epochMs = 0, i.e. representing ECMAScript epoch (1st of January 1970 UTC).'
+    description: '%Instant with %epochMs = 0, i.e. representing ECMAScript epoch (1st of %JANUARY 1970 UTC).'
     references:
       epochMs:
         symbol: default

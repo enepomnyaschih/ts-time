@@ -1,0 +1,414 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      Comprises a specific date/time, without time zone relation. In other words, this is a tuple of (%LocalDate,
+      %LocalTime). You may bind this date/time to a time zone or an offset using %atZone and %atOffset methods.
+
+    properties:
+      date:
+        modifiers: readonly
+        type: '%LocalDate'
+        description: Date part.
+
+      time:
+        modifiers: readonly
+        type: '%LocalTime'
+        description: Time part.
+
+      nativeLocal:
+        modifiers: readonly
+        type: Date
+        description: |
+          Native JS Date representing this local date/time in the browser time zone,
+          for compatibility with native and third party API.
+
+      nativeUtc:
+        modifiers: readonly
+        type: Date
+        description: |
+          Native JS Date representing this local date/time in %UTC,
+          for compatibility with native and third party API.
+
+      epochMsUtc:
+        modifiers: readonly
+        type: number
+        description: Number of milliseconds since epoch in %UTC.
+
+      era:
+        modifiers: readonly
+        type: '%Era'
+        description: Era of this local date/time.
+
+      year:
+        modifiers: readonly
+        type: number
+        description: Absolute year.
+
+      yearOfEra:
+        modifiers: readonly
+        type: number
+        description: Absolute year of era. See %Era for details.
+
+      weekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          Absolute week based year. %%weekBased
+
+      month:
+        modifiers: readonly
+        type: '%Month'
+        description: Month.
+
+      weekOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          1-based week of week-based year. %%weekBased
+
+      dayOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based day of year.
+
+      dayOfWeekBasedYear:
+        modifiers: readonly
+        type: number
+        description: |
+          1-based day of week-based year. %%weekBased
+
+      dayOfMonth:
+        modifiers: readonly
+        type: number
+        description: 1-based day of month.
+
+      dayOfWeek:
+        modifiers: readonly
+        type: '%DayOfWeek'
+        description: Day of week.
+
+      epochDay:
+        modifiers: readonly
+        type: number
+        description: 1-based day since epoch (i.e. 1st of %JANUARY 1970 is the 1st epoch day).
+
+      quarterOfYear:
+        modifiers: readonly
+        type: number
+        description: 1-based quarter of year.
+
+      isLeapYear:
+        modifiers: readonly
+        type: boolean
+        description: True if this is a leap year.
+
+      lengthOfYear:
+        modifiers: readonly
+        type: number
+        description: Number of days in this year (365 for non-leap, 366 for leap).
+
+      hour:
+        modifiers: readonly
+        type: number
+        description: Hour of a day (0-23).
+
+      minute:
+        modifiers: readonly
+        type: number
+        description: Minute of an hour (0-59).
+
+      second:
+        modifiers: readonly
+        type: number
+        description: Second of a minute (0-59).
+
+      ms:
+        modifiers: readonly
+        type: number
+        description: Millisecond of a second (0-999).
+
+      truncateToYear:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the year (i.e. the 1st of %JANUARY, %MIDNIGHT).
+
+      truncateToWeekBasedYear:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the week-based year (i.e. %MONDAY, %MIDNIGHT). %%weekBased
+
+      truncateToMonth:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the month (i.e. 1st day of one, %MIDNIGHT).
+
+      truncateToWeek:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the week (i.e. Monday, %MIDNIGHT).
+
+      truncateToDay:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the day (i.e. %MIDNIGHT).
+
+      truncateToHour:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the hour (i.e. 0 minutes, 0 seconds, 0 milliseconds).
+
+      truncateToMinute:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the minute (i.e. 0 seconds, 0 milliseconds).
+
+      truncateToSecond:
+        modifiers: readonly
+        type: '%LocalDateTime'
+        description: Start of the second (i.e. 0 milliseconds).
+
+    methods:
+      compareTo:
+        signature: |
+          (other: %LocalDateTime): number
+        params:
+          other: Local date/time to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same local date/time;</li>
+            <li>positive value if this local date/time goes after %other;</li>
+            <li>negative value if this local date/time goes before %other.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other. %%null
+
+      equals:
+        signature: |
+          (other: %LocalDateTime): boolean
+        params:
+          other: Local date/time to compare to.
+        returns: |
+          True if this local date/time is equal to %other. Null and undefined are only equal to each other. %%null
+
+      isBefore:
+        signature: |
+          (other: %LocalDateTime): boolean
+        params:
+          other: Local date/time to compare to.
+        returns: |
+          True if this local date/time goes before %other. Null and undefined go before anything, except each other. %%null
+
+      isAfter:
+        signature: |
+          (other: %LocalDateTime): boolean
+        params:
+          other: Local date/time to compare to.
+        returns: |
+          True if this local date/time goes after %other. Null and undefined go before anything, except each other. %%null
+
+      atZone:
+        signature: |
+          (zone: %ZoneId): %ZonedDateTime
+        params:
+          zone: Time zone.
+        returns: This date/time in the specified time zone.
+
+      atOffset:
+        signature: |
+          (offset: %ZoneOffset): %OffsetDateTime
+        params:
+          zone: Time zone offset.
+        returns: This date/time in the specified time zone offset.
+
+      plusDuration:
+        signature: |
+          (duration: %Duration): %LocalDateTime
+        params:
+          duration: '%Duration to add.'
+        returns: New %LocalDateTime shifted onwards from this one by the specified duration.
+
+      plusPeriod:
+        signature: |
+          (period: %Period): %LocalDateTime
+        params:
+          period: '%Period to add.'
+        returns: New %LocalDateTime shifted onwards from this one by the specified period.
+
+      minusDuration:
+        signature: |
+          (duration: %Duration): %LocalDateTime
+        params:
+          duration: '%Duration to subtract.'
+        returns: New %LocalDateTime shifted backwards from this one by the specified duration.
+
+      minusPeriod:
+        signature: |
+          (period: %Period): %LocalDateTime
+        params:
+          period: '%Period to subtract.'
+        returns: New %LocalDateTime shifted backwards from this one by the specified period.
+
+      withYear:
+        signature: |
+          (year: number): %LocalDateTime
+        params:
+          year: Absolute year.
+        returns: |
+          New %LocalDateTime with the specified year and its current month/day of month/time. If such date doesn't
+          exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 29th of %FEBRUARY in 2019,
+          18:30 gets shifted to 28th of %FEBRUARY, 18:30).
+
+      withMonth:
+        signature: |
+          (month: number | %Month): %LocalDateTime
+        params:
+          month: Month.
+        returns: |
+          New %LocalDateTime with the specified month and its current year/day of month/time. If such date doesn't
+          exist, it shifts the date back to the nearest valid one, preserving the time (e.g. 31st of %APRIL, 18:30 gets
+          shifted to 30th of %APRIL, 18:30).
+
+      withDayOfMonth:
+        signature: |
+          (dayOfMonth: number): %LocalDateTime
+        params:
+          dayOfMonth: 1-based day of month.
+        returns: New %LocalDateTime with the specified day of month and its current year/month/time.
+
+      withDayOfWeek:
+        signature: |
+          (dayOfWeek: number | %DayOfWeek): %LocalDateTime
+        params:
+          dayOfWeek: Day of week or its numeric value
+        returns: New %LocalDateTime with the specified day of week and its current week/time.
+
+      withDayOfYear:
+        signature: |
+          (dayOfYear: number): %LocalDateTime
+        params:
+          dayOfYear: 1-based day of year.
+        returns: New %LocalDateTime with the specified day of year and its current year/time.
+
+      withHour:
+        signature: |
+          (hour: number): %LocalDateTime
+        params:
+          hour: Hour of a day.
+        returns: New %LocalDateTime with the specified hour of a day. All other properties don't change.
+
+      withMinute:
+        signature: |
+          (minute: number): %LocalDateTime
+        params:
+          minute: Minute of an hour.
+        returns: New %LocalDateTime with the specified minute of an hour. All other properties don't change.
+
+      withSecond:
+        signature: |
+          (second: number): %LocalDateTime
+        params:
+          second: Second of a minute.
+        returns: New %LocalDateTime with the specified second of a minute. All other properties don't change.
+
+      withMs:
+        signature: |
+          (ms: number): %LocalDateTime
+        params:
+          ms: Millisecond of a second.
+        returns: New %LocalDateTime with the specified millisecond of a second. All other properties don't change.
+
+      toString:
+        signature: |
+          (): string
+        returns: String representation of the date/time in ISO format, such as "2019-12-30T18:30:15.225".
+
+    staticMethods:
+      of:
+        signature: |
+          (date: %LocalDate, time: %LocalTime): %LocalDateTime
+        params:
+          date: Date part.
+          time: Time part.
+        returns: New %LocalDateTime with the specified parts.
+
+      ofComponents:
+        signature: |
+          (year: number, month: number | %Month = %JANUARY, dayOfMonth: number = 1,
+           hour: number = 0, minute: number = 0, second: number = 0, ms: number = 0): %LocalDateTime
+        params:
+          year: Absolute year.
+          month: Month or its numeric value.
+          dayOfMonth: 1-based day of month.
+          hour: Hour of day.
+          minute: Minute of hour.
+          second: Second of minute.
+          ms: Millisecond of second.
+        returns: '%LocalDateTime representation.'
+
+      ofEpochMsUtc:
+        signature: |
+          (ms: number): %LocalDateTime
+        params:
+          ms: Number of milliseconds since epoch in %UTC.
+        returns: '%LocalDateTime representation.'
+
+      fromNativeLocal:
+        signature: |
+          (date: Date): %LocalDateTime
+        params:
+          date: Native JS date.
+        returns: |
+          %LocalDateTime representation of %date in the browser time zone,
+          for compatibility with native and third party API.
+
+      fromNativeUtc:
+        signature: |
+          (date: Date): %LocalDate
+        params:
+          date: Native JS date.
+        returns: '%LocalDateTime representation of %date in %UTC, for compatibility with native and third party API.'
+
+      parse:
+        signature: |
+          (str: string): %LocalDateTime
+        params:
+          str: String representation of a local date/time in ISO format, such as '2019-12-30T18:30.15.225'.
+        returns: '%LocalDateTime representation.'
+
+      compare:
+        signature: |
+          (x: %LocalDateTime, y: %LocalDateTime): number
+        params:
+          x: One local date/time.
+          y: Another local date/time.
+        returns: |
+          <ul>
+            <li>0 if this %x and %y are the same local dates;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+          Null and undefined are considered less than anything, except each other.
+
+      equals:
+        signature: |
+          (x: %LocalDateTime, y: %LocalDateTime): boolean
+        params:
+          x: One local date/time.
+          y: Another local date/time.
+        returns: True if %x is equal to %y. Null and undefined are only equal to each other.
+
+      isBefore:
+        signature: |
+          (x: %LocalDateTime, y: %LocalDateTime): boolean
+        params:
+          x: One local date/time.
+          y: Another local date/time.
+        returns: True if %x goes before %y. Null and undefined go before anything, except each other.
+
+      isAfter:
+        signature: |
+          (x: %LocalDateTime, y: %LocalDateTime): boolean
+        params:
+          x: One local date/time.
+          y: Another local date/time.
+        returns: True if %x goes after %y. Null and undefined go before anything, except each other.
