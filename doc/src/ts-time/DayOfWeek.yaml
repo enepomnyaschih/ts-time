@@ -1,0 +1,113 @@
+symbols:
+  default:
+    kind: class
+    description: |
+      There are exactly 7 days of week, with respective numeric values:
+      <ol>
+        <li>%MONDAY</li>
+        <li>%TUESDAY</li>
+        <li>%WEDNESDAY</li>
+        <li>%THURSDAY</li>
+        <li>%FRIDAY</li>
+        <li>%SATURDAY</li>
+        <li>%SUNDAY</li>
+      </ol>
+      You can't construct new days of week, you can only get an existing day of week directly with %of method.
+
+    properties:
+      value:
+        modifiers: readonly
+        type: number
+        description: Numeric value of the day.
+
+    methods:
+      compareTo:
+        signature: |
+          compareTo(other: %DayOfWeek): number
+        params:
+          other: Day of week to compare to.
+        returns: |
+          <ul>
+            <li>0 if this is the same day of week;</li>
+            <li>positive value if this day goes after %other;</li>
+            <li>negative value if this day goes before %other.</li>
+          </ul>
+
+      isBefore:
+        signature: |
+          isBefore(other: %DayOfWeek): boolean
+        params:
+          other: Day of week to compare to.
+        returns: True if this day goes before %other.
+
+      isAfter:
+        signature: |
+          isafter(other: %DayOfWeek): boolean
+        params:
+          other: Day of week to compare to.
+        returns: True if this day goes after %other.
+
+    staticMethods:
+      of:
+        signature: |
+          of(value: number | %DayOfWeek): %DayOfWeek
+        params:
+          value: Numeric value of the day.
+        returns: '%DayOfWeek representation of the day.'
+
+      compareTo:
+        signature: |
+          compareTo(x: %DayOfWeek, y: %DayOfWeek): number
+        params:
+          x: One day.
+          y: Another day.
+        returns: |
+          <ul>
+            <li>0 if this is %x === %y;</li>
+            <li>positive value if %x goes after %y;</li>
+            <li>negative value if %x goes before %y.</li>
+          </ul>
+
+      isBefore:
+        signature: |
+          isBefore(x: %DayOfWeek, y: %DayOfWeek): boolean
+        params:
+          x: One day.
+          y: Another day.
+        returns: True if %x goes before %y.
+
+      isAfter:
+        signature: |
+          isafter(x: %DayOfWeek, y: %DayOfWeek): boolean
+        params:
+          x: One day.
+          y: Another day.
+        returns: True if %x goes after %y.
+
+  MONDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Monday. Has numeric value of 1.'
+
+  TUESDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Tuesday. Has numeric value of 2.'
+
+  WEDNESDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Wednesday. Has numeric value of 3.'
+
+  THURSDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Thursday. Has numeric value of 4.'
+
+  FRIDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Friday. Has numeric value of 5.'
+
+  SATURDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Saturday. Has numeric value of 6.'
+
+  SUNDAY:
+    type: '%DayOfWeek'
+    description: '%DayOfWeek representation of Sunday. Has numeric value of 7.'
