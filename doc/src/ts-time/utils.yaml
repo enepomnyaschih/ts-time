@@ -1,0 +1,11 @@
+symbols:
+  isLeapYear:
+    signature: |
+      (year: number): boolean
+    params:
+      year: Absolute year.
+    returns: |
+      <p>True if this is a leap year.</p>
+      <pre>
+      (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
+      </pre>
