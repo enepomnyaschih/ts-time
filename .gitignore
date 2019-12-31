@@ -1,7 +1,6 @@
 $CACHE_FILE$
 *.iml
-/.idea
+.idea
 node_modules
-/doc/dist
-/test/dist
-/test/src/all.js
+dist
+all.js

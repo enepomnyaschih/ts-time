@@ -49,7 +49,7 @@ try {
 	const dir = path.resolve(__dirname, "src");
 	for (let entry of options.testPaths.split(",")) {
 		for (let {id, stat} of readdirDownwards(path.resolve(dir, entry))) {
-			if (stat.isFile() && id && !id.endsWith(".d.ts") && path.extname(id) === ".ts") {
+			if (stat.isFile() && id && !id.startsWith("_") && !id.endsWith(".d.ts") && path.extname(id) === ".ts") {
 				files.push(entry + "/" + id);
 			}
 		}

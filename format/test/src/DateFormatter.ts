@@ -22,38 +22,13 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {TemporalCompiler} from "./TemporalCompiler";
+import LocalDate from "../../src/LocalDate";
+import DateFormatter, {DATE_COMPILERS} from "../../../format/src/DateFormatter";
+import {buildPattern} from "./_utils";
 
-export interface TemporalFormatComponent<T> {
-	write(value: T, context: any): string;
-}
-
-export class LiteralFormatComponent<T> implements TemporalFormatComponent<T> {
-
-	constructor(private literal: string) {
-	}
-
-	write(): string {
-		return this.literal;
-	}
-}
-
-export class CompiledFormatComponent<T> implements TemporalFormatComponent<T> {
-
-	constructor(private compiler: TemporalCompiler<T>, private length: number) {
-	}
-
-	write(value: T, context: any): string {
-		return this.compiler.compile(value, this.length, context);
-	}
-}
-
-export class TemporalFormatter<T> {
-
-	constructor(readonly components: TemporalFormatComponent<T>[]) {
-	}
-
-	format(value: T, context?: any): string {
-		return this.components.reduce((acc, component) => acc + component.write(value, context), "");
-	}
-}
+describe("DateFormatter", () => {
+	const formatter = DateFormatter.ofPattern(buildPattern(DATE_COMPILERS.array));
+	it("should format long date", () => {
+		expect(formatter.format(LocalDate.of(2019, 12, 30))).toBe("");
+	});
+});

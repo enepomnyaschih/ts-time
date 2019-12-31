@@ -3,3 +3,4 @@
 /.npmignore
 /clean.sh
 /tsconfig.json
+/test

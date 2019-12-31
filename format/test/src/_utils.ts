@@ -22,38 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {TemporalCompiler} from "./TemporalCompiler";
+import {TemporalCompiler} from "../../../format/src/TemporalCompiler";
 
-export interface TemporalFormatComponent<T> {
-	write(value: T, context: any): string;
-}
-
-export class LiteralFormatComponent<T> implements TemporalFormatComponent<T> {
-
-	constructor(private literal: string) {
-	}
-
-	write(): string {
-		return this.literal;
-	}
-}
-
-export class CompiledFormatComponent<T> implements TemporalFormatComponent<T> {
-
-	constructor(private compiler: TemporalCompiler<T>, private length: number) {
-	}
-
-	write(value: T, context: any): string {
-		return this.compiler.compile(value, this.length, context);
-	}
-}
-
-export class TemporalFormatter<T> {
-
-	constructor(readonly components: TemporalFormatComponent<T>[]) {
-	}
-
-	format(value: T, context?: any): string {
-		return this.components.reduce((acc, component) => acc + component.write(value, context), "");
-	}
+export function buildPattern(compilers: TemporalCompiler<any>[]) {
+	const parts: string[] = [];
+	compilers.forEach(compiler => {
+		let part = "";
+		for (let i = 0; i < compiler.maxLength; ++i) {
+			part += compiler.char;
+			parts.push(part);
+		}
+	});
+	return parts.join(" ");
 }

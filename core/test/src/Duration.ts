@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import Duration from "../../../core/src/Duration";
+import Duration from "../../main/src/Duration";
 
 describe("Duration", () => {
 	it("should support various constructors", () => {

@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../../core/src/_internal";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../../core/src/DayOfWeek";
+import {utc} from "../../main/src/_internal";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../main/src/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
@@ -31,10 +31,10 @@ import Duration, {
 	MS_DURATION,
 	NULL_DURATION,
 	SECOND_DURATION
-} from "../../../core/src/Duration";
-import {AD, BC} from "../../../core/src/Era";
-import Instant from "../../../core/src/Instant";
-import LocalDateTime from "../../../core/src/LocalDateTime";
+} from "../../main/src/Duration";
+import {AD, BC} from "../../main/src/Era";
+import Instant from "../../main/src/Instant";
+import LocalDateTime from "../../main/src/LocalDateTime";
 import {
 	APRIL,
 	AUGUST,
@@ -48,8 +48,8 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../../core/src/Month";
-import OffsetDateTime from "../../../core/src/OffsetDateTime";
+} from "../../main/src/Month";
+import OffsetDateTime from "../../main/src/OffsetDateTime";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -57,8 +57,8 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../../core/src/Period";
-import {UTC, ZoneOffset} from "../../../core/src/Zone";
+} from "../../main/src/Period";
+import {UTC, ZoneOffset} from "../../main/src/Zone";
 
 describe("OffsetDateTime", () => {
 	const offset = ZoneOffset.ofComponents(3),

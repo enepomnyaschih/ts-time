@@ -35,7 +35,7 @@ import Month, {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../../core/src/Month";
+} from "../../main/src/Month";
 
 describe("Month", () => {
 	it("should construct itself", () => {

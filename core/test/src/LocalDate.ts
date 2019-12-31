@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../../core/src/_internal";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../../core/src/DayOfWeek";
-import {AD, BC} from "../../../core/src/Era";
-import LocalDate, {EPOCH_DATE} from "../../../core/src/LocalDate";
-import LocalTime, {MIDNIGHT, NOON} from "../../../core/src/LocalTime";
+import {utc} from "../../main/src/_internal";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../main/src/DayOfWeek";
+import {AD, BC} from "../../main/src/Era";
+import LocalDate, {EPOCH_DATE} from "../../main/src/LocalDate";
+import LocalTime, {MIDNIGHT, NOON} from "../../main/src/LocalTime";
 import {
 	APRIL,
 	AUGUST,
@@ -40,7 +40,7 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../../core/src/Month";
+} from "../../main/src/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -48,7 +48,7 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../../core/src/Period";
+} from "../../main/src/Period";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 // TODO: Add numeric month/weekday tests
