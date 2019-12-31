@@ -1,6 +1,6 @@
 # ts-time
 
-TypeScript library of immutable date/time models with time zone support.
+TypeScript/JavaScript library of immutable date/time models with time zone support.
 
 This library mimics [Java 8 Date/Time API](https://www.baeldung.com/java-8-date-time-intro),
 adjusting its API to the best practices of TypeScript and JavaScript. It uses

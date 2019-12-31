@@ -1,6 +1,6 @@
 {
   "name": "ts-time-format",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Date/Time formatting utilities for ts-time data structures",
   "homepage": "http://enepomnyaschih.github.io/ts-time",
   "bugs": {
@@ -20,7 +20,7 @@
   },
   "devDependencies": {
     "babel-preset-env": "1.7.x",
-    "ts-time": "file:../core",
+    "ts-time": "0.1.1",
     "typescript": "~3.5.3"
   }
 }

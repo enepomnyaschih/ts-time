@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../core/src/_internal";
-import {MS_PER_HOUR} from "../../core/src/constants";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../core/src/DayOfWeek";
+import {utc} from "../../../core/src/_internal";
+import {MS_PER_HOUR} from "../../../core/src/constants";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../../core/src/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
@@ -32,10 +32,10 @@ import Duration, {
 	MS_DURATION,
 	NULL_DURATION,
 	SECOND_DURATION
-} from "../../core/src/Duration";
-import {AD, BC} from "../../core/src/Era";
-import Instant from "../../core/src/Instant";
-import LocalDateTime from "../../core/src/LocalDateTime";
+} from "../../../core/src/Duration";
+import {AD, BC} from "../../../core/src/Era";
+import Instant from "../../../core/src/Instant";
+import LocalDateTime from "../../../core/src/LocalDateTime";
 import {
 	APRIL,
 	AUGUST,
@@ -49,7 +49,7 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../core/src/Month";
+} from "../../../core/src/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -57,9 +57,9 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../core/src/Period";
-import {UTC, ZoneId, ZoneOffset} from "../../core/src/Zone";
-import ZonedDateTime from "../../core/src/ZonedDateTime";
+} from "../../../core/src/Period";
+import {UTC, ZoneId, ZoneOffset} from "../../../core/src/Zone";
+import ZonedDateTime from "../../../core/src/ZonedDateTime";
 
 describe("ZonedDateTime", () => {
 	const moscow = ZoneId.of("Europe/Moscow"),

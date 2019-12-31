@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {MARCH, NOVEMBER, OCTOBER} from "../../core/Month";
-import Instant from "../../core/src/Instant";
-import LocalDateTime from "../../core/src/LocalDateTime";
-import {UTC, ZoneId, ZoneOffset} from "../../core/src/Zone";
+import {MARCH, NOVEMBER, OCTOBER} from "../../../core/Month";
+import Instant from "../../../core/src/Instant";
+import LocalDateTime from "../../../core/src/LocalDateTime";
+import {UTC, ZoneId, ZoneOffset} from "../../../core/src/Zone";
 
 describe("ZoneOffset", () => {
 	// TODO: Initialize values in beforeAll

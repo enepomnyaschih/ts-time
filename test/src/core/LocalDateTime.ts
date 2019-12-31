@@ -22,18 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../core/src/_internal";
-import {MS_PER_DAY} from "../../core/src/constants";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../core/src/DayOfWeek";
+import {utc} from "../../../core/src/_internal";
+import {MS_PER_DAY} from "../../../core/src/constants";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../../core/src/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
 	MINUTE_DURATION,
-	MS_DURATION, NULL_DURATION,
+	MS_DURATION,
+	NULL_DURATION,
 	SECOND_DURATION
-} from "../../core/src/Duration";
-import {AD, BC} from "../../core/src/Era";
-import LocalDateTime from "../../core/src/LocalDateTime";
+} from "../../../core/src/Duration";
+import {AD, BC} from "../../../core/src/Era";
+import LocalDateTime from "../../../core/src/LocalDateTime";
 import {
 	APRIL,
 	AUGUST,
@@ -47,7 +48,7 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../core/src/Month";
+} from "../../../core/src/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -55,8 +56,8 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../core/src/Period";
-import {UTC, ZoneId, ZoneOffset} from "../../core/src/Zone";
+} from "../../../core/src/Period";
+import {UTC, ZoneId, ZoneOffset} from "../../../core/src/Zone";
 
 describe("LocalDateTime", () => {
 	const dateTime = LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225);

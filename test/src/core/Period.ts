@@ -22,9 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import LocalDate from "../../core/src/LocalDate";
-import {APRIL, AUGUST, DECEMBER, FEBRUARY, JULY, JUNE, MARCH, MAY, OCTOBER, SEPTEMBER} from "../../core/src/Month";
-import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "../../core/src/Period";
+import LocalDate from "../../../core/src/LocalDate";
+import {APRIL, AUGUST, DECEMBER, FEBRUARY, JULY, JUNE, MARCH, MAY, OCTOBER, SEPTEMBER} from "../../../core/src/Month";
+import Period, {
+	DAY_PERIOD,
+	MONTH_PERIOD,
+	NULL_PERIOD,
+	QUARTER_PERIOD,
+	WEEK_PERIOD,
+	YEAR_PERIOD
+} from "../../../core/src/Period";
 
 describe("Period", () => {
 	const date = LocalDate.of(2019, JULY, 5),

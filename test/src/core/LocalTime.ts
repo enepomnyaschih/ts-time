@@ -26,13 +26,14 @@ import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
 	MINUTE_DURATION,
-	MS_DURATION, NULL_DURATION,
+	MS_DURATION,
+	NULL_DURATION,
 	SECOND_DURATION
-} from "../../core/src/Duration";
-import LocalDate from "../../core/src/LocalDate";
-import LocalTime, {MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "../../core/src/LocalTime";
-import {SEPTEMBER} from "../../core/src/Month";
-import {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "../../core/src/TimeField";
+} from "../../../core/src/Duration";
+import LocalDate from "../../../core/src/LocalDate";
+import LocalTime, {MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "../../../core/src/LocalTime";
+import {SEPTEMBER} from "../../../core/src/Month";
+import {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "../../../core/src/TimeField";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 describe("LocalTime", () => {
