@@ -22,10 +22,10 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import Instant from "../../main/src/Instant";
-import LocalDateTime from "../../main/src/LocalDateTime";
-import {MARCH, NOVEMBER, OCTOBER} from "../../main/src/Month";
-import {UTC, ZoneId, ZoneOffset} from "../../main/src/Zone";
+import Instant from "ts-time/Instant";
+import LocalDateTime from "ts-time/LocalDateTime";
+import {MARCH, NOVEMBER, OCTOBER} from "ts-time/Month";
+import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("ZoneOffset", () => {
 	// TODO: Initialize values in beforeAll

@@ -29,11 +29,11 @@ import Duration, {
 	MS_DURATION,
 	NULL_DURATION,
 	SECOND_DURATION
-} from "../../main/src/Duration";
-import LocalDate from "../../main/src/LocalDate";
-import LocalTime, {MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "../../main/src/LocalTime";
-import {SEPTEMBER} from "../../main/src/Month";
-import {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "../../main/src/TimeField";
+} from "ts-time/Duration";
+import LocalDate from "ts-time/LocalDate";
+import LocalTime, {MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "ts-time/LocalTime";
+import {SEPTEMBER} from "ts-time/Month";
+import {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "ts-time/TimeField";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 describe("LocalTime", () => {

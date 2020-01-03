@@ -1,3 +1,2 @@
-rm *.js
-rm *.js.map
-rm *.d.ts
+rm dist/*.js
+rm dist/*.d.ts

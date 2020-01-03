@@ -22,9 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../main/src/_internal";
-import {MS_PER_DAY} from "../../main/src/constants";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "../../main/src/DayOfWeek";
+import {utc} from "ts-time/_internal";
+import {MS_PER_DAY} from "ts-time/constants";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, TUESDAY} from "ts-time/DayOfWeek";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
@@ -32,9 +32,9 @@ import Duration, {
 	MS_DURATION,
 	NULL_DURATION,
 	SECOND_DURATION
-} from "../../main/src/Duration";
-import {AD, BC} from "../../main/src/Era";
-import LocalDateTime from "../../main/src/LocalDateTime";
+} from "ts-time/Duration";
+import {AD, BC} from "ts-time/Era";
+import LocalDateTime from "ts-time/LocalDateTime";
 import {
 	APRIL,
 	AUGUST,
@@ -48,7 +48,7 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../main/src/Month";
+} from "ts-time/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -56,8 +56,8 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../main/src/Period";
-import {UTC, ZoneId, ZoneOffset} from "../../main/src/Zone";
+} from "ts-time/Period";
+import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("LocalDateTime", () => {
 	const dateTime = LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225);

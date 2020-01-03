@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {MS_PER_DAY, MS_PER_HOUR, MS_PER_MINUTE, MS_PER_SECOND, MS_PER_WEEK} from "../../main/src/constants";
+import {MS_PER_DAY, MS_PER_HOUR, MS_PER_MINUTE, MS_PER_SECOND, MS_PER_WEEK} from "ts-time/constants";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
@@ -31,9 +31,9 @@ import Duration, {
 	NULL_DURATION,
 	SECOND_DURATION,
 	WEEK_DURATION
-} from "../../main/src/Duration";
-import Instant from "../../main/src/Instant";
-import {ZoneId, ZoneOffset} from "../../main/src/Zone";
+} from "ts-time/Duration";
+import Instant from "ts-time/Instant";
+import {ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("Instant", () => {
 	const native = new Date(Date.UTC(2019, 8, 10, 10)),

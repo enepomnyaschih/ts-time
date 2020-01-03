@@ -35,7 +35,7 @@ import Month, {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../main/src/Month";
+} from "ts-time/Month";
 
 describe("Month", () => {
 	it("should construct itself", () => {

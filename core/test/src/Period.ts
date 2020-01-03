@@ -22,8 +22,8 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import LocalDate from "../../main/src/LocalDate";
-import {APRIL, AUGUST, DECEMBER, FEBRUARY, JULY, JUNE, MARCH, MAY, OCTOBER, SEPTEMBER} from "../../main/src/Month";
+import LocalDate from "ts-time/LocalDate";
+import {APRIL, AUGUST, DECEMBER, FEBRUARY, JULY, JUNE, MARCH, MAY, OCTOBER, SEPTEMBER} from "ts-time/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -31,7 +31,7 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../main/src/Period";
+} from "ts-time/Period";
 
 describe("Period", () => {
 	const date = LocalDate.of(2019, JULY, 5),

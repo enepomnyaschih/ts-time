@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {utc} from "../../main/src/_internal";
-import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "../../main/src/DayOfWeek";
-import {AD, BC} from "../../main/src/Era";
-import LocalDate, {EPOCH_DATE} from "../../main/src/LocalDate";
-import LocalTime, {MIDNIGHT, NOON} from "../../main/src/LocalTime";
+import {utc} from "ts-time/_internal";
+import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "ts-time/DayOfWeek";
+import {AD, BC} from "ts-time/Era";
+import LocalDate, {EPOCH_DATE} from "ts-time/LocalDate";
+import LocalTime, {MIDNIGHT, NOON} from "ts-time/LocalTime";
 import {
 	APRIL,
 	AUGUST,
@@ -40,7 +40,7 @@ import {
 	NOVEMBER,
 	OCTOBER,
 	SEPTEMBER
-} from "../../main/src/Month";
+} from "ts-time/Month";
 import Period, {
 	DAY_PERIOD,
 	MONTH_PERIOD,
@@ -48,7 +48,7 @@ import Period, {
 	QUARTER_PERIOD,
 	WEEK_PERIOD,
 	YEAR_PERIOD
-} from "../../main/src/Period";
+} from "ts-time/Period";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 // TODO: Add numeric month/weekday tests
