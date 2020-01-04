@@ -94,7 +94,8 @@ export function utc(year: number, month: number, dayOfMonth: number, hour: numbe
 	const date = new Date(Date.UTC(year, month, dayOfMonth, hour, minute, second, ms));
 	if (year >= 0 && year <= 99) {
 		// Work around a REALLY STUPID feature of Date.UTC to treat 00-99 years as 1900-1999
-		date.setUTCFullYear(year);
+		date.setUTCFullYear(date.getUTCFullYear() - 1900);
+		// Note: we can't simply assign (year), because, say, utc(9, 0, -2) should lead to 8th year, not 9th
 	}
 	return date;
 }

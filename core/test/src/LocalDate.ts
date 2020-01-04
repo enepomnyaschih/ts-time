@@ -42,14 +42,7 @@ import {
 	OCTOBER,
 	SEPTEMBER
 } from "ts-time/Month";
-import Period, {
-	DAY_PERIOD,
-	MONTH_PERIOD,
-	NULL_PERIOD,
-	QUARTER_PERIOD,
-	WEEK_PERIOD,
-	YEAR_PERIOD
-} from "ts-time/Period";
+import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "ts-time/Period";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 // TODO: Add numeric month/weekday tests
@@ -265,6 +258,12 @@ describe("LocalDate", () => {
 		expect(date9.weekBasedYear).equal(2014);
 		expect(date9.weekOfWeekBasedYear).equal(52);
 		expect(date9.dayOfWeekBasedYear).equal(364);
+
+		const date10 = LocalDate.of(9, JANUARY, 5);
+		expect(date10.dayOfWeek).equal(MONDAY);
+		expect(date10.weekBasedYear).equal(9);
+		expect(date10.weekOfWeekBasedYear).equal(2);
+		expect(date10.dayOfWeekBasedYear).equal(8);
 	});
 
 	it("should provide epoch date", () => {

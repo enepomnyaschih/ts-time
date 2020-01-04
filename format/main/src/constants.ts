@@ -22,18 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {TemporalCompiler} from "ts-time-format/TemporalCompiler";
-
-export function buildPattern(compilers: TemporalCompiler<any>[]) {
-	const parts: string[] = [];
-	compilers.forEach(compiler => {
-		const subparts = [];
-		let part = "";
-		for (let i = 0; i < compiler.maxLength; ++i) {
-			part += compiler.char;
-			subparts.push(part);
-		}
-		parts.push(subparts.join(" "));
-	});
-	return parts.join("\n");
-}
+export const DEFAULT_TEMPORAL_CONTEXT: any = {
+	eraNames: ["Before Christ", "Anno Domini"],
+	eraShortNames: ["BC", "AD"],
+	eraAbbreviations: ["B", "A"],
+	monthNames: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+	monthShortNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+	monthAbbreviations: ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"],
+	dayOfWeekNames: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+	dayOfWeekShortNames: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+	dayOfWeekAbbreviations: ["M", "T", "W", "T", "F", "S", "S"],
+	quarterNames: ["1st quarter", "2nd quarter", "3rd quarter", "4th quarter"],
+	quarterShortNames: ["Q1", "Q2", "Q3", "Q4"]
+};

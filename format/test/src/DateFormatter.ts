@@ -22,13 +22,49 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import LocalDate from "../../src/LocalDate";
-import DateFormatter, {DATE_COMPILERS} from "../../../format/src/DateFormatter";
+import {expect} from "chai";
+import DateFormatter, {DATE_COMPILERS} from "ts-time-format/DateFormatter";
+import LocalDate from "ts-time/LocalDate";
 import {buildPattern} from "./_utils";
 
 describe("DateFormatter", () => {
 	const formatter = DateFormatter.ofPattern(buildPattern(DATE_COMPILERS.array));
+
 	it("should format long date", () => {
-		expect(formatter.format(LocalDate.of(2019, 12, 30))).toBe("");
+		expect(formatter.format(LocalDate.of(2008, 12, 30))).equal(
+			"AD Anno Domini A\n" +
+			"2008 08 2008 2008\n" +
+			"2008 08 2008 2008\n" +
+			"365 365 365\n" +
+			"12 12 Dec December D\n" +
+			"12 12 Dec December D\n" +
+			"30 30\n" +
+			"4 04 Q4 4th quarter\n" +
+			"4 04 Q4 4th quarter\n" +
+			"2009 09 2009 2009\n" +
+			"1 01\n" +
+			"Tue Tuesday T\n" +
+			"2 02 Tue Tuesday T\n" +
+			"2 02 Tue Tuesday T"
+		);
+	});
+
+	it("should format short date", () => {
+		expect(formatter.format(LocalDate.of(9, 1, 5))).equal(
+			"AD Anno Domini A\n" +
+			"9 09 9 9\n" +
+			"9 09 9 9\n" +
+			"5 05 005\n" +
+			"1 01 Jan January J\n" +
+			"1 01 Jan January J\n" +
+			"5 05\n" +
+			"1 01 Q1 1st quarter\n" +
+			"1 01 Q1 1st quarter\n" +
+			"9 09 9 9\n" +
+			"2 02\n" +
+			"Mon Monday M\n" +
+			"1 01 Mon Monday M\n" +
+			"1 01 Mon Monday M"
+		);
 	});
 });
