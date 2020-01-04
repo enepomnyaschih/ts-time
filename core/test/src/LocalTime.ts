@@ -22,6 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
+import {expect} from "chai";
 import Duration, {
 	DAY_DURATION,
 	HOUR_DURATION,
@@ -40,239 +41,239 @@ describe("LocalTime", () => {
 	const time = LocalTime.of(18, 30, 15, 225);
 
 	it("should construct itself", () => {
-		expect(LocalTime.of(18, 30, 15, 225).totalMs).toBe(66615225);
-		expect(LocalTime.ofTotalMs(12345).totalMs).toBe(12345);
-		expect(LocalTime.fromNativeLocal(new Date(2019, 8, 10, 18, 30, 15, 225)).totalMs).toBe(66615225);
-		expect(LocalTime.fromNativeUtc(new Date(Date.UTC(2019, 8, 10, 18, 30, 15, 225))).totalMs).toBe(66615225);
+		expect(LocalTime.of(18, 30, 15, 225).totalMs).equal(66615225);
+		expect(LocalTime.ofTotalMs(12345).totalMs).equal(12345);
+		expect(LocalTime.fromNativeLocal(new Date(2019, 8, 10, 18, 30, 15, 225)).totalMs).equal(66615225);
+		expect(LocalTime.fromNativeUtc(new Date(Date.UTC(2019, 8, 10, 18, 30, 15, 225))).totalMs).equal(66615225);
 	});
 
 	it("should construct from string", () => {
-		expect(LocalTime.parse("0:0:0.0").totalMs).toBe(0);
-		expect(LocalTime.parse("00:00:00.000").totalMs).toBe(0);
-		expect(LocalTime.parse("00:00:00").totalMs).toBe(0);
-		expect(LocalTime.parse("00:00").totalMs).toBe(0);
-		expect(LocalTime.parse("18:30:15.225").totalMs).toBe(66615225);
-		expect(LocalTime.parse("18:30:15").totalMs).toBe(66615000);
-		expect(LocalTime.parse("18:30").totalMs).toBe(66600000);
+		expect(LocalTime.parse("0:0:0.0").totalMs).equal(0);
+		expect(LocalTime.parse("00:00:00.000").totalMs).equal(0);
+		expect(LocalTime.parse("00:00:00").totalMs).equal(0);
+		expect(LocalTime.parse("00:00").totalMs).equal(0);
+		expect(LocalTime.parse("18:30:15.225").totalMs).equal(66615225);
+		expect(LocalTime.parse("18:30:15").totalMs).equal(66615000);
+		expect(LocalTime.parse("18:30").totalMs).equal(66600000);
 	});
 
 	it("should throw an error by invalid string", () => {
-		expect(() => LocalTime.parse("abc")).toThrow(new Error("Invalid time format."));
+		expect(() => LocalTime.parse("abc")).throw("Invalid time format.");
 	});
 
 	it("should convert itself to string", () => {
-		expect(time.toString()).toBe("18:30:15.225");
+		expect(time.toString()).equal("18:30:15.225");
 	});
 
 	it("should return proper hour", () => {
-		expect(time.hour).toBe(18);
-		expect(MIDNIGHT.hour).toBe(0);
-		expect(NOON.hour).toBe(12);
-		expect(MAX_TIME.hour).toBe(23);
-		expect(MAX_TIME12.hour).toBe(11);
+		expect(time.hour).equal(18);
+		expect(MIDNIGHT.hour).equal(0);
+		expect(NOON.hour).equal(12);
+		expect(MAX_TIME.hour).equal(23);
+		expect(MAX_TIME12.hour).equal(11);
 	});
 
 	it("should return proper minute", () => {
-		expect(time.minute).toBe(30);
-		expect(MIDNIGHT.minute).toBe(0);
-		expect(NOON.minute).toBe(0);
-		expect(MAX_TIME.minute).toBe(59);
-		expect(MAX_TIME12.minute).toBe(59);
+		expect(time.minute).equal(30);
+		expect(MIDNIGHT.minute).equal(0);
+		expect(NOON.minute).equal(0);
+		expect(MAX_TIME.minute).equal(59);
+		expect(MAX_TIME12.minute).equal(59);
 	});
 
 	it("should return proper second", () => {
-		expect(time.second).toBe(15);
-		expect(MIDNIGHT.second).toBe(0);
-		expect(NOON.second).toBe(0);
-		expect(MAX_TIME.second).toBe(59);
-		expect(MAX_TIME12.second).toBe(59);
+		expect(time.second).equal(15);
+		expect(MIDNIGHT.second).equal(0);
+		expect(NOON.second).equal(0);
+		expect(MAX_TIME.second).equal(59);
+		expect(MAX_TIME12.second).equal(59);
 	});
 
 	it("should return proper millisecond", () => {
-		expect(time.ms).toBe(225);
-		expect(MIDNIGHT.ms).toBe(0);
-		expect(NOON.ms).toBe(0);
-		expect(MAX_TIME.ms).toBe(999);
-		expect(MAX_TIME12.ms).toBe(999);
+		expect(time.ms).equal(225);
+		expect(MIDNIGHT.ms).equal(0);
+		expect(NOON.ms).equal(0);
+		expect(MAX_TIME.ms).equal(999);
+		expect(MAX_TIME12.ms).equal(999);
 	});
 
 	it("should return proper total millisecond", () => {
-		expect(time.totalMs).toBe(66615225);
-		expect(MIDNIGHT.totalMs).toBe(0);
-		expect(NOON.totalMs).toBe(43200000);
-		expect(MAX_TIME.totalMs).toBe(86399999);
-		expect(MAX_TIME12.totalMs).toBe(43199999);
+		expect(time.totalMs).equal(66615225);
+		expect(MIDNIGHT.totalMs).equal(0);
+		expect(NOON.totalMs).equal(43200000);
+		expect(MAX_TIME.totalMs).equal(86399999);
+		expect(MAX_TIME12.totalMs).equal(43199999);
 	});
 
 	it("should return proper field", () => {
-		expect(time.get(HOUR_FIELD)).toBe(18);
-		expect(time.get(HOUR12_FIELD)).toBe(6);
-		expect(time.get(MINUTE_FIELD)).toBe(30);
-		expect(time.get(SECOND_FIELD)).toBe(15);
-		expect(time.get(MS_FIELD)).toBe(225);
+		expect(time.get(HOUR_FIELD)).equal(18);
+		expect(time.get(HOUR12_FIELD)).equal(6);
+		expect(time.get(MINUTE_FIELD)).equal(30);
+		expect(time.get(SECOND_FIELD)).equal(15);
+		expect(time.get(MS_FIELD)).equal(225);
 	});
 
 	it("should compare itself", () => {
-		expect(time.compareTo(MIDNIGHT)).toBeGreaterThan(0);
-		expect(time.compareTo(LocalTime.of(18, 30, 15, 224))).toBeGreaterThan(0);
-		expect(time.compareTo(time)).toBe(0);
-		expect(time.compareTo(LocalTime.of(18, 30, 15, 225))).toBe(0);
-		expect(time.compareTo(LocalTime.of(18, 30, 15, 226))).toBeLessThan(0);
-		expect(time.compareTo(MAX_TIME)).toBeLessThan(0);
+		expect(time.compareTo(MIDNIGHT)).greaterThan(0);
+		expect(time.compareTo(LocalTime.of(18, 30, 15, 224))).greaterThan(0);
+		expect(time.compareTo(time)).equal(0);
+		expect(time.compareTo(LocalTime.of(18, 30, 15, 225))).equal(0);
+		expect(time.compareTo(LocalTime.of(18, 30, 15, 226))).lessThan(0);
+		expect(time.compareTo(MAX_TIME)).lessThan(0);
 	});
 
 	it("should compare itself statically", () => {
-		expect(LocalTime.compare(time, MIDNIGHT)).toBeGreaterThan(0);
-		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 224))).toBeGreaterThan(0);
-		expect(LocalTime.compare(time, time)).toBe(0);
-		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 225))).toBe(0);
-		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 226))).toBeLessThan(0);
-		expect(LocalTime.compare(time, MAX_TIME)).toBeLessThan(0);
+		expect(LocalTime.compare(time, MIDNIGHT)).greaterThan(0);
+		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 224))).greaterThan(0);
+		expect(LocalTime.compare(time, time)).equal(0);
+		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 225))).equal(0);
+		expect(LocalTime.compare(time, LocalTime.of(18, 30, 15, 226))).lessThan(0);
+		expect(LocalTime.compare(time, MAX_TIME)).lessThan(0);
 	});
 
 	it("should compare itself with null", () => {
-		expect(time.compareTo(null)).toBeGreaterThan(0);
-		expect(LocalTime.compare(time, null)).toBeGreaterThan(0);
-		expect(LocalTime.compare(null, time)).toBeLessThan(0);
-		expect(LocalTime.compare(null, null)).toBe(0);
+		expect(time.compareTo(null)).greaterThan(0);
+		expect(LocalTime.compare(time, null)).greaterThan(0);
+		expect(LocalTime.compare(null, time)).lessThan(0);
+		expect(LocalTime.compare(null, null)).equal(0);
 	});
 
 	it("should check itself for equality", () => {
-		expect(time.equals(MIDNIGHT)).toBe(false);
-		expect(time.equals(LocalTime.of(18, 30, 15, 224))).toBe(false);
-		expect(time.equals(time)).toBe(true);
-		expect(time.equals(LocalTime.of(18, 30, 15, 225))).toBe(true);
-		expect(time.equals(LocalTime.of(18, 30, 15, 226))).toBe(false);
-		expect(time.equals(MAX_TIME)).toBe(false);
+		expect(time.equals(MIDNIGHT)).equal(false);
+		expect(time.equals(LocalTime.of(18, 30, 15, 224))).equal(false);
+		expect(time.equals(time)).equal(true);
+		expect(time.equals(LocalTime.of(18, 30, 15, 225))).equal(true);
+		expect(time.equals(LocalTime.of(18, 30, 15, 226))).equal(false);
+		expect(time.equals(MAX_TIME)).equal(false);
 	});
 
 	it("should check itself for equality statically", () => {
-		expect(LocalTime.equal(time, MIDNIGHT)).toBe(false);
-		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 224))).toBe(false);
-		expect(LocalTime.equal(time, time)).toBe(true);
-		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 225))).toBe(true);
-		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 226))).toBe(false);
-		expect(LocalTime.equal(time, MAX_TIME)).toBe(false);
+		expect(LocalTime.equal(time, MIDNIGHT)).equal(false);
+		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 224))).equal(false);
+		expect(LocalTime.equal(time, time)).equal(true);
+		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 225))).equal(true);
+		expect(LocalTime.equal(time, LocalTime.of(18, 30, 15, 226))).equal(false);
+		expect(LocalTime.equal(time, MAX_TIME)).equal(false);
 	});
 
 	it("should check itself for equality with null", () => {
-		expect(time.equals(null)).toBe(false);
-		expect(LocalTime.equal(time, null)).toBe(false);
-		expect(LocalTime.equal(null, time)).toBe(false);
-		expect(LocalTime.equal(null, null)).toBe(true);
+		expect(time.equals(null)).equal(false);
+		expect(LocalTime.equal(time, null)).equal(false);
+		expect(LocalTime.equal(null, time)).equal(false);
+		expect(LocalTime.equal(null, null)).equal(true);
 	});
 
 	it("should compare itself with isBefore method", () => {
-		expect(time.isBefore(MIDNIGHT)).toBe(false);
-		expect(time.isBefore(LocalTime.of(18, 30, 15, 224))).toBe(false);
-		expect(time.isBefore(time)).toBe(false);
-		expect(time.isBefore(LocalTime.of(18, 30, 15, 225))).toBe(false);
-		expect(time.isBefore(LocalTime.of(18, 30, 15, 226))).toBe(true);
-		expect(time.isBefore(MAX_TIME)).toBe(true);
+		expect(time.isBefore(MIDNIGHT)).equal(false);
+		expect(time.isBefore(LocalTime.of(18, 30, 15, 224))).equal(false);
+		expect(time.isBefore(time)).equal(false);
+		expect(time.isBefore(LocalTime.of(18, 30, 15, 225))).equal(false);
+		expect(time.isBefore(LocalTime.of(18, 30, 15, 226))).equal(true);
+		expect(time.isBefore(MAX_TIME)).equal(true);
 	});
 
 	it("should compare itself with isBefore method statically", () => {
-		expect(LocalTime.isBefore(time, MIDNIGHT)).toBe(false);
-		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 224))).toBe(false);
-		expect(LocalTime.isBefore(time, time)).toBe(false);
-		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 225))).toBe(false);
-		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 226))).toBe(true);
-		expect(LocalTime.isBefore(time, MAX_TIME)).toBe(true);
+		expect(LocalTime.isBefore(time, MIDNIGHT)).equal(false);
+		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 224))).equal(false);
+		expect(LocalTime.isBefore(time, time)).equal(false);
+		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 225))).equal(false);
+		expect(LocalTime.isBefore(time, LocalTime.of(18, 30, 15, 226))).equal(true);
+		expect(LocalTime.isBefore(time, MAX_TIME)).equal(true);
 	});
 
 	it("should compare itself with null with isBefore method", () => {
-		expect(time.isBefore(null)).toBe(false);
-		expect(LocalTime.isBefore(time, null)).toBe(false);
-		expect(LocalTime.isBefore(null, time)).toBe(true);
-		expect(LocalTime.isBefore(null, null)).toBe(false);
+		expect(time.isBefore(null)).equal(false);
+		expect(LocalTime.isBefore(time, null)).equal(false);
+		expect(LocalTime.isBefore(null, time)).equal(true);
+		expect(LocalTime.isBefore(null, null)).equal(false);
 	});
 
 	it("should compare itself with isAfter method", () => {
-		expect(time.isAfter(MIDNIGHT)).toBe(true);
-		expect(time.isAfter(LocalTime.of(18, 30, 15, 224))).toBe(true);
-		expect(time.isAfter(time)).toBe(false);
-		expect(time.isAfter(LocalTime.of(18, 30, 15, 225))).toBe(false);
-		expect(time.isAfter(LocalTime.of(18, 30, 15, 226))).toBe(false);
-		expect(time.isAfter(MAX_TIME)).toBe(false);
+		expect(time.isAfter(MIDNIGHT)).equal(true);
+		expect(time.isAfter(LocalTime.of(18, 30, 15, 224))).equal(true);
+		expect(time.isAfter(time)).equal(false);
+		expect(time.isAfter(LocalTime.of(18, 30, 15, 225))).equal(false);
+		expect(time.isAfter(LocalTime.of(18, 30, 15, 226))).equal(false);
+		expect(time.isAfter(MAX_TIME)).equal(false);
 	});
 
 	it("should compare itself with isAfter method statically", () => {
-		expect(LocalTime.isAfter(time, MIDNIGHT)).toBe(true);
-		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 224))).toBe(true);
-		expect(LocalTime.isAfter(time, time)).toBe(false);
-		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 225))).toBe(false);
-		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 226))).toBe(false);
-		expect(LocalTime.isAfter(time, MAX_TIME)).toBe(false);
+		expect(LocalTime.isAfter(time, MIDNIGHT)).equal(true);
+		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 224))).equal(true);
+		expect(LocalTime.isAfter(time, time)).equal(false);
+		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 225))).equal(false);
+		expect(LocalTime.isAfter(time, LocalTime.of(18, 30, 15, 226))).equal(false);
+		expect(LocalTime.isAfter(time, MAX_TIME)).equal(false);
 	});
 
 	it("should compare itself with null with isAfter method", () => {
-		expect(time.isAfter(null)).toBe(true);
-		expect(LocalTime.isAfter(time, null)).toBe(true);
-		expect(LocalTime.isAfter(null, time)).toBe(false);
-		expect(LocalTime.isAfter(null, null)).toBe(false);
+		expect(time.isAfter(null)).equal(true);
+		expect(LocalTime.isAfter(time, null)).equal(true);
+		expect(LocalTime.isAfter(null, time)).equal(false);
+		expect(LocalTime.isAfter(null, null)).equal(false);
 	});
 
 	it("should create proper date/time (atDate)", () => {
-		expect(time.atDate(LocalDate.of(2019, SEPTEMBER, 10)).toString()).toBe("2019-09-10T18:30:15.225");
+		expect(time.atDate(LocalDate.of(2019, SEPTEMBER, 10)).toString()).equal("2019-09-10T18:30:15.225");
 	});
 
 	it("should add duration", () => {
-		expect(time.plus(MS_DURATION).toString()).toBe("18:30:15.226");
-		expect(time.plus(SECOND_DURATION).toString()).toBe("18:30:16.225");
-		expect(time.plus(MINUTE_DURATION).toString()).toBe("18:31:15.225");
-		expect(time.plus(HOUR_DURATION).toString()).toBe("19:30:15.225");
-		expect(time.plus(DAY_DURATION).toString()).toBe("18:30:15.225");
-		expect(time.plus(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("20:33:19.230");
-		expect(time.plus(Duration.of(-1)).toString()).toBe("18:30:15.224");
+		expect(time.plus(MS_DURATION).toString()).equal("18:30:15.226");
+		expect(time.plus(SECOND_DURATION).toString()).equal("18:30:16.225");
+		expect(time.plus(MINUTE_DURATION).toString()).equal("18:31:15.225");
+		expect(time.plus(HOUR_DURATION).toString()).equal("19:30:15.225");
+		expect(time.plus(DAY_DURATION).toString()).equal("18:30:15.225");
+		expect(time.plus(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).equal("20:33:19.230");
+		expect(time.plus(Duration.of(-1)).toString()).equal("18:30:15.224");
 	});
 
 	it("should add zero duration", () => {
-		expect(time.plus(NULL_DURATION)).toBe(time);
+		expect(time.plus(NULL_DURATION)).equal(time);
 	});
 
 	it("should subtract duration", () => {
-		expect(time.minus(MS_DURATION).toString()).toBe("18:30:15.224");
-		expect(time.minus(SECOND_DURATION).toString()).toBe("18:30:14.225");
-		expect(time.minus(MINUTE_DURATION).toString()).toBe("18:29:15.225");
-		expect(time.minus(HOUR_DURATION).toString()).toBe("17:30:15.225");
-		expect(time.minus(DAY_DURATION).toString()).toBe("18:30:15.225");
-		expect(time.minus(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).toBe("16:27:11.220");
-		expect(time.minus(Duration.of(-1)).toString()).toBe("18:30:15.226");
+		expect(time.minus(MS_DURATION).toString()).equal("18:30:15.224");
+		expect(time.minus(SECOND_DURATION).toString()).equal("18:30:14.225");
+		expect(time.minus(MINUTE_DURATION).toString()).equal("18:29:15.225");
+		expect(time.minus(HOUR_DURATION).toString()).equal("17:30:15.225");
+		expect(time.minus(DAY_DURATION).toString()).equal("18:30:15.225");
+		expect(time.minus(Duration.ofComponents(1, 2, 3, 4, 5)).toString()).equal("16:27:11.220");
+		expect(time.minus(Duration.of(-1)).toString()).equal("18:30:15.226");
 	});
 
 	it("should subtract zero duration", () => {
-		expect(time.minus(NULL_DURATION)).toBe(time);
+		expect(time.minus(NULL_DURATION)).equal(time);
 	});
 
 	it("should modify hour", () => {
-		expect(MIDNIGHT.withHour(15).toString()).toBe("15:00:00.000");
-		expect(time.withHour(15).toString()).toBe("15:30:15.225");
+		expect(MIDNIGHT.withHour(15).toString()).equal("15:00:00.000");
+		expect(time.withHour(15).toString()).equal("15:30:15.225");
 	});
 
 	it("should modify minute", () => {
-		expect(MIDNIGHT.withMinute(15).toString()).toBe("00:15:00.000");
-		expect(time.withMinute(15).toString()).toBe("18:15:15.225");
+		expect(MIDNIGHT.withMinute(15).toString()).equal("00:15:00.000");
+		expect(time.withMinute(15).toString()).equal("18:15:15.225");
 	});
 
 	it("should modify second", () => {
-		expect(MIDNIGHT.withSecond(12).toString()).toBe("00:00:12.000");
-		expect(time.withSecond(12).toString()).toBe("18:30:12.225");
+		expect(MIDNIGHT.withSecond(12).toString()).equal("00:00:12.000");
+		expect(time.withSecond(12).toString()).equal("18:30:12.225");
 	});
 
 	it("should modify millisecond", () => {
-		expect(MIDNIGHT.withMs(15).toString()).toBe("00:00:00.015");
-		expect(time.withMs(15).toString()).toBe("18:30:15.015");
+		expect(MIDNIGHT.withMs(15).toString()).equal("00:00:00.015");
+		expect(time.withMs(15).toString()).equal("18:30:15.015");
 	});
 
 	it("should truncate itself to hour", () => {
-		expect(time.truncateToHour.toString()).toBe("18:00:00.000");
+		expect(time.truncateToHour.toString()).equal("18:00:00.000");
 	});
 
 	it("should truncate itself to minute", () => {
-		expect(time.truncateToMinute.toString()).toBe("18:30:00.000");
+		expect(time.truncateToMinute.toString()).equal("18:30:00.000");
 	});
 
 	it("should truncate itself to second", () => {
-		expect(time.truncateToSecond.toString()).toBe("18:30:15.000");
+		expect(time.truncateToSecond.toString()).equal("18:30:15.000");
 	});
 });

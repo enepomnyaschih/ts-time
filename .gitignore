@@ -1,6 +1,6 @@
 $CACHE_FILE$
 *.iml
+.cache
 .idea
 node_modules
 dist
-all.js
