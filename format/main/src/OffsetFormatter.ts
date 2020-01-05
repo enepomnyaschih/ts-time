@@ -52,7 +52,7 @@ export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
 			case 4:
 				return pad(hours, 2, true) + pad(minutes, 2) + (seconds ? pad(seconds, 2) : "");
 			case 5:
-				return pad(hours, 2, true) + pad(minutes, 2) + pad(seconds, 2);
+				return pad(hours, 2, true) + ":" + pad(minutes, 2) + (seconds ? ":" + pad(seconds, 2) : "");
 			default:
 				return null;
 		}
