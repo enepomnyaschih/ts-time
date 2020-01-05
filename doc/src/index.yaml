@@ -68,6 +68,16 @@ description: |
     <p>None of the defined data structures has public constructors. You should use static methods to initialize them.
     Methods starting with "of" create new instances by parameters. Methods starting with "from" convert the structures
     to each other. Methods "parse" create new instances by strings, that are always compatible with "toString".</p>
+    <hr>
+    <p><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a> is an extension of
+    ts-time library with date/time formatting capabilities.</p>
+    <pre>
+    npm install --save ts-time-format
+    </pre>
+    <p>As opposed to ts-time, ts-time-format API is very different from Java 8 Date/Time API, because its author finds
+    Java API for date/time formatting way too loose and error-prone. Implementation of ts-time-format is more strict -
+    for every class of ts-time there's a specialized implementation of %TemporalFormatter supporting its own set of
+    features. The library doesn't support date/time parsing by an arbitrary pattern.</p>
     <p>Project license is <a href="https://github.com/enepomnyaschih/ts-time/blob/master/LICENSE" target="_blank">MIT</a>.</p>
     <p>Find source code and bug tracker at <a href="https://github.com/enepomnyaschih/ts-time" target="_blank">GitHub</a>.</p>
   </div>

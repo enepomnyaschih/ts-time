@@ -25,7 +25,7 @@ SOFTWARE.
 import {Enum, pad} from "ts-time/_internal";
 import {ZoneOffset} from "ts-time/Zone";
 import {TemporalCompiler} from "./TemporalCompiler";
-import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
+import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
 export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {

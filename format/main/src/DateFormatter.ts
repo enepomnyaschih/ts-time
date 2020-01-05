@@ -26,7 +26,7 @@ import {Enum, pad} from "ts-time/_internal";
 import LocalDate from "ts-time/LocalDate";
 import {DEFAULT_TEMPORAL_CONTEXT} from "./constants";
 import {TemporalCompiler} from "./TemporalCompiler";
-import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
+import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
 export interface DateCompiler extends TemporalCompiler<LocalDate> {

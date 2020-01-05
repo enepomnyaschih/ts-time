@@ -28,7 +28,7 @@ import LocalDateTime from "ts-time/LocalDateTime";
 import LocalTime from "ts-time/LocalTime";
 import {DATE_COMPILERS} from "./DateFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
-import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
+import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {TIME_COMPILERS} from "./TimeFormatter";
 import {parsePattern} from "./utils";
 

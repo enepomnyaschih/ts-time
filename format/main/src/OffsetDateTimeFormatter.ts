@@ -27,7 +27,7 @@ import OffsetDateTime from "ts-time/OffsetDateTime";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
-import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
+import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
 export interface OffsetDateTimeCompiler extends TemporalCompiler<OffsetDateTime> {

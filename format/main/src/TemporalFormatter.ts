@@ -48,9 +48,9 @@ export class CompiledFormatComponent<T> implements TemporalFormatComponent<T> {
 	}
 }
 
-export class TemporalFormatter<T> {
+export default class TemporalFormatter<T> {
 
-	constructor(readonly components: TemporalFormatComponent<T>[]) {
+	constructor(private components: TemporalFormatComponent<T>[]) {
 	}
 
 	format(value: T, context?: any): string {

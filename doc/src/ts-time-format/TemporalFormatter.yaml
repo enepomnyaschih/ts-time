@@ -1,0 +1,106 @@
+# MIT License
+#
+# Copyright (c) 2019 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  default:
+    kind: class
+    typevars:
+      T: Type to format.
+    description: |
+      Date/time-related type string formatter. The result equals to concatenation of %write method call results on all
+      components. You may specify components explicitly by using 'of' method of a respective subclass, or implicitly
+      by using 'ofPattern' method of a respective subclass to parse a string pattern.
+
+    constructor:
+      signature: |
+        (components: %TemporalFormatComponent<%T>[])
+      params:
+        components: Sequence of components representing the formatter.
+
+    methods:
+      format:
+        signature: |
+          (value: %T, context?: any): string
+        params:
+          value: Value to format.
+          context: Context object (see %TemporalCompiler).
+        returns: Formatted string.
+        description: |
+          Formats %value to a string as concatenation of %write method call results on all components.
+
+    references:
+      write:
+        symbol: TemporalFormatComponent
+        member: write
+
+  TemporalFormatComponent:
+    kind: interface
+    typevars:
+      T: Type to format.
+    description: |
+      A single component of %TemporalFormatter. May represent a fixed literal (%LiteralFormatComponent) or a
+      value-dependent part (%CompiledFormatComponent).
+
+    methods:
+      write:
+        signature: |
+          (value: %T, context: any): string
+        params:
+          value: Value to format.
+          context: Context object (see %TemporalCompiler).
+        returns: Formatted part.
+        description: Formats %value to a string based on concrete implementation.
+
+  LiteralFormatComponent:
+    kind: class
+    typevars:
+      T: Type to format.
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        symbol: TemporalFormatComponent
+        typevars: <%T>
+    description: |
+      Implementation of %TemporalFormatComponent that returns a fixed literal.
+
+    constructor:
+      signature: |
+        (literal: string)
+      params:
+        literal: Literal to return.
+
+  CompiledFormatComponent:
+    kind: class
+    typevars:
+      T: Type to format.
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        symbol: TemporalFormatComponent
+        typevars: <%T>
+    description: |
+      Implementation of %TemporalFormatComponent that uses %TemporalCompiler to compile the result.
+
+    constructor:
+      signature: |
+        (compiler: %TemporalCompiler<%T>, length: number)
+      params:
+        compiler: Compiler to use.
+        length: Length to use during compilation (see %TemporalCompiler).

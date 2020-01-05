@@ -98,6 +98,18 @@ references:
     file: ts-time/Zone
     symbol: UTC
 
+  DAY_OF_MONTH_COMPILER:
+    file: ts-time-format/DateFormatter
+    symbol: DAY_OF_MONTH_COMPILER
+
+  MONTH_OF_YEAR_COMPILER_M:
+    file: ts-time-format/DateFormatter
+    symbol: MONTH_OF_YEAR_COMPILER_M
+
+  DEFAULT_TEMPORAL_CONTEXT:
+    file: ts-time-format/constants
+    symbol: DEFAULT_TEMPORAL_CONTEXT
+
   ZoneId:
     file: ts-time/Zone
     symbol: ZoneId
@@ -131,20 +143,34 @@ includes:
     remove or change it in future releases.</p>
 
   DocumentationIndex: |
-    <ul>
-      <li>%constants</li>
-      <li>%DayOfWeek</li>
-      <li>%Duration</li>
-      <li>%Era</li>
-      <li>%Instant</li>
-      <li>%LocalDate</li>
-      <li>%LocalDateTime</li>
-      <li>%LocalTime</li>
-      <li>%Month</li>
-      <li>%OffsetDateTime</li>
-      <li>%Period</li>
-      <li>%TimeField</li>
-      <li>%utils</li>
-      <li>%Zone</li>
-      <li>%ZonedDateTime</li>
-    </ul>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-6">
+          <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+          <ul class="list-unstyled">
+            <li>%constants</li>
+            <li>%DayOfWeek</li>
+            <li>%Duration</li>
+            <li>%Era</li>
+            <li>%Instant</li>
+            <li>%LocalDate</li>
+            <li>%LocalDateTime</li>
+            <li>%LocalTime</li>
+            <li>%Month</li>
+            <li>%OffsetDateTime</li>
+            <li>%Period</li>
+            <li>%TimeField</li>
+            <li>%utils</li>
+            <li>%Zone</li>
+            <li>%ZonedDateTime</li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+          <ul class="list-unstyled">
+            <li>%TemporalCompiler</li>
+            <li>%TemporalFormatter</li>
+          </ul>
+        </div>
+      </div>
+    </div>
