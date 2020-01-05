@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 import OffsetDateTime from "ts-time/OffsetDateTime";
-import {Dictionary} from "../../../core/main/src/_internal";
+import {Dictionary} from "ts-time/_internal";
 import {mapDictionary} from "./_internal";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";

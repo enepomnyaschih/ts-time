@@ -31,7 +31,7 @@ import ZonedDateTime from "ts-time/ZonedDateTime";
 import {buildPattern} from "./_utils";
 
 describe("ZonedDateTimeFormatter", () => {
-	const formatter = ZonedDateTimeFormatter.ofPattern(buildPattern(ZONED_DATE_TIME_COMPILERS.array));
+	const formatter = ZonedDateTimeFormatter.ofPattern(buildPattern(ZONED_DATE_TIME_COMPILERS));
 
 	it("should format date/time", () => {
 		expect(formatter.format(ZonedDateTime.ofDateTime(

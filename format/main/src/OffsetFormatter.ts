@@ -24,7 +24,7 @@ SOFTWARE.
 
 import {pad} from "ts-time/_internal";
 import {ZoneOffset} from "ts-time/Zone";
-import {Dictionary} from "../../../core/main/src/_internal";
+import {Dictionary} from "ts-time/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";

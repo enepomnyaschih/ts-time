@@ -23,7 +23,7 @@ SOFTWARE.
 */
 
 import ZonedDateTime from "ts-time/ZonedDateTime";
-import {Dictionary} from "../../../core/main/src/_internal";
+import {Dictionary} from "ts-time/_internal";
 import {mapDictionary} from "./_internal";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";
@@ -79,7 +79,7 @@ export const ZONE_ID_COMPILER: ZonedDateTimeCompiler = new ZoneIdCompiler();
 export const ZONED_DATE_TIME_COMPILERS: Dictionary<ZonedDateTimeCompiler> = {
 	...mapDictionary(DATE_TIME_COMPILERS, delegated => new DateTimeDelegateCompiler(delegated)),
 	...mapDictionary(OFFSET_COMPILERS, delegated => new OffsetDelegateCompiler(delegated)),
-	ZONE_ID_COMPILER
+	V: ZONE_ID_COMPILER
 };
 
 class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {

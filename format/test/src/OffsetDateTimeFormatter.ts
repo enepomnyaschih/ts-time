@@ -31,7 +31,7 @@ import {ZoneOffset} from "ts-time/Zone";
 import {buildPattern} from "./_utils";
 
 describe("OffsetDateTimeFormatter", () => {
-	const formatter = OffsetDateTimeFormatter.ofPattern(buildPattern(OFFSET_DATE_TIME_COMPILERS.array));
+	const formatter = OffsetDateTimeFormatter.ofPattern(buildPattern(OFFSET_DATE_TIME_COMPILERS));
 
 	it("should format date/time", () => {
 		expect(formatter.format(OffsetDateTime.ofDateTime(

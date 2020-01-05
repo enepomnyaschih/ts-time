@@ -23,17 +23,20 @@ SOFTWARE.
 */
 
 import {TemporalCompiler} from "ts-time-format/TemporalCompiler";
+import {Dictionary} from "ts-time/_internal";
 
-export function buildPattern(compilers: TemporalCompiler<any>[]) {
+export function buildPattern<T>(compilers: Dictionary<TemporalCompiler<T>>) {
 	const parts: string[] = [];
-	compilers.forEach(compiler => {
-		const subparts = [];
-		let part = "";
-		for (let i = 0; i < compiler.maxLength; ++i) {
-			part += compiler.char;
-			subparts.push(part);
+	for (let char in compilers) {
+		if (compilers.hasOwnProperty(char)) {
+			const subparts: string[] = [];
+			let part = "";
+			for (let i = 0, l = compilers[char].maxLength; i < l; ++i) {
+				part += char;
+				subparts.push(part);
+			}
+			parts.push(subparts.join(" "));
 		}
-		parts.push(subparts.join(" "));
-	});
+	}
 	return parts.join("\n");
 }

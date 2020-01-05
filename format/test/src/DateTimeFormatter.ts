@@ -29,7 +29,7 @@ import {DECEMBER} from "ts-time/Month";
 import {buildPattern} from "./_utils";
 
 describe("DateTimeFormatter", () => {
-	const formatter = DateTimeFormatter.ofPattern(buildPattern(DATE_TIME_COMPILERS.array));
+	const formatter = DateTimeFormatter.ofPattern(buildPattern(DATE_TIME_COMPILERS));
 
 	it("should format date/time", () => {
 		expect(formatter.format(LocalDateTime.ofComponents(2008, DECEMBER, 30, 22, 30, 15, 225))).equal(

@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Dictionary} from "../../../core/main/src/_internal";
+import {Dictionary} from "ts-time/_internal";
 
 export function mapDictionary<T, U>(dict: Dictionary<T>, callback: (value: T) => U) {
 	const result: Dictionary<U> = {};

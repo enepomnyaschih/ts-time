@@ -26,7 +26,7 @@ import {pad} from "ts-time/_internal";
 import {HOURS_PER_DAY} from "ts-time/constants";
 import LocalTime from "ts-time/LocalTime";
 import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, SECOND_FIELD} from "ts-time/TimeField";
-import {Dictionary} from "../../../core/main/src/_internal";
+import {Dictionary} from "ts-time/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";

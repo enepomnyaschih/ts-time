@@ -28,7 +28,7 @@ import {UTC, ZoneOffset} from "ts-time/Zone";
 import {buildPattern} from "./_utils";
 
 describe("OffsetFormatter", () => {
-	const formatter = OffsetFormatter.ofPattern(buildPattern(OFFSET_COMPILERS.array));
+	const formatter = OffsetFormatter.ofPattern(buildPattern(OFFSET_COMPILERS));
 
 	it("should format UTC", () => {
 		expect(formatter.format(UTC)).equal(

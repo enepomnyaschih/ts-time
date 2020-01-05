@@ -29,7 +29,7 @@ import {DECEMBER, FEBRUARY, JANUARY} from "ts-time/Month";
 import {buildPattern} from "./_utils";
 
 describe("DateFormatter", () => {
-	const formatter = DateFormatter.ofPattern(buildPattern(DATE_COMPILERS.array));
+	const formatter = DateFormatter.ofPattern(buildPattern(DATE_COMPILERS));
 
 	it("should format long date", () => {
 		expect(formatter.format(LocalDate.of(2008, DECEMBER, 30))).equal(

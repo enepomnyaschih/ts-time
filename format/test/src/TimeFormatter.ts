@@ -28,7 +28,7 @@ import LocalTime, {MAX_TIME, MIDNIGHT, NOON} from "ts-time/LocalTime";
 import {buildPattern} from "./_utils";
 
 describe("TimeFormatter", () => {
-	const formatter = TimeFormatter.ofPattern(buildPattern(TIME_COMPILERS.array));
+	const formatter = TimeFormatter.ofPattern(buildPattern(TIME_COMPILERS));
 
 	it("should format long time", () => {
 		expect(formatter.format(LocalTime.of(22, 30, 15, 225))).equal(
