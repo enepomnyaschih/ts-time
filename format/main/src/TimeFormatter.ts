@@ -25,7 +25,7 @@ SOFTWARE.
 import {Enum, pad} from "ts-time/_internal";
 import {HOURS_PER_DAY} from "ts-time/constants";
 import LocalTime from "ts-time/LocalTime";
-import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "ts-time/TimeField";
+import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, SECOND_FIELD} from "ts-time/TimeField";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {TemporalFormatComponent, TemporalFormatter} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
@@ -45,6 +45,20 @@ class FieldCompiler implements TimeCompiler {
 	compile(time: LocalTime, length: number): string {
 		const value = time.get(this.field);
 		return length === 1 ? String(value) : pad(value, 2);
+	}
+}
+
+class MsCompiler implements TimeCompiler {
+
+	constructor(readonly char: string) {
+	}
+
+	get maxLength() {
+		return 3;
+	}
+
+	compile(time: LocalTime, length: number): string {
+		return pad(time.ms, 3).substr(0, length);
 	}
 }
 
@@ -78,15 +92,24 @@ class AmPmCompiler implements TimeCompiler {
 	}
 }
 
+export const HOUR_COMPILER: TimeCompiler = new FieldCompiler("H", HOUR_FIELD);
+export const HOUR12_COMPILER: TimeCompiler = new FieldCompiler("K", HOUR12_FIELD);
+export const MINUTE_COMPILER: TimeCompiler = new FieldCompiler("m", MINUTE_FIELD);
+export const SECOND_COMPILER: TimeCompiler = new FieldCompiler("s", SECOND_FIELD);
+export const MS_COMPILER: TimeCompiler = new MsCompiler("S");
+export const HOUR_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler("h", HOUR12_FIELD);
+export const HOUR12_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler("k", HOUR_FIELD);
+export const AM_PM_COMPILER: TimeCompiler = new AmPmCompiler();
+
 export const TIME_COMPILERS = new Enum<TimeCompiler>([
-	new FieldCompiler("H", HOUR_FIELD),
-	new FieldCompiler("K", HOUR12_FIELD),
-	new FieldCompiler("m", MINUTE_FIELD),
-	new FieldCompiler("s", SECOND_FIELD),
-	new FieldCompiler("S", MS_FIELD),
-	new NonZeroFieldCompiler("h", HOUR12_FIELD),
-	new NonZeroFieldCompiler("k", HOUR_FIELD),
-	new AmPmCompiler()
+	HOUR_COMPILER,
+	HOUR12_COMPILER,
+	MINUTE_COMPILER,
+	SECOND_COMPILER,
+	MS_COMPILER,
+	HOUR_NZ_COMPILER,
+	HOUR12_NZ_COMPILER,
+	AM_PM_COMPILER
 ], compiler => compiler.char);
 
 class TimeFormatter extends TemporalFormatter<LocalTime> {
