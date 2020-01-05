@@ -69,9 +69,28 @@ class OffsetDelegateCompiler implements ZonedDateTimeCompiler {
 	}
 }
 
-export const Zoned_DATE_TIME_COMPILERS = new Enum<ZonedDateTimeCompiler>([
+class ZoneIdCompiler implements ZonedDateTimeCompiler {
+
+	get char() {
+		return "V";
+	}
+
+	get maxLength() {
+		return 1;
+	}
+
+	compile(value: ZonedDateTime, _length: number, _context: any): string {
+		return value.zone.id;
+	}
+
+}
+
+export const ZONE_ID_COMPILER: ZonedDateTimeCompiler = new ZoneIdCompiler();
+
+export const ZONED_DATE_TIME_COMPILERS = new Enum<ZonedDateTimeCompiler>([
 	...DATE_TIME_COMPILERS.array.map(delegated => new DateTimeDelegateCompiler(delegated)),
-	...OFFSET_COMPILERS.array.map(delegated => new OffsetDelegateCompiler(delegated))
+	...OFFSET_COMPILERS.array.map(delegated => new OffsetDelegateCompiler(delegated)),
+	ZONE_ID_COMPILER
 ], compiler => compiler.char);
 
 class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {
@@ -80,7 +99,7 @@ class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {
 		return new ZonedDateTimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<ZonedDateTimeCompiler> = Zoned_DATE_TIME_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Enum<ZonedDateTimeCompiler> = ZONED_DATE_TIME_COMPILERS) {
 		return new ZonedDateTimeFormatter(parsePattern(pattern, compilers));
 	}
 }
