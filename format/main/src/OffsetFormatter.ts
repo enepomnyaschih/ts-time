@@ -22,15 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad} from "ts-time/_internal";
+import {pad} from "ts-time/_internal";
 import {ZoneOffset} from "ts-time/Zone";
+import {Dictionary} from "../../../core/main/src/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
 export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
 
-	constructor(readonly char: string, private zeroZ: boolean) {
+	constructor(private zeroZ: boolean) {
 	}
 
 	get maxLength() {
@@ -59,10 +60,10 @@ export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
 	}
 }
 
-export const OFFSET_COMPILERS = new Enum<OffsetCompiler>([
-	new OffsetCompiler("X", true),
-	new OffsetCompiler("x", false)
-], compiler => compiler.char);
+export const OFFSET_COMPILERS: Dictionary<OffsetCompiler> = {
+	X: new OffsetCompiler(true),
+	x: new OffsetCompiler(false)
+};
 
 class OffsetFormatter extends TemporalFormatter<ZoneOffset> {
 
@@ -70,7 +71,7 @@ class OffsetFormatter extends TemporalFormatter<ZoneOffset> {
 		return new OffsetFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<OffsetCompiler> = OFFSET_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<OffsetCompiler> = OFFSET_COMPILERS) {
 		return new OffsetFormatter(parsePattern(pattern, compilers));
 	}
 }

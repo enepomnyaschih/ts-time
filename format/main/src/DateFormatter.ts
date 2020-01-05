@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad} from "ts-time/_internal";
+import {Dictionary, pad} from "ts-time/_internal";
 import LocalDate from "ts-time/LocalDate";
 import {DEFAULT_TEMPORAL_CONTEXT} from "./constants";
 import {TemporalCompiler} from "./TemporalCompiler";
@@ -34,7 +34,7 @@ export interface DateCompiler extends TemporalCompiler<LocalDate> {
 
 class YearCompiler implements DateCompiler {
 
-	constructor(readonly char: string, private getter: (date: LocalDate) => number) {
+	constructor(private getter: (date: LocalDate) => number) {
 	}
 
 	get maxLength() {
@@ -55,7 +55,7 @@ class YearCompiler implements DateCompiler {
 // TODO: Extract DayOfWeekFormatters (with dayOfWeek.format method) and so on.
 class NumberCompiler implements DateCompiler {
 
-	constructor(readonly char: string, readonly maxLength: number, private getter: (date: LocalDate) => number) {
+	constructor(readonly maxLength: number, private getter: (date: LocalDate) => number) {
 	}
 
 	compile(date: LocalDate, length: number): string {
@@ -65,8 +65,7 @@ class NumberCompiler implements DateCompiler {
 
 class TextCompiler implements DateCompiler {
 
-	constructor(readonly char: string, readonly maxLength: number,
-				private group: string, private getter: (date: LocalDate) => number) {
+	constructor(readonly maxLength: number, private group: string, private getter: (date: LocalDate) => number) {
 	}
 
 	compile(date: LocalDate, length: number, context: any): string {
@@ -76,8 +75,8 @@ class TextCompiler implements DateCompiler {
 
 class NumberTextCompiler implements DateCompiler {
 
-	constructor(readonly char: string, readonly maxLength: number,
-				private group: string, private getter: (date: LocalDate) => number, private textOffset: number = 0) {
+	constructor(readonly maxLength: number, private group: string, private getter: (date: LocalDate) => number,
+				private textOffset: number = 0) {
 	}
 
 	compile(date: LocalDate, length: number, context: any): string {
@@ -99,43 +98,39 @@ function compileNumberText(context: any, group: string, value: number, length: n
 	return (length <= 2) ? compileNumber(value, length) : compileText(context, group, value + textOffset, length - 2);
 }
 
-export const ERA_COMPILER: DateCompiler = new TextCompiler("G", 3, "era", date => date.era.value);
-export const YEAR_COMPILER: DateCompiler = new YearCompiler("u", date => date.year);
-export const YEAR_OF_ERA_COMPILER: DateCompiler = new YearCompiler("y", date => date.yearOfEra);
-export const DAY_OF_YEAR_COMPILER: DateCompiler = new NumberCompiler("D", 3, date => date.dayOfYear);
-export const MONTH_OF_YEAR_COMPILER_M: DateCompiler = new NumberTextCompiler("M", 5, "month", date => date.month.value, -1);
-export const MONTH_OF_YEAR_COMPILER_L: DateCompiler = new NumberTextCompiler("L", 5, "month", date => date.month.value, -1);
-export const DAY_OF_MONTH_COMPILER: DateCompiler = new NumberCompiler("d", 2, date => date.dayOfMonth);
+export const ERA_COMPILER: DateCompiler = new TextCompiler(3, "era", date => date.era.value);
+export const YEAR_COMPILER: DateCompiler = new YearCompiler(date => date.year);
+export const YEAR_OF_ERA_COMPILER: DateCompiler = new YearCompiler(date => date.yearOfEra);
+export const DAY_OF_YEAR_COMPILER: DateCompiler = new NumberCompiler(3, date => date.dayOfYear);
+export const MONTH_OF_YEAR_COMPILER: DateCompiler = new NumberTextCompiler(5, "month", date => date.month.value, -1);
+export const DAY_OF_MONTH_COMPILER: DateCompiler = new NumberCompiler(2, date => date.dayOfMonth);
 
-export const QUARTER_OF_YEAR_COMPILER_Q: DateCompiler = new NumberTextCompiler("Q", 4, "quarter", date => date.quarterOfYear, -1);
-export const QUARTER_OF_YEAR_COMPILER_q: DateCompiler = new NumberTextCompiler("q", 4, "quarter", date => date.quarterOfYear, -1);
-export const WEEK_BASED_YEAR_COMPILER: DateCompiler = new YearCompiler("Y", date => date.weekBasedYear);
-export const WEEK_OF_WEEK_BASED_YEAR_COMPILER: DateCompiler = new NumberCompiler("w", 2, date => date.weekOfWeekBasedYear);
-//export const WEEK_MONTH_COMPILER_W: DateCompiler = new NumberCompiler("W", 2, date => date.weekOfMonth);
-//export const WEEK_MONTH_COMPILER_F: DateCompiler = new NumberCompiler("F", 2, date => date.weekOfMonth);
-export const DAY_OF_WEEK_COMPILER_E: DateCompiler = new TextCompiler("E", 3, "dayOfWeek", date => date.dayOfWeek.value - 1);
-export const DAY_OF_WEEK_COMPILER_e: DateCompiler = new NumberTextCompiler("e", 5, "dayOfWeek", date => date.dayOfWeek.value, -1);
-export const DAY_OF_WEEK_COMPILER_c: DateCompiler = new NumberTextCompiler("c", 5, "dayOfWeek", date => date.dayOfWeek.value, -1);
+export const QUARTER_OF_YEAR_COMPILER: DateCompiler = new NumberTextCompiler(4, "quarter", date => date.quarterOfYear, -1);
+export const WEEK_BASED_YEAR_COMPILER: DateCompiler = new YearCompiler(date => date.weekBasedYear);
+export const WEEK_OF_WEEK_BASED_YEAR_COMPILER: DateCompiler = new NumberCompiler(2, date => date.weekOfWeekBasedYear);
+//export const WEEK_MONTH_COMPILER: DateCompiler = new NumberCompiler(2, date => date.weekOfMonth);
+export const DAY_OF_WEEK_TEXT_COMPILER: DateCompiler = new TextCompiler(3, "dayOfWeek", date => date.dayOfWeek.value - 1);
+export const DAY_OF_WEEK_COMPILER: DateCompiler = new NumberTextCompiler(5, "dayOfWeek", date => date.dayOfWeek.value, -1);
 
-export const DATE_COMPILERS = new Enum<DateCompiler>([
-	ERA_COMPILER,
-	YEAR_COMPILER,
-	YEAR_OF_ERA_COMPILER,
-	DAY_OF_YEAR_COMPILER,
-	MONTH_OF_YEAR_COMPILER_M,
-	MONTH_OF_YEAR_COMPILER_L,
-	DAY_OF_MONTH_COMPILER,
+export const DATE_COMPILERS: Dictionary<DateCompiler> = {
+	G: ERA_COMPILER,
+	u: YEAR_COMPILER,
+	y: YEAR_OF_ERA_COMPILER,
+	D: DAY_OF_YEAR_COMPILER,
+	M: MONTH_OF_YEAR_COMPILER,
+	L: MONTH_OF_YEAR_COMPILER,
+	d: DAY_OF_MONTH_COMPILER,
 
-	QUARTER_OF_YEAR_COMPILER_Q,
-	QUARTER_OF_YEAR_COMPILER_q,
-	WEEK_BASED_YEAR_COMPILER,
-	WEEK_OF_WEEK_BASED_YEAR_COMPILER,
-	//WEEK_MONTH_COMPILER_W,
-	//WEEK_MONTH_COMPILER_F,
-	DAY_OF_WEEK_COMPILER_E,
-	DAY_OF_WEEK_COMPILER_e,
-	DAY_OF_WEEK_COMPILER_c
-], compiler => compiler.char);
+	Q: QUARTER_OF_YEAR_COMPILER,
+	q: QUARTER_OF_YEAR_COMPILER,
+	Y: WEEK_BASED_YEAR_COMPILER,
+	w: WEEK_OF_WEEK_BASED_YEAR_COMPILER,
+	//W: WEEK_MONTH_COMPILER,
+	//F: WEEK_MONTH_COMPILER,
+	E: DAY_OF_WEEK_TEXT_COMPILER,
+	e: DAY_OF_WEEK_COMPILER,
+	c: DAY_OF_WEEK_COMPILER
+};
 
 class DateFormatter extends TemporalFormatter<LocalDate> {
 
@@ -143,7 +138,7 @@ class DateFormatter extends TemporalFormatter<LocalDate> {
 		return new DateFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<DateCompiler> = DATE_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<DateCompiler> = DATE_COMPILERS) {
 		return new DateFormatter(parsePattern(pattern, compilers));
 	}
 }

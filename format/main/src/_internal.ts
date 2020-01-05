@@ -22,9 +22,14 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-export interface TemporalCompiler<T> {
+import {Dictionary} from "../../../core/main/src/_internal";
 
-	readonly maxLength: number;
-
-	compile(value: T, length: number, context: any): string;
+export function mapDictionary<T, U>(dict: Dictionary<T>, callback: (value: T) => U) {
+	const result: Dictionary<U> = {};
+	for (let key in dict) {
+		if (dict.hasOwnProperty(key)) {
+			result[key] = callback(dict[key]);
+		}
+	}
+	return result;
 }

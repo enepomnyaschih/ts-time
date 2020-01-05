@@ -22,11 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "ts-time/_internal";
+import {Dictionary} from "ts-time/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import {CompiledFormatComponent, LiteralFormatComponent, TemporalFormatComponent} from "./TemporalFormatter";
 
-export function parsePattern<T>(pattern: string, compilers: Enum<TemporalCompiler<T>>) {
+export function parsePattern<T>(pattern: string, compilers: Dictionary<TemporalCompiler<T>>) {
 	const components: TemporalFormatComponent<T>[] = [];
 	let index = 0;
 	let literal = "";
@@ -34,14 +34,14 @@ export function parsePattern<T>(pattern: string, compilers: Enum<TemporalCompile
 	while (index < pattern.length) {
 		const char = pattern.charAt(index);
 		if (!escape) {
-			const compiler = compilers.dict[char];
+			const compiler = compilers[char];
 			if (compiler) {
 				if (literal) {
 					components.push(new LiteralFormatComponent<T>(literal));
 					literal = "";
 				}
 				let length = 1;
-				while (length < compiler.maxLength && pattern.charAt(index + length) === compiler.char) {
+				while (length < compiler.maxLength && pattern.charAt(index + length) === char) {
 					++length;
 				}
 				components.push(new CompiledFormatComponent<T>(compiler, length));

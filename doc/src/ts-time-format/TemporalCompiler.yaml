@@ -37,16 +37,11 @@ symbols:
       const context = {
           monthShortNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       };
-      %MONTH_OF_YEAR_COMPILER_M.%compile(date, 3, context); // writes short name of a month, same as "MMM" sequence
+      %MONTH_OF_YEAR_COMPILER.%compile(date, 3, context); // writes short name of a month, same as "MMM" sequence
       </pre>
       <p>If no context is passed, %DEFAULT_TEMPORAL_CONTEXT representing English localization is being used.</p>
 
     properties:
-      char:
-        modifiers: readonly
-        type: string
-        description: Character identifying this compiler in a pattern.
-
       maxLength:
         modifiers: readonly
         type: number

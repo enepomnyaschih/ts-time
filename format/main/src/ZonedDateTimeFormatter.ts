@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "ts-time/_internal";
 import ZonedDateTime from "ts-time/ZonedDateTime";
+import {Dictionary} from "../../../core/main/src/_internal";
+import {mapDictionary} from "./_internal";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
@@ -36,10 +37,6 @@ export interface ZonedDateTimeCompiler extends TemporalCompiler<ZonedDateTime> {
 class DateTimeDelegateCompiler implements ZonedDateTimeCompiler {
 
 	constructor(private delegated: DateTimeCompiler) {
-	}
-
-	get char() {
-		return this.delegated.char;
 	}
 
 	get maxLength() {
@@ -56,10 +53,6 @@ class OffsetDelegateCompiler implements ZonedDateTimeCompiler {
 	constructor(private delegated: OffsetCompiler) {
 	}
 
-	get char() {
-		return this.delegated.char;
-	}
-
 	get maxLength() {
 		return this.delegated.maxLength;
 	}
@@ -70,10 +63,6 @@ class OffsetDelegateCompiler implements ZonedDateTimeCompiler {
 }
 
 class ZoneIdCompiler implements ZonedDateTimeCompiler {
-
-	get char() {
-		return "V";
-	}
 
 	get maxLength() {
 		return 1;
@@ -87,11 +76,11 @@ class ZoneIdCompiler implements ZonedDateTimeCompiler {
 
 export const ZONE_ID_COMPILER: ZonedDateTimeCompiler = new ZoneIdCompiler();
 
-export const ZONED_DATE_TIME_COMPILERS = new Enum<ZonedDateTimeCompiler>([
-	...DATE_TIME_COMPILERS.array.map(delegated => new DateTimeDelegateCompiler(delegated)),
-	...OFFSET_COMPILERS.array.map(delegated => new OffsetDelegateCompiler(delegated)),
+export const ZONED_DATE_TIME_COMPILERS: Dictionary<ZonedDateTimeCompiler> = {
+	...mapDictionary(DATE_TIME_COMPILERS, delegated => new DateTimeDelegateCompiler(delegated)),
+	...mapDictionary(OFFSET_COMPILERS, delegated => new OffsetDelegateCompiler(delegated)),
 	ZONE_ID_COMPILER
-], compiler => compiler.char);
+};
 
 class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {
 
@@ -99,7 +88,7 @@ class ZonedDateTimeFormatter extends TemporalFormatter<ZonedDateTime> {
 		return new ZonedDateTimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<ZonedDateTimeCompiler> = ZONED_DATE_TIME_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<ZonedDateTimeCompiler> = ZONED_DATE_TIME_COMPILERS) {
 		return new ZonedDateTimeFormatter(parsePattern(pattern, compilers));
 	}
 }

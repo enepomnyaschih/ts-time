@@ -22,8 +22,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "ts-time/_internal";
 import OffsetDateTime from "ts-time/OffsetDateTime";
+import {Dictionary} from "../../../core/main/src/_internal";
+import {mapDictionary} from "./_internal";
 import {DATE_TIME_COMPILERS, DateTimeCompiler} from "./DateTimeFormatter";
 import {OFFSET_COMPILERS, OffsetCompiler} from "./OffsetFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
@@ -37,10 +38,6 @@ export interface OffsetDateTimeCompiler extends TemporalCompiler<OffsetDateTime>
 class DateTimeDelegateCompiler implements OffsetDateTimeCompiler {
 
 	constructor(private delegated: DateTimeCompiler) {
-	}
-
-	get char() {
-		return this.delegated.char;
 	}
 
 	get maxLength() {
@@ -57,10 +54,6 @@ class OffsetDelegateCompiler implements OffsetDateTimeCompiler {
 	constructor(private delegated: OffsetCompiler) {
 	}
 
-	get char() {
-		return this.delegated.char;
-	}
-
 	get maxLength() {
 		return this.delegated.maxLength;
 	}
@@ -70,10 +63,10 @@ class OffsetDelegateCompiler implements OffsetDateTimeCompiler {
 	}
 }
 
-export const OFFSET_DATE_TIME_COMPILERS = new Enum<OffsetDateTimeCompiler>([
-	...DATE_TIME_COMPILERS.array.map(delegated => new DateTimeDelegateCompiler(delegated)),
-	...OFFSET_COMPILERS.array.map(delegated => new OffsetDelegateCompiler(delegated))
-], compiler => compiler.char);
+export const OFFSET_DATE_TIME_COMPILERS: Dictionary<OffsetDateTimeCompiler> = {
+	...mapDictionary(DATE_TIME_COMPILERS, delegated => new DateTimeDelegateCompiler(delegated)),
+	...mapDictionary(OFFSET_COMPILERS, delegated => new OffsetDelegateCompiler(delegated))
+};
 
 class OffsetDateTimeFormatter extends TemporalFormatter<OffsetDateTime> {
 
@@ -81,7 +74,7 @@ class OffsetDateTimeFormatter extends TemporalFormatter<OffsetDateTime> {
 		return new OffsetDateTimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<OffsetDateTimeCompiler> = OFFSET_DATE_TIME_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<OffsetDateTimeCompiler> = OFFSET_DATE_TIME_COMPILERS) {
 		return new OffsetDateTimeFormatter(parsePattern(pattern, compilers));
 	}
 }

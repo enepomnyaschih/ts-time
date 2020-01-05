@@ -26,17 +26,6 @@ export interface Dictionary<T> {
 	[key: string]: T;
 }
 
-export class Enum<T> {
-
-	readonly dict: Dictionary<T> = {};
-
-	constructor(readonly array: T[], indexer: (value: T) => string) {
-		for (let value of array) {
-			this.dict[indexer(value)] = value;
-		}
-	}
-}
-
 export function compare(x: any, y: any) {
 	return x > y ? 1 : x < y ? -1 : 0;
 }
@@ -89,11 +78,10 @@ export function toInt(value: number) {
 	return value < 0 ? Math.ceil(value) : Math.floor(value);
 }
 
-// Same as Date.UTC, but without REALLY STUPID special case for years from 0 to 99.
+// Same as Date.UTC, but without special case for years from 0 to 99.
 export function utc(year: number, month: number, dayOfMonth: number, hour: number, minute: number, second: number, ms: number) {
 	const date = new Date(Date.UTC(year, month, dayOfMonth, hour, minute, second, ms));
 	if (year >= 0 && year <= 99) {
-		// Work around a REALLY STUPID feature of Date.UTC to treat 00-99 years as 1900-1999
 		date.setUTCFullYear(date.getUTCFullYear() - 1900);
 		// Note: we can't simply assign (year), because, say, utc(9, 0, -2) should lead to 8th year, not 9th
 	}

@@ -102,9 +102,9 @@ references:
     file: ts-time-format/DateFormatter
     symbol: DAY_OF_MONTH_COMPILER
 
-  MONTH_OF_YEAR_COMPILER_M:
+  MONTH_OF_YEAR_COMPILER:
     file: ts-time-format/DateFormatter
-    symbol: MONTH_OF_YEAR_COMPILER_M
+    symbol: MONTH_OF_YEAR_COMPILER
 
   DEFAULT_TEMPORAL_CONTEXT:
     file: ts-time-format/constants

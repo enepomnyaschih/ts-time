@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum, pad} from "ts-time/_internal";
+import {pad} from "ts-time/_internal";
 import {HOURS_PER_DAY} from "ts-time/constants";
 import LocalTime from "ts-time/LocalTime";
 import TimeField, {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, SECOND_FIELD} from "ts-time/TimeField";
+import {Dictionary} from "../../../core/main/src/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
@@ -35,7 +36,7 @@ export interface TimeCompiler extends TemporalCompiler<LocalTime> {
 
 class FieldCompiler implements TimeCompiler {
 
-	constructor(readonly char: string, private field: TimeField) {
+	constructor(private field: TimeField) {
 	}
 
 	get maxLength() {
@@ -50,9 +51,6 @@ class FieldCompiler implements TimeCompiler {
 
 class MsCompiler implements TimeCompiler {
 
-	constructor(readonly char: string) {
-	}
-
 	get maxLength() {
 		return 3;
 	}
@@ -64,7 +62,7 @@ class MsCompiler implements TimeCompiler {
 
 class NonZeroFieldCompiler implements TimeCompiler {
 
-	constructor(readonly char: string, private field: TimeField) {
+	constructor(private field: TimeField) {
 	}
 
 	get maxLength() {
@@ -79,10 +77,6 @@ class NonZeroFieldCompiler implements TimeCompiler {
 
 class AmPmCompiler implements TimeCompiler {
 
-	get char() {
-		return "a";
-	}
-
 	get maxLength() {
 		return 1;
 	}
@@ -92,25 +86,25 @@ class AmPmCompiler implements TimeCompiler {
 	}
 }
 
-export const HOUR_COMPILER: TimeCompiler = new FieldCompiler("H", HOUR_FIELD);
-export const HOUR12_COMPILER: TimeCompiler = new FieldCompiler("K", HOUR12_FIELD);
-export const MINUTE_COMPILER: TimeCompiler = new FieldCompiler("m", MINUTE_FIELD);
-export const SECOND_COMPILER: TimeCompiler = new FieldCompiler("s", SECOND_FIELD);
-export const MS_COMPILER: TimeCompiler = new MsCompiler("S");
-export const HOUR_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler("h", HOUR12_FIELD);
-export const HOUR12_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler("k", HOUR_FIELD);
+export const HOUR_COMPILER: TimeCompiler = new FieldCompiler(HOUR_FIELD);
+export const HOUR12_COMPILER: TimeCompiler = new FieldCompiler(HOUR12_FIELD);
+export const MINUTE_COMPILER: TimeCompiler = new FieldCompiler(MINUTE_FIELD);
+export const SECOND_COMPILER: TimeCompiler = new FieldCompiler(SECOND_FIELD);
+export const MS_COMPILER: TimeCompiler = new MsCompiler();
+export const HOUR_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR12_FIELD);
+export const HOUR12_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR_FIELD);
 export const AM_PM_COMPILER: TimeCompiler = new AmPmCompiler();
 
-export const TIME_COMPILERS = new Enum<TimeCompiler>([
-	HOUR_COMPILER,
-	HOUR12_COMPILER,
-	MINUTE_COMPILER,
-	SECOND_COMPILER,
-	MS_COMPILER,
-	HOUR_NZ_COMPILER,
-	HOUR12_NZ_COMPILER,
-	AM_PM_COMPILER
-], compiler => compiler.char);
+export const TIME_COMPILERS: Dictionary<TimeCompiler> = {
+	H: HOUR_COMPILER,
+	K: HOUR12_COMPILER,
+	m: MINUTE_COMPILER,
+	s: SECOND_COMPILER,
+	S: MS_COMPILER,
+	h: HOUR_NZ_COMPILER,
+	k: HOUR12_NZ_COMPILER,
+	a: AM_PM_COMPILER
+};
 
 class TimeFormatter extends TemporalFormatter<LocalTime> {
 
@@ -118,7 +112,7 @@ class TimeFormatter extends TemporalFormatter<LocalTime> {
 		return new TimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<TimeCompiler> = TIME_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<TimeCompiler> = TIME_COMPILERS) {
 		return new TimeFormatter(parsePattern(pattern, compilers));
 	}
 }

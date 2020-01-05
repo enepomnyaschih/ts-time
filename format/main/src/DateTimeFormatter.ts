@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {Enum} from "ts-time/_internal";
+import {Dictionary} from "ts-time/_internal";
 import LocalDate from "ts-time/LocalDate";
 import LocalDateTime from "ts-time/LocalDateTime";
 import LocalTime from "ts-time/LocalTime";
+import {mapDictionary} from "./_internal";
 import {DATE_COMPILERS} from "./DateFormatter";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
@@ -38,10 +39,6 @@ export interface DateTimeCompiler extends TemporalCompiler<LocalDateTime> {
 abstract class AbstractDelegateCompiler<T> implements DateTimeCompiler {
 
 	constructor(private delegated: TemporalCompiler<T>) {
-	}
-
-	get char() {
-		return this.delegated.char;
 	}
 
 	get maxLength() {
@@ -69,10 +66,10 @@ class TimeDelegateCompiler extends AbstractDelegateCompiler<LocalTime> {
 	}
 }
 
-export const DATE_TIME_COMPILERS = new Enum<DateTimeCompiler>([
-	...DATE_COMPILERS.array.map(delegated => new DateDelegateCompiler(delegated)),
-	...TIME_COMPILERS.array.map(delegated => new TimeDelegateCompiler(delegated))
-], compiler => compiler.char);
+export const DATE_TIME_COMPILERS: Dictionary<DateTimeCompiler> = {
+	...mapDictionary(DATE_COMPILERS, delegated => new DateDelegateCompiler(delegated)),
+	...mapDictionary(TIME_COMPILERS, delegated => new TimeDelegateCompiler(delegated))
+};
 
 class DateTimeFormatter extends TemporalFormatter<LocalDateTime> {
 
@@ -80,7 +77,7 @@ class DateTimeFormatter extends TemporalFormatter<LocalDateTime> {
 		return new DateTimeFormatter(components);
 	}
 
-	static ofPattern(pattern: string, compilers: Enum<DateTimeCompiler> = DATE_TIME_COMPILERS) {
+	static ofPattern(pattern: string, compilers: Dictionary<DateTimeCompiler> = DATE_TIME_COMPILERS) {
 		return new DateTimeFormatter(parsePattern(pattern, compilers));
 	}
 }
