@@ -110,6 +110,10 @@ references:
     file: ts-time-format/constants
     symbol: DEFAULT_TEMPORAL_CONTEXT
 
+  DATE_COMPILERS:
+    file: ts-time-format/DateFormatter
+    symbol: DATE_COMPILERS
+
   ZoneId:
     file: ts-time/Zone
     symbol: ZoneId
@@ -128,6 +132,14 @@ references:
   DateTimeFormat:
     label: Intl.DateTimeFormat
     href: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+
+  coreUtils:
+    file: ts-time/utils
+    label: utils
+
+  formatUtils:
+    file: ts-time-format/utils
+    label: utils
 
 includes:
   null: |
@@ -160,7 +172,7 @@ includes:
             <li>%OffsetDateTime</li>
             <li>%Period</li>
             <li>%TimeField</li>
-            <li>%utils</li>
+            <li>%coreUtils</li>
             <li>%Zone</li>
             <li>%ZonedDateTime</li>
           </ul>
@@ -170,6 +182,7 @@ includes:
           <ul class="list-unstyled">
             <li>%TemporalCompiler</li>
             <li>%TemporalFormatter</li>
+            <li>%formatUtils</li>
           </ul>
         </div>
       </div>
