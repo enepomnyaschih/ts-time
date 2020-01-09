@@ -91,8 +91,8 @@ export const HOUR12_COMPILER: TimeCompiler = new FieldCompiler(HOUR12_FIELD);
 export const MINUTE_COMPILER: TimeCompiler = new FieldCompiler(MINUTE_FIELD);
 export const SECOND_COMPILER: TimeCompiler = new FieldCompiler(SECOND_FIELD);
 export const MS_COMPILER: TimeCompiler = new MsCompiler();
-export const HOUR_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR12_FIELD);
-export const HOUR12_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR_FIELD);
+export const HOUR12_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR12_FIELD);
+export const HOUR_NZ_COMPILER: TimeCompiler = new NonZeroFieldCompiler(HOUR_FIELD);
 export const AM_PM_COMPILER: TimeCompiler = new AmPmCompiler();
 
 export const TIME_COMPILERS: Dictionary<TimeCompiler> = {
@@ -101,8 +101,8 @@ export const TIME_COMPILERS: Dictionary<TimeCompiler> = {
 	m: MINUTE_COMPILER,
 	s: SECOND_COMPILER,
 	S: MS_COMPILER,
-	h: HOUR_NZ_COMPILER,
-	k: HOUR12_NZ_COMPILER,
+	h: HOUR12_NZ_COMPILER,
+	k: HOUR_NZ_COMPILER,
 	a: AM_PM_COMPILER
 };
 

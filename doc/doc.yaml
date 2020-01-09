@@ -191,6 +191,7 @@ includes:
             <li>%DateFormatter</li>
             <li>%TemporalCompiler</li>
             <li>%TemporalFormatter</li>
+            <li>%TimeFormatter</li>
             <li>%formatUtils</li>
           </ul>
         </div>

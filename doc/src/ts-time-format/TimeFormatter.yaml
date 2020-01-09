@@ -1,0 +1,187 @@
+# MIT License
+#
+# Copyright (c) 2019 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  default:
+    kind: class
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        typevars: '%LocalTime'
+    description: |
+      Formatter of %LocalTime to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %TIME_COMPILERS for supported pattern characters. See
+      %parsePattern for general pattern writing guidelines.
+
+    staticMethods:
+      of:
+        signature: |
+          (components: %TemporalFormatComponent<%LocalTime>[]): %TimeFormatter
+        params:
+          components: Ordered array of format components.
+        returns: Formatter.
+        description: Constructs a formatter explicitly by components.
+
+      ofPattern:
+        signature: |
+          (pattern: string, compilers: Dictionary<%TimeCompiler> = %TIME_COMPILERS): %TimeFormatter
+        params:
+          pattern: Pattern string.
+          compilers: Dictionary from supported pattern characters to the respective compilers.
+        returns: Formatter.
+        description: Constructs a formatter implicitly by pattern. See %parsePattern for details.
+
+    references:
+      T:
+        file: ts-time/LocalTime
+        label: LocalTime
+
+  TimeCompiler:
+    kind: interface
+    extends:
+      - file: ts-time-format/TemporalCompiler
+        typevars: '%LocalTime'
+    description: '%TemporalCompiler for %LocalTime.'
+    references:
+      T:
+        file: ts-time/LocalTime
+        label: LocalTime
+
+  TIME_COMPILERS:
+    type: Dictionary<%TimeCompiler>
+    description: |
+      <p>Default dictionary from pattern character to the respective compiler:</p>
+      <table class="table table-striped">
+        <colgroup>
+          <col width="100">
+          <col width="400">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+        </colgroup>
+        <thead>
+          <tr><th rowspan="2">Character</th><th rowspan="2">Compiler</th><th colspan="5">Examples per length</th></tr>
+          <tr><th>1</th><th>2</th><th>3</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>H</td><td>%HOUR_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>K</td><td>%HOUR12_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>m</td><td>%MINUTE_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>s</td><td>%SECOND_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>S</td><td>%MS_COMPILER</td><td>4</td><td>48</td><td>485</td></tr>
+          <tr><td>h</td><td>%HOUR12_NZ_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>k</td><td>%HOUR_NZ_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>a</td><td>%AM_PM_COMPILER</td><td>AM</td></tr>
+        </tbody>
+      </table>
+
+  HOUR_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(time.%hour).</li>
+      <li>Writes time.%hour, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "06" for 6 o'clock.</li>
+      </ol>
+      <p>Default pattern character is "H".</p>
+    references:
+      hour:
+        file: ts-time/LocalTime
+        member: hour
+
+  HOUR12_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(time.%hour % 12). For example, writes "6" for both 6 AM and 6 PM.</li>
+      <li>Writes time.%hour % 12, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "06" for both 6 AM and 6 PM.</li>
+      </ol>
+      <p>Default pattern character is "K".</p>
+    references:
+      hour:
+        file: ts-time/LocalTime
+        member: hour
+
+  MINUTE_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(time.%minute).</li>
+      <li>Writes time.%minute, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "06" for 6 minutes.</li>
+      </ol>
+      <p>Default pattern character is "m".</p>
+    references:
+      minute:
+        file: ts-time/LocalTime
+        member: minute
+
+  SECOND_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(time.%second).</li>
+      <li>Writes time.%second, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "06" for 6 seconds.</li>
+      </ol>
+      <p>Default pattern character is "s".</p>
+    references:
+      second:
+        file: ts-time/LocalTime
+        member: second
+
+  MS_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Writes the same number of the most significant fractions of a second as the length, truncating them down. For
+      example, writes "4", "48" and "485" for 485 milliseconds and lengths 1, 2 and 3 respectively.</p>
+      <p>Default pattern character is "S".</p>
+
+  HOUR12_NZ_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>If time.%hour % 12 === 0, writes "12". Else behaves like %HOUR12_COMPILER.</p>
+      <p>Default pattern character is "h".</p>
+    references:
+      hour:
+        file: ts-time/LocalTime
+        member: hour
+
+  HOUR_NZ_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>If time.%hour === 0, writes "24". Else behaves like %HOUR_COMPILER.</p>
+      <p>Default pattern character is "k".</p>
+    references:
+      hour:
+        file: ts-time/LocalTime
+        member: hour
+
+  AM_PM_COMPILER:
+    type: '%TimeCompiler'
+    description: |
+      <p>Writes AM or PM. AM starts at 00:00:00.000 and ends at 11:59:59.999. PM starts at 12:00:00.000 and ends at
+      23:59:59.999.</p>
