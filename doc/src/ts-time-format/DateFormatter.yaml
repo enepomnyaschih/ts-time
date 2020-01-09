@@ -1,0 +1,273 @@
+# MIT License
+#
+# Copyright (c) 2019 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  default:
+    kind: class
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        typevars: '%LocalDate'
+    description: |
+      Formatter of %LocalDate to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %DATE_COMPILERS for supported pattern characters. See
+      %parsePattern for general pattern writing guidelines.
+
+    staticMethods:
+      of:
+        signature: |
+          (components: %TemporalFormatComponent<%LocalDate>[]): %DateFormatter
+        params:
+          components: Ordered array of format components.
+        returns: Formatter.
+        description: Constructs a formatter explicitly by components.
+
+      ofPattern:
+        signature: |
+          (pattern: string, compilers: Dictionary<%DateCompiler> = %DATE_COMPILERS): %DateFormatter
+        params:
+          pattern: Pattern string.
+          compilers: Dictionary from supported pattern characters to the respective compilers.
+        returns: Formatter.
+        description: Constructs a formatter implicitly by pattern. See %parsePattern for details.
+
+    references:
+      T:
+        file: ts-time/LocalDate
+        label: LocalDate
+
+  DateCompiler:
+    kind: interface
+    extends:
+      - file: ts-time-format/TemporalCompiler
+        typevars: '%LocalDate'
+    description: '%TemporalCompiler for %LocalDate.'
+    references:
+      T:
+        file: ts-time/LocalDate
+        label: LocalDate
+
+  DATE_COMPILERS:
+    type: Dictionary<%DateCompiler>
+    description: |
+      <p>Default dictionary from pattern character to the respective compiler:</p>
+      <table class="table table-striped">
+        <colgroup>
+          <col width="100">
+          <col width="400">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+        </colgroup>
+        <thead>
+          <tr><th rowspan="2">Character</th><th rowspan="2">Compiler</th><th colspan="5">Examples per length</th></tr>
+          <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>G</td><td>%ERA_COMPILER</td><td>AD</td><td>Anno Domini</td><td>A</td></tr>
+          <tr><td>u</td><td>%YEAR_COMPILER</td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+          <tr><td>y</td><td>%YEAR_OF_ERA_COMPILER</td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+          <tr><td>D</td><td>%DAY_OF_YEAR_COMPILER</td><td>5</td><td>05</td><td>005</td></tr>
+          <tr><td>M or L</td><td>%MONTH_COMPILER</td><td>2</td><td>02</td><td>Feb</td><td>February</td><td>F</td></tr>
+          <tr><td>d</td><td>%DAY_OF_MONTH_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>Q or q</td><td>%QUARTER_OF_YEAR_COMPILER</td><td>1</td><td>01</td><td>Q1</td><td>1st quarter</td></tr>
+          <tr><td>Y</td><td>%WEEK_BASED_YEAR_COMPILER</td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+          <tr><td>w</td><td>%WEEK_OF_WEEK_BASED_YEAR_COMPILER</td><td>5</td><td>05</td></tr>
+          <tr><td>E</td><td>%DAY_OF_WEEK_TEXT_COMPILER</td><td>Tue</td><td>Tuesday</td><td>T</td></tr>
+          <tr><td>e or c</td><td>%DAY_OF_WEEK_COMPILER</td><td>2</td><td>02</td><td>Tue</td><td>Tuesday</td><td>T</td></tr>
+        </tbody>
+      </table>
+
+  ERA_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes context.eraShortNames[date.%era.%value] (default to "BC", "AD")</li>
+      <li>Writes context.eraNames[date.%era.%value] (default to "Before Christ", "Anno Domini")</li>
+      <li>Writes context.eraAbbreviations[date.%era.%value] (default to "B", "A")</li>
+      </ol>
+      <p>Default pattern character is "G".</p>
+    references:
+      era:
+        file: ts-time/LocalDate
+        member: era
+      value:
+        file: ts-time/Era
+        member: value
+
+  YEAR_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%year).</li>
+      <li>Writes two lower-rank digits of date.%year. For example, writes "09" for 2009 year. Includes sign for BC, e.g. "-09" for -9 year.</li>
+      <li>Same as 1.</li>
+      <li>Same as 1.</li>
+      </ol>
+      <p>Default pattern character is "u".</p>
+    references:
+      year:
+        file: ts-time/LocalDate
+        member: year
+
+  YEAR_OF_ERA_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Same as %YEAR_COMPILER, but based on date.%yearOfEra. See %Era for year convertion rules.</p>
+      <p>Default pattern character is "y".</p>
+    references:
+      yearOfEra:
+        file: ts-time/LocalDate
+        member: yearOfEra
+
+  DAY_OF_YEAR_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%dayOfYear).<li>
+      <li>or 3. Writes date.%dayOfYear, prepending it with leading zeros if necessary to ensure 2/3 digits.
+      For example, writes "023" for 23rd of January and length 3.</li>
+      </ol>
+      <p>Default pattern character is "D".</p>
+    references:
+      dayOfYear:
+        file: ts-time/LocalDate
+        member: dayOfYear
+
+  MONTH_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%month.%value).</li>
+      <li>Writes date.%month.%value, prepending it with a leading zero if necessary to ensure 2 digits.</li>
+      For example, writes "02" for February.</li>
+      <li>Writes context.monthShortNames[date.%month.%value - 1] (default to "Jan", "Feb"...)</li>
+      <li>Writes context.monthNames[date.%month.%value - 1] (default to "January", "February"...)</li>
+      <li>Writes context.monthAbbreviations[date.%month.%value - 1] (default to "J", "F"...)</li>
+      </ol>
+      <p>Default pattern character is "M" or "L".</p>
+    references:
+      month:
+        file: ts-time/LocalDate
+        member: month
+      value:
+        file: ts-time/Month
+        member: value
+
+  DAY_OF_MONTH_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%dayOfMonth).<li>
+      <li>Writes date.%dayOfMonth, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "06" for 6th of February.</li>
+      </ol>
+      <p>Default pattern character is "d".</p>
+    references:
+      dayOfMonth:
+        file: ts-time/LocalDate
+        member: dayOfMonth
+
+  QUARTER_OF_YEAR_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%quarterOfYear).</li>
+      <li>Writes date.%quarterOfYear, prepending it with a leading zero to ensure 2 digits.
+      For example, writes "04" for 4th quarter.</li>
+      <li>Writes context.quarterShortNames[date.%quarterOfYear - 1] (default to "Q1", "Q2"...)</li>
+      <li>Writes context.quarterNames[date.%quarterOfYear - 1] (default to "1st quarter", "2nd quarter"...)</li>
+      </ol>
+      <p>Default pattern character is "Q" or "q".</p>
+    references:
+      quarterOfYear:
+        file: ts-time/LocalDate
+        member: quarterOfYear
+
+  WEEK_BASED_YEAR_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Same as %YEAR_COMPILER, but based on date.%weekBasedYear.</p>
+      <p>Default pattern character is "Y".</p>
+    references:
+      weekBasedYear:
+        file: ts-time/LocalDate
+        member: weekBasedYear
+
+  WEEK_OF_WEEK_BASED_YEAR_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%weekOfWeekBasedYear).<li>
+      <li>Writes date.%weekOfWeekBasedYear, prepending it with a leading zero if necessary to ensure 2 digits.
+      For example, writes "09" for 9th week of year.</li>
+      </ol>
+      <p>Default pattern character is "w".</p>
+    references:
+      weekOfWeekBasedYear:
+        file: ts-time/LocalDate
+        member: weekOfWeekBasedYear
+
+  DAY_OF_WEEK_TEXT_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes context.dayOfWeekShortNames[date.%dayOfWeek.%value - 1] (default to "Mon", "Tue"...)</li>
+      <li>Writes context.dayOfWeekNames[date.%dayOfWeek.%value - 1] (default to "Monday", "Tuesday"...)</li>
+      <li>Writes context.dayOfWeekAbbreviations[date.%dayOfWeek.%value - 1] (default to "M", "T")</li>
+      </ol>
+      <p>Default pattern character is "E".</p>
+    references:
+      dayOfWeek:
+        file: ts-time/LocalDate
+        member: dayOfWeek
+      value:
+        file: ts-time/DayOfWeek
+        member: value
+
+  DAY_OF_WEEK_COMPILER:
+    type: '%DateCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes String(date.%dayOfWeek.%value).</li>
+      <li>Writes date.%dayOfWeek.%value, prepending it with a leading zero to ensure 2 digits.
+      For example, writes "04" for Thursday.</li>
+      <li>or 4. or 5. Same as %DAY_OF_WEEK_TEXT_COMPILER, in the same order.</li>
+      </ol>
+      <p>Default pattern character is "e" or "c".</p>
+    references:
+      dayOfWeek:
+        file: ts-time/LocalDate
+        member: dayOfWeek
+      value:
+        file: ts-time/DayOfWeek
+        member: value

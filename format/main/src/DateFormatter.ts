@@ -102,7 +102,7 @@ export const ERA_COMPILER: DateCompiler = new TextCompiler(3, "era", date => dat
 export const YEAR_COMPILER: DateCompiler = new YearCompiler(date => date.year);
 export const YEAR_OF_ERA_COMPILER: DateCompiler = new YearCompiler(date => date.yearOfEra);
 export const DAY_OF_YEAR_COMPILER: DateCompiler = new NumberCompiler(3, date => date.dayOfYear);
-export const MONTH_OF_YEAR_COMPILER: DateCompiler = new NumberTextCompiler(5, "month", date => date.month.value, -1);
+export const MONTH_COMPILER: DateCompiler = new NumberTextCompiler(5, "month", date => date.month.value, -1);
 export const DAY_OF_MONTH_COMPILER: DateCompiler = new NumberCompiler(2, date => date.dayOfMonth);
 
 export const QUARTER_OF_YEAR_COMPILER: DateCompiler = new NumberTextCompiler(4, "quarter", date => date.quarterOfYear, -1);
@@ -117,8 +117,8 @@ export const DATE_COMPILERS: Dictionary<DateCompiler> = {
 	u: YEAR_COMPILER,
 	y: YEAR_OF_ERA_COMPILER,
 	D: DAY_OF_YEAR_COMPILER,
-	M: MONTH_OF_YEAR_COMPILER,
-	L: MONTH_OF_YEAR_COMPILER,
+	M: MONTH_COMPILER,
+	L: MONTH_COMPILER,
 	d: DAY_OF_MONTH_COMPILER,
 
 	Q: QUARTER_OF_YEAR_COMPILER,

@@ -141,6 +141,14 @@ references:
     file: ts-time-format/utils
     label: utils
 
+  parsePattern:
+    file: ts-time-format/utils
+    symbol: parsePattern
+
+  TemporalFormatComponent:
+    file: ts-time-format/TemporalFormatter
+    symbol: TemporalFormatComponent
+
 includes:
   null: |
     <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
@@ -180,6 +188,7 @@ includes:
         <div class="col-6">
           <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
           <ul class="list-unstyled">
+            <li>%DateFormatter</li>
             <li>%TemporalCompiler</li>
             <li>%TemporalFormatter</li>
             <li>%formatUtils</li>

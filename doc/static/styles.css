@@ -111,6 +111,10 @@ footer {
     font-weight: 300;
 }
 
+.doc-consumption {
+    white-space: pre-wrap;
+}
+
 @media (min-width: 992px) {
     .doc-sidebar {
         display: block;
