@@ -22,14 +22,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {pad} from "ts-time/_internal";
+import {Dictionary, pad} from "ts-time/_internal";
 import {ZoneOffset} from "ts-time/Zone";
-import {Dictionary} from "ts-time/_internal";
 import {TemporalCompiler} from "./TemporalCompiler";
 import TemporalFormatter, {TemporalFormatComponent} from "./TemporalFormatter";
 import {parsePattern} from "./utils";
 
-export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
+export interface OffsetCompiler extends TemporalCompiler<ZoneOffset> {
+}
+
+class OffsetCompilerImpl implements OffsetCompiler {
 
 	constructor(private zeroZ: boolean) {
 	}
@@ -60,9 +62,12 @@ export class OffsetCompiler implements TemporalCompiler<ZoneOffset> {
 	}
 }
 
+export const OFFSET_COMPILER: OffsetCompiler = new OffsetCompilerImpl(true);
+export const OFFSET_NZ_COMPILER: OffsetCompiler = new OffsetCompilerImpl(false);
+
 export const OFFSET_COMPILERS: Dictionary<OffsetCompiler> = {
-	X: new OffsetCompiler(true),
-	x: new OffsetCompiler(false)
+	X: OFFSET_COMPILER,
+	x: OFFSET_NZ_COMPILER
 };
 
 class OffsetFormatter extends TemporalFormatter<ZoneOffset> {

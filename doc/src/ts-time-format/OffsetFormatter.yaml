@@ -1,0 +1,110 @@
+# MIT License
+#
+# Copyright (c) 2019 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  default:
+    kind: class
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        typevars: '%ZoneOffset'
+    description: |
+      Formatter of %ZoneOffset to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %OFFSET_COMPILERS for supported pattern characters. See
+      %parsePattern for general pattern writing guidelines.
+
+    staticMethods:
+      of:
+        signature: |
+          (components: %TemporalFormatComponent<%ZoneOffset>[]): %OffsetFormatter
+        params:
+          components: Ordered array of format components.
+        returns: Formatter.
+        description: Constructs a formatter explicitly by components.
+
+      ofPattern:
+        signature: |
+          (pattern: string, compilers: Dictionary<%OffsetCompiler> = %OFFSET_COMPILERS): %OffsetFormatter
+        params:
+          pattern: Pattern string.
+          compilers: Dictionary from supported pattern characters to the respective compilers.
+        returns: Formatter.
+        description: Constructs a formatter implicitly by pattern. See %parsePattern for details.
+
+    references:
+      T:
+        file: ts-time/ZoneOffset
+        label: ZoneOffset
+
+  OffsetCompiler:
+    kind: interface
+    extends:
+      - file: ts-time-format/TemporalCompiler
+        typevars: '%ZoneOffset'
+    description: '%TemporalCompiler for %ZoneOffset.'
+    references:
+      T:
+        file: ts-time/ZoneOffset
+        label: ZoneOffset
+
+  OFFSET_COMPILERS:
+    type: Dictionary<%OffsetCompiler>
+    description: |
+      <p>Default dictionary from pattern character to the respective compiler:</p>
+      <table class="table table-striped">
+        <colgroup>
+          <col width="100">
+          <col width="400">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+          <col width="100">
+        </colgroup>
+        <thead>
+          <tr><th rowspan="2">Character</th><th rowspan="2">Compiler</th><th colspan="5">Examples per length</th></tr>
+          <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>X</td><td>%OFFSET_COMPILER</td><td>+05</td><td>+0500</td><td>+05:00</td><td>+050030</td><td>+05:00:30</td></tr>
+          <tr><td>X</td><td>%OFFSET_NZ_COMPILER</td><td>+05</td><td>+0500</td><td>+05:00</td><td>+050030</td><td>+05:00:30</td></tr>
+        </tbody>
+      </table>
+
+  OFFSET_COMPILER:
+    type: '%OffsetCompiler'
+    description: |
+      <p>For zero offset, writes "Z". Else same as %OFFSET_NZ_COMPILER.</p>
+      <p>Default pattern character is "X".</p>
+
+  OFFSET_NZ_COMPILER:
+    type: '%OffsetCompiler'
+    description: |
+      <p>Depending on length:</p>
+      <ol>
+      <li>Writes just the hour, such as "+01", unless the minute is non-zero in which case writes also the minute, such
+      as "+0130".</li>
+      <li>Writes the hour and minute, without a colon, such as "+0130".</li>
+      <li>Writes the hour and minute, with a colon, such as "+01:30".</li>
+      <li>Writes the hour and minute and optional second, without a colon, such as "+013015".</li>
+      <li>Writes the hour and minute and optional second, with a colon, such as "+01:30:15".</li>
+      </ol>
+      <p>Default pattern character is "x".</p>

@@ -1,0 +1,72 @@
+# MIT License
+#
+# Copyright (c) 2019 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  default:
+    kind: class
+    extends:
+      - file: ts-time-format/TemporalFormatter
+        typevars: '%LocalDateTime'
+    description: |
+      Formatter of %LocalDateTime to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %DATE_TIME_COMPILERS for supported pattern characters. See
+      %parsePattern for general pattern writing guidelines.
+
+    staticMethods:
+      of:
+        signature: |
+          (components: %TemporalFormatComponent<%LocalDateTime>[]): %DateTimeFormatter
+        params:
+          components: Ordered array of format components.
+        returns: Formatter.
+        description: Constructs a formatter explicitly by components.
+
+      ofPattern:
+        signature: |
+          (pattern: string, compilers: Dictionary<%DateTimeCompiler> = %DATE_TIME_COMPILERS): %DateTimeFormatter
+        params:
+          pattern: Pattern string.
+          compilers: Dictionary from supported pattern characters to the respective compilers.
+        returns: Formatter.
+        description: Constructs a formatter implicitly by pattern. See %parsePattern for details.
+
+    references:
+      T:
+        file: ts-time/LocalDateTime
+        label: LocalDateTime
+
+  DateTimeCompiler:
+    kind: interface
+    extends:
+      - file: ts-time-format/TemporalCompiler
+        typevars: '%LocalDateTime'
+    description: '%TemporalCompiler for %LocalDateTime.'
+    references:
+      T:
+        file: ts-time/LocalDateTime
+        label: LocalDateTime
+
+  DATE_TIME_COMPILERS:
+    type: Dictionary<%DateTimeCompiler>
+    description: |
+      <p>Default dictionary from pattern character to the respective compiler. Union of %DATE_COMPILERS and
+      %TIME_COMPILERS.</p>

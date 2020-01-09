@@ -114,6 +114,10 @@ references:
     file: ts-time-format/DateFormatter
     symbol: DATE_COMPILERS
 
+  TIME_COMPILERS:
+    file: ts-time-format/TimeFormatter
+    symbol: TIME_COMPILERS
+
   ZoneId:
     file: ts-time/Zone
     symbol: ZoneId
@@ -189,6 +193,8 @@ includes:
           <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
           <ul class="list-unstyled">
             <li>%DateFormatter</li>
+            <li>%DateTimeFormatter</li>
+            <li>%OffsetFormatter</li>
             <li>%TemporalCompiler</li>
             <li>%TemporalFormatter</li>
             <li>%TimeFormatter</li>
