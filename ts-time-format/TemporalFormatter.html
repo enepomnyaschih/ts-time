@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/TemporalFormatter - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/TemporalFormatter</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+<a class="nav-link" href="#default---constructor">Constructor</a>
+
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--format">format</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#TemporalFormatComponent">TemporalFormatComponent</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#TemporalFormatComponent---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#TemporalFormatComponent---description">Description</a>
+
+
+
+
+<a class="nav-link" href="#TemporalFormatComponent---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#TemporalFormatComponent--write">write</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#LiteralFormatComponent">LiteralFormatComponent</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#LiteralFormatComponent---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#LiteralFormatComponent---description">Description</a>
+
+<a class="nav-link" href="#LiteralFormatComponent---constructor">Constructor</a>
+
+
+<a class="nav-link" href="#LiteralFormatComponent---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#LiteralFormatComponent--write">write</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#CompiledFormatComponent">CompiledFormatComponent</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#CompiledFormatComponent---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#CompiledFormatComponent---description">Description</a>
+
+<a class="nav-link" href="#CompiledFormatComponent---constructor">Constructor</a>
+
+
+<a class="nav-link" href="#CompiledFormatComponent---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#CompiledFormatComponent--write">write</a></nav>
+
+
+</nav>
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/TemporalFormatter</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import TemporalFormatter, {TemporalFormatComponent, LiteralFormatComponent, CompiledFormatComponent} from "ts-time-format/TemporalFormatter";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>TemporalFormatter</b><span class="monospace">&lt;T&gt;</span></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="DateFormatter.html#default">DateFormatter</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="DateTimeFormatter.html#default">DateTimeFormatter</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="OffsetDateTimeFormatter.html#default">OffsetDateTimeFormatter</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="OffsetFormatter.html#default">OffsetFormatter</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="TimeFormatter.html#default">TimeFormatter</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="ZonedDateTimeFormatter.html#default">ZonedDateTimeFormatter</a></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">T</dt><dd class="col-lg-10 col-sm-9">Type to format.</dd>
+</dl>
+Date/time-related type string formatter. The result equals to concatenation of <a href="#TemporalFormatComponent--write" target="_parent">write</a> method call results on all
+components. You may specify components explicitly by using 'of' method of a respective subclass, or implicitly
+by using 'ofPattern' method of a respective subclass to parse a string pattern.
+
+
+
+<h4><span id="default---constructor"></span>Constructor<a class="anchorjs-link" href="#default---constructor" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<p><code>new TemporalFormatter<span class="monospace">&lt;T&gt;</span>(components: <a href="#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>&lt;<a href="#default" target="_parent">T</a>&gt;[])
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">components</dt><dd class="col-lg-10 col-sm-9">Sequence of components representing the formatter.</dd>
+</dl>
+
+
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--format"></span>format<a class="anchorjs-link" href="#default--format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: <a href="#default" target="_parent">T</a>, context?: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted string.</dd>
+</dl>
+Formats <b>value</b> to a string as concatenation of <a href="#TemporalFormatComponent--write" target="_parent">write</a> method call results on all components.
+
+</div>
+
+
+</div>
+<h3><span id="TemporalFormatComponent"></span>TemporalFormatComponent<a class="anchorjs-link" href="#TemporalFormatComponent" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="TemporalFormatComponent---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#TemporalFormatComponent---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>interface <b>TemporalFormatComponent</b><span class="monospace">&lt;T&gt;</span></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#LiteralFormatComponent">LiteralFormatComponent</a><span class="monospace">&lt;T&gt;</span></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#CompiledFormatComponent">CompiledFormatComponent</a><span class="monospace">&lt;T&gt;</span></li>
+
+</ul>
+<h4><span id="TemporalFormatComponent---description"></span>Description<a class="anchorjs-link" href="#TemporalFormatComponent---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">T</dt><dd class="col-lg-10 col-sm-9">Type to format.</dd>
+</dl>
+A single component of <b>TemporalFormatter</b>. May represent a fixed literal (<a href="#LiteralFormatComponent" target="_parent">LiteralFormatComponent</a>) or a
+value-dependent part (<a href="#CompiledFormatComponent" target="_parent">CompiledFormatComponent</a>).
+
+
+
+
+
+<h4><span id="TemporalFormatComponent---methods"></span>Methods<a class="anchorjs-link" href="#TemporalFormatComponent---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="TemporalFormatComponent--write"></span>write<a class="anchorjs-link" href="#TemporalFormatComponent--write" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: <a href="#TemporalFormatComponent" target="_parent">T</a>, context: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted part.</dd>
+</dl>
+Formats <b>value</b> to a string based on concrete implementation.
+</div>
+
+
+</div>
+<h3><span id="LiteralFormatComponent"></span>LiteralFormatComponent<a class="anchorjs-link" href="#LiteralFormatComponent" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="LiteralFormatComponent---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#LiteralFormatComponent---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>interface <a href="#TemporalFormatComponent">TemporalFormatComponent</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>class <b>LiteralFormatComponent</b><span class="monospace">&lt;T&gt;</span></li>
+
+</ul>
+<h4><span id="LiteralFormatComponent---description"></span>Description<a class="anchorjs-link" href="#LiteralFormatComponent---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">T</dt><dd class="col-lg-10 col-sm-9">Type to format.</dd>
+</dl>
+Implementation of <a href="#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a> that returns a fixed literal.
+
+
+
+<h4><span id="LiteralFormatComponent---constructor"></span>Constructor<a class="anchorjs-link" href="#LiteralFormatComponent---constructor" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<p><code>new LiteralFormatComponent<span class="monospace">&lt;T&gt;</span>(literal: string)
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">literal</dt><dd class="col-lg-10 col-sm-9">Literal to return.</dd>
+</dl>
+
+
+
+<h4><span id="LiteralFormatComponent---methods"></span>Methods<a class="anchorjs-link" href="#LiteralFormatComponent---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="LiteralFormatComponent--write"></span><i>write</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>)</span><a class="anchorjs-link" href="#LiteralFormatComponent--write" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="#LiteralFormatComponent" target="_parent">T</a>, context: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted part.</dd>
+</dl>
+Formats <b>value</b> to a string based on concrete implementation.
+</div>
+
+
+</div>
+<h3><span id="CompiledFormatComponent"></span>CompiledFormatComponent<a class="anchorjs-link" href="#CompiledFormatComponent" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="CompiledFormatComponent---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#CompiledFormatComponent---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>interface <a href="#TemporalFormatComponent">TemporalFormatComponent</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>class <b>CompiledFormatComponent</b><span class="monospace">&lt;T&gt;</span></li>
+
+</ul>
+<h4><span id="CompiledFormatComponent---description"></span>Description<a class="anchorjs-link" href="#CompiledFormatComponent---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">T</dt><dd class="col-lg-10 col-sm-9">Type to format.</dd>
+</dl>
+Implementation of <a href="#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a> that uses <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a> to compile the result.
+
+
+
+<h4><span id="CompiledFormatComponent---constructor"></span>Constructor<a class="anchorjs-link" href="#CompiledFormatComponent---constructor" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<p><code>new CompiledFormatComponent<span class="monospace">&lt;T&gt;</span>(compiler: <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>&lt;<a href="#CompiledFormatComponent" target="_parent">T</a>&gt;, length: number)
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">compiler</dt><dd class="col-lg-10 col-sm-9">Compiler to use.</dd>
+<dt class="col-lg-2 col-sm-3">length</dt><dd class="col-lg-10 col-sm-9">Length to use during compilation (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+</dl>
+
+
+
+<h4><span id="CompiledFormatComponent---methods"></span>Methods<a class="anchorjs-link" href="#CompiledFormatComponent---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="CompiledFormatComponent--write"></span><i>write</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>)</span><a class="anchorjs-link" href="#CompiledFormatComponent--write" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="#CompiledFormatComponent" target="_parent">T</a>, context: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted part.</dd>
+</dl>
+Formats <b>value</b> to a string based on concrete implementation.
+</div>
+
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><b>TemporalFormatter</b></li>
+        <li><a href="TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

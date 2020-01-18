@@ -62,8 +62,7 @@ footer {
 
 #index-dropdown {
     left: 150px;
-    padding-top: 10px;
-    width: 200px;
+    width: 400px;
 }
 
 @media (max-width: 991.99px) {
@@ -110,6 +109,10 @@ footer {
 
 .doc-index .nav .nav .nav-link {
     font-weight: 300;
+}
+
+.doc-consumption {
+    white-space: pre-wrap;
 }
 
 @media (min-width: 992px) {

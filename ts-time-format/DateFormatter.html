@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/DateFormatter - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/DateFormatter</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#default--format">format</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--ofPattern-static">ofPattern</a></nav>
+</nav>
+
+<a class="nav-link" href="#DateCompiler">DateCompiler</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#DateCompiler---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#DateCompiler---description">Description</a>
+
+
+
+<a class="nav-link" href="#DateCompiler---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#DateCompiler--maxLength">maxLength</a></nav>
+
+<a class="nav-link" href="#DateCompiler---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#DateCompiler--compile">compile</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#DATE_COMPILERS">DATE_COMPILERS</a>
+
+
+<a class="nav-link" href="#ERA_COMPILER">ERA_COMPILER</a>
+
+
+<a class="nav-link" href="#YEAR_COMPILER">YEAR_COMPILER</a>
+
+
+<a class="nav-link" href="#YEAR_OF_ERA_COMPILER">YEAR_OF_ERA_COMPILER</a>
+
+
+<a class="nav-link" href="#DAY_OF_YEAR_COMPILER">DAY_OF_YEAR_COMPILER</a>
+
+
+<a class="nav-link" href="#MONTH_COMPILER">MONTH_COMPILER</a>
+
+
+<a class="nav-link" href="#DAY_OF_MONTH_COMPILER">DAY_OF_MONTH_COMPILER</a>
+
+
+<a class="nav-link" href="#QUARTER_OF_YEAR_COMPILER">QUARTER_OF_YEAR_COMPILER</a>
+
+
+<a class="nav-link" href="#WEEK_BASED_YEAR_COMPILER">WEEK_BASED_YEAR_COMPILER</a>
+
+
+<a class="nav-link" href="#WEEK_OF_WEEK_BASED_YEAR_COMPILER">WEEK_OF_WEEK_BASED_YEAR_COMPILER</a>
+
+
+<a class="nav-link" href="#DAY_OF_WEEK_TEXT_COMPILER">DAY_OF_WEEK_TEXT_COMPILER</a>
+
+
+<a class="nav-link" href="#DAY_OF_WEEK_COMPILER">DAY_OF_WEEK_COMPILER</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/DateFormatter</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import DateFormatter, {DateCompiler, DATE_COMPILERS, ERA_COMPILER, YEAR_COMPILER, YEAR_OF_ERA_COMPILER, DAY_OF_YEAR_COMPILER, MONTH_COMPILER, DAY_OF_MONTH_COMPILER, QUARTER_OF_YEAR_COMPILER, WEEK_BASED_YEAR_COMPILER, WEEK_OF_WEEK_BASED_YEAR_COMPILER, DAY_OF_WEEK_TEXT_COMPILER, DAY_OF_WEEK_COMPILER} from "ts-time-format/DateFormatter";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="TemporalFormatter.html#default">TemporalFormatter</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>class <b>DateFormatter</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Formatter of <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a> to a string. You may initialize a formatter explicitly by using <a href="#default--of-static" target="_parent">of</a> method,
+or implicitly by using <a href="#default--ofPattern-static" target="_parent">ofPattern</a> method. See <a href="#DATE_COMPILERS" target="_parent">DATE_COMPILERS</a> for supported pattern characters. See
+<a href="utils.html#parsePattern" target="_parent">parsePattern</a> for general pattern writing guidelines.
+
+
+
+
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--format"></span><i>format</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalFormatter.html#default" target="_parent">TemporalFormatter</a>)</span><a class="anchorjs-link" href="#default--format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>, context?: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted string.</dd>
+</dl>
+Formats <b>value</b> to a string as concatenation of <a href="#TemporalFormatComponent--write" target="_parent">write</a> method call results on all components.
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(components: <a href="TemporalFormatter.html#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>&lt;<a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>&gt;[]): <b>DateFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">components</dt><dd class="col-lg-10 col-sm-9">Ordered array of format components.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter explicitly by components.
+</div>
+
+<h5><span id="default--ofPattern-static"></span>ofPattern<a class="anchorjs-link" href="#default--ofPattern-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(pattern: string, compilers: Dictionary&lt;<a href="#DateCompiler" target="_parent">DateCompiler</a>&gt; = <a href="#DATE_COMPILERS" target="_parent">DATE_COMPILERS</a>): <b>DateFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">pattern</dt><dd class="col-lg-10 col-sm-9">Pattern string.</dd>
+<dt class="col-lg-2 col-sm-3">compilers</dt><dd class="col-lg-10 col-sm-9">Dictionary from supported pattern characters to the respective compilers.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter implicitly by pattern. See <a href="utils.html#parsePattern" target="_parent">parsePattern</a> for details.
+</div>
+</div>
+<h3><span id="DateCompiler"></span>DateCompiler<a class="anchorjs-link" href="#DateCompiler" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="DateCompiler---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#DateCompiler---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>interface <a href="TemporalCompiler.html#default">TemporalCompiler</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>interface <b>DateCompiler</b></li>
+
+</ul>
+<h4><span id="DateCompiler---description"></span>Description<a class="anchorjs-link" href="#DateCompiler---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a> for <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>.
+
+
+
+<h4><span id="DateCompiler---properties"></span>Fields<a class="anchorjs-link" href="#DateCompiler---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="DateCompiler--maxLength"></span><i>maxLength</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#DateCompiler--maxLength" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly maxLength: number</code></p>
+Maximum number of sequential characters supported in a pattern.
+</div>
+
+<h4><span id="DateCompiler---methods"></span>Methods<a class="anchorjs-link" href="#DateCompiler---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="DateCompiler--compile"></span><i>compile</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#DateCompiler--compile" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>, length: number, context: any = <a href="constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">DEFAULT_TEMPORAL_CONTEXT</a>): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to compile.</dd>
+<dt class="col-lg-2 col-sm-3">length</dt><dd class="col-lg-10 col-sm-9">Number of sequential characters used in a pattern.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Compiled string.</dd>
+</dl>
+Compiles <b>value</b> to a string based on number of sequential characters specified in <b>length</b> and compiler-dependent
+<b>context</b> object which can be used, in particular, to specify language-specific textual strings.
+
+</div>
+
+
+</div>
+<h3><span id="DATE_COMPILERS"></span>DATE_COMPILERS<a class="anchorjs-link" href="#DATE_COMPILERS" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DATE_COMPILERS: Dictionary&lt;<a href="#DateCompiler" target="_parent">DateCompiler</a>&gt;</code></p>
+<p>Default dictionary from pattern character to the respective compiler:</p>
+<table class="table table-striped">
+  <colgroup>
+    <col width="100">
+    <col width="400">
+    <col width="100">
+    <col width="100">
+    <col width="100">
+    <col width="100">
+    <col width="100">
+  </colgroup>
+  <thead>
+    <tr><th rowspan="2">Character</th><th rowspan="2">Compiler</th><th colspan="5">Examples per length</th></tr>
+    <tr><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>G</td><td><a href="#ERA_COMPILER" target="_parent">ERA_COMPILER</a></td><td>AD</td><td>Anno Domini</td><td>A</td></tr>
+    <tr><td>u</td><td><a href="#YEAR_COMPILER" target="_parent">YEAR_COMPILER</a></td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+    <tr><td>y</td><td><a href="#YEAR_OF_ERA_COMPILER" target="_parent">YEAR_OF_ERA_COMPILER</a></td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+    <tr><td>D</td><td><a href="#DAY_OF_YEAR_COMPILER" target="_parent">DAY_OF_YEAR_COMPILER</a></td><td>5</td><td>05</td><td>005</td></tr>
+    <tr><td>M or L</td><td><a href="#MONTH_COMPILER" target="_parent">MONTH_COMPILER</a></td><td>2</td><td>02</td><td>Feb</td><td>February</td><td>F</td></tr>
+    <tr><td>d</td><td><a href="#DAY_OF_MONTH_COMPILER" target="_parent">DAY_OF_MONTH_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>Q or q</td><td><a href="#QUARTER_OF_YEAR_COMPILER" target="_parent">QUARTER_OF_YEAR_COMPILER</a></td><td>1</td><td>01</td><td>Q1</td><td>1st quarter</td></tr>
+    <tr><td>Y</td><td><a href="#WEEK_BASED_YEAR_COMPILER" target="_parent">WEEK_BASED_YEAR_COMPILER</a></td><td>2009</td><td>09</td><td>2009</td><td>2009</td></tr>
+    <tr><td>w</td><td><a href="#WEEK_OF_WEEK_BASED_YEAR_COMPILER" target="_parent">WEEK_OF_WEEK_BASED_YEAR_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>E</td><td><a href="#DAY_OF_WEEK_TEXT_COMPILER" target="_parent">DAY_OF_WEEK_TEXT_COMPILER</a></td><td>Tue</td><td>Tuesday</td><td>T</td></tr>
+    <tr><td>e or c</td><td><a href="#DAY_OF_WEEK_COMPILER" target="_parent">DAY_OF_WEEK_COMPILER</a></td><td>2</td><td>02</td><td>Tue</td><td>Tuesday</td><td>T</td></tr>
+  </tbody>
+</table>
+
+</div>
+<h3><span id="ERA_COMPILER"></span>ERA_COMPILER<a class="anchorjs-link" href="#ERA_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>ERA_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes context.eraShortNames[date.<a href="../ts-time/LocalDate.html#default--era" target="_parent">era</a>.<a href="../ts-time/Era.html#default--value" target="_parent">value</a>] (default to "BC", "AD")</li>
+<li>Writes context.eraNames[date.<a href="../ts-time/LocalDate.html#default--era" target="_parent">era</a>.<a href="../ts-time/Era.html#default--value" target="_parent">value</a>] (default to "Before Christ", "Anno Domini")</li>
+<li>Writes context.eraAbbreviations[date.<a href="../ts-time/LocalDate.html#default--era" target="_parent">era</a>.<a href="../ts-time/Era.html#default--value" target="_parent">value</a>] (default to "B", "A")</li>
+</ol>
+<p>Default pattern character is "G".</p>
+
+</div>
+<h3><span id="YEAR_COMPILER"></span>YEAR_COMPILER<a class="anchorjs-link" href="#YEAR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>YEAR_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--year" target="_parent">year</a>).</li>
+<li>Writes two lower-rank digits of date.<a href="../ts-time/LocalDate.html#default--year" target="_parent">year</a>. For example, writes "09" for 2009 year. Includes sign for BC, e.g. "-09" for -9 year.</li>
+<li>Same as 1.</li>
+<li>Same as 1.</li>
+</ol>
+<p>Default pattern character is "u".</p>
+
+</div>
+<h3><span id="YEAR_OF_ERA_COMPILER"></span>YEAR_OF_ERA_COMPILER<a class="anchorjs-link" href="#YEAR_OF_ERA_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>YEAR_OF_ERA_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Same as <a href="#YEAR_COMPILER" target="_parent">YEAR_COMPILER</a>, but based on date.<a href="../ts-time/LocalDate.html#default--yearOfEra" target="_parent">yearOfEra</a>. See <a href="../ts-time/Era.html" target="_parent">Era</a> for year convertion rules.</p>
+<p>Default pattern character is "y".</p>
+
+</div>
+<h3><span id="DAY_OF_YEAR_COMPILER"></span>DAY_OF_YEAR_COMPILER<a class="anchorjs-link" href="#DAY_OF_YEAR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_OF_YEAR_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--dayOfYear" target="_parent">dayOfYear</a>).</li>
+<li>or 3. Writes date.<a href="../ts-time/LocalDate.html#default--dayOfYear" target="_parent">dayOfYear</a>, prepending it with leading zeros if necessary to ensure 2/3 digits.
+For example, writes "023" for 23rd of January and length 3.</li>
+</ol>
+<p>Default pattern character is "D".</p>
+
+</div>
+<h3><span id="MONTH_COMPILER"></span>MONTH_COMPILER<a class="anchorjs-link" href="#MONTH_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MONTH_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--month" target="_parent">month</a>.<a href="../ts-time/Month.html#default--value" target="_parent">value</a>).</li>
+<li>Writes date.<a href="../ts-time/LocalDate.html#default--month" target="_parent">month</a>.<a href="../ts-time/Month.html#default--value" target="_parent">value</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "02" for February.</li>
+<li>Writes context.monthShortNames[date.<a href="../ts-time/LocalDate.html#default--month" target="_parent">month</a>.<a href="../ts-time/Month.html#default--value" target="_parent">value</a> - 1] (default to "Jan", "Feb"...)</li>
+<li>Writes context.monthNames[date.<a href="../ts-time/LocalDate.html#default--month" target="_parent">month</a>.<a href="../ts-time/Month.html#default--value" target="_parent">value</a> - 1] (default to "January", "February"...)</li>
+<li>Writes context.monthAbbreviations[date.<a href="../ts-time/LocalDate.html#default--month" target="_parent">month</a>.<a href="../ts-time/Month.html#default--value" target="_parent">value</a> - 1] (default to "J", "F"...)</li>
+</ol>
+<p>Default pattern character is "M" or "L".</p>
+
+</div>
+<h3><span id="DAY_OF_MONTH_COMPILER"></span>DAY_OF_MONTH_COMPILER<a class="anchorjs-link" href="#DAY_OF_MONTH_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_OF_MONTH_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--dayOfMonth" target="_parent">dayOfMonth</a>).</li>
+<li>Writes date.<a href="../ts-time/LocalDate.html#default--dayOfMonth" target="_parent">dayOfMonth</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "06" for 6th of February.</li>
+</ol>
+<p>Default pattern character is "d".</p>
+
+</div>
+<h3><span id="QUARTER_OF_YEAR_COMPILER"></span>QUARTER_OF_YEAR_COMPILER<a class="anchorjs-link" href="#QUARTER_OF_YEAR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>QUARTER_OF_YEAR_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--quarterOfYear" target="_parent">quarterOfYear</a>).</li>
+<li>Writes date.<a href="../ts-time/LocalDate.html#default--quarterOfYear" target="_parent">quarterOfYear</a>, prepending it with a leading zero to ensure 2 digits.
+For example, writes "04" for 4th quarter.</li>
+<li>Writes context.quarterShortNames[date.<a href="../ts-time/LocalDate.html#default--quarterOfYear" target="_parent">quarterOfYear</a> - 1] (default to "Q1", "Q2"...)</li>
+<li>Writes context.quarterNames[date.<a href="../ts-time/LocalDate.html#default--quarterOfYear" target="_parent">quarterOfYear</a> - 1] (default to "1st quarter", "2nd quarter"...)</li>
+</ol>
+<p>Default pattern character is "Q" or "q".</p>
+
+</div>
+<h3><span id="WEEK_BASED_YEAR_COMPILER"></span>WEEK_BASED_YEAR_COMPILER<a class="anchorjs-link" href="#WEEK_BASED_YEAR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>WEEK_BASED_YEAR_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Same as <a href="#YEAR_COMPILER" target="_parent">YEAR_COMPILER</a>, but based on date.<a href="../ts-time/LocalDate.html#default--weekBasedYear" target="_parent">weekBasedYear</a>.</p>
+<p>Default pattern character is "Y".</p>
+
+</div>
+<h3><span id="WEEK_OF_WEEK_BASED_YEAR_COMPILER"></span>WEEK_OF_WEEK_BASED_YEAR_COMPILER<a class="anchorjs-link" href="#WEEK_OF_WEEK_BASED_YEAR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>WEEK_OF_WEEK_BASED_YEAR_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--weekOfWeekBasedYear" target="_parent">weekOfWeekBasedYear</a>).</li>
+<li>Writes date.<a href="../ts-time/LocalDate.html#default--weekOfWeekBasedYear" target="_parent">weekOfWeekBasedYear</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "09" for 9th week of year.</li>
+</ol>
+<p>Default pattern character is "w".</p>
+
+</div>
+<h3><span id="DAY_OF_WEEK_TEXT_COMPILER"></span>DAY_OF_WEEK_TEXT_COMPILER<a class="anchorjs-link" href="#DAY_OF_WEEK_TEXT_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_OF_WEEK_TEXT_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes context.dayOfWeekShortNames[date.<a href="../ts-time/LocalDate.html#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="../ts-time/DayOfWeek.html#default--value" target="_parent">value</a> - 1] (default to "Mon", "Tue"...)</li>
+<li>Writes context.dayOfWeekNames[date.<a href="../ts-time/LocalDate.html#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="../ts-time/DayOfWeek.html#default--value" target="_parent">value</a> - 1] (default to "Monday", "Tuesday"...)</li>
+<li>Writes context.dayOfWeekAbbreviations[date.<a href="../ts-time/LocalDate.html#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="../ts-time/DayOfWeek.html#default--value" target="_parent">value</a> - 1] (default to "M", "T")</li>
+</ol>
+<p>Default pattern character is "E".</p>
+
+</div>
+<h3><span id="DAY_OF_WEEK_COMPILER"></span>DAY_OF_WEEK_COMPILER<a class="anchorjs-link" href="#DAY_OF_WEEK_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>DAY_OF_WEEK_COMPILER: <a href="#DateCompiler" target="_parent">DateCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(date.<a href="../ts-time/LocalDate.html#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="../ts-time/DayOfWeek.html#default--value" target="_parent">value</a>).</li>
+<li>Writes date.<a href="../ts-time/LocalDate.html#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="../ts-time/DayOfWeek.html#default--value" target="_parent">value</a>, prepending it with a leading zero to ensure 2 digits.
+For example, writes "04" for Thursday.</li>
+<li>or 4. or 5. Same as <a href="#DAY_OF_WEEK_TEXT_COMPILER" target="_parent">DAY_OF_WEEK_TEXT_COMPILER</a>'s 1, 2 and 3 respectively.</li>
+</ol>
+<p>Default pattern character is "e" or "c".</p>
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><b>DateFormatter</b></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><a href="TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><a href="TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

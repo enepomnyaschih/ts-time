@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/OffsetDateTimeFormatter - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/OffsetDateTimeFormatter</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#default--format">format</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--ofPattern-static">ofPattern</a></nav>
+</nav>
+
+<a class="nav-link" href="#OffsetDateTimeCompiler">OffsetDateTimeCompiler</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#OffsetDateTimeCompiler---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#OffsetDateTimeCompiler---description">Description</a>
+
+
+
+<a class="nav-link" href="#OffsetDateTimeCompiler---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#OffsetDateTimeCompiler--maxLength">maxLength</a></nav>
+
+<a class="nav-link" href="#OffsetDateTimeCompiler---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#OffsetDateTimeCompiler--compile">compile</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#OFFSET_DATE_TIME_COMPILERS">OFFSET_DATE_TIME_COMPILERS</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/OffsetDateTimeFormatter</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import OffsetDateTimeFormatter, {OffsetDateTimeCompiler, OFFSET_DATE_TIME_COMPILERS} from "ts-time-format/OffsetDateTimeFormatter";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="TemporalFormatter.html#default">TemporalFormatter</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>class <b>OffsetDateTimeFormatter</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Formatter of <a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a> to a string. You may initialize a formatter explicitly by using <a href="#default--of-static" target="_parent">of</a> method,
+or implicitly by using <a href="#default--ofPattern-static" target="_parent">ofPattern</a> method. See <a href="#OFFSET_DATE_TIME_COMPILERS" target="_parent">OFFSET_DATE_TIME_COMPILERS</a> for supported pattern characters. See
+<a href="utils.html#parsePattern" target="_parent">parsePattern</a> for general pattern writing guidelines.
+
+
+
+
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--format"></span><i>format</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalFormatter.html#default" target="_parent">TemporalFormatter</a>)</span><a class="anchorjs-link" href="#default--format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a>, context?: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted string.</dd>
+</dl>
+Formats <b>value</b> to a string as concatenation of <a href="#TemporalFormatComponent--write" target="_parent">write</a> method call results on all components.
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(components: <a href="TemporalFormatter.html#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>&lt;<a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a>&gt;[]): <b>OffsetDateTimeFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">components</dt><dd class="col-lg-10 col-sm-9">Ordered array of format components.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter explicitly by components.
+</div>
+
+<h5><span id="default--ofPattern-static"></span>ofPattern<a class="anchorjs-link" href="#default--ofPattern-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(pattern: string, compilers: Dictionary&lt;<a href="#OffsetDateTimeCompiler" target="_parent">OffsetDateTimeCompiler</a>&gt; = <a href="#OFFSET_DATE_TIME_COMPILERS" target="_parent">OFFSET_DATE_TIME_COMPILERS</a>): <b>OffsetDateTimeFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">pattern</dt><dd class="col-lg-10 col-sm-9">Pattern string.</dd>
+<dt class="col-lg-2 col-sm-3">compilers</dt><dd class="col-lg-10 col-sm-9">Dictionary from supported pattern characters to the respective compilers.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter implicitly by pattern. See <a href="utils.html#parsePattern" target="_parent">parsePattern</a> for details.
+</div>
+</div>
+<h3><span id="OffsetDateTimeCompiler"></span>OffsetDateTimeCompiler<a class="anchorjs-link" href="#OffsetDateTimeCompiler" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="OffsetDateTimeCompiler---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#OffsetDateTimeCompiler---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>interface <a href="TemporalCompiler.html#default">TemporalCompiler</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>interface <b>OffsetDateTimeCompiler</b></li>
+
+</ul>
+<h4><span id="OffsetDateTimeCompiler---description"></span>Description<a class="anchorjs-link" href="#OffsetDateTimeCompiler---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a> for <a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a>.
+
+
+
+<h4><span id="OffsetDateTimeCompiler---properties"></span>Fields<a class="anchorjs-link" href="#OffsetDateTimeCompiler---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="OffsetDateTimeCompiler--maxLength"></span><i>maxLength</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#OffsetDateTimeCompiler--maxLength" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly maxLength: number</code></p>
+Maximum number of sequential characters supported in a pattern.
+</div>
+
+<h4><span id="OffsetDateTimeCompiler---methods"></span>Methods<a class="anchorjs-link" href="#OffsetDateTimeCompiler---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="OffsetDateTimeCompiler--compile"></span><i>compile</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#OffsetDateTimeCompiler--compile" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a>, length: number, context: any = <a href="constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">DEFAULT_TEMPORAL_CONTEXT</a>): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to compile.</dd>
+<dt class="col-lg-2 col-sm-3">length</dt><dd class="col-lg-10 col-sm-9">Number of sequential characters used in a pattern.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Compiled string.</dd>
+</dl>
+Compiles <b>value</b> to a string based on number of sequential characters specified in <b>length</b> and compiler-dependent
+<b>context</b> object which can be used, in particular, to specify language-specific textual strings.
+
+</div>
+
+
+</div>
+<h3><span id="OFFSET_DATE_TIME_COMPILERS"></span>OFFSET_DATE_TIME_COMPILERS<a class="anchorjs-link" href="#OFFSET_DATE_TIME_COMPILERS" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>OFFSET_DATE_TIME_COMPILERS: Dictionary&lt;<a href="#OffsetDateTimeCompiler" target="_parent">OffsetDateTimeCompiler</a>&gt;</code></p>
+<p>Default dictionary from pattern character to the respective compiler. Union of interface-compatible adapters
+around <a href="DateFormatter.html#DATE_COMPILERS" target="_parent">DATE_COMPILERS</a>, <a href="TimeFormatter.html#TIME_COMPILERS" target="_parent">TIME_COMPILERS</a> and <a href="OffsetFormatter.html#OFFSET_COMPILERS" target="_parent">OFFSET_COMPILERS</a>.</p>
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><b>OffsetDateTimeFormatter</b></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><a href="TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><a href="TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

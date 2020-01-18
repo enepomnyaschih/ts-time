@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/TemporalCompiler - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/TemporalCompiler</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+<a class="nav-link" href="#default---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--maxLength">maxLength</a></nav>
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--compile">compile</a></nav>
+
+
+</nav>
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/TemporalCompiler</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import TemporalCompiler from "ts-time-format/TemporalCompiler";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>interface <b>TemporalCompiler</b><span class="monospace">&lt;T&gt;</span></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="DateFormatter.html#DateCompiler">DateCompiler</a></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="DateTimeFormatter.html#DateTimeCompiler">DateTimeCompiler</a></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="OffsetDateTimeFormatter.html#OffsetDateTimeCompiler">OffsetDateTimeCompiler</a></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="OffsetFormatter.html#OffsetCompiler">OffsetCompiler</a></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="TimeFormatter.html#TimeCompiler">TimeCompiler</a></li>
+
+<li><span style="margin-left: 2em"></span>interface <a href="ZonedDateTimeFormatter.html#ZonedDateTimeCompiler">ZonedDateTimeCompiler</a></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">T</dt><dd class="col-lg-10 col-sm-9">Type to compile.</dd>
+</dl>
+<p>Interface of date/time-related type string compiler. Compiler defines a way to format a single component of a
+pattern defined as a sequence of same text characters. For example, "dd" sequence calls:</p>
+<pre>
+<a href="DateFormatter.html#DAY_OF_MONTH_COMPILER" target="_parent">DAY_OF_MONTH_COMPILER</a>.<a href="#default--compile" target="_parent">compile</a>(date, 2);</pre>
+<p>Some character sequences write textual language-dependent strings. To handle such cases, context should be
+passed to the compiler:</p>
+<pre>
+const context = {
+    monthShortNames: [&quot;Jan&quot;, &quot;Feb&quot;, &quot;Mar&quot;, &quot;Apr&quot;, &quot;May&quot;, &quot;Jun&quot;, &quot;Jul&quot;, &quot;Aug&quot;, &quot;Sep&quot;, &quot;Oct&quot;, &quot;Nov&quot;, &quot;Dec&quot;]
+};
+<a href="DateFormatter.html#MONTH_COMPILER" target="_parent">MONTH_COMPILER</a>.<a href="#default--compile" target="_parent">compile</a>(date, 3, context); // writes short name of a month, same as &quot;MMM&quot; sequence</pre>
+<p>If no context is passed, <a href="constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">DEFAULT_TEMPORAL_CONTEXT</a> representing English localization is being used.</p>
+
+
+
+
+<h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--maxLength"></span>maxLength<a class="anchorjs-link" href="#default--maxLength" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly maxLength: number</code></p>
+Maximum number of sequential characters supported in a pattern.
+</div>
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--compile"></span>compile<a class="anchorjs-link" href="#default--compile" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(value: <a href="#default" target="_parent">T</a>, length: number, context: any = <a href="constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">DEFAULT_TEMPORAL_CONTEXT</a>): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to compile.</dd>
+<dt class="col-lg-2 col-sm-3">length</dt><dd class="col-lg-10 col-sm-9">Number of sequential characters used in a pattern.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Compiled string.</dd>
+</dl>
+Compiles <b>value</b> to a string based on number of sequential characters specified in <b>length</b> and compiler-dependent
+<b>context</b> object which can be used, in particular, to specify language-specific textual strings.
+
+</div>
+
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><b>TemporalCompiler</b></li>
+        <li><a href="TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><a href="TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

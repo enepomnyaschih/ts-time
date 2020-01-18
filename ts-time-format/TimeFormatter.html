@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/TimeFormatter - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/TimeFormatter</a>
+						
+<a class="nav-link" href="#default">Default export</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#default---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#default---description">Description</a>
+
+
+
+
+<a class="nav-link" href="#default---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#default--format">format</a></nav>
+
+
+<a class="nav-link" href="#default---staticMethods">Static methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--of-static">of</a>
+<a class="nav-link" href="#default--ofPattern-static">ofPattern</a></nav>
+</nav>
+
+<a class="nav-link" href="#TimeCompiler">TimeCompiler</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#TimeCompiler---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#TimeCompiler---description">Description</a>
+
+
+
+<a class="nav-link" href="#TimeCompiler---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#TimeCompiler--maxLength">maxLength</a></nav>
+
+<a class="nav-link" href="#TimeCompiler---methods">Methods</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link font-italic" href="#TimeCompiler--compile">compile</a></nav>
+
+
+</nav>
+
+<a class="nav-link" href="#TIME_COMPILERS">TIME_COMPILERS</a>
+
+
+<a class="nav-link" href="#HOUR_COMPILER">HOUR_COMPILER</a>
+
+
+<a class="nav-link" href="#HOUR12_COMPILER">HOUR12_COMPILER</a>
+
+
+<a class="nav-link" href="#MINUTE_COMPILER">MINUTE_COMPILER</a>
+
+
+<a class="nav-link" href="#SECOND_COMPILER">SECOND_COMPILER</a>
+
+
+<a class="nav-link" href="#MS_COMPILER">MS_COMPILER</a>
+
+
+<a class="nav-link" href="#HOUR12_NZ_COMPILER">HOUR12_NZ_COMPILER</a>
+
+
+<a class="nav-link" href="#HOUR_NZ_COMPILER">HOUR_NZ_COMPILER</a>
+
+
+<a class="nav-link" href="#AM_PM_COMPILER">AM_PM_COMPILER</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/TimeFormatter</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import TimeFormatter, {TimeCompiler, TIME_COMPILERS, HOUR_COMPILER, HOUR12_COMPILER, MINUTE_COMPILER, SECOND_COMPILER, MS_COMPILER, HOUR12_NZ_COMPILER, HOUR_NZ_COMPILER, AM_PM_COMPILER} from "ts-time-format/TimeFormatter";</pre>
+						
+<h3><span id="default"></span>Default export<a class="anchorjs-link" href="#default" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="default---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#default---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="TemporalFormatter.html#default">TemporalFormatter</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>class <b>TimeFormatter</b></li>
+
+</ul>
+<h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Formatter of <a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a> to a string. You may initialize a formatter explicitly by using <a href="#default--of-static" target="_parent">of</a> method,
+or implicitly by using <a href="#default--ofPattern-static" target="_parent">ofPattern</a> method. See <a href="#TIME_COMPILERS" target="_parent">TIME_COMPILERS</a> for supported pattern characters. See
+<a href="utils.html#parsePattern" target="_parent">parsePattern</a> for general pattern writing guidelines.
+
+
+
+
+
+<h4><span id="default---methods"></span>Methods<a class="anchorjs-link" href="#default---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--format"></span><i>format</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalFormatter.html#default" target="_parent">TemporalFormatter</a>)</span><a class="anchorjs-link" href="#default--format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a>, context?: any): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to format.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object (see <a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>).</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatted string.</dd>
+</dl>
+Formats <b>value</b> to a string as concatenation of <a href="#TemporalFormatComponent--write" target="_parent">write</a> method call results on all components.
+
+</div>
+
+
+<h4><span id="default---staticMethods"></span>Static methods<a class="anchorjs-link" href="#default---staticMethods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(components: <a href="TemporalFormatter.html#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>&lt;<a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a>&gt;[]): <b>TimeFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">components</dt><dd class="col-lg-10 col-sm-9">Ordered array of format components.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter explicitly by components.
+</div>
+
+<h5><span id="default--ofPattern-static"></span>ofPattern<a class="anchorjs-link" href="#default--ofPattern-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>(pattern: string, compilers: Dictionary&lt;<a href="#TimeCompiler" target="_parent">TimeCompiler</a>&gt; = <a href="#TIME_COMPILERS" target="_parent">TIME_COMPILERS</a>): <b>TimeFormatter</b>
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">pattern</dt><dd class="col-lg-10 col-sm-9">Pattern string.</dd>
+<dt class="col-lg-2 col-sm-3">compilers</dt><dd class="col-lg-10 col-sm-9">Dictionary from supported pattern characters to the respective compilers.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Formatter.</dd>
+</dl>
+Constructs a formatter implicitly by pattern. See <a href="utils.html#parsePattern" target="_parent">parsePattern</a> for details.
+</div>
+</div>
+<h3><span id="TimeCompiler"></span>TimeCompiler<a class="anchorjs-link" href="#TimeCompiler" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="TimeCompiler---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#TimeCompiler---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>interface <a href="TemporalCompiler.html#default">TemporalCompiler</a><span class="monospace">&lt;T&gt;</span></li>
+<li><span style="margin-left: 2em"></span>interface <b>TimeCompiler</b></li>
+
+</ul>
+<h4><span id="TimeCompiler---description"></span>Description<a class="anchorjs-link" href="#TimeCompiler---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a> for <a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a>.
+
+
+
+<h4><span id="TimeCompiler---properties"></span>Fields<a class="anchorjs-link" href="#TimeCompiler---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="TimeCompiler--maxLength"></span><i>maxLength</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#TimeCompiler--maxLength" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly maxLength: number</code></p>
+Maximum number of sequential characters supported in a pattern.
+</div>
+
+<h4><span id="TimeCompiler---methods"></span>Methods<a class="anchorjs-link" href="#TimeCompiler---methods" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="TimeCompiler--compile"></span><i>compile</i> <span class="doc-inherit-mark">(inherited from <a href="TemporalCompiler.html#default" target="_parent">TemporalCompiler</a>)</span><a class="anchorjs-link" href="#TimeCompiler--compile" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>(value: <a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a>, length: number, context: any = <a href="constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">DEFAULT_TEMPORAL_CONTEXT</a>): string
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Value to compile.</dd>
+<dt class="col-lg-2 col-sm-3">length</dt><dd class="col-lg-10 col-sm-9">Number of sequential characters used in a pattern.</dd>
+<dt class="col-lg-2 col-sm-3">context</dt><dd class="col-lg-10 col-sm-9">Context object.</dd>
+<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">Compiled string.</dd>
+</dl>
+Compiles <b>value</b> to a string based on number of sequential characters specified in <b>length</b> and compiler-dependent
+<b>context</b> object which can be used, in particular, to specify language-specific textual strings.
+
+</div>
+
+
+</div>
+<h3><span id="TIME_COMPILERS"></span>TIME_COMPILERS<a class="anchorjs-link" href="#TIME_COMPILERS" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>TIME_COMPILERS: Dictionary&lt;<a href="#TimeCompiler" target="_parent">TimeCompiler</a>&gt;</code></p>
+<p>Default dictionary from pattern character to the respective compiler:</p>
+<table class="table table-striped">
+  <colgroup>
+    <col width="100">
+    <col width="400">
+    <col width="100">
+    <col width="100">
+    <col width="100">
+  </colgroup>
+  <thead>
+    <tr><th rowspan="2">Character</th><th rowspan="2">Compiler</th><th colspan="5">Examples per length</th></tr>
+    <tr><th>1</th><th>2</th><th>3</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>H</td><td><a href="#HOUR_COMPILER" target="_parent">HOUR_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>K</td><td><a href="#HOUR12_COMPILER" target="_parent">HOUR12_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>m</td><td><a href="#MINUTE_COMPILER" target="_parent">MINUTE_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>s</td><td><a href="#SECOND_COMPILER" target="_parent">SECOND_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>S</td><td><a href="#MS_COMPILER" target="_parent">MS_COMPILER</a></td><td>4</td><td>48</td><td>485</td></tr>
+    <tr><td>h</td><td><a href="#HOUR12_NZ_COMPILER" target="_parent">HOUR12_NZ_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>k</td><td><a href="#HOUR_NZ_COMPILER" target="_parent">HOUR_NZ_COMPILER</a></td><td>5</td><td>05</td></tr>
+    <tr><td>a</td><td><a href="#AM_PM_COMPILER" target="_parent">AM_PM_COMPILER</a></td><td>AM</td></tr>
+  </tbody>
+</table>
+
+</div>
+<h3><span id="HOUR_COMPILER"></span>HOUR_COMPILER<a class="anchorjs-link" href="#HOUR_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>HOUR_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a>).</li>
+<li>Writes time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "06" for 6 o'clock.</li>
+</ol>
+<p>Default pattern character is "H".</p>
+
+</div>
+<h3><span id="HOUR12_COMPILER"></span>HOUR12_COMPILER<a class="anchorjs-link" href="#HOUR12_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>HOUR12_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a> % 12). For example, writes "6" for both 6 AM and 6 PM.</li>
+<li>Writes time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a> % 12, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "06" for both 6 AM and 6 PM.</li>
+</ol>
+<p>Default pattern character is "K".</p>
+
+</div>
+<h3><span id="MINUTE_COMPILER"></span>MINUTE_COMPILER<a class="anchorjs-link" href="#MINUTE_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MINUTE_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(time.<a href="../ts-time/LocalTime.html#default--minute" target="_parent">minute</a>).</li>
+<li>Writes time.<a href="../ts-time/LocalTime.html#default--minute" target="_parent">minute</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "06" for 6 minutes.</li>
+</ol>
+<p>Default pattern character is "m".</p>
+
+</div>
+<h3><span id="SECOND_COMPILER"></span>SECOND_COMPILER<a class="anchorjs-link" href="#SECOND_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>SECOND_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Depending on length:</p>
+<ol>
+<li>Writes String(time.<a href="../ts-time/LocalTime.html#default--second" target="_parent">second</a>).</li>
+<li>Writes time.<a href="../ts-time/LocalTime.html#default--second" target="_parent">second</a>, prepending it with a leading zero if necessary to ensure 2 digits.
+For example, writes "06" for 6 seconds.</li>
+</ol>
+<p>Default pattern character is "s".</p>
+
+</div>
+<h3><span id="MS_COMPILER"></span>MS_COMPILER<a class="anchorjs-link" href="#MS_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>MS_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Writes the same number of the most significant fractions of a second as the length, truncating them down. For
+example, writes "4", "48" and "485" for 485 milliseconds and lengths 1, 2 and 3 respectively.</p>
+<p>Default pattern character is "S".</p>
+
+</div>
+<h3><span id="HOUR12_NZ_COMPILER"></span>HOUR12_NZ_COMPILER<a class="anchorjs-link" href="#HOUR12_NZ_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>HOUR12_NZ_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>If time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a> % 12 === 0, writes "12". Else behaves like <a href="#HOUR12_COMPILER" target="_parent">HOUR12_COMPILER</a>.</p>
+<p>Default pattern character is "h".</p>
+
+</div>
+<h3><span id="HOUR_NZ_COMPILER"></span>HOUR_NZ_COMPILER<a class="anchorjs-link" href="#HOUR_NZ_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>HOUR_NZ_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>If time.<a href="../ts-time/LocalTime.html#default--hour" target="_parent">hour</a> === 0, writes "24". Else behaves like <a href="#HOUR_COMPILER" target="_parent">HOUR_COMPILER</a>.</p>
+<p>Default pattern character is "k".</p>
+
+</div>
+<h3><span id="AM_PM_COMPILER"></span>AM_PM_COMPILER<a class="anchorjs-link" href="#AM_PM_COMPILER" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>AM_PM_COMPILER: <a href="#TimeCompiler" target="_parent">TimeCompiler</a></code></p>
+<p>Writes AM or PM. AM starts at 00:00:00.000 and ends at 11:59:59.999. PM starts at 12:00:00.000 and ends at
+23:59:59.999.</p>
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><a href="TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><b>TimeFormatter</b></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

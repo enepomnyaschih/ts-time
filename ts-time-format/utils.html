@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time-format/utils - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time-format/utils</a>
+						
+<a class="nav-link" href="#parsePattern">parsePattern</a>
+
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time-format/utils</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import * as utils from "ts-time-format/utils";</pre>
+						
+<h3><span id="parsePattern"></span>parsePattern<a class="anchorjs-link" href="#parsePattern" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+<p><code>(pattern: string, compilers: Dictionary&lt;<a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a>&lt;T&gt;&gt;): <a href="TemporalFormatter.html#TemporalFormatComponent" target="_parent">TemporalFormatComponent</a>&lt;T&gt;[]
+</code></p>
+<dl class="row">
+<dt class="col-lg-2 col-sm-3">pattern</dt><dd class="col-lg-10 col-sm-9">Pattern string.</dd>
+<dt class="col-lg-2 col-sm-3">compilers</dt><dd class="col-lg-10 col-sm-9">Dictionary from supported pattern characters to the respective compilers.</dd>
+</dl>
+<p>Patterns are based on a simple sequence of characters. Pattern can be used to create formatters
+using their ofPattern static methods. For example:</p>
+<pre>
+const date = <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>.<a href="../ts-time/LocalDate.html#default--of-static" target="_parent">of</a>(2011, <a href="../ts-time/Month.html#DECEMBER" target="_parent">DECEMBER</a>, 3),
+    formatter = <a href="DateFormatter.html" target="_parent">DateFormatter</a>.<a href="DateFormatter.html#default--ofPattern-static" target="_parent">ofPattern</a>(&quot;d MMM uuuu&quot;);
+// equivalent to:
+//  formatter = <a href="DateFormatter.html" target="_parent">DateFormatter</a>.<a href="DateFormatter.html#default--of-static" target="_parent">of</a>(<b>parsePattern</b>(&quot;d MMM uuuu&quot;, <a href="DateFormatter.html#DATE_COMPILERS" target="_parent">DATE_COMPILERS</a>));
+expect(formatter.<a href="TemporalFormatter.html#default--format" target="_parent">format</a>(date)).equal(&quot;3 Dec 2011&quot;);</pre>
+<p>A formatter created from a pattern can be used as many times as necessary, it is immutable.</p>
+<p>Only characters defined in compilers are reserved as pattern characters. The count of consequent pattern
+characters determines the format. To write them as non-pattern characters, surround them with single quote '
+symbols. All other characters don't need to be surrounded. To write a single quote, use two subsequent single
+quotes:</p>
+<pre>
+const date = <a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a>.<a href="../ts-time/LocalDate.html#default--of-static" target="_parent">of</a>(2011, <a href="../ts-time/Month.html#DECEMBER" target="_parent">DECEMBER</a>, 3),
+    formatter = <a href="DateFormatter.html" target="_parent">DateFormatter</a>.<a href="DateFormatter.html#default--ofPattern-static" target="_parent">ofPattern</a>(&quot;'Mud'dr''&quot;);
+expect(formatter.<a href="TemporalFormatter.html#default--format" target="_parent">format</a>(date)).equal(&quot;Mud3r'&quot;);</pre>
+
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time/DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="../ts-time/Duration.html" target="_parent">Duration</a></li>
+        <li><a href="../ts-time/Era.html" target="_parent">Era</a></li>
+        <li><a href="../ts-time/Instant.html" target="_parent">Instant</a></li>
+        <li><a href="../ts-time/LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="../ts-time/LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="../ts-time/LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="../ts-time/Month.html" target="_parent">Month</a></li>
+        <li><a href="../ts-time/OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="../ts-time/Period.html" target="_parent">Period</a></li>
+        <li><a href="../ts-time/TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="../ts-time/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time/Zone.html" target="_parent">Zone</a></li>
+        <li><a href="../ts-time/ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><a href="TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><a href="TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><b>utils</b></li>
+        <li><a href="ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>
