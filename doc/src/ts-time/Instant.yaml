@@ -148,7 +148,7 @@ symbols:
         returns: '%Instant representation.'
         references:
           parseZoned:
-            file: ZonedDateTime
+            file: ts-time/ZonedDateTime
             member: parse
             static: true
             label: parse
