@@ -1,6 +1,6 @@
 {
   "name": "ts-time-format",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Extension of ts-time library with date/time formatting capabilities",
   "homepage": "http://enepomnyaschih.github.io/ts-time",
   "bugs": {
@@ -16,6 +16,6 @@
     "url": "https://github.com/enepomnyaschih/ts-time.git"
   },
   "peerDependencies": {
-    "ts-time": ">=0.1.3"
+    "ts-time": ">=0.1.4"
   }
 }
