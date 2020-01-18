@@ -3,4 +3,3 @@ $CACHE_FILE$
 .cache
 .idea
 node_modules
-dist
