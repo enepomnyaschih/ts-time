@@ -25,16 +25,16 @@ symbols:
     kind: class
     extends:
       - file: ts-time-format/TemporalFormatter
-        typevars: '%LocalDateTime'
+        typevars: '%OffsetDateTime'
     description: |
-      Formatter of %LocalDateTime to a string. You may initialize a formatter explicitly by using %of method,
-      or implicitly by using %ofPattern method. See %DATE_TIME_COMPILERS for supported pattern characters. See
+      Formatter of %OffsetDateTime to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %OFFSET_DATE_TIME_COMPILERS for supported pattern characters. See
       %parsePattern for general pattern writing guidelines.
 
     staticMethods:
       of:
         signature: |
-          (components: %TemporalFormatComponent<%LocalDateTime>[]): %DateTimeFormatter
+          (components: %TemporalFormatComponent<%OffsetDateTime>[]): %OffsetDateTimeFormatter
         params:
           components: Ordered array of format components.
         returns: Formatter.
@@ -42,7 +42,7 @@ symbols:
 
       ofPattern:
         signature: |
-          (pattern: string, compilers: Dictionary<%DateTimeCompiler> = %DATE_TIME_COMPILERS): %DateTimeFormatter
+          (pattern: string, compilers: Dictionary<%OffsetDateTimeCompiler> = %OFFSET_DATE_TIME_COMPILERS): %OffsetDateTimeFormatter
         params:
           pattern: Pattern string.
           compilers: Dictionary from supported pattern characters to the respective compilers.
@@ -51,22 +51,22 @@ symbols:
 
     references:
       T:
-        file: ts-time/LocalDateTime
-        label: LocalDateTime
+        file: ts-time/OffsetDateTime
+        label: OffsetDateTime
 
-  DateTimeCompiler:
+  OffsetDateTimeCompiler:
     kind: interface
     extends:
       - file: ts-time-format/TemporalCompiler
-        typevars: '%LocalDateTime'
-    description: '%TemporalCompiler for %LocalDateTime.'
+        typevars: '%OffsetDateTime'
+    description: '%TemporalCompiler for %OffsetDateTime.'
     references:
       T:
-        file: ts-time/LocalDateTime
-        label: LocalDateTime
+        file: ts-time/OffsetDateTime
+        label: OffsetDateTime
 
-  DATE_TIME_COMPILERS:
-    type: Dictionary<%DateTimeCompiler>
+  OFFSET_DATE_TIME_COMPILERS:
+    type: Dictionary<%OffsetDateTimeCompiler>
     description: |
       <p>Default dictionary from pattern character to the respective compiler. Union of interface-compatible adapters
-      around %DATE_COMPILERS and %TIME_COMPILERS.</p>
+      around %DATE_COMPILERS, %TIME_COMPILERS and %OFFSET_COMPILERS.</p>

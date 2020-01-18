@@ -32,13 +32,14 @@ description: |
       adjusting its API to the best practices of TypeScript and JavaScript. It uses %DateTimeFormat
       API to detect time zone offsets, providing efficient and reliable time zone support in your client code.</p>
     </div>
+    <h3>ts-time</h3>
     <p>ts-time is available as <a href="https://www.npmjs.com/package/ts-time" target="_blank">npm package</a>.</p>
     <pre>
     npm install --save ts-time
     </pre>
     <p>ts-time features:</p>
     <ul>
-      <li>Various useful %constants.</li>
+      <li>Various useful %coreConstants.</li>
       <li>%Instant class representing an instant of time without time zone relation.</li>
       <li>%LocalDate, %LocalTime, %LocalDateTime classes representing dates and times without time zone relation.</li>
       <li>%ZoneId, %ZoneOffset classes representing time zones and time zone offsets.</li>
@@ -69,6 +70,7 @@ description: |
     Methods starting with "of" create new instances by parameters. Methods starting with "from" convert the structures
     to each other. Methods "parse" create new instances by strings, that are always compatible with "toString".</p>
     <hr>
+    <h3>ts-time-format</h3>
     <p><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a> is an extension of
     ts-time library with date/time formatting capabilities.</p>
     <pre>

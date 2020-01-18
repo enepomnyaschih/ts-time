@@ -147,7 +147,7 @@ symbols:
     description: |
       <p>Depending on length:</p>
       <ol>
-      <li>Writes String(date.%dayOfYear).<li>
+      <li>Writes String(date.%dayOfYear).</li>
       <li>or 3. Writes date.%dayOfYear, prepending it with leading zeros if necessary to ensure 2/3 digits.
       For example, writes "023" for 23rd of January and length 3.</li>
       </ol>
@@ -163,7 +163,7 @@ symbols:
       <p>Depending on length:</p>
       <ol>
       <li>Writes String(date.%month.%value).</li>
-      <li>Writes date.%month.%value, prepending it with a leading zero if necessary to ensure 2 digits.</li>
+      <li>Writes date.%month.%value, prepending it with a leading zero if necessary to ensure 2 digits.
       For example, writes "02" for February.</li>
       <li>Writes context.monthShortNames[date.%month.%value - 1] (default to "Jan", "Feb"...)</li>
       <li>Writes context.monthNames[date.%month.%value - 1] (default to "January", "February"...)</li>
@@ -183,7 +183,7 @@ symbols:
     description: |
       <p>Depending on length:</p>
       <ol>
-      <li>Writes String(date.%dayOfMonth).<li>
+      <li>Writes String(date.%dayOfMonth).</li>
       <li>Writes date.%dayOfMonth, prepending it with a leading zero if necessary to ensure 2 digits.
       For example, writes "06" for 6th of February.</li>
       </ol>
@@ -225,7 +225,7 @@ symbols:
     description: |
       <p>Depending on length:</p>
       <ol>
-      <li>Writes String(date.%weekOfWeekBasedYear).<li>
+      <li>Writes String(date.%weekOfWeekBasedYear).</li>
       <li>Writes date.%weekOfWeekBasedYear, prepending it with a leading zero if necessary to ensure 2 digits.
       For example, writes "09" for 9th week of year.</li>
       </ol>
@@ -261,7 +261,7 @@ symbols:
       <li>Writes String(date.%dayOfWeek.%value).</li>
       <li>Writes date.%dayOfWeek.%value, prepending it with a leading zero to ensure 2 digits.
       For example, writes "04" for Thursday.</li>
-      <li>or 4. or 5. Same as %DAY_OF_WEEK_TEXT_COMPILER, in the same order.</li>
+      <li>or 4. or 5. Same as %DAY_OF_WEEK_TEXT_COMPILER's 1, 2 and 3 respectively.</li>
       </ol>
       <p>Default pattern character is "e" or "c".</p>
     references:

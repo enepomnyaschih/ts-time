@@ -58,8 +58,8 @@ class OffsetDelegateCompiler implements OffsetDateTimeCompiler {
 		return this.delegated.maxLength;
 	}
 
-	compile(value: OffsetDateTime, length: number): string {
-		return this.delegated.compile(value.offset, length);
+	compile(value: OffsetDateTime, length: number, context: any): string {
+		return this.delegated.compile(value.offset, length, context);
 	}
 }
 

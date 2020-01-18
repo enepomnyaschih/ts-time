@@ -37,7 +37,7 @@ symbols:
       const context = {
           monthShortNames: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
       };
-      %MONTH_OF_YEAR_COMPILER.%compile(date, 3, context); // writes short name of a month, same as "MMM" sequence
+      %MONTH_COMPILER.%compile(date, 3, context); // writes short name of a month, same as "MMM" sequence
       </pre>
       <p>If no context is passed, %DEFAULT_TEMPORAL_CONTEXT representing English localization is being used.</p>
 
@@ -50,7 +50,7 @@ symbols:
     methods:
       compile:
         signature: |
-          (value: %T, length: number, context: any): string
+          (value: %T, length: number, context: any = %DEFAULT_TEMPORAL_CONTEXT): string
         params:
           value: Value to compile.
           length: Number of sequential characters used in a pattern.

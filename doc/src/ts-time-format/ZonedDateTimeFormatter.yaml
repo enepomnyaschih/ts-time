@@ -25,16 +25,16 @@ symbols:
     kind: class
     extends:
       - file: ts-time-format/TemporalFormatter
-        typevars: '%LocalDateTime'
+        typevars: '%ZonedDateTime'
     description: |
-      Formatter of %LocalDateTime to a string. You may initialize a formatter explicitly by using %of method,
-      or implicitly by using %ofPattern method. See %DATE_TIME_COMPILERS for supported pattern characters. See
+      Formatter of %ZonedDateTime to a string. You may initialize a formatter explicitly by using %of method,
+      or implicitly by using %ofPattern method. See %ZONED_DATE_TIME_COMPILERS for supported pattern characters. See
       %parsePattern for general pattern writing guidelines.
 
     staticMethods:
       of:
         signature: |
-          (components: %TemporalFormatComponent<%LocalDateTime>[]): %DateTimeFormatter
+          (components: %TemporalFormatComponent<%ZonedDateTime>[]): %ZonedDateTimeFormatter
         params:
           components: Ordered array of format components.
         returns: Formatter.
@@ -42,7 +42,7 @@ symbols:
 
       ofPattern:
         signature: |
-          (pattern: string, compilers: Dictionary<%DateTimeCompiler> = %DATE_TIME_COMPILERS): %DateTimeFormatter
+          (pattern: string, compilers: Dictionary<%ZonedDateTimeCompiler> = %ZONED_DATE_TIME_COMPILERS): %ZonedDateTimeFormatter
         params:
           pattern: Pattern string.
           compilers: Dictionary from supported pattern characters to the respective compilers.
@@ -51,22 +51,32 @@ symbols:
 
     references:
       T:
-        file: ts-time/LocalDateTime
-        label: LocalDateTime
+        file: ts-time/ZonedDateTime
+        label: ZonedDateTime
 
-  DateTimeCompiler:
+  ZonedDateTimeCompiler:
     kind: interface
     extends:
       - file: ts-time-format/TemporalCompiler
-        typevars: '%LocalDateTime'
-    description: '%TemporalCompiler for %LocalDateTime.'
+        typevars: '%ZonedDateTime'
+    description: '%TemporalCompiler for %ZonedDateTime.'
     references:
       T:
-        file: ts-time/LocalDateTime
-        label: LocalDateTime
+        file: ts-time/ZonedDateTime
+        label: ZonedDateTime
 
-  DATE_TIME_COMPILERS:
-    type: Dictionary<%DateTimeCompiler>
+  ZONED_DATE_TIME_COMPILERS:
+    type: Dictionary<%ZonedDateTimeCompiler>
     description: |
       <p>Default dictionary from pattern character to the respective compiler. Union of interface-compatible adapters
-      around %DATE_COMPILERS and %TIME_COMPILERS.</p>
+      around %DATE_COMPILERS, %TIME_COMPILERS and %OFFSET_COMPILERS, plus %ZONE_ID_COMPILER.</p>
+
+  ZONE_ID_COMPILER:
+    type: '%ZonedDateTimeCompiler'
+    description: |
+      <p>Writes zonedDateTime.%zone. Only length of 1 is supported.</p>
+      <p>Default pattern character is "V".</p>
+    references:
+      zone:
+        file: ts-time/ZonedDateTime
+        member: zone

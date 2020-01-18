@@ -102,9 +102,9 @@ references:
     file: ts-time-format/DateFormatter
     symbol: DAY_OF_MONTH_COMPILER
 
-  MONTH_OF_YEAR_COMPILER:
+  MONTH_COMPILER:
     file: ts-time-format/DateFormatter
-    symbol: MONTH_OF_YEAR_COMPILER
+    symbol: MONTH_COMPILER
 
   DEFAULT_TEMPORAL_CONTEXT:
     file: ts-time-format/constants
@@ -117,6 +117,14 @@ references:
   TIME_COMPILERS:
     file: ts-time-format/TimeFormatter
     symbol: TIME_COMPILERS
+
+  DATE_TIME_COMPILERS:
+    file: ts-time-format/DateTimeFormatter
+    symbol: DATE_TIME_COMPILERS
+
+  OFFSET_COMPILERS:
+    file: ts-time-format/OffsetFormatter
+    symbol: OFFSET_COMPILERS
 
   ZoneId:
     file: ts-time/Zone
@@ -136,6 +144,14 @@ references:
   DateTimeFormat:
     label: Intl.DateTimeFormat
     href: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+
+  coreConstants:
+    file: ts-time/constants
+    label: constants
+
+  formatConstants:
+    file: ts-time-format/constants
+    label: constants
 
   coreUtils:
     file: ts-time/utils
@@ -172,7 +188,7 @@ includes:
         <div class="col-6">
           <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
           <ul class="list-unstyled">
-            <li>%constants</li>
+            <li>%coreConstants</li>
             <li>%DayOfWeek</li>
             <li>%Duration</li>
             <li>%Era</li>
@@ -192,13 +208,16 @@ includes:
         <div class="col-6">
           <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
           <ul class="list-unstyled">
+            <li>%formatConstants</li>
             <li>%DateFormatter</li>
             <li>%DateTimeFormatter</li>
+            <li>%OffsetDateTimeFormatter</li>
             <li>%OffsetFormatter</li>
             <li>%TemporalCompiler</li>
             <li>%TemporalFormatter</li>
             <li>%TimeFormatter</li>
             <li>%formatUtils</li>
+            <li>%ZonedDateTimeFormatter</li>
           </ul>
         </div>
       </div>

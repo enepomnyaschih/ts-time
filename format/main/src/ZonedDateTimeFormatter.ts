@@ -57,8 +57,8 @@ class OffsetDelegateCompiler implements ZonedDateTimeCompiler {
 		return this.delegated.maxLength;
 	}
 
-	compile(value: ZonedDateTime, length: number): string {
-		return this.delegated.compile(value.offset, length);
+	compile(value: ZonedDateTime, length: number, context: any): string {
+		return this.delegated.compile(value.offset, length, context);
 	}
 }
 
