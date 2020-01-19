@@ -49,6 +49,8 @@ describe("Instant", () => {
 	it("should construct from a string", () => {
 		expect(Instant.parse("2019-09-10T01:02:03.004Z").epochMs).equal(Date.UTC(2019, 8, 10, 1, 2, 3, 4));
 		expect(Instant.parse("2019-09-10T01:02:03.004-3").epochMs).equal(Date.UTC(2019, 8, 10, 4, 2, 3, 4));
+		expect(Instant.parse("2019-09-10T01:02:03.4Z").epochMs).equal(Date.UTC(2019, 8, 10, 1, 2, 3, 400));
+		expect(Instant.parse("2019-09-10T01:02:03.4567Z").epochMs).equal(Date.UTC(2019, 8, 10, 1, 2, 3, 456));
 	});
 
 	it("should throw an error by invalid string", () => {

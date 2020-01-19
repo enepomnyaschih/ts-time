@@ -55,6 +55,8 @@ describe("LocalTime", () => {
 		expect(LocalTime.parse("18:30:15.225").totalMs).equal(66615225);
 		expect(LocalTime.parse("18:30:15").totalMs).equal(66615000);
 		expect(LocalTime.parse("18:30").totalMs).equal(66600000);
+		expect(LocalTime.parse("18:30:15.4").totalMs).equal(66615400);
+		expect(LocalTime.parse("18:30:15.456").totalMs).equal(66615456);
 	});
 
 	it("should throw an error by invalid string", () => {

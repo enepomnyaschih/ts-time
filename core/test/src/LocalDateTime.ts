@@ -310,8 +310,10 @@ describe("LocalDateTime", () => {
 			.equal(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15).nativeUtc.getTime());
 		expect(LocalDateTime.parse("2019-07-05T18:30:15.225").nativeUtc.getTime())
 			.equal(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225).nativeUtc.getTime());
+		expect(LocalDateTime.parse("2019-07-05T18:30:15.4567").nativeUtc.getTime())
+			.equal(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 456).nativeUtc.getTime());
 		expect(LocalDateTime.parse("2019-7-5T8:3:5.16").nativeUtc.getTime())
-			.equal(LocalDateTime.ofComponents(2019, JULY, 5, 8, 3, 5, 16).nativeUtc.getTime());
+			.equal(LocalDateTime.ofComponents(2019, JULY, 5, 8, 3, 5, 160).nativeUtc.getTime());
 	});
 
 	it("should throw an error by invalid string", () => {

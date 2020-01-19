@@ -306,6 +306,10 @@ describe("ZonedDateTime", () => {
 			.equal(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, DECEMBER, 5, 18, 30, 15), berlin).native.getTime());
 		expect(ZonedDateTime.parse("2019-07-05T18:30:15.225+02:00[Europe/Berlin]").native.getTime())
 			.equal(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), berlin).native.getTime());
+		expect(ZonedDateTime.parse("2019-07-05T18:30:15.4+02:00[Europe/Berlin]").native.getTime())
+			.equal(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 400), berlin).native.getTime());
+		expect(ZonedDateTime.parse("2019-07-05T18:30:15.4567+02:00[Europe/Berlin]").native.getTime())
+			.equal(ZonedDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 456), berlin).native.getTime());
 	});
 
 	it("should throw an error by invalid string", () => {

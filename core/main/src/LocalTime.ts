@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, mod, pad} from "./_internal";
+import {compareByNumber, equalBy, mod, pad, parseMs} from "./_internal";
 import {
 	HOURS_PER_DAY,
 	MINUTES_PER_HOUR,
@@ -90,8 +90,6 @@ class LocalTime {
 		return duration.ms !== 0 ? LocalTime.ofTotalMs(this.totalMs - duration.ms) : this;
 	}
 
-	// TODO: until(time: LocalTime): Duration
-
 	withHour(hour: number) {
 		return LocalTime.of(hour, this.minute, this.second, this.ms);
 	}
@@ -150,7 +148,7 @@ class LocalTime {
 		const hour = +matches[1],
 			minute = +matches[2],
 			second = +matches[3] || 0,
-			ms = +matches[4] || 0;
+			ms = parseMs(matches[4]);
 		if (isNaN(hour) || isNaN(minute) || isNaN(second) || isNaN(ms) || hour >= HOURS_PER_DAY
 			|| minute >= MINUTES_PER_HOUR || second >= SECONDS_PER_MINUTE || ms >= MS_PER_SECOND) {
 			throw new Error("Invalid time format.");

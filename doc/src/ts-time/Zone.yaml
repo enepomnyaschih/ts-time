@@ -211,3 +211,7 @@ symbols:
   UTC:
     type: '%ZoneOffset'
     description: UTC time zone having a constant 0 offset.
+
+  LOCAL_ZONE_ID:
+    type: '%ZoneId'
+    description: Local browser/system time zone.

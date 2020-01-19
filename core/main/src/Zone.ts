@@ -29,8 +29,7 @@ import LocalDateTime from "./LocalDateTime";
 import OffsetDateTime from "./OffsetDateTime";
 import {DAY_PERIOD} from "./Period";
 
-// TODO: Auto-detect local time zone
-// TODO: List all available time zones
+// TODO: List all available time zones if possible
 export abstract class ZoneId {
 
 	protected constructor(readonly id: string) {
@@ -132,7 +131,6 @@ export class ZoneOffset extends FixedOffsetZone {
 		return this;
 	}
 
-	// TODO: Rename to ofId, add of(hours, minutes, seconds).
 	static of(id: string): ZoneOffset {
 		return id != null ? ZoneOffset.ofTotalSeconds(parseOffset(id)) : null;
 	}
@@ -254,7 +252,17 @@ function getCached(id: string, supplier: () => ZoneId): ZoneId {
 	return supplied;
 }
 
+function getLocal() {
+	try {
+		return ZoneId.of(Intl.DateTimeFormat().resolvedOptions().timeZone);
+	} catch (e) {
+		console.warn("Unable to detect local browser/system time zone. Using UTC as a fallback option.");
+		return UTC;
+	}
+}
+
 const offsetCache: Dictionary<ZoneOffset> = {}; // from totalSeconds
 const zoneCache: Dictionary<ZoneId> = {}; // from id
 
 export const UTC = ZoneOffset.of("Z");
+export const LOCAL_ZONE_ID = getLocal();

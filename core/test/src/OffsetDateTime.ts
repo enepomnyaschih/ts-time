@@ -284,6 +284,10 @@ describe("OffsetDateTime", () => {
 			.equal(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15), offset).native.getTime());
 		expect(OffsetDateTime.parse("2019-07-05T18:30:15.225+03:00").native.getTime())
 			.equal(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), offset).native.getTime());
+		expect(OffsetDateTime.parse("2019-07-05T18:30:15.4+03:00").native.getTime())
+			.equal(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 400), offset).native.getTime());
+		expect(OffsetDateTime.parse("2019-07-05T18:30:15.4567+03:00").native.getTime())
+			.equal(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 456), offset).native.getTime());
 	});
 
 	it("should throw an error by invalid string", () => {

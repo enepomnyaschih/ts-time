@@ -87,3 +87,14 @@ export function utc(year: number, month: number, dayOfMonth: number, hour: numbe
 	}
 	return date;
 }
+
+export function parseMs(ms: string) {
+	if (!ms) {
+		return 0;
+	}
+	ms = ms.substr(0, 3);
+	while (ms.length < 3) {
+		ms += "0";
+	}
+	return +ms;
+}
