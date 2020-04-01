@@ -4,7 +4,8 @@
   "description": "TypeScript/JavaScript library imitating Java Time API",
   "homepage": "http://enepomnyaschih.github.io/ts-time",
   "bugs": {
-    "url": "https://github.com/enepomnyaschih/ts-time/issues"
+    "url": "https://github.com/enepomnyaschih/ts-time/issues",
+    "email": "jwidgetproject@gmail.com"
   },
   "license": "MIT",
   "author": {
