@@ -26,6 +26,7 @@ import {expect} from "chai";
 import Instant from "ts-time/Instant";
 import LocalDateTime from "ts-time/LocalDateTime";
 import {MARCH, NOVEMBER, OCTOBER} from "ts-time/Month";
+import {isTimeZoneSupport} from "ts-time/utils";
 import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("ZoneOffset", () => {
@@ -186,7 +187,7 @@ describe("ZoneId", () => {
 		expect(gmtm3.id).equal("GMT-03:00");
 	});
 
-	it("should have specified id if named", () => {
+	isTimeZoneSupport() && it("should have specified id if named", () => {
 		expect(omsk.id).equal("Asia/Omsk");
 		expect(berlin.id).equal("Europe/Berlin");
 		expect(newYork.id).equal("America/New_York");
@@ -201,19 +202,19 @@ describe("ZoneId", () => {
 		expect(gmtm3.offsetAtInstant(winterInstant)).equal(ZoneOffset.of("-3"));
 	});
 
-	it("should return winter offset by instant", () => {
+	isTimeZoneSupport() && it("should return winter offset by instant", () => {
 		expect(omsk.offsetAtInstant(winterInstant)).equal(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtInstant(winterInstant)).equal(ZoneOffset.of("+1"));
 		expect(newYork.offsetAtInstant(winterInstant)).equal(ZoneOffset.of("-5"));
 	});
 
-	it("should return summer offset by instant", () => {
+	isTimeZoneSupport() && it("should return summer offset by instant", () => {
 		expect(omsk.offsetAtInstant(summerInstant)).equal(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtInstant(summerInstant)).equal(ZoneOffset.of("+2"));
 		expect(newYork.offsetAtInstant(summerInstant)).equal(ZoneOffset.of("-4"));
 	});
 
-	it("should return edge offset by instant", () => {
+	isTimeZoneSupport() && it("should return edge offset by instant", () => {
 		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 0, 59)))).equal(ZoneOffset.of("+1"));
 		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 1, 0)))).equal(ZoneOffset.of("+2"));
 		expect(berlin.offsetAtInstant(Instant.ofEpochMs(Date.UTC(2019, 2, 31, 1, 1)))).equal(ZoneOffset.of("+2"));
@@ -238,19 +239,19 @@ describe("ZoneId", () => {
 		expect(gmtm3.offsetAtLocalDateTime(winterDateTime)).equal(ZoneOffset.of("-3"));
 	});
 
-	it("should return winter offset by local date/time", () => {
+	isTimeZoneSupport() && it("should return winter offset by local date/time", () => {
 		expect(omsk.offsetAtLocalDateTime(winterDateTime)).equal(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtLocalDateTime(winterDateTime)).equal(ZoneOffset.of("+1"));
 		expect(newYork.offsetAtLocalDateTime(winterDateTime)).equal(ZoneOffset.of("-5"));
 	});
 
-	it("should return summer offset by local date/time", () => {
+	isTimeZoneSupport() && it("should return summer offset by local date/time", () => {
 		expect(omsk.offsetAtLocalDateTime(summerDateTime)).equal(ZoneOffset.of("+6"));
 		expect(berlin.offsetAtLocalDateTime(summerDateTime)).equal(ZoneOffset.of("+2"));
 		expect(newYork.offsetAtLocalDateTime(summerDateTime)).equal(ZoneOffset.of("-4"));
 	});
 
-	it("should prefer earlier offset by local date/time", () => {
+	isTimeZoneSupport() && it("should prefer earlier offset by local date/time", () => {
 		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 2, 0))).equal(ZoneOffset.of("+1"));
 		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 2, 30))).equal(ZoneOffset.of("+1")); // gap
 		expect(berlin.offsetAtLocalDateTime(LocalDateTime.ofComponents(2019, MARCH, 31, 3, 0))).equal(ZoneOffset.of("+2"));
@@ -272,18 +273,20 @@ describe("ZoneId", () => {
 		expect(ZoneId.of(null)).equal(null);
 	});
 
-	it("should throw error by invalid ID", () => {
+	isTimeZoneSupport() && it("should throw error by invalid ID", () => {
 		expect(() => ZoneId.of("abc")).throw("Invalid time zone ID.");
 	});
 
-	it("should convert itself to a string", () => {
+	it("should convert itself to an offset string", () => {
 		expect(utcp3.toString()).equal("UTC+03:00");
 		expect(utcm3.toString()).equal("UTC-03:00");
 		expect(utp3.toString()).equal("UT+03:00");
 		expect(utm3.toString()).equal("UT-03:00");
 		expect(gmtp3.toString()).equal("GMT+03:00");
 		expect(gmtm3.toString()).equal("GMT-03:00");
+	});
 
+	isTimeZoneSupport() && it("should convert itself to a name string", () => {
 		expect(omsk.toString()).equal("Asia/Omsk");
 		expect(berlin.toString()).equal("Europe/Berlin");
 		expect(newYork.toString()).equal("America/New_York");

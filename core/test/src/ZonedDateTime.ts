@@ -59,10 +59,11 @@ import Period, {
 	WEEK_PERIOD,
 	YEAR_PERIOD
 } from "ts-time/Period";
+import {isTimeZoneSupport} from "ts-time/utils";
 import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 import ZonedDateTime from "ts-time/ZonedDateTime";
 
-describe("ZonedDateTime", () => {
+isTimeZoneSupport() && describe("ZonedDateTime", () => {
 	const moscow = ZoneId.of("Europe/Moscow"),
 		berlin = ZoneId.of("Europe/Berlin"),
 		newYork = ZoneId.of("America/New_York"),

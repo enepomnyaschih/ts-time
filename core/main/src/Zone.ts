@@ -28,6 +28,7 @@ import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
 import OffsetDateTime from "./OffsetDateTime";
 import {DAY_PERIOD} from "./Period";
+import {requireTimeZoneSupport} from "./utils";
 
 // TODO: List all available time zones if possible
 export abstract class ZoneId {
@@ -70,7 +71,7 @@ export abstract class ZoneId {
 		}
 		return getCached(id, () => {
 			try {
-				return new CustomZone(id).test();
+				return requireTimeZoneSupport() ? new CustomZone(id).test() : new FixedOffsetZoneConstructor(id, 0);
 			} catch (e) {
 				return null;
 			}

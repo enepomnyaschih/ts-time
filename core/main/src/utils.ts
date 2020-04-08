@@ -25,3 +25,21 @@ SOFTWARE.
 export function isLeapYear(year: number) {
 	return (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0);
 }
+
+export function isTimeZoneSupport() {
+	return !(<any>window.document).documentMode;
+}
+
+export function requireTimeZoneSupport() {
+	if (isTimeZoneSupport()) {
+		return true;
+	}
+	if (supportWarning) {
+		supportWarning = false;
+		console.warn("This browser doesn't support IANA time zone library. "
+			+ "All local time zones will have constant zero offset.")
+	}
+	return false;
+}
+
+let supportWarning = true;

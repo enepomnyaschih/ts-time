@@ -58,6 +58,7 @@ import Period, {
 	WEEK_PERIOD,
 	YEAR_PERIOD
 } from "ts-time/Period";
+import {isTimeZoneSupport} from "ts-time/utils";
 import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("LocalDateTime", () => {
@@ -776,6 +777,8 @@ describe("LocalDateTime", () => {
 
 	it("should create proper zoned date/time (atZone)", () => {
 		expect(dateTime.atZone(UTC).toString()).equal("2019-07-05T18:30:15.225Z");
-		expect(dateTime.atZone(ZoneId.of("Europe/Berlin")).toString()).equal("2019-07-05T18:30:15.225+02:00[Europe/Berlin]");
+		expect(dateTime.atZone(ZoneId.of("Europe/Berlin")).toString())
+			.equal(isTimeZoneSupport() ? "2019-07-05T18:30:15.225+02:00[Europe/Berlin]"
+				: "2019-07-05T18:30:15.225Z[Europe/Berlin]");
 	});
 });

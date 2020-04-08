@@ -12,7 +12,7 @@
     <script class="mocha-init">
         sourceMapSupport.install();
         mocha.setup('bdd');
-        mocha.checkLeaks();
+        //mocha.checkLeaks(); // causes an error in IE 11 for some reason
     </script>
     <script src="tests.ts"></script>
     <script class="mocha-exec">

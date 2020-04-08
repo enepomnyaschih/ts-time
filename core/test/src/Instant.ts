@@ -34,6 +34,7 @@ import Duration, {
 	WEEK_DURATION
 } from "ts-time/Duration";
 import Instant from "ts-time/Instant";
+import {isTimeZoneSupport} from "ts-time/utils";
 import {ZoneId, ZoneOffset} from "ts-time/Zone";
 
 describe("Instant", () => {
@@ -67,7 +68,8 @@ describe("Instant", () => {
 
 	it("should return zoned date/time", () => {
 		expect(instant.atZone(ZoneId.of("Europe/Berlin")).toString())
-			.equal("2019-09-10T12:00:00.000+02:00[Europe/Berlin]");
+			.equal(isTimeZoneSupport() ? "2019-09-10T12:00:00.000+02:00[Europe/Berlin]"
+				: "2019-09-10T10:00:00.000Z[Europe/Berlin]");
 	});
 
 	it("should compare itself", () => {
