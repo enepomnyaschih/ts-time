@@ -157,8 +157,8 @@ class CustomZone extends ZoneId {
 
 	constructor(id: string) {
 		super(id);
-		this.formatter = new Intl.DateTimeFormat("en-US", {
-			hour12: false,
+		this.formatter = new Intl.DateTimeFormat("en-US", <any>{ // TSC doesn't recognize "hourCycle" option
+			hourCycle: "h23",
 			timeZone: id,
 			year: "numeric",
 			month: "2-digit",

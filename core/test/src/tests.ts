@@ -1,3 +1,5 @@
+import "core-js/stable";
+
 import "./DayOfWeek";
 import "./Duration";
 import "./Instant";
