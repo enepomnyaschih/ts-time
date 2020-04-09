@@ -27,7 +27,7 @@ export function isLeapYear(year: number) {
 }
 
 export function isTimeZoneSupport() {
-	return !(<any>window.document).documentMode;
+	return typeof window === "undefined" || !(<any>window.document).documentMode;
 }
 
 export function requireTimeZoneSupport() {
