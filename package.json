@@ -7,6 +7,7 @@
     "@babel/preset-env": "~7.9.5",
     "@types/chai": "~4.2.7",
     "@types/mocha": "~5.2.7",
+    "@types/node": "~13.13.2",
     "chai": "~4.2.0",
     "core-js": "~3.6.4",
     "mocha": "~6.2.2",
@@ -15,6 +16,8 @@
     "ts-node": "~8.5.4",
     "ts-time": "file:core/main/dist",
     "ts-time-format": "file:format/main/dist",
-    "typescript": "~3.5.3"
+    "typescript": "~3.8.3",
+    "yaml-doc": "file:../../docgen/git/main/dist",
+    "yaml-doc-bootstrap": "file:../../docgen/git/templates/bootstrap/dist"
   }
 }

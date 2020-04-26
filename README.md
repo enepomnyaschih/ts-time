@@ -9,7 +9,7 @@ API to detect time zone offsets, providing efficient and reliable time zone supp
 
 ts-time is available as [npm package](https://www.npmjs.com/package/ts-time).
 
-    npm install --save ts-time
+    npm i ts-time
 
 See [documentation](https://enepomnyaschih.github.io/ts-time/) for details.
 
@@ -21,7 +21,7 @@ Extension of ts-time library with date/time formatting capabilities.
 
 ts-time-format is available as [npm package](https://www.npmjs.com/package/ts-time-format).
 
-    npm install --save ts-time-format
+    npm i ts-time-format
 
 See [documentation](https://enepomnyaschih.github.io/ts-time/) for details.
 
