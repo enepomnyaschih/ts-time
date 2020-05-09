@@ -31,3 +31,22 @@ symbols:
       <pre>
       (year % 4 === 0) && (year % 100 !== 0 || year % 400 === 0)
       </pre>
+
+  isTimeZoneSupport:
+    signature: |
+      (): boolean
+    returns: |
+      <p>True if current browser/environment supports local time zones such as "Europe/Berlin". See <b>Browser
+      support</b> at the %home.</p>
+    references:
+      home:
+        file: index
+        label: home page
+
+  requireTimeZoneSupport:
+    signature: |
+      (): boolean
+    returns: |
+      <p>Same as %isTimeZoneSupport, but also logs a warning message to the browser/environment console if local time
+      zones are not supported. The function guarantees that the message is only logged once, on the first function
+      call. This function is called internally on the first attempt to instantiate a local %ZoneId.</p>
