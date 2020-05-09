@@ -26,6 +26,7 @@ import {expect} from "chai";
 import ZonedDateTimeFormatter, {ZONED_DATE_TIME_COMPILERS} from "ts-time-format/ZonedDateTimeFormatter";
 import LocalDateTime from "ts-time/LocalDateTime";
 import {DECEMBER} from "ts-time/Month";
+import {isTimeZoneSupport} from "ts-time/utils";
 import {ZoneId} from "ts-time/Zone";
 import ZonedDateTime from "ts-time/ZonedDateTime";
 import {buildPattern} from "./_utils";
@@ -58,8 +59,8 @@ describe("ZonedDateTimeFormatter", () => {
 			"10 10\n" +
 			"22 22\n" +
 			"PM\n" +
-			"+01 +0100 +01:00 +0100 +01:00\n" +
-			"+01 +0100 +01:00 +0100 +01:00\n" +
+			(isTimeZoneSupport() ? "+01 +0100 +01:00 +0100 +01:00\n" : "Z Z Z Z Z\n")  +
+			(isTimeZoneSupport() ? "+01 +0100 +01:00 +0100 +01:00\n" : "+00 +0000 +00:00 +0000 +00:00\n") +
 			"Europe/Berlin"
 		);
 	});
