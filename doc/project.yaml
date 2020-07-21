@@ -25,10 +25,6 @@ input: src
 output: dist
 docTitle: Modules
 
-statics:
-  - src: static
-    dest: .
-
 references:
   MS_PER_DAY:
     file: ts-time/constants
