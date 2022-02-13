@@ -1,6 +1,6 @@
 {
   "name": "ts-time",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "TypeScript/JavaScript library imitating Java Time API",
   "homepage": "http://enepomnyaschih.github.io/ts-time",
   "bugs": {

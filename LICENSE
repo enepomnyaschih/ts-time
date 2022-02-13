@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 ts-time
 TypeScript library of immutable date/time models with time zone support.

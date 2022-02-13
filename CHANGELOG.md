@@ -1,3 +1,8 @@
+### 0.2.1
+
+* Fixed *"TypeError: Invalid attempt to destructure non-iterable instance. In order to be iterable, non-array objects
+must have a [Symbol.iterator]() method."* error caused by en-US format change in IANA time zone update.
+
 ### 0.2
 
 * Fixed a local time zone offset detection bug in Chrome 80+ caused by

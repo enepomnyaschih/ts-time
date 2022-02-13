@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -55,7 +55,7 @@ class LocalDate {
 		return Math.abs(this.year); // BC starts from 0, AD starts from 1
 	}
 
-	get weekBasedYear() {
+	get weekBasedYear(): number {
 		return this._weekBasedYear = this._weekBasedYear || this._computeWeekBasedYear();
 	}
 
@@ -63,7 +63,7 @@ class LocalDate {
 		return Month.of(this.nativeUtc.getUTCMonth() + 1);
 	}
 
-	get weekOfWeekBasedYear() {
+	get weekOfWeekBasedYear(): number {
 		return WEEK_PERIOD.between(this.truncateToWeekBasedYear, this) + 1;
 	}
 
@@ -71,7 +71,7 @@ class LocalDate {
 		return DAY_PERIOD.between(this.truncateToYear, this) + 1;
 	}
 
-	get dayOfWeekBasedYear() {
+	get dayOfWeekBasedYear(): number {
 		return DAY_PERIOD.between(this.truncateToWeekBasedYear, this) + 1;
 	}
 
@@ -259,7 +259,7 @@ class LocalDate {
 
 export default LocalDate;
 
-function getWeekBasedYearStart(year: number) {
+function getWeekBasedYearStart(year: number): LocalDate {
 	const firstDay = LocalDate.of(year, JANUARY, 1),
 		dayOfWeek = firstDay.dayOfWeek;
 	return dayOfWeek.isAfter(THURSDAY)
