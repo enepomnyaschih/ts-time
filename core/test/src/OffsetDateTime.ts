@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -51,14 +51,7 @@ import {
 	SEPTEMBER
 } from "ts-time/Month";
 import OffsetDateTime from "ts-time/OffsetDateTime";
-import Period, {
-	DAY_PERIOD,
-	MONTH_PERIOD,
-	NULL_PERIOD,
-	QUARTER_PERIOD,
-	WEEK_PERIOD,
-	YEAR_PERIOD
-} from "ts-time/Period";
+import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "ts-time/Period";
 import {UTC, ZoneOffset} from "ts-time/Zone";
 
 describe("OffsetDateTime", () => {
@@ -291,13 +284,22 @@ describe("OffsetDateTime", () => {
 	});
 
 	it("should throw an error by invalid string", () => {
-		expect(() => OffsetDateTime.parse("2019-07-05").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("2019-7-5").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("2019-07-05T18:30").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("2019-07-05T18:30:15").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("2019-07-05T18:30:15.225").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("2019-7-5T8:3:5.16").native).throw("Invalid date format.");
-		expect(() => OffsetDateTime.parse("abc")).throw("Invalid date format.");
+		const expectError = (str: string) => {
+			expect(() => OffsetDateTime.parse(str))
+				.throw(`Unable to parse '${str}' as date/time with offset. ISO 8601 date/time string with offset expected.`);
+		};
+
+		expectError("abc");
+		expectError("18:30");
+		expectError("18:30:15");
+		expectError("18:30:15.225");
+		expectError("2019-07-05");
+		expectError("2019-07-05T18:30:15.225");
+		expectError("2019-07-05T18:30:15.225[Europe/Berlin]");
+		expectError("2019-07-05T18:30:15.225+02:00[Europe/Berlin]");
+		expectError("2019-07-aaT18:30:15.225+02:00");
+		expectError("2019-07-05T18:30:aa.225+02:00");
+		expectError("2019-07-05T18:30:15.225+aa:00");
 	});
 
 	it("should support two eras", () => {

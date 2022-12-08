@@ -1,0 +1,135 @@
+# MIT License
+#
+# Copyright (c) 2022 Egor Nepomnyaschih
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
+symbols:
+  TemporalError:
+    kind: class
+    description: |
+      Base error class. Message of this error is designed to be user-friendly, thus can be displayed to the end user.
+      Extends standard %Error.
+
+    properties:
+      message:
+        modifiers: readonly
+        type: string
+        description: User-friendly user message.
+
+  TemporalParsingError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Error thrown by various temporal parsing methods.
+
+    properties:
+      str:
+        modifiers: readonly
+        type: string
+        description: Original string that was being parsed.
+
+      cls:
+        modifiers: readonly
+        type: string
+        description: User-friendly temporal class name, such as "a local date", "local time" etc.
+
+      reason:
+        modifiers: readonly
+        type: string
+        description: User-friendly error reason.
+
+  InvalidTemporalFormatError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Provided string doesn't match ISO 8601 standard. One of possible reasons for %TemporalParsingError.
+
+    properties:
+      expectedFormat:
+        modifiers: readonly
+        type: string
+        description: User-friendly name of the expected ISO 8601 format.
+
+  InvalidTimeZoneError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Provided string contains an invalid or unrecognized time zone ID or offset.
+      One of possible reasons for %TemporalParsingError.
+
+    properties:
+      id:
+        modifiers: readonly
+        type: string
+        description: Time zone ID attempted to be parsed.
+
+  MismatchingOffsetError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Provided string contains an offset that doesn't match the specified time zone at a given date/time. For example,
+      "2019-07-05T18:30:15.225Z[Europe/Berlin]", because Europe/Berlin time zone has +01:00 offset in summer.
+
+    properties:
+      offset:
+        modifiers: readonly
+        type: any
+        description: The specified time zone offset.
+
+      zonedDateTime:
+        modifiers: readonly
+        type: any
+        description: Mismatching date/time with a time zone.
+
+  InvalidDayOfWeekError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Provided day of week number is NaN or out of 1-7 bounds.
+
+    properties:
+      value:
+        modifiers: readonly
+        type: any
+        description: The provided invalid value.
+
+  InvalidMonthError:
+    kind: class
+    extends:
+      - file: ts-time/errors
+        symbol: TemporalError
+    description: |
+      Provided month number is NaN or out of 1-12 bounds.
+
+    properties:
+      value:
+        modifiers: readonly
+        type: any
+        description: The provided invalid value.

@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,19 @@ describe("LocalTime", () => {
 	});
 
 	it("should throw an error by invalid string", () => {
-		expect(() => LocalTime.parse("abc")).throw("Invalid time format.");
+		const expectError = (str: string) => {
+			expect(() => LocalTime.parse(str))
+				.throw(`Unable to parse '${str}' as local time. ISO 8601 time string expected.`);
+		};
+
+		expectError("abc");
+		expectError("2019-07-05");
+		expectError("2019-07-05T18:30:15.225");
+		expectError("2019-07-05T18:30:15.225Z");
+		expectError("2019-07-05T18:30:15.225+00:00");
+		expectError("2019-07-05T18:30:15.225[Europe/Berlin]");
+		expectError("2019-07-05T18:30:15.225+02:00[Europe/Berlin]");
+		expectError("18:30:aa.225");
 	});
 
 	it("should convert itself to string", () => {

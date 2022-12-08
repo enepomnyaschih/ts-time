@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -21,6 +21,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
+
+import {InvalidTemporalFormatError, TemporalError, TemporalParsingError} from "./errors";
 
 export interface Dictionary<T> {
 	[key: string]: T;
@@ -98,3 +100,25 @@ export function parseMs(ms: string) {
 	}
 	return +ms;
 }
+
+export function parseAs<T>(str: string, componentParser: () => T, className: string, expectedFormat: string) {
+	try {
+		return componentParser();
+	} catch (e) {
+		if (e instanceof InvalidTemporalFormatError) {
+			throw new TemporalParsingError(str, className, InvalidTemporalFormatError.getMessage(expectedFormat));
+		}
+		if (e instanceof TemporalError) {
+			throw new TemporalParsingError(str, className, e.message);
+		}
+		throw e;
+	}
+}
+
+export const LOCAL_DATE_ISO_FORMAT = "date string";
+export const LOCAL_TIME_ISO_FORMAT = "time string";
+export const LOCAL_DATE_TIME_ISO_FORMAT = "date/time string without offset or time zone";
+export const OFFSET_DATE_TIME_ISO_FORMAT = "date/time string with offset";
+export const ZONED_DATE_TIME_ISO_FORMAT = "date/time string with offset and optional time zone";
+export const ZONE_OFFSET_ISO_FORMAT = "time zone offset string";
+export const ZONE_ID_ISO_FORMAT = "time zone ID";

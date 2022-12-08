@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compare} from "./_internal";
+import {compare, parseAs, ZONED_DATE_TIME_ISO_FORMAT} from "./_internal";
 import {MS_PER_SECOND} from "./constants";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
 import Era from "./Era";
+import {MismatchingOffsetError} from "./errors";
 import Instant from "./Instant";
 import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
@@ -227,12 +228,16 @@ class ZonedDateTime {
 	}
 
 	static parse(str: string) {
+		return parseAs(str, () => ZonedDateTime.parseComponent(str), "date/time with zone", ZONED_DATE_TIME_ISO_FORMAT);
+	}
+
+	static parseComponent(str: string) {
 		const t = str.indexOf("["),
-			offsetDateTime = OffsetDateTime.parse(t !== -1 ? str.substr(0, t) : str),
-			zoneId = t !== -1 ? ZoneId.of(str.substr(t + 1, str.length - t - 2)) : offsetDateTime.offset,
+			offsetDateTime = OffsetDateTime.parseComponent(t !== -1 ? str.substr(0, t) : str),
+			zoneId = t !== -1 ? ZoneId.parseComponent(str.substr(t + 1, str.length - t - 2)) : offsetDateTime.offset,
 			zonedDateTime = ZonedDateTime.ofDateTime(offsetDateTime.dateTime, zoneId);
 		if (zonedDateTime.offset !== offsetDateTime.offset) {
-			throw new Error("The specified offset doesn't match zone ID.");
+			throw new MismatchingOffsetError(String(offsetDateTime.offset), String(zonedDateTime));
 		}
 		return zonedDateTime;
 	}

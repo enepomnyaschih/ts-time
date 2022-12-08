@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, mod, pad, parseMs} from "./_internal";
+import {compareByNumber, equalBy, LOCAL_TIME_ISO_FORMAT, mod, pad, parseAs, parseMs} from "./_internal";
 import {
 	HOURS_PER_DAY,
 	MINUTES_PER_HOUR,
@@ -33,6 +33,7 @@ import {
 	SECONDS_PER_MINUTE
 } from "./constants";
 import Duration from "./Duration";
+import {InvalidTemporalFormatError} from "./errors";
 import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
 import TimeField from "./TimeField";
@@ -141,9 +142,13 @@ class LocalTime {
 	}
 
 	static parse(str: string) {
+		return parseAs(str, () => LocalTime.parseComponent(str), "local time", LOCAL_TIME_ISO_FORMAT);
+	}
+
+	static parseComponent(str: string) {
 		const matches = /^(\d+):(\d+)(?::(\d+)(?:\.(\d+))?)?$/.exec(str);
 		if (!matches) {
-			throw new Error("Invalid time format.");
+			throw new InvalidTemporalFormatError(LOCAL_TIME_ISO_FORMAT);
 		}
 		const hour = +matches[1],
 			minute = +matches[2],
@@ -151,7 +156,7 @@ class LocalTime {
 			ms = parseMs(matches[4]);
 		if (isNaN(hour) || isNaN(minute) || isNaN(second) || isNaN(ms) || hour >= HOURS_PER_DAY
 			|| minute >= MINUTES_PER_HOUR || second >= SECONDS_PER_MINUTE || ms >= MS_PER_SECOND) {
-			throw new Error("Invalid time format.");
+			throw new InvalidTemporalFormatError(LOCAL_TIME_ISO_FORMAT);
 		}
 		return LocalTime.of(hour, minute, second, ms);
 	}

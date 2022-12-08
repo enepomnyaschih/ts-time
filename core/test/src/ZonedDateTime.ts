@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -51,14 +51,7 @@ import {
 	OCTOBER,
 	SEPTEMBER
 } from "ts-time/Month";
-import Period, {
-	DAY_PERIOD,
-	MONTH_PERIOD,
-	NULL_PERIOD,
-	QUARTER_PERIOD,
-	WEEK_PERIOD,
-	YEAR_PERIOD
-} from "ts-time/Period";
+import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "ts-time/Period";
 import {isTimeZoneSupport} from "ts-time/utils";
 import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
 import ZonedDateTime from "ts-time/ZonedDateTime";
@@ -314,17 +307,42 @@ isTimeZoneSupport() && describe("ZonedDateTime", () => {
 	});
 
 	it("should throw an error by invalid string", () => {
-		expect(() => ZonedDateTime.parse("2019-07-05").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-7-5").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30:15").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30:15.225").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-7-5T8:3:5.16").native).throw("Invalid date format.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30:15.225Z[Europe/Berlin]").native).throw("The specified offset doesn't match zone ID.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30:15.225+01:00[Europe/Berlin]").native).throw("The specified offset doesn't match zone ID.");
-		expect(() => ZonedDateTime.parse("2019-12-05T18:30:15.225+02:00[Europe/Berlin]").native).throw("The specified offset doesn't match zone ID.");
-		expect(() => ZonedDateTime.parse("2019-07-05T18:30:15.225+01:00[UTC]").native).throw("The specified offset doesn't match zone ID.");
-		expect(() => ZonedDateTime.parse("abc")).throw("Invalid date format.");
+		const expectError = (str: string) => {
+			expect(() => ZonedDateTime.parse(str))
+				.throw(`Unable to parse '${str}' as date/time with zone. ISO 8601 date/time string with offset and optional time zone expected.`);
+		};
+
+		expectError("abc");
+		expectError("18:30");
+		expectError("18:30:15");
+		expectError("18:30:15.225");
+		expectError("2019-07-05");
+		expectError("2019-07-05T18:30:15.225");
+		expectError("2019-07-05T18:30:15.225[Europe/Berlin]");
+		expectError("2019-07-aaT18:30:15.225+02:00[Europe/Berlin]");
+		expectError("2019-07-05T18:30:aa.225+02:00[Europe/Berlin]");
+		expectError("2019-07-05T18:30:15.225+aa:00[Europe/Berlin]");
+	});
+
+	it("should throw an error by invalid time zone", () => {
+		const expectError = (str: string) => {
+			expect(() => ZonedDateTime.parse(str))
+				.throw(`Unable to parse '${str}' as date/time with zone. Invalid or unrecognized time zone ID or offset: 'aa'.`);
+		};
+
+		expectError("2019-07-05T18:30:15.225+02:00[aa]");
+	});
+
+	it("should throw an error by mismatching offset and time zone", () => {
+		const expectError = (str: string, dateTime: string, offset: string) => {
+			expect(() => ZonedDateTime.parse(str))
+				.throw(`Unable to parse '${str}' as date/time with zone. Date/time ${dateTime} has an offset different from ${offset}.`);
+		};
+
+		expectError("2019-07-05T18:30:15.225Z[Europe/Berlin]", "2019-07-05T18:30:15.225+02:00[Europe/Berlin]", "Z");
+		expectError("2019-07-05T18:30:15.225+01:00[Europe/Berlin]", "2019-07-05T18:30:15.225+02:00[Europe/Berlin]", "+01:00");
+		expectError("2019-12-05T18:30:15.225+02:00[Europe/Berlin]", "2019-12-05T18:30:15.225+01:00[Europe/Berlin]", "+02:00");
+		expectError("2019-07-05T18:30:15.225+01:00[UTC]", "2019-07-05T18:30:15.225Z[UTC]", "+01:00");
 	});
 
 	it("should support two eras", () => {

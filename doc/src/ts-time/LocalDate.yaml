@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2019 Egor Nepomnyaschih
+# Copyright (c) 2019-2022 Egor Nepomnyaschih
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -307,7 +307,7 @@ symbols:
 
       parse:
         signature: |
-          (str: string): %LocalDate
+          (str: string): %LocalDate throws %TemporalParsingError
         params:
           str: String representation of a local date in ISO format, such as '2019-12-30'.
         returns: '%LocalDate representation.'

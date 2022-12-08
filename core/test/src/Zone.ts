@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -126,7 +126,8 @@ describe("ZoneOffset", () => {
 	});
 
 	it("should throw error by invalid ID", () => {
-		expect(() => ZoneOffset.of("abc")).throw("Invalid time zone offset.");
+		expect(() => ZoneOffset.of("abc"))
+			.throw("Unable to parse 'abc' as a time zone offset. ISO 8601 time zone offset string expected.");
 	});
 
 	it("should convert itself to string", () => {
@@ -274,7 +275,8 @@ describe("ZoneId", () => {
 	});
 
 	isTimeZoneSupport() && it("should throw error by invalid ID", () => {
-		expect(() => ZoneId.of("abc")).throw("Invalid time zone ID.");
+		expect(() => ZoneId.of("abc"))
+			.throw("Unable to parse 'abc' as a time zone ID. Invalid or unrecognized time zone ID or offset: 'abc'.");
 	});
 
 	it("should convert itself to an offset string", () => {

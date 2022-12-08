@@ -22,8 +22,19 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareBy, Dictionary, pad, spread, toInt, utc} from "./_internal";
+import {
+	compareBy,
+	Dictionary,
+	pad,
+	parseAs,
+	spread,
+	toInt,
+	utc,
+	ZONE_ID_ISO_FORMAT,
+	ZONE_OFFSET_ISO_FORMAT
+} from "./_internal";
 import {MINUTES_PER_HOUR, MS_PER_SECOND, SECONDS_PER_HOUR, SECONDS_PER_MINUTE} from "./constants";
+import {InvalidTemporalFormatError, InvalidTimeZoneError} from "./errors";
 import Instant from "./Instant";
 import LocalDateTime from "./LocalDateTime";
 import OffsetDateTime from "./OffsetDateTime";
@@ -45,6 +56,10 @@ export abstract class ZoneId {
 	}
 
 	static of(id: string): ZoneId {
+		return parseAs(id, () => ZoneId.parseComponent(id), "a time zone ID", ZONE_ID_ISO_FORMAT);
+	}
+
+	static parseComponent(id: string): ZoneId {
 		if (id == null) {
 			return null;
 		}
@@ -53,7 +68,7 @@ export abstract class ZoneId {
 			return ZoneOffset.ofTotalSeconds(totalSeconds);
 		}
 		if (id.length === 1) {
-			throw new Error("Invalid time zone ID.");
+			throw new InvalidTimeZoneError(id);
 		}
 		let offsetStart = 0;
 		if (id.startsWith("GMT+") || id.startsWith("GMT-") || id.startsWith("UTC+") || id.startsWith("UTC-")) {
@@ -62,9 +77,9 @@ export abstract class ZoneId {
 			offsetStart = 2;
 		}
 		if (offsetStart !== 0) {
-			const offset = ZoneOffset.of(id.substr(offsetStart));
+			const offset = ZoneOffset.parseComponent(id.substr(offsetStart));
 			if (offset == null) {
-				throw new Error("Invalid time zone ID.");
+				throw new InvalidTimeZoneError(id);
 			}
 			const fixedId = id.substr(0, offsetStart) + offset.id;
 			return getCached(fixedId, () => new FixedOffsetZoneConstructor(fixedId, offset.totalSeconds));
@@ -133,7 +148,19 @@ export class ZoneOffset extends FixedOffsetZone {
 	}
 
 	static of(id: string): ZoneOffset {
-		return id != null ? ZoneOffset.ofTotalSeconds(parseOffset(id)) : null;
+		return parseAs(id, () => ZoneOffset.parseComponent(id), "a time zone offset", ZONE_OFFSET_ISO_FORMAT);
+	}
+
+	static parseComponent(id: string): ZoneOffset {
+		if (id == null) {
+			return null;
+		}
+		const totalSeconds = parseOffset(id);
+		if (Number.isFinite(totalSeconds)) {
+			return ZoneOffset.ofTotalSeconds(totalSeconds);
+		} else {
+			throw new InvalidTemporalFormatError(ZONE_OFFSET_ISO_FORMAT);
+		}
 	}
 
 	static ofComponents(hours: number, minutes: number = 0, seconds: number = 0): ZoneOffset {
@@ -142,7 +169,7 @@ export class ZoneOffset extends FixedOffsetZone {
 
 	static ofTotalSeconds(totalSeconds: number): ZoneOffset {
 		if (!Number.isFinite(totalSeconds)) {
-			throw new Error("Invalid time zone offset.");
+			throw new Error("Invalid argument.");
 		}
 		return offsetCache[totalSeconds] || new ZoneOffset(totalSeconds);
 	}
@@ -204,7 +231,7 @@ class CustomZone extends ZoneId {
 function getComponents(formatter: Intl.DateTimeFormat, date: Date): Date {
 	// en-US format changed on February V8 update, so here we try to parse both old and new formats.
 	const matches = /^(\d+)\/(\d+)\/(\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)) ||
-		/^(\d+) (\d+), (\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)),
+			/^(\d+) (\d+), (\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)),
 		[, month, dayOfMonth, year, era, hour, minute, second] = matches;
 	return utc((era === "A") ? +year : (-year + 1),
 		+month - 1, +dayOfMonth, +hour, +minute, +second, date.getUTCMilliseconds());
@@ -245,11 +272,11 @@ function getCached(id: string, supplier: () => ZoneId): ZoneId {
 		return cached;
 	}
 	if (cached === null) {
-		throw new Error("Invalid time zone ID.");
+		throw new InvalidTimeZoneError(id);
 	}
 	const supplied = supplier();
 	if (supplied == null) {
-		throw new Error("Invalid time zone ID.");
+		throw new InvalidTimeZoneError(id);
 	}
 	zoneCache[id] = supplied;
 	return supplied;
