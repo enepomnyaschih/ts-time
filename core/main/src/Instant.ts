@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, pad} from "./_internal";
+import {compareByNumber, equalBy, pad, parseAs, ZONED_DATE_TIME_ISO_FORMAT} from "./_internal";
 import Duration from "./Duration";
 import OffsetDateTime from "./OffsetDateTime";
 import {ZoneId, ZoneOffset} from "./Zone";
@@ -93,11 +93,7 @@ class Instant {
 	}
 
 	static parse(str: string) {
-		try {
-			return ZonedDateTime.parse(str).instant;
-		} catch (e) {
-			throw new Error("Invalid instant format.");
-		}
+		return parseAs(str, () => ZonedDateTime.parseComponent(str).instant, "an instant", ZONED_DATE_TIME_ISO_FORMAT);
 	}
 
 	static compare(x: Instant, y: Instant) {

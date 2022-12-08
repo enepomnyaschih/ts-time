@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -52,10 +52,35 @@ describe("Instant", () => {
 		expect(Instant.parse("2019-09-10T01:02:03.004-3").epochMs).equal(Date.UTC(2019, 8, 10, 4, 2, 3, 4));
 		expect(Instant.parse("2019-09-10T01:02:03.4Z").epochMs).equal(Date.UTC(2019, 8, 10, 1, 2, 3, 400));
 		expect(Instant.parse("2019-09-10T01:02:03.4567Z").epochMs).equal(Date.UTC(2019, 8, 10, 1, 2, 3, 456));
+		expect(Instant.parse("2019-07-05T18:30:15.225+02:00[Europe/Berlin]").epochMs)
+			.equal(Date.UTC(2019, 6, 5, 16, 30, 15, 225));
 	});
 
 	it("should throw an error by invalid string", () => {
-		expect(() => Instant.parse("abc")).throw("Invalid instant format.");
+		const expectError = (str: string) => {
+			expect(() => Instant.parse(str))
+				.throw(`Unable to parse '${str}' as an instant. ISO 8601 date/time string with offset and optional time zone expected.`);
+		};
+
+		expectError("abc");
+		expectError("18:30");
+		expectError("18:30:15");
+		expectError("18:30:15.225");
+		expectError("2019-07-05");
+		expectError("2019-07-05T18:30:15.225");
+		expectError("2019-07-05T18:30:15.225[Europe/Berlin]");
+		expectError("2019-07-aaT18:30:15.225+02:00[Europe/Berlin]");
+		expectError("2019-07-05T18:30:aa.225+02:00[Europe/Berlin]");
+		expectError("2019-07-05T18:30:15.225+aa:00[Europe/Berlin]");
+	});
+
+	it("should throw an error by invalid time zone", () => {
+		const expectError = (str: string) => {
+			expect(() => Instant.parse(str))
+				.throw(`Unable to parse '${str}' as an instant. Invalid or unrecognized time zone ID or offset: 'aa'.`);
+		};
+
+		expectError("2019-07-05T18:30:15.225+02:00[aa]");
 	});
 
 	it("should return native date", () => {

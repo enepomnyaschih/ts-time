@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2019 Egor Nepomnyaschih
+# Copyright (c) 2019-2022 Egor Nepomnyaschih
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -58,7 +58,7 @@ symbols:
     staticMethods:
       of:
         signature: |
-          (id: string): %ZoneId
+          (id: string): %ZoneId throws %TemporalParsingError
         params:
           id: Zone text identifier.
         returns: '%ZoneId representing this identifier.'
@@ -149,7 +149,7 @@ symbols:
     staticMethods:
       of:
         signature: |
-          (id: string): %ZoneOffset
+          (id: string): %ZoneOffset throws %TemporalParsingError
         params:
           id: Time zone offset identifier.
         returns: '%ZoneOffset representing this identifier.'

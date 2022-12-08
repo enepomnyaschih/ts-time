@@ -22,10 +22,11 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, pad, utc} from "./_internal";
+import {compareByNumber, equalBy, LOCAL_DATE_ISO_FORMAT, pad, parseAs, utc} from "./_internal";
 import {DAYS_PER_LEAP_YEAR, DAYS_PER_NON_LEAP_YEAR} from "./constants";
 import DayOfWeek, {THURSDAY} from "./DayOfWeek";
 import Era, {AD, BC} from "./Era";
+import {InvalidTemporalFormatError} from "./errors";
 import LocalDateTime from "./LocalDateTime";
 import LocalTime, {MIDNIGHT} from "./LocalTime";
 import Month, {JANUARY} from "./Month";
@@ -223,19 +224,23 @@ class LocalDate {
 	}
 
 	static parse(str: string) {
+		return parseAs(str, () => LocalDate.parseComponent(str), "a local date", LOCAL_DATE_ISO_FORMAT);
+	}
+
+	static parseComponent(str: string) {
 		const matches = /^(\d+)-(\d+)-(\d+)$/.exec(str);
 		if (!matches) {
-			throw new Error("Invalid date format.");
+			throw new InvalidTemporalFormatError(LOCAL_DATE_ISO_FORMAT);
 		}
 		const year = +matches[1],
 			month = +matches[2],
 			day = +matches[3];
 		if (isNaN(year) || isNaN(month) || isNaN(day)) {
-			throw new Error("Invalid date format.");
+			throw new InvalidTemporalFormatError(LOCAL_DATE_ISO_FORMAT);
 		}
 		const date = new Date(Date.UTC(year, month - 1, day));
 		if (year !== date.getUTCFullYear() || month - 1 !== date.getUTCMonth() || day !== date.getUTCDate()) {
-			throw new Error("Invalid date format.");
+			throw new InvalidTemporalFormatError(LOCAL_DATE_ISO_FORMAT);
 		}
 		return new LocalDate(date);
 	}

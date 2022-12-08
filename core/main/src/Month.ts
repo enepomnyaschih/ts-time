@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -23,6 +23,7 @@ SOFTWARE.
 */
 
 import {compareByNumber} from "./_internal";
+import {InvalidMonthError} from "./errors";
 
 abstract class Month {
 
@@ -48,7 +49,7 @@ abstract class Month {
 		}
 		const month = MONTHS[value - 1];
 		if (!month) {
-			throw new Error("Invalid month value.");
+			throw new InvalidMonthError(value);
 		}
 		return month;
 	}

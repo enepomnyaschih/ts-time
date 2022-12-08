@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -47,8 +47,8 @@ describe("DayOfWeek", () => {
 	});
 
 	it("should throw an error if value is out of range", () => {
-		expect(() => DayOfWeek.of(0)).throw("Invalid day of week value.");
-		expect(() => DayOfWeek.of(8)).throw("Invalid day of week value.");
+		expect(() => DayOfWeek.of(0)).throw("Invalid day of week: 0.");
+		expect(() => DayOfWeek.of(8)).throw("Invalid day of week: 8.");
 	});
 
 	it("should be returned by instance", () => {

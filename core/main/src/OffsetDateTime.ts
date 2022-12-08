@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,11 +22,12 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compare} from "./_internal";
+import {compare, OFFSET_DATE_TIME_ISO_FORMAT, parseAs} from "./_internal";
 import {MS_PER_SECOND} from "./constants";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
 import Era from "./Era";
+import {InvalidTemporalFormatError} from "./errors";
 import Instant from "./Instant";
 import LocalDate from "./LocalDate";
 import LocalDateTime from "./LocalDateTime";
@@ -215,17 +216,21 @@ class OffsetDateTime {
 	}
 
 	static parse(str: string) {
+		return parseAs(str, () => OffsetDateTime.parseComponent(str), "date/time with offset", OFFSET_DATE_TIME_ISO_FORMAT);
+	}
+
+	static parseComponent(str: string) {
 		const t = str.indexOf("T");
 		if (t === -1) {
-			throw new Error("Invalid date format.")
+			throw new InvalidTemporalFormatError(OFFSET_DATE_TIME_ISO_FORMAT);
 		}
 		const matches = /[Z+\-]/i.exec(str.substr(t));
 		if (!matches) {
-			throw new Error("Invalid date format.")
+			throw new InvalidTemporalFormatError(OFFSET_DATE_TIME_ISO_FORMAT);
 		}
 		return OffsetDateTime.ofDateTime(
-			LocalDateTime.parse(str.substr(0, t + matches.index)),
-			ZoneOffset.of(str.substr(t + matches.index)));
+			LocalDateTime.parseComponent(str.substr(0, t + matches.index)),
+			ZoneOffset.parseComponent(str.substr(t + matches.index)));
 	}
 
 	static compare(x: OffsetDateTime, y: OffsetDateTime) {

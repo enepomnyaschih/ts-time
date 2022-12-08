@@ -1,6 +1,6 @@
 # MIT License
 #
-# Copyright (c) 2019 Egor Nepomnyaschih
+# Copyright (c) 2019-2022 Egor Nepomnyaschih
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -338,7 +338,7 @@ symbols:
 
       parse:
         signature: |
-          (str: string): %ZonedDateTime
+          (str: string): %ZonedDateTime throws %TemporalParsingError
         params:
           str: String representation of offset date/time in ISO format, such as '2019-12-30T18:30:15.225+01:00[Europe/Berlin]'.
         returns: '%ZonedDateTime representation.'

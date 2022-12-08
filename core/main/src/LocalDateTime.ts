@@ -1,7 +1,7 @@
 /*
 MIT License
 
-Copyright (c) 2019 Egor Nepomnyaschih
+Copyright (c) 2019-2022 Egor Nepomnyaschih
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -22,7 +22,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 */
 
-import {compareByNumber, equalBy, utc} from "./_internal";
+import {compareByNumber, equalBy, LOCAL_DATE_TIME_ISO_FORMAT, parseAs, utc} from "./_internal";
 import {MS_PER_DAY} from "./constants";
 import DayOfWeek from "./DayOfWeek";
 import Duration from "./Duration";
@@ -263,10 +263,14 @@ class LocalDateTime {
 	}
 
 	static parse(str: string) {
+		return parseAs(str, () => LocalDateTime.parseComponent(str), "local date/time", LOCAL_DATE_TIME_ISO_FORMAT);
+	}
+
+	static parseComponent(str: string) {
 		const t = str.indexOf("T");
 		return LocalDateTime.of(
-			LocalDate.parse(t !== -1 ? str.substr(0, t) : str),
-			t !== -1 ? LocalTime.parse(str.substr(t + 1)) : MIDNIGHT);
+			LocalDate.parseComponent(t !== -1 ? str.substr(0, t) : str),
+			t !== -1 ? LocalTime.parseComponent(str.substr(t + 1)) : MIDNIGHT);
 	}
 
 	static compare(x: LocalDateTime, y: LocalDateTime) {
