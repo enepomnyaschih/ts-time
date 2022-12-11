@@ -44,7 +44,7 @@ symbols:
           %Instant.%now().%atZone(zone).%time;            // Current LocalTime in a given %ZoneId/%ZoneOffset
           </pre>
           <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
-          <p>A common way to convert native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
           static method:</p>
           <pre>
           %LocalTime.%fromNativeUtc(date);              // LocalTime from a given %Date in %UTC
@@ -125,7 +125,7 @@ symbols:
           t1.%compareTo(t2); // -1
           </pre>
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
-          except each other.:</p>
+          except each other:</p>
           <pre>
           const t1 = null;
           const t2 = %LocalTime.%of(18, 30, 15, 225);

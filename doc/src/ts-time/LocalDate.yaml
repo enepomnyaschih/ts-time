@@ -44,7 +44,7 @@ symbols:
           %Instant.%now().%atZone(zone).%date;            // Current LocalDate in a given %ZoneId/%ZoneOffset
           </pre>
           <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
-          <p>A common way to convert native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
           static method:</p>
           <pre>
           %LocalDate.%fromNativeUtc(date);              // LocalDate from a given %Date in %UTC
@@ -137,7 +137,7 @@ symbols:
           d1.%compareTo(d2); // -1
           </pre>
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
-          except each other.:</p>
+          except each other:</p>
           <pre>
           const d1 = null;
           const d2 = %LocalDate.%of(2022, %FEBRUARY, 16);
@@ -224,7 +224,7 @@ symbols:
           <p>You can as well convert %LocalDate to a native JavaScript %Date:</p>
           <pre>
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
-          date.%nativeUtc;                         // Date representing 15th of February, 2022, midnight in UTC
+          date.%nativeUtc;                         // Date representing 15th of February, 2022, midnight in %UTC
           date.%nativeLocal;                       // Date representing 15th of February, 2022, midnight in the local time zone
           date.%atStartOfDay.%atZone(zone).%native;  // Date representing 15th of February, 2022, midnight in a given %ZoneId/%ZoneOffset
           date.%atTime(time).%atZone(zone).%native;  // Date representing 15th of February, 2022, at a given %LocalTime in a given %ZoneId/%ZoneOffset
