@@ -72,6 +72,7 @@ describe("Instant", () => {
 		expectError("2019-07-aaT18:30:15.225+02:00[Europe/Berlin]");
 		expectError("2019-07-05T18:30:aa.225+02:00[Europe/Berlin]");
 		expectError("2019-07-05T18:30:15.225+aa:00[Europe/Berlin]");
+		expectError("2019-07-05TT18:30:15.225");
 	});
 
 	it("should throw an error by invalid time zone", () => {
