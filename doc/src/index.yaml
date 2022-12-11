@@ -58,7 +58,7 @@ description: |
       const result: %LocalDate[] = [];
       while (from.%isBefore(to)) {
         result.push(from);
-        from = to.%plus(step);
+        from = from.%plus(step);
       }
       return result;
     }

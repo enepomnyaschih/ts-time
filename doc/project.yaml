@@ -42,6 +42,14 @@ references:
     file: ts-time/DayOfWeek
     symbol: MONDAY
 
+  TUESDAY:
+    file: ts-time/DayOfWeek
+    symbol: TUESDAY
+
+  SUNDAY:
+    file: ts-time/DayOfWeek
+    symbol: SUNDAY
+
   JANUARY:
     file: ts-time/Month
     symbol: JANUARY
@@ -90,9 +98,21 @@ references:
     file: ts-time/Month
     symbol: DECEMBER
 
+  DAY_PERIOD:
+    file: ts-time/Period
+    symbol: DAY_PERIOD
+
+  MONTH_PERIOD:
+    file: ts-time/Period
+    symbol: MONTH_PERIOD
+
   UTC:
     file: ts-time/Zone
     symbol: UTC
+
+  LOCAL_ZONE_ID:
+    file: ts-time/ZoneId
+    symbol: LOCAL_ZONE_ID
 
   DAY_OF_MONTH_COMPILER:
     file: ts-time-format/DateFormatter
@@ -136,6 +156,9 @@ references:
     member: of
     static: true
     label: of
+
+  Date:
+    href: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
 
   DateTimeFormat:
     label: Intl.DateTimeFormat
