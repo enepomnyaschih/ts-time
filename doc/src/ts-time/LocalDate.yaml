@@ -41,15 +41,15 @@ symbols:
           <pre>
           %Instant.%now().%atZone(%UTC).%date;             // Current LocalDate in UTC
           %Instant.%now().%atZone(%LOCAL_ZONE_ID).%date;   // Current LocalDate in the local time zone
-          %Instant.%now().%atZone(zone).%date;            // Current LocalDate in a given time zone
+          %Instant.%now().%atZone(zone).%date;            // Current LocalDate in a given %ZoneId/%ZoneOffset
           </pre>
           <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
           <p>A common way to convert native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
           static method:</p>
           <pre>
-          %LocalDate.%fromNativeUtc(date);              // LocalDate equal to the given date in UTC
-          %LocalDate.%fromNativeLocal(date);            // LocalDate equal to the given date in the local time zone
-          %Instant.%fromNative(date).%atZone(zone).%date; // LocalDate equal to the given date in a given time zone
+          %LocalDate.%fromNativeUtc(date);              // LocalDate from a given %Date in %UTC
+          %LocalDate.%fromNativeLocal(date);            // LocalDate from a given %Date in the local time zone
+          %Instant.%fromNative(date).%atZone(zone).%date; // LocalDate from a given %Date in a given %ZoneId/%ZoneOffset
           </pre>
           <p>You can convert instances of other ts-time classes to %LocalDate via their properties and methods:</p>
           <pre>
@@ -58,7 +58,7 @@ symbols:
           offsetDateTime.%dateOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
           zonedDateTime.%date;                         // From %ZonedDateTime in the same %ZoneId
           </pre>
-          <p>More sophisticated constructors: %ofEpochDay, %ofYearDay, %ofWeek, %ofWeekBasedYearDay.</p>
+          <p>Other sophisticated constructors: %ofEpochDay, %ofYearDay, %ofWeek, %ofWeekBasedYearDay.</p>
         references:
           dateOfLocal:
             file: ts-time/LocalDateTime
@@ -111,7 +111,7 @@ symbols:
           const dayOfWeek      = date.%dayOfWeek;       // %TUESDAY
           const dayOfWeekValue = date.%dayOfWeek.%valueOfDay; // 2
           </pre>
-          <p>More sophisticated features for %LocalDate inspection: %era, %yearOfEra, %weekBasedYear,
+          <p>Other sophisticated features for %LocalDate inspection: %era, %yearOfEra, %weekBasedYear,
           %weekOfWeekBasedYear, %dayOfYear, %dayOfWeekBasedYear, %epochDay, %quarterOfYear, %isLeapYear,
           %lengthOfYear.</p>
         references:
@@ -181,7 +181,7 @@ symbols:
           const d3 = date.%withDayOfMonth(10);     // 10th of February, 2022
           const d4 = date.%withDayOfWeek(%SUNDAY);  // 20th of February, 2022, Sunday
           </pre>
-          <p>To truncate all less-significant components, call <b>truncate*</b> methods:</p>
+          <p>To truncate all the least-significant components, call <b>truncate*</b> methods:</p>
           <pre>
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           const d1 = date.%truncateToYear;         // 1st of January, 2022
@@ -197,7 +197,7 @@ symbols:
           <pre>
           const d5 = date.%minus(%Period.%ofDays((date.%dayOfWeek.%valueOfDayOfWeek + 7 - firstDayOfWeek) % 7));
           </pre>
-          <p>More sophisticated features for %LocalDate manipulation: %withDayOfYear, %truncateToWeekBasedYear.</p>
+          <p>Other sophisticated features for %LocalDate manipulation: %withDayOfYear, %truncateToWeekBasedYear.</p>
         references:
           ofDays:
             file: ts-time/Period
@@ -216,18 +216,18 @@ symbols:
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           date.%atStartOfDay;                      // To %LocalDateTime at midnight
           date.%atTime(%MIDNIGHT);                  // Equivalent
-          date.%atTime(time);                      // To %LocalDateTime at a given time
-          date.%atTime(time).%atOffset(offset);     // To %OffsetDateTime at a given time in a given %ZoneOffset
-          date.%atTime(time).%atZone(zone);         // To %ZonedDateTime at a given time in a given %ZoneId
-          date.%atTime(time).%atZone(zone).%instant; // To %Instant at a given time in a given %ZoneId/%ZoneOffset
+          date.%atTime(time);                      // To %LocalDateTime at a given %LocalTime
+          date.%atTime(time).%atOffset(offset);     // To %OffsetDateTime at a given %LocalTime in a given %ZoneOffset
+          date.%atTime(time).%atZone(zone);         // To %ZonedDateTime at a given %LocalTime in a given %ZoneId
+          date.%atTime(time).%atZone(zone).%instant; // To %Instant at a given %LocalTime in a given %ZoneId/%ZoneOffset
           </pre>
           <p>You can as well convert %LocalDate to a native JavaScript %Date:</p>
           <pre>
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           date.%nativeUtc;                         // Date representing 15th of February, 2022, midnight in UTC
           date.%nativeLocal;                       // Date representing 15th of February, 2022, midnight in the local time zone
-          date.%atStartOfDay.%atZone(zone).%native;  // Date representing 15th of February, 2022, midnight in a given time zone
-          date.%atTime(time).%atZone(zone).%native;  // Date representing 15th of February, 2022, at a given time in a given time zone
+          date.%atStartOfDay.%atZone(zone).%native;  // Date representing 15th of February, 2022, midnight in a given %ZoneId/%ZoneOffset
+          date.%atTime(time).%atZone(zone).%native;  // Date representing 15th of February, 2022, at a given %LocalTime in a given %ZoneId/%ZoneOffset
           </pre>
           <p>For backward conversion, see %construct.</p>
         references:
@@ -255,9 +255,9 @@ symbols:
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           date.%toString(); // "2022-02-15"
           </pre>
-          <p>For more sophisticated string formatting, add ts-time-format library to your list of dependencies:</p>
+          <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
           <pre>
-          npm install --save ts-time-format
+          npm install --save %tsTimeFormat
           </pre>
           <p>Now you can construct an instance of %DateFormatter in order to format arbitrary %LocalDate instances:</p>
           <pre>

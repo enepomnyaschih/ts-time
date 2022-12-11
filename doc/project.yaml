@@ -50,6 +50,10 @@ references:
     file: ts-time/DayOfWeek
     symbol: SUNDAY
 
+  MINUTE_DURATION:
+    file: ts-time/Duration
+    symbol: MINUTE_DURATION
+
   JANUARY:
     file: ts-time/Month
     symbol: JANUARY
@@ -163,6 +167,10 @@ references:
   DateTimeFormat:
     label: Intl.DateTimeFormat
     href: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DateTimeFormat
+
+  tsTimeFormat:
+    label: ts-time-format
+    href: https://www.npmjs.com/package/ts-time-format
 
   coreConstants:
     file: ts-time/constants
