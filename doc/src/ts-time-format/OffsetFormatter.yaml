@@ -85,7 +85,7 @@ symbols:
         </thead>
         <tbody>
           <tr><td>X</td><td>%OFFSET_COMPILER</td><td>+05</td><td>+0500</td><td>+05:00</td><td>+050030</td><td>+05:00:30</td></tr>
-          <tr><td>X</td><td>%OFFSET_NZ_COMPILER</td><td>+05</td><td>+0500</td><td>+05:00</td><td>+050030</td><td>+05:00:30</td></tr>
+          <tr><td>x</td><td>%OFFSET_NZ_COMPILER</td><td>+05</td><td>+0500</td><td>+05:00</td><td>+050030</td><td>+05:00:30</td></tr>
         </tbody>
       </table>
 

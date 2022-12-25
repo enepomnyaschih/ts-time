@@ -34,7 +34,6 @@ symbols:
           following %LocalDateTime instances represent 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
           15th of February, 2022:</p>
           <pre>
-          %LocalDateTime.%of(%LocalDate.%ofDate(2022, %FEBRUARY, 15), %LocalTime.%ofTime(18, 30, 15, 225));
           %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
           %LocalDateTime.%ofComponents(2022, 2, 15, 18, 30, 15, 225);
           </pre>
@@ -42,7 +41,7 @@ symbols:
           because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
           and convert it to an object that you need, taking time zone into consideration.</p>
           <pre>
-          %Instant.%now().%atZone(%UTC).%dateTime;             // Current LocalDateTime in UTC
+          %Instant.%now().%atZone(%UTC).%dateTime;             // Current LocalDateTime in %UTC
           %Instant.%now().%atZone(%LOCAL_ZONE_ID).%dateTime;   // Current LocalDateTime in the local time zone
           %Instant.%now().%atZone(zone).%dateTime;            // Current LocalDateTime in a given %ZoneId/%ZoneOffset
           </pre>
@@ -57,10 +56,13 @@ symbols:
           <p>You can convert instances of other ts-time classes to %LocalDateTime via their properties and methods:</p>
           <pre>
           %LocalDateTime.%of(date, time);                   // From a pair of %LocalDate and %LocalTime
+          date.%atTime(time);                              // Equivalent
           instant.%atZone(zone).%dateTime;                  // From %Instant in a given %ZoneId/%ZoneOffset
           offsetDateTime.%dateTimeOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
           zonedDateTime.%dateTime;                         // From %ZonedDateTime in the same %ZoneId
           </pre>
+          <p>Please notice that conversions from %OffsetDateTime and %ZonedDateTime result in a partial data
+          loss (offset and time zone respectively).</p>
           <p>Another sophisticated constructor: %ofEpochMsUtc. Also check sophisticated constructors of %LocalDate and
           %LocalTime, as %LocalDateTime is essentially a pair of them.</p>
         references:
@@ -81,6 +83,9 @@ symbols:
           atZone:
             file: ts-time/Instant
             member: atZone
+          atTime:
+            file: ts-time/LocalDate
+            member: atTime
           fromNative:
             file: ts-time/Instant
             member: fromNative
@@ -181,7 +186,7 @@ symbols:
         header: Manipulate
         text: |
           <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
-          <p>To add/subtract a period, call %plusPeriod/%minusPeriod method:</p>
+          <p>To add/subtract a %Period, call %plusPeriod/%minusPeriod method:</p>
           <pre>
           const dateTime = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
           const d1 = dateTime.%plusPeriod(%DAY_PERIOD);                // 18:30:15.225 on 16th of February, 2022
@@ -195,6 +200,8 @@ symbols:
           const d2 = dateTime.%plusDuration(%Duration.%ofHours(10));    // 04:30:15.225 on 16th of February, 2022
           const d3 = dateTime.%minusDuration(%Duration.%ofSeconds(30)); // 18:29:45.225 on 15th of February, 2022
           </pre>
+          <p>For difference between %Period and %Duration, see their documentation. For %LocalDateTime, they are
+          interchangeable - apart for the list of supported date/time components.</p>
           <p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
           <pre>
           const dateTime = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
@@ -252,12 +259,14 @@ symbols:
           <p>You can convert %LocalDateTime to other kinds of objects via its properties and methods:</p>
           <pre>
           const dateTime = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
-          dateTime.%date;                 // To %LocalDate
-          dateTime.%time;                 // To %LocalTime
-          dateTime.%atOffset(offset);     // To %OffsetDateTime in a given %ZoneOffset
-          dateTime.%atZone(zone);         // To %ZonedDateTime in a given %ZoneId
-          dateTime.%atZone(zone).%instant; // To %Instant in a given %ZoneId/%ZoneOffset
+          dateTime.%date;                 // To %LocalDate: 2022-02-15
+          dateTime.%time;                 // To %LocalTime: 18:30:15.225
+          dateTime.%atOffset(offset);     // To %OffsetDateTime in a given %ZoneOffset: 2022-02-15T18:30:15.225+01:00
+          dateTime.%atZone(zone);         // To %ZonedDateTime in a given %ZoneId: 2022-02-15T18:30:15.225+01:00[Europe/Berlin]
+          dateTime.%atZone(zone).%instant; // To %Instant in a given %ZoneId/%ZoneOffset: 2022-02-15T17:30:15.225Z
           </pre>
+          <p>Please notice that - when converting to %Instant - string presentation may change depending on the selected
+          time zone.</p>
           <p>In order to convert %LocalDateTime from one %ZoneId/%ZoneOffset to another, you must first convert it to
           an %Instant:</p>
           <pre>
@@ -297,7 +306,7 @@ symbols:
           <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
           <pre>
           const dateTime = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
-          date.%toString(); // "2022-02-15T18:30:15.225"
+          dateTime.%toString(); // "2022-02-15T18:30:15.225"
           </pre>
           <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
           <pre>
@@ -306,9 +315,9 @@ symbols:
           <p>Now you can construct an instance of %DateTimeFormatter in order to format arbitrary %LocalDateTime
           instances:</p>
           <pre>
-          const formatter = %DateTimeFormatter.%ofPattern("dd.MMM'yy, hh:mm a");
+          const formatter = %DateTimeFormatter.%ofPattern("dd.MMM''yy, hh:mm a");
           const dateTime = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
-          formatter.%format(date); // "15.Feb'22, 06:30 PM"
+          formatter.%format(dateTime); // "15.Feb'22, 06:30 PM"
           </pre>
           <p>You can define a custom %context object to internationalize the formatted strings:</p>
           <pre>

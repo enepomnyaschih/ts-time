@@ -24,8 +24,330 @@ symbols:
   default:
     kind: class
     description: |
-      Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
-      (%Instant, %ZoneOffset). Unambiguously identifies a %LocalDateTime.
+      <p>Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
+      (%Instant, %ZoneOffset). Unambiguously identifies a %LocalDateTime.</p>
+    topics:
+      construct:
+        header: Construct
+        text: |
+          <p>%OffsetDateTime has a very limited number of usage scenarios, so it has a limited number of ways to be
+          constructed to avoid its misuse. Always consider using other data structures (%ZonedDateTime, %LocalDateTime,
+          %Instant) before %OffsetDateTime.</p>
+          <p>Typically you don't construct %OffsetDateTime directly, but create it from other data structures:</p>
+          <pre>
+          %OffsetDateTime.%ofInstant(instant, offset);   // From %Instant in a given %ZoneOffset
+          instant.%atOffsetOfInstant(offset);                    // Equivalent
+          %OffsetDateTime.%ofDateTime(dateTime, offset); // From %LocalDateTime in a given %ZoneOffset
+          dateTime.%atOffsetOfDateTime(offset);                   // Equivalent
+          zonedDateTime.%offsetDateTime;                // From %ZonedDateTime
+          </pre>
+          <p>Please notice that:</p>
+          <ul>
+          <li>Conversion from %Instant may be counter-intuitive, as string presentation of the date/time may change:
+          <pre>
+          const offset  = %ZoneOffset.%ofComponentsOfOffset(-2);
+          const instant = %Instant.%parseOfInstant("2022-11-14T00:00:00.000Z");
+          console.log(instant.%atOffsetOfInstant(offset));           // "2022-11-13T22:00:00.000-02:00"
+          </pre>
+          It happens, because %OffsetDateTime preserves its %instant component in this case, not %dateTime:
+          <pre>
+          console.log(instant.%atOffsetOfInstant(offset).%instant);   // "2022-11-14T00:00:00.000Z"
+          console.log(instant.%atOffsetOfInstant(offset).%dateTime);  // "2022-11-13T22:00:00.000"
+          </pre></li>
+          <li>Conversion from %LocalDateTime, on the contrary, preserves %dateTime component:
+          <pre>
+          const dateTime = %LocalDateTime.%parseOfDateTime("2022-11-14T00:00:00.000");
+          console.log(dateTime.%atOffsetOfDateTime(offset));          // "2022-11-14T00:00:00.000-02:00"
+          console.log(dateTime.%atOffsetOfDateTime(offset).%dateTime); // "2022-11-14T00:00:00.000"
+          console.log(dateTime.%atOffsetOfDateTime(offset).%instant);  // "2022-11-14T02:00:00.000Z"
+          </pre></li>
+          <li>Conversion from %ZonedDateTime may result in a partial data loss (if the time zone has dynamic offset).</li>
+          </ul>
+        references:
+          parseOfInstant:
+            file: ts-time/Instant
+            member: parse
+            static: true
+            label: parse
+          parseOfDateTime:
+            file: ts-time/LocalDateTime
+            member: parse
+            static: true
+            label: parse
+          atOffsetOfInstant:
+            file: ts-time/Instant
+            member: atOffset
+            label: atOffset
+          atOffsetOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atOffset
+            label: atOffset
+          offsetDateTime:
+            file: ts-time/ZonedDateTime
+            member: offsetDateTime
+          ofComponentsOfOffset:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: ofComponents
+            static: true
+            label: ofComponents
+
+      parse:
+        header: Parse
+        text: |
+          <p>A common way to parse an ISO 8601 compliant string in ts-time is to call %parse static method. For example,
+          the following %OffsetDateTime instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+          15th of February, 2022, UTC-2 offset:</p></p>
+          <pre>
+          %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          </pre>
+          <p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+        references:
+          parse:
+            file: ts-time/OffsetDateTime
+            member: parse
+            static: true
+
+      inspect:
+        header: Inspect
+        text: |
+          <p>In the following example, we inspect various properties of a %OffsetDateTime object. Please notice
+          the difference in return value types:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          const year           = offsetDateTime.%year;            // 2022
+          const month          = offsetDateTime.%month;           // %FEBRUARY
+          const monthValue     = offsetDateTime.%month.%valueOfMonth;     // 2
+          const dayOfMonth     = offsetDateTime.%dayOfMonth;      // 15
+          const dayOfWeek      = offsetDateTime.%dayOfWeek;       // %TUESDAY
+          const dayOfWeekValue = offsetDateTime.%dayOfWeek.%valueOfDay; // 2
+          const hour           = offsetDateTime.%hour;            // 18
+          const minute         = offsetDateTime.%minute;          // 30
+          const second         = offsetDateTime.%second;          // 15
+          const ms             = offsetDateTime.%ms;              // 225
+          const offset         = offsetDateTime.%offset;          // Instance of %ZoneOffset
+          const offsetHours    = offsetDateTime.%offset.%hours;    // -2
+          const offsetMinutes  = offsetDateTime.%offset.%minutes;  // 0
+          const offsetSeconds  = offsetDateTime.%offset.%seconds;  // 0
+          </pre>
+          <p>Other sophisticated features for %OffsetDateTime inspection: %epochMs, %era, %yearOfEra, %weekBasedYear,
+          %weekOfWeekBasedYear, %dayOfYear, %dayOfWeekBasedYear, %epochDay, %quarterOfYear, %isLeapYear,
+          %lengthOfYear.</p>
+        references:
+          valueOfMonth:
+            file: ts-time/Month
+            member: value
+            label: value
+          valueOfDay:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+          hours:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: hours
+          minutes:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: minutes
+          seconds:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: seconds
+
+      compare:
+        header: Compare
+        text: |
+          <p>A common way to compare objects in ts-time is to call %equals, %isBefore, %isAfter, %compareTo methods:</p>
+          <pre>
+          const d1 = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          const d2 = %OffsetDateTime.%parse("2022-02-15T18:30:15.226-02:00");
+          d1.%equals(d2);    // false
+          d1.%isBefore(d2);  // true
+          d1.%isAfter(d2);   // false
+          d1.%compareTo(d2); // -1
+          </pre>
+          <p>The objects are first compared by %instant, and then by %offset. If you want to ignore %offset,
+          compare a specific component instead: %instant or %dateTime.</p>
+          <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+          except each other:</p>
+          <pre>
+          const d1 = null;
+          const d2 = %OffsetDateTime.%parse("2022-02-15T18:30:15.226-02:00");
+          %OffsetDateTime.%equal(d1, d2);     // false
+          %OffsetDateTime.%isBeforeStatic(d1, d2);  // true
+          %OffsetDateTime.%isAfterStatic(d1, d2);   // false
+          %OffsetDateTime.%compare(d1, d2);   // -1
+          </pre>
+        references:
+          isBeforeStatic:
+            file: ts-time/OffsetDateTime
+            member: isBefore
+            static: true
+            label: isBefore
+          isAfterStatic:
+            file: ts-time/OffsetDateTime
+            member: isAfter
+            static: true
+            label: isAfter
+          compare:
+            file: ts-time/OffsetDateTime
+            member: compare
+            static: true
+
+      manipulation:
+        header: Manipulate
+        text: |
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
+          <p>To add/subtract a %Period, call %plusPeriod/%minusPeriod method:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          const d1 = offsetDateTime.%plusPeriod(%DAY_PERIOD);                // 18:30:15.225 on 16th of February, 2022, UTC-2
+          const d2 = offsetDateTime.%plusPeriod(%Period.%ofDays(2));          // 18:30:15.225 on 17th of February, 2022, UTC-2
+          const d3 = offsetDateTime.%minusPeriod(%MONTH_PERIOD);             // 18:30:15.225 on 15th of January, 2022, UTC-2
+          </pre>
+          <p>The algorithm respects %dateTime to align periods, not %instant. In the following example, offsetDateTime
+          is the 1st of March in UTC+2, but still 28th of February in UTC. When adding a month, the library considers
+          offsetDateTime to be the 1st of March, so it adds 31 days, not 28:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-03-01T00:00:00.000+02:00");
+          const d1 = offsetDateTime.%plusPeriod(%MONTH_PERIOD);              // Midnight on 1st of April, 2022, UTC+2
+          </pre>
+          <p>If you expect a month to be added in %UTC, convert the %instant explicitly to %UTC first:</p>
+          <pre>
+          const d2 = offsetDateTime.%instant.%atOffset(%UTC).%plusPeriod(%MONTH_PERIOD); // 22:00 on 28th of March, 2022, UTC
+          </pre>
+          <p>To add/subtract a %Duration, call %plusDuration/%minusDuration method:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          const d1 = offsetDateTime.%plusDuration(%MINUTE_DURATION);         // 18:31:15.225 on 15th of February, 2022, UTC-2
+          const d2 = offsetDateTime.%plusDuration(%Duration.%ofHours(10));    // 04:30:15.225 on 16th of February, 2022, UTC-2
+          const d3 = offsetDateTime.%minusDuration(%Duration.%ofSeconds(30)); // 18:29:45.225 on 15th of February, 2022, UTC-2
+          </pre>
+          <p>For difference between %Period and %Duration, see their documentation. For %OffsetDateTime, they are
+          interchangeable - apart for the list of supported date/time components.</p>
+          <p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          const d1 = offsetDateTime.%withYear(2025);                        // 18:30:15.225 on 15th of February, 2025, UTC-2
+          const d2 = offsetDateTime.%withMonth(%APRIL);                      // 18:30:15.225 on 15th of April, 2022, UTC-2
+          const d3 = offsetDateTime.%withDayOfMonth(10);                    // 18:30:15.225 on 10th of February, 2022, UTC-2
+          const d4 = offsetDateTime.%withDayOfWeek(%SUNDAY);                 // 18:30:15.225 on 20th of February, 2022, Sunday, UTC-2
+          const d5 = offsetDateTime.%withHour(20);                          // 20:30:15.225 on 15th of February, 2022, UTC-2
+          const d6 = offsetDateTime.%withMinute(20);                        // 18:20:15.225 on 15th of February, 2022, UTC-2
+          const d7 = offsetDateTime.%withSecond(20);                        // 18:30:20.225 on 15th of February, 2022, UTC-2
+          const d8 = offsetDateTime.%withMs(20);                            // 18:30:15.020 on 15th of February, 2022, UTC-2
+          </pre>
+          <p>For manipulating %offset component, see %convert.</p>
+          <p><span class="text-danger">The library doesn't yet support %OffsetDateTime truncating.</span> Truncate its
+          %dateTime component instead.</p>
+          <p>Another sophisticated feature for %OffsetDateTime manipulation: %withDayOfYear.</p>
+        references:
+          atOffset:
+            file: ts-time/Instant
+            member: atOffset
+          ofHours:
+            file: ts-time/Duration
+            member: ofHours
+            static: true
+          ofSeconds:
+            file: ts-time/Duration
+            member: ofSeconds
+            static: true
+          ofDays:
+            file: ts-time/Period
+            member: ofDays
+            static: true
+          valueOfDayOfWeek:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+          convert:
+            href: '#conversion'
+            label: Convert
+
+      conversion:
+        header: Convert
+        text: |
+          <p>You can convert %OffsetDateTime to other kinds of objects via its properties:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          offsetDateTime.%instant;                   // To %Instant: 2022-02-15T20:30:15.225Z
+          offsetDateTime.%date;                      // To %LocalDate: 2022-02-15
+          offsetDateTime.%time;                      // To %LocalTime: 18:30:15.225
+          offsetDateTime.%dateTime;                  // To %LocalDateTime: 2022-02-15T18:30:15.225
+          offsetDateTime.%instant.%atOffsetOfInstant(offset);  // To %OffsetDateTime with another %ZoneOffset, preserving %instant component: 2022-02-16T00:30:15.225+04:00
+          offsetDateTime.%dateTime.%atOffsetOfDateTime(offset); // To %OffsetDateTime with another %ZoneOffset, preserving %dateTime component: 2022-02-15T18:30:15.225+04:00
+          offsetDateTime.%instant.%atZoneOfInstant(zone);      // To %ZonedDateTime in a given %ZoneId, preserving %instant component: 2022-02-15T20:30:15.225Z
+          offsetDateTime.%dateTime.%atZoneOfDateTime(zone);     // To %ZonedDateTime in a given %ZoneId, preserving %dateTime component: 2022-02-15T18:30:15.225Z
+          </pre>
+          <p>You can as well convert %OffsetDateTime to a native JavaScript %Date:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          offsetDateTime.%native;                    // Date representing 18:30:15.225 on 15th of February, UTC-2
+          </pre>
+          <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
+          date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
+          <p>For backward conversion, see %construct.</p>
+        references:
+          atOffsetOfInstant:
+            file: ts-time/Instant
+            member: atOffset
+            label: atOffset
+          atOffsetOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atOffset
+            label: atOffset
+          atZoneOfInstant:
+            file: ts-time/Instant
+            member: atZone
+            label: atZone
+          atZoneOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atZone
+            label: atZone
+          construct:
+            href: '#construct'
+            label: Construct
+
+      format:
+        header: Format
+        text: |
+          <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
+          <pre>
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          offsetDateTime.%toString(); // "2022-02-15T18:30:15.225-02:00"
+          </pre>
+          <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
+          <pre>
+          npm install --save %tsTimeFormat
+          </pre>
+          <p>Now you can construct an instance of %OffsetDateTimeFormatter in order to format arbitrary %OffsetDateTime
+          instances:</p>
+          <pre>
+          const formatter = %OffsetDateTimeFormatter.%ofPattern("dd.MMM''yy, hh:mm a, ('UTC'x)");
+          const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
+          formatter.%format(offsetDateTime); // "15.Feb'22, 06:30 PM (UTC-02)"
+          </pre>
+          <p>You can define a custom %context object to internationalize the formatted strings:</p>
+          <pre>
+          const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+          formatter.%format(date, context); // "15.Фев'22, 06:30 PM (UTC-02)"
+          </pre>
+        references:
+          toString:
+            file: ts-time/OffsetDateTime
+            member: toString
+          ofPattern:
+            file: ts-time-format/OffsetDateTimeFormatter
+            member: ofPattern
+            static: true
+          format:
+            file: ts-time-format/OffsetDateTimeFormatter
+            member: format
+          context:
+            file: ts-time-format/constants
+            symbol: DEFAULT_TEMPORAL_CONTEXT
 
     properties:
       dateTime:

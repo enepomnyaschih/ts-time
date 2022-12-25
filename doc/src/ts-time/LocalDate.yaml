@@ -39,7 +39,7 @@ symbols:
           because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
           and convert it to an object that you need, taking time zone into consideration.</p>
           <pre>
-          %Instant.%now().%atZone(%UTC).%date;             // Current LocalDate in UTC
+          %Instant.%now().%atZone(%UTC).%date;             // Current LocalDate in %UTC
           %Instant.%now().%atZone(%LOCAL_ZONE_ID).%date;   // Current LocalDate in the local time zone
           %Instant.%now().%atZone(zone).%date;            // Current LocalDate in a given %ZoneId/%ZoneOffset
           </pre>
@@ -58,6 +58,7 @@ symbols:
           offsetDateTime.%dateOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
           zonedDateTime.%date;                         // From %ZonedDateTime in the same %ZoneId
           </pre>
+          <p>Please notice that all these conversions result in a partial data loss (time, zone, offset).</p>
           <p>Other sophisticated constructors: %ofEpochDay, %ofYearDay, %ofWeek, %ofWeekBasedYearDay.</p>
         references:
           dateOfLocal:
@@ -166,7 +167,7 @@ symbols:
         header: Manipulate
         text: |
           <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
-          <p>To add/subtract a period, call %plus/%minus method:</p>
+          <p>To add/subtract a %Period, call %plus/%minus method:</p>
           <pre>
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           const d1 = date.%plus(%DAY_PERIOD);       // 16th of February, 2022
@@ -261,7 +262,7 @@ symbols:
           </pre>
           <p>Now you can construct an instance of %DateFormatter in order to format arbitrary %LocalDate instances:</p>
           <pre>
-          const formatter = %DateFormatter.%ofPattern("dd.MMM'yy");
+          const formatter = %DateFormatter.%ofPattern("dd.MMM''yy");
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);
           formatter.%format(date); // "15.Feb'22"
           </pre>

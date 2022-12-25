@@ -39,7 +39,7 @@ symbols:
           because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
           and convert it to an object that you need, taking time zone into consideration.</p>
           <pre>
-          %Instant.%now().%atZone(%UTC).%time;             // Current LocalTime in UTC
+          %Instant.%now().%atZone(%UTC).%time;             // Current LocalTime in %UTC
           %Instant.%now().%atZone(%LOCAL_ZONE_ID).%time;   // Current LocalTime in the local time zone
           %Instant.%now().%atZone(zone).%time;            // Current LocalTime in a given %ZoneId/%ZoneOffset
           </pre>
@@ -58,6 +58,7 @@ symbols:
           offsetDateTime.%timeOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
           zonedDateTime.%time;                         // From %ZonedDateTime in the same %ZoneId
           </pre>
+          <p>Please notice that all these conversions result in a partial data loss (date, time zone, offset).</p>
           <p>For some commonly used time moments, there are predefined %LocalTime instances: %MIDNIGHT, %NOON,
           %MIN_TIME, %MAX_TIME, %MAX_TIME12.</p>
           <p>Another sophisticated constructor: %ofTotalMs.</p>
@@ -154,7 +155,7 @@ symbols:
         header: Manipulate
         text: |
           <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
-          <p>To add/subtract a duration, call %plus/%minus method. Please notice that the result is always between
+          <p>To add/subtract a %Duration, call %plus/%minus method. Please notice that the result is always between
           00:00:00.000 inclusive and 24:00:00.000 exclusive:</p>
           <pre>
           const time = %LocalTime.%of(18, 30, 15, 225);
