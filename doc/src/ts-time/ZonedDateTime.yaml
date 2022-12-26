@@ -62,6 +62,20 @@ symbols:
           <li>%ZonedDateTime is the highest-level date/time presentation in ts-time, thus none of the conversions
           listed above result in any data loss.</li>
           </ul>
+          <p>As opposed to Java API, there's no common way to get the current instance of %ZonedDateTime in ts-time,
+          because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
+          and convert it to an object that you need, taking time zone into consideration.</p>
+          <pre>
+          %Instant.%now().%atZoneOfInstant(%UTC);             // Current %ZonedDateTime in %UTC
+          %Instant.%now().%atZoneOfInstant(%LOCAL_ZONE_ID);   // Current %ZonedDateTime in the local time zone
+          %Instant.%now().%atZoneOfInstant(zone);            // Current %ZonedDateTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          static method:</p>
+          <pre>
+          %Instant.%fromNative(date).%atZoneOfInstant(zone); // %ZonedDateTime from a given %Date in a given %ZoneId/%ZoneOffset
+          </pre>
         references:
           parseOfInstant:
             file: ts-time/Instant
@@ -95,6 +109,14 @@ symbols:
             member: of
             static: true
             label: of
+          now:
+            file: ts-time/Instant
+            member: now
+            static: true
+          fromNative:
+            file: ts-time/Instant
+            member: fromNative
+            static: true
 
       parse:
         header: Parse
@@ -291,10 +313,11 @@ symbols:
           zonedDateTime.%instant.%atZoneOfInstant(zone);      // To %ZonedDateTime with another %ZoneId, preserving %instant component: 2022-02-15T00:30:15.225+01:00[Europe/Berlin]
           zonedDateTime.%dateTime.%atZoneOfDateTime(zone);     // To %ZonedDateTime with another %ZoneId, preserving %dateTime component: 2022-02-15T18:30:15.225+01:00[Europe/Berlin]
           </pre>
+          <p>Please notice that all conversions result in a partial data loss (date, time, original time zone).</p>
           <p>You can as well convert %ZonedDateTime to a native JavaScript %Date:</p>
           <pre>
           const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
-          zonedDateTime.%native;                    // Date representing 18:30:15.225 on 15th of February, UTC-5
+          zonedDateTime.%native;                    // %Date representing 18:30:15.225 on 15th of February, UTC-5
           </pre>
           <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
           date/time when printing it as a string. It will be the same instant, just a different time zone.</p>

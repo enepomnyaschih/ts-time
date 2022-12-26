@@ -281,6 +281,7 @@ symbols:
           offsetDateTime.%instant.%atZoneOfInstant(zone);      // To %ZonedDateTime in a given %ZoneId, preserving %instant component: 2022-02-15T20:30:15.225Z
           offsetDateTime.%dateTime.%atZoneOfDateTime(zone);     // To %ZonedDateTime in a given %ZoneId, preserving %dateTime component: 2022-02-15T18:30:15.225Z
           </pre>
+          <p>Please notice that all conversions result in a partial data loss (date, time, original offset).</p>
           <p>You can as well convert %OffsetDateTime to a native JavaScript %Date:</p>
           <pre>
           const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");

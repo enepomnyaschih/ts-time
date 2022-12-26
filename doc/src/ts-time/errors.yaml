@@ -94,6 +94,7 @@ symbols:
     description: |
       Provided string contains an offset that doesn't match the specified time zone at a given date/time. For example,
       "2019-07-05T18:30:15.225Z[Europe/Berlin]", because Europe/Berlin time zone has +01:00 offset in summer.
+      One of possible reasons for %TemporalParsingError.
 
     properties:
       offset:
@@ -112,7 +113,7 @@ symbols:
       - file: ts-time/errors
         symbol: TemporalError
     description: |
-      Provided day of week number is NaN or out of 1-7 bounds.
+      Provided day of week number is NaN, fractional or out of 1-7 bounds.
 
     properties:
       value:
@@ -126,7 +127,7 @@ symbols:
       - file: ts-time/errors
         symbol: TemporalError
     description: |
-      Provided month number is NaN or out of 1-12 bounds.
+      Provided month number is NaN, fractional or out of 1-12 bounds. One of possible reasons for %TemporalParsingError.
 
     properties:
       value:

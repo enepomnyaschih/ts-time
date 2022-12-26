@@ -37,21 +37,21 @@ symbols:
           %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 225);
           %LocalDateTime.%ofComponents(2022, 2, 15, 18, 30, 15, 225);
           </pre>
-          <p>As opposed to Java API, there's no common way to get the current instance of an object in ts-time,
+          <p>As opposed to Java API, there's no common way to get the current instance of %LocalDateTime in ts-time,
           because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
           and convert it to an object that you need, taking time zone into consideration.</p>
           <pre>
-          %Instant.%now().%atZone(%UTC).%dateTime;             // Current LocalDateTime in %UTC
-          %Instant.%now().%atZone(%LOCAL_ZONE_ID).%dateTime;   // Current LocalDateTime in the local time zone
-          %Instant.%now().%atZone(zone).%dateTime;            // Current LocalDateTime in a given %ZoneId/%ZoneOffset
+          %Instant.%now().%atZone(%UTC).%dateTime;             // Current %LocalDateTime in %UTC
+          %Instant.%now().%atZone(%LOCAL_ZONE_ID).%dateTime;   // Current %LocalDateTime in the local time zone
+          %Instant.%now().%atZone(zone).%dateTime;            // Current %LocalDateTime in a given %ZoneId/%ZoneOffset
           </pre>
           <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
           <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
           static method:</p>
           <pre>
-          %LocalDateTime.%fromNativeUtc(date);              // LocalDateTime from a given %Date in %UTC
-          %LocalDateTime.%fromNativeLocal(date);            // LocalDateTime from a given %Date in the local time zone
-          %Instant.%fromNative(date).%atZone(zone).%dateTime; // LocalDateTime from a given %Date in a given %ZoneId/%ZoneOffset
+          %LocalDateTime.%fromNativeUtc(date);              // %LocalDateTime from a given %Date in %UTC
+          %LocalDateTime.%fromNativeLocal(date);            // %LocalDateTime from a given %Date in the local time zone
+          %Instant.%fromNative(date).%atZone(zone).%dateTime; // %LocalDateTime from a given %Date in a given %ZoneId/%ZoneOffset
           </pre>
           <p>You can convert instances of other ts-time classes to %LocalDateTime via their properties and methods:</p>
           <pre>
