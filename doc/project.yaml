@@ -46,6 +46,22 @@ references:
     file: ts-time/DayOfWeek
     symbol: TUESDAY
 
+  WEDNESDAY:
+    file: ts-time/DayOfWeek
+    symbol: WEDNESDAY
+
+  THURSDAY:
+    file: ts-time/DayOfWeek
+    symbol: THURSDAY
+
+  FRIDAY:
+    file: ts-time/DayOfWeek
+    symbol: FRIDAY
+
+  SATURDAY:
+    file: ts-time/DayOfWeek
+    symbol: SATURDAY
+
   SUNDAY:
     file: ts-time/DayOfWeek
     symbol: SUNDAY

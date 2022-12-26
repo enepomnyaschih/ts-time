@@ -166,7 +166,7 @@ symbols:
       manipulation:
         header: Manipulate
         text: |
-          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
           <p>To add/subtract a %Period, call %plus/%minus method:</p>
           <pre>
           const date = %LocalDate.%of(2022, %FEBRUARY, 15);

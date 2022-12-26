@@ -154,7 +154,7 @@ symbols:
       manipulation:
         header: Manipulate
         text: |
-          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new instance of an object.</p>
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
           <p>To add/subtract a %Duration, call %plus/%minus method. Please notice that the result is always between
           00:00:00.000 inclusive and 24:00:00.000 exclusive:</p>
           <pre>
