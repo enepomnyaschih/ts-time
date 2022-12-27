@@ -64,4 +64,15 @@ describe("ZonedDateTimeFormatter", () => {
 			"Europe/Berlin"
 		);
 	});
+
+	it("should be properly documented", () => {
+		const formatter = ZonedDateTimeFormatter.ofPattern("dd.MMM''yy, hh:mm a ('UTC'x, V)");
+		const zonedDateTime = ZonedDateTime.parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+		const str = formatter.format(zonedDateTime);
+		expect(str).equal("15.Feb'22, 06:30 PM (UTC-05, America/New_York)");
+
+		const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+		const str2 = formatter.format(zonedDateTime, context);
+		expect(str2).equal("15.Фев'22, 06:30 PM (UTC-05, America/New_York)");
+	});
 });
