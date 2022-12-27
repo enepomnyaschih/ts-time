@@ -128,7 +128,7 @@ symbols:
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
           <pre>
-          const t1 = null;
+          const t1: %LocalTime = null;
           const t2 = %LocalTime.%of(18, 30, 15, 225);
           %LocalTime.%equal(t1, t2);     // false
           %LocalTime.%isBeforeStatic(t1, t2);  // true

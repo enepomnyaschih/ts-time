@@ -34,8 +34,11 @@ import Duration, {
 	WEEK_DURATION
 } from "ts-time/Duration";
 import Instant from "ts-time/Instant";
+import LocalDateTime from "ts-time/LocalDateTime";
+import OffsetDateTime from "ts-time/OffsetDateTime";
 import {isTimeZoneSupport} from "ts-time/utils";
-import {ZoneId, ZoneOffset} from "ts-time/Zone";
+import {UTC, ZoneId, ZoneOffset} from "ts-time/Zone";
+import ZonedDateTime from "ts-time/ZonedDateTime";
 
 describe("Instant", () => {
 	const native = new Date(Date.UTC(2019, 8, 10, 10)),
@@ -264,5 +267,155 @@ describe("Instant", () => {
 	it("should convert itself to string", () => {
 		expect(instant.toString()).equal("2019-09-10T10:00:00.000Z");
 		expect(Instant.ofEpochMs(Date.UTC(2019, 8, 10, 1, 2, 3, 4)).toString()).equal("2019-09-10T01:02:03.004Z");
+	});
+
+	describe("examples", () => {
+		describe("construct", () => {
+			it("should construct from epoch ms", () => {
+				const msSinceEpoch: number = Date.UTC(2022, 1, 15, 18, 30, 15, 225);
+				const instant = Instant.ofEpochMs(msSinceEpoch);
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T18:30:15.225Z");
+			});
+
+			it("should construct from ZonedDateTime", () => {
+				const zonedDateTime = ZonedDateTime.parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+				const instant = zonedDateTime.instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+
+			it("should construct from OffsetDateTime", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-05:00");
+				const instant = offsetDateTime.instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+
+			it("should construct from LocalDateTime in a given time zone", () => {
+				const localDateTime = LocalDateTime.parse("2022-02-15T18:30:15.225");
+				const zone = ZoneId.of("America/New_York");
+				const instant = localDateTime.atZone(zone).instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+
+			it("should construct from LocalDateTime in a given offset", () => {
+				const localDateTime = LocalDateTime.parse("2022-02-15T18:30:15.225");
+				const offset = ZoneOffset.ofComponents(-5);
+				const instant = localDateTime.atZone(offset).instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+
+			it("should construct from native Date", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 30, 15, 225));
+				const instant = Instant.fromNative(date);
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T18:30:15.225Z");
+			});
+		});
+
+		describe("parse", () => {
+			it("should parse ISO 8601", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+		});
+
+		describe("inspect", () => {
+			it("should return various properties", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const zonedDateTime = instant.atZone(UTC);
+				const hour = zonedDateTime.hour;            // 18
+				const minute = zonedDateTime.minute;          // 30
+				expect(hour).equal(18);
+				expect(minute).equal(30);
+			});
+		});
+
+		describe("compare", () => {
+			it("should compare non-null instances", () => {
+				const d1 = Instant.parse("2022-02-15T18:30:15.225Z");
+				const d2 = Instant.parse("2022-02-15T18:30:15.226Z");
+				expect(d1.equals(d2)).equal(false);
+				expect(d1.isBefore(d2)).equal(true);
+				expect(d1.isAfter(d2)).equal(false);
+				expect(d1.compareTo(d2)).equal(-1);
+			});
+
+			it("should compare nullable instances", () => {
+				const d1: Instant = null;
+				const d2 = Instant.parse("2022-02-15T18:30:15.226Z");
+				expect(Instant.equal(d1, d2)).equal(false);
+				expect(Instant.isBefore(d1, d2)).equal(true);
+				expect(Instant.isAfter(d1, d2)).equal(false);
+				expect(Instant.compare(d1, d2)).equal(-1);
+			});
+		});
+
+		describe("manipulate", () => {
+			it("should add/subtract duration", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const d1 = instant.plus(MINUTE_DURATION);         // 2022-02-15T18:31:15.225Z
+				const d2 = instant.plus(Duration.ofHours(10));    // 2022-02-16T04:30:15.225Z
+				const d3 = instant.minus(Duration.ofSeconds(30)); // 2022-02-15T18:29:45.225Z
+				expect(d1).instanceof(Instant);
+				expect(d2).instanceof(Instant);
+				expect(d3).instanceof(Instant);
+				expect(d1.toString()).equal("2022-02-15T18:31:15.225Z");
+				expect(d2.toString()).equal("2022-02-16T04:30:15.225Z");
+				expect(d3.toString()).equal("2022-02-15T18:29:45.225Z");
+			});
+		});
+
+		describe("convert", () => {
+			it("should convert to ZonedDateTime", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const zone = ZoneId.of("Europe/Berlin");
+				const zonedDateTime = instant.atZone(zone);
+				expect(zonedDateTime).instanceof(ZonedDateTime);
+				expect(zonedDateTime.toString()).equal("2022-02-15T19:30:15.225+01:00[Europe/Berlin]");
+			});
+
+			it("should convert to OffsetDateTime", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const offset = ZoneOffset.ofComponents(2);
+				const offsetDateTime = instant.atOffset(offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-02-15T20:30:15.225+02:00");
+			});
+
+			it("should convert to LocalDateTime in a given time zone", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const zone = ZoneId.of("Europe/Berlin");
+				const dateTime = instant.atZone(zone).dateTime;
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T19:30:15.225");
+			});
+
+			it("should convert to LocalDateTime in a given offset", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const offset = ZoneOffset.ofComponents(2);
+				const dateTime = instant.atOffset(offset).dateTime;
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T20:30:15.225");
+			});
+
+			it("should convert to native Date", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const date = instant.native;
+				expect(date).instanceof(Date);
+				expect(date.getTime()).equal(Date.UTC(2022, 1, 15, 18, 30, 15, 225));
+			});
+		});
+
+		describe("format", () => {
+			it("should format in ISO 8601", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+				expect(instant.toString()).equal("2022-02-15T23:30:15.225Z");
+			});
+		});
 	});
 });

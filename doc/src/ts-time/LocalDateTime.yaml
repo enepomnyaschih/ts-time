@@ -159,7 +159,7 @@ symbols:
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
           <pre>
-          const d1 = null;
+          const d1: %LocalDateTime = null;
           const d2 = %LocalDateTime.%ofComponents(2022, %FEBRUARY, 15, 18, 30, 15, 226);
           %LocalDateTime.%equal(d1, d2);     // false
           %LocalDateTime.%isBeforeStatic(d1, d2);  // true

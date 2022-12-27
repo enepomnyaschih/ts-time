@@ -204,7 +204,7 @@ symbols:
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
           <pre>
-          const d1 = null;
+          const d1: %ZonedDateTime = null;
           const d2 = %ZonedDateTime.%parse("2022-02-15T18:30:15.226-05:00[America/New_York]");
           %ZonedDateTime.%equal(d1, d2);     // false
           %ZonedDateTime.%isBeforeStatic(d1, d2);  // true

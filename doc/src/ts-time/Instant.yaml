@@ -133,7 +133,7 @@ symbols:
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
           <pre>
-          const d1 = null;
+          const d1: %Instant = null;
           const d2 = %Instant.%parse("2022-02-15T18:30:15.226Z");
           %Instant.%equal(d1, d2);     // false
           %Instant.%isBeforeStatic(d1, d2);  // true
@@ -188,22 +188,36 @@ symbols:
           <p>You can convert %Instant to other kinds of objects via its methods:</p>
           <pre>
           const instant = %Instant.%parse("2022-02-15T18:30:15.225Z");
-          instant.%atZone(zone);              // To %ZonedDateTime in a given time zone: 2022-02-15T20:30:15.225+02:00[Europe/Berlin]
-          instant.%atOffset(offset);          // To %OffsetDateTime in a given offset: 2022-02-15T20:30:15.225+02:00
-          instant.%atZone(zone).%dateTimeOfZonedDateTime;     // To %LocalDateTime in a given time zone: 2022-02-15T20:30:15.225 (if zone is Europe/Berlin)
-          instant.%atOffset(offset).%dateTimeOfOffsetDateTime; // To %LocalDateTime in a given offset: 2022-02-15T20:30:15.225 (if offset is +02:00)
+          const zone    = %ZoneId.%ofOfZoneId("Europe/Berlin");
+          const offset  = %ZoneOffset.%ofOfOffset(2);
+          instant.%atZone(zone);              // To %ZonedDateTime  in a given time zone: 2022-02-15T19:30:15.225+01:00[Europe/Berlin]
+          instant.%atOffset(offset);          // To %OffsetDateTime in a given offset:    2022-02-15T20:30:15.225+02:00
+          instant.%atZone(zone).%dateTimeOfZonedDateTime;     // To %LocalDateTime  in a given time zone: 2022-02-15T19:30:15.225
+          instant.%atOffset(offset).%dateTimeOfOffsetDateTime; // To %LocalDateTime  in a given offset:    2022-02-15T20:30:15.225
           </pre>
-          <p>Please notice that conversions to %LocalDateTime, %LocalDate and %LocalTime result in a partial data loss
-          (instant becomes ambiguous).</p>
+          <p>Please notice that conversion to %LocalDateTime results in a partial data loss
+          (instant becomes ambiguous due to lack of time zone/offset attachment).</p>
           <p>You can as well convert %Instant to a native JavaScript %Date:</p>
           <pre>
           const instant = %Instant.%parse("2022-02-15T18:30:15.225Z");
-          instant.%native;                    // %Date representing 18:30:15.225 on 15th of February (UTC)
+          instant.%native;                    // %Date representing 18:30:15.225 on 15th of February, 2022 (UTC)
           </pre>
           <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
           date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
           <p>For backward conversion, see %construct.</p>
         references:
+          ofOfZoneId:
+            file: ts-time/Zone
+            symbol: ZoneId
+            member: of
+            static: true
+            label: of
+          ofOfOffset:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: ofComponents
+            static: true
+            label: ofComponents
           dateTimeOfZonedDateTime:
             file: ts-time/ZonedDateTime
             member: dateTime
@@ -224,6 +238,7 @@ symbols:
           const instant = %Instant.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
           instant.%toString(); // "2022-02-15T23:30:15.225Z"
           </pre>
+          <p>Please notice that the instant is always formatted in %UTC, because %Instant doesn't have a time zone.</p>
           <p>For more sophisticated string formatting, you must first convert the %Instant to %ZonedDateTime or
           %OffsetDateTime and then use their formatting functionality.</p>
         references:
