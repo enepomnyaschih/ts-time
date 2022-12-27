@@ -46,20 +46,20 @@ symbols:
           <li>Conversion from %Instant may be counter-intuitive, as string presentation of the date/time may change:
           <pre>
           const offset  = %ZoneOffset.%ofComponentsOfOffset(-2);
-          const instant = %Instant.%parseOfInstant("2022-11-14T00:00:00.000Z");
-          console.log(instant.%atOffsetOfInstant(offset));           // "2022-11-13T22:00:00.000-02:00"
+          const instant = %Instant.%parseOfInstant("2022-06-14T00:00:00.000Z");
+          console.log(instant.%atOffsetOfInstant(offset));           // "2022-06-13T22:00:00.000-02:00"
           </pre>
           It happens, because %OffsetDateTime preserves its %instant component in this case, not %dateTime:
           <pre>
-          console.log(instant.%atOffsetOfInstant(offset).%instant);   // "2022-11-14T00:00:00.000Z"
-          console.log(instant.%atOffsetOfInstant(offset).%dateTime);  // "2022-11-13T22:00:00.000"
+          console.log(instant.%atOffsetOfInstant(offset).%instant);   // "2022-06-14T00:00:00.000Z"
+          console.log(instant.%atOffsetOfInstant(offset).%dateTime);  // "2022-06-13T22:00:00.000"
           </pre></li>
           <li>Conversion from %LocalDateTime, on the contrary, preserves %dateTime component:
           <pre>
-          const dateTime = %LocalDateTime.%parseOfDateTime("2022-11-14T00:00:00.000");
-          console.log(dateTime.%atOffsetOfDateTime(offset));          // "2022-11-14T00:00:00.000-02:00"
-          console.log(dateTime.%atOffsetOfDateTime(offset).%dateTime); // "2022-11-14T00:00:00.000"
-          console.log(dateTime.%atOffsetOfDateTime(offset).%instant);  // "2022-11-14T02:00:00.000Z"
+          const dateTime = %LocalDateTime.%parseOfDateTime("2022-06-14T00:00:00.000");
+          console.log(dateTime.%atOffsetOfDateTime(offset));          // "2022-06-14T00:00:00.000-02:00"
+          console.log(dateTime.%atOffsetOfDateTime(offset).%dateTime); // "2022-06-14T00:00:00.000"
+          console.log(dateTime.%atOffsetOfDateTime(offset).%instant);  // "2022-06-14T02:00:00.000Z"
           </pre></li>
           <li>Conversion from %ZonedDateTime may result in a partial data loss (if the time zone has dynamic offset).</li>
           </ul>
@@ -158,38 +158,40 @@ symbols:
       compare:
         header: Compare
         text: |
-          <p>A common way to compare objects in ts-time is to call %equals, %isBefore, %isAfter, %compareTo methods:</p>
+          <p>A common way to compare objects in ts-time is to call %equals, %compareTo methods:</p>
           <pre>
           const d1 = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
           const d2 = %OffsetDateTime.%parse("2022-02-15T18:30:15.226-02:00");
           d1.%equals(d2);    // false
-          d1.%isBefore(d2);  // true
-          d1.%isAfter(d2);   // false
           d1.%compareTo(d2); // -1
           </pre>
-          <p>The objects are first compared by %instant, and then by %offset. If you want to ignore %offset,
-          compare a specific component instead: %instant or %dateTime.</p>
+          <p>The objects are first compared by %instant, and then by %offset.</p>
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
           <pre>
           const d1: %OffsetDateTime = null;
           const d2 = %OffsetDateTime.%parse("2022-02-15T18:30:15.226-02:00");
-          %OffsetDateTime.%equal(d1, d2);     // false
-          %OffsetDateTime.%isBeforeStatic(d1, d2);  // true
-          %OffsetDateTime.%isAfterStatic(d1, d2);   // false
-          %OffsetDateTime.%compare(d1, d2);   // -1
+          %OffsetDateTime.%equal(d1, d2);   // false
+          %OffsetDateTime.%compare(d1, d2); // -1
+          </pre>
+          <p>As opposed to the majority of objects in ts-time, %OffsetDateTime doesn't have <b>isBefore</b> and
+          <b>isAfter</b> methods. You must explicitly specify which component you want to compare: %instant or
+          %dateTime.</p>
+          <pre>
+          const d1 = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-05:00");
+          const d2 = %OffsetDateTime.%parse("2022-02-15T20:30:15.226+01:00");
+          d1.%instant.%isBeforeOfInstant(d2.%instant);   // false
+          d1.%dateTime.%isBeforeOfDateTime(d2.%dateTime); // true
           </pre>
         references:
-          isBeforeStatic:
-            file: ts-time/OffsetDateTime
+          isBeforeOfInstant:
+            file: ts-time/Instant
             member: isBefore
-            static: true
             label: isBefore
-          isAfterStatic:
-            file: ts-time/OffsetDateTime
-            member: isAfter
-            static: true
-            label: isAfter
+          isBeforeOfDateTime:
+            file: ts-time/LocalDateTime
+            member: isBefore
+            label: isBefore
           compare:
             file: ts-time/OffsetDateTime
             member: compare
@@ -285,7 +287,7 @@ symbols:
           <p>You can as well convert %OffsetDateTime to a native JavaScript %Date:</p>
           <pre>
           const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
-          offsetDateTime.%native;                    // Date representing 18:30:15.225 on 15th of February, UTC-2
+          offsetDateTime.%native;                    // Date representing 20:30:15.225 on 15th of February, 2022 (UTC)
           </pre>
           <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
           date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
@@ -500,26 +502,6 @@ symbols:
           True if this offset date/time is equal to %other, i.e. all components are equal.
           Null and undefined are only equal to each other. %%null
 
-      isBefore:
-        signature: |
-          (other: %OffsetDateTime): boolean
-        params:
-          other: Offset date/time to compare to.
-        returns: |
-          True if this offset date/time goes before %other.
-          The objects are first compared by instant, and then by offset.
-          Null and undefined go before anything, except each other. %%null
-
-      isAfter:
-        signature: |
-          (other: %OffsetDateTime): boolean
-        params:
-          other: Offset date/time to compare to.
-        returns: |
-          True if this offset date/time goes after %other.
-          The objects are first compared by instant, and then by offset.
-          Null and undefined go before anything, except each other. %%null
-
       plusDuration:
         signature: |
           (duration: %Duration): %OffsetDateTime
@@ -674,25 +656,3 @@ symbols:
         returns: |
           True if %x is equal to %y, i.e. all components are equal.
           Null and undefined are only equal to each other.
-
-      isBefore:
-        signature: |
-          (x: %OffsetDateTime, y: %OffsetDateTime): boolean
-        params:
-          x: One offset date/time.
-          y: Another offset date/time.
-        returns: |
-          True if %x goes before %y.
-          The objects are first compared by instant, and then by offset.
-          Null and undefined go before anything, except each other.
-
-      isAfter:
-        signature: |
-          (x: %OffsetDateTime, y: %OffsetDateTime): boolean
-        params:
-          x: One offset date/time.
-          y: Another offset date/time.
-        returns: |
-          True if %x goes after %y.
-          The objects are first compared by instant, and then by offset.
-          Null and undefined go before anything, except each other.
