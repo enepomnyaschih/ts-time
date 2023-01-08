@@ -159,4 +159,11 @@ describe("TimeFormatter", () => {
 			"PM"
 		);
 	});
+
+	it("should be properly documented", () => {
+		const formatter = TimeFormatter.ofPattern("hh:mm a");
+		const time = LocalTime.of(18, 30, 15, 225);
+		const str = formatter.format(time);
+		expect(str).equal("06:30 PM");
+	});
 });
