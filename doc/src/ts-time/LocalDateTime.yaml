@@ -232,7 +232,7 @@ symbols:
           </pre>
           <p>Or a flexible solution, where firstDayOfWeek is 1 for Monday, and 7 for Sunday:
           <pre>
-          const d8 = dateTime.%truncateToDay.%minusPeriod(%Period.%ofDays((date.%dayOfWeek.%valueOfDayOfWeek + 7 - firstDayOfWeek) % 7));
+          const d8 = dateTime.%truncateToDay.%minusPeriod(%Period.%ofDays((dateTime.%dayOfWeek.%valueOfDayOfWeek + 7 - firstDayOfWeek) % 7));
           </pre>
           <p>Other sophisticated features for %LocalDateTime manipulation: %withDayOfYear, %truncateToWeekBasedYear.</p>
         references:

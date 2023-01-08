@@ -328,7 +328,7 @@ symbols:
           <p>Now you can construct an instance of %OffsetDateTimeFormatter in order to format arbitrary %OffsetDateTime
           instances:</p>
           <pre>
-          const formatter = %OffsetDateTimeFormatter.%ofPattern("dd.MMM''yy, hh:mm a, ('UTC'x)");
+          const formatter = %OffsetDateTimeFormatter.%ofPattern("dd.MMM''yy, hh:mm a ('UTC'x)");
           const offsetDateTime = %OffsetDateTime.%parse("2022-02-15T18:30:15.225-02:00");
           formatter.%format(offsetDateTime); // "15.Feb'22, 06:30 PM (UTC-02)"
           </pre>

@@ -62,4 +62,15 @@ describe("OffsetDateTimeFormatter", () => {
 			"+05 +0500 +05:00 +0500 +05:00"
 		);
 	});
+
+	it("should be properly documented", () => {
+		const formatter = OffsetDateTimeFormatter.ofPattern("dd.MMM''yy, hh:mm a ('UTC'x)");
+		const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+		const str = formatter.format(offsetDateTime);
+		expect(str).equal("15.Feb'22, 06:30 PM (UTC-02)");
+
+		const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+		const str2 = formatter.format(offsetDateTime, context);
+		expect(str2).equal("15.Фев'22, 06:30 PM (UTC-02)");
+	});
 });
