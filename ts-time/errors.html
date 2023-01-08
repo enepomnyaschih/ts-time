@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>ts-time/errors - ts-time</title>
+		<link rel="stylesheet" type="text/css" href="../bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="../styles.css">
+	</head>
+	<body>
+		<nav class="doc-header navbar navbar-expand-lg navbar-dark bg-dark">
+			<a class="navbar-brand" href="..">ts-time</a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="..">Home</a>
+					</li>
+					
+					<li class="nav-item">
+						<a class="nav-link dropdown-toggle" href="../doc.html"
+							data-dropdown="#index-dropdown">Modules <span class="sr-only">(current)</span></a>
+					</li>
+				</ul>
+				<form class="form-inline my-2 my-lg-0">
+					<div class="form-check text-light mr-2">
+		<input class="form-check-input" type="checkbox" id="navbarShowInherited">
+		<label class="form-check-label" for="navbarShowInherited">Expand inherited members</label>
+	</div>
+				</form>
+			</div>
+		</nav>
+		<div class="doc-contents">
+			
+				<nav class="doc-sidebar navbar navbar-light bg-light">
+					<nav class="doc-index nav nav-pills flex-column">
+						<a class="navbar-brand" href="#">ts-time/errors</a>
+						
+<a class="nav-link" href="#TemporalError">TemporalError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#TemporalError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#TemporalError---description">Description</a>
+
+
+
+<a class="nav-link" href="#TemporalError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#TemporalError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#TemporalParsingError">TemporalParsingError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#TemporalParsingError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#TemporalParsingError---description">Description</a>
+
+
+
+<a class="nav-link" href="#TemporalParsingError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#TemporalParsingError--str">str</a>
+<a class="nav-link" href="#TemporalParsingError--cls">cls</a>
+<a class="nav-link" href="#TemporalParsingError--reason">reason</a>
+<a class="nav-link font-italic" href="#TemporalParsingError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#InvalidTemporalFormatError">InvalidTemporalFormatError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#InvalidTemporalFormatError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#InvalidTemporalFormatError---description">Description</a>
+
+
+
+<a class="nav-link" href="#InvalidTemporalFormatError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#InvalidTemporalFormatError--expectedFormat">expectedFormat</a>
+<a class="nav-link font-italic" href="#InvalidTemporalFormatError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#InvalidTimeZoneError">InvalidTimeZoneError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#InvalidTimeZoneError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#InvalidTimeZoneError---description">Description</a>
+
+
+
+<a class="nav-link" href="#InvalidTimeZoneError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#InvalidTimeZoneError--id">id</a>
+<a class="nav-link font-italic" href="#InvalidTimeZoneError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#MismatchingOffsetError">MismatchingOffsetError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#MismatchingOffsetError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#MismatchingOffsetError---description">Description</a>
+
+
+
+<a class="nav-link" href="#MismatchingOffsetError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#MismatchingOffsetError--offset">offset</a>
+<a class="nav-link" href="#MismatchingOffsetError--zonedDateTime">zonedDateTime</a>
+<a class="nav-link font-italic" href="#MismatchingOffsetError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#InvalidDayOfWeekError">InvalidDayOfWeekError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#InvalidDayOfWeekError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#InvalidDayOfWeekError---description">Description</a>
+
+
+
+<a class="nav-link" href="#InvalidDayOfWeekError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#InvalidDayOfWeekError--value">value</a>
+<a class="nav-link font-italic" href="#InvalidDayOfWeekError--message">message</a></nav>
+
+
+
+</nav>
+
+<a class="nav-link" href="#InvalidMonthError">InvalidMonthError</a>
+
+<nav class="nav nav-pills flex-column">
+<a class="nav-link" href="#InvalidMonthError---hierarchy">Hierarchy</a>
+<a class="nav-link" href="#InvalidMonthError---description">Description</a>
+
+
+
+<a class="nav-link" href="#InvalidMonthError---properties">Properties</a>
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#InvalidMonthError--value">value</a>
+<a class="nav-link font-italic" href="#InvalidMonthError--message">message</a></nav>
+
+
+
+</nav>
+						<div class="py-3"></div>
+					</nav>
+				</nav>
+				<div class="doc-main">
+					<div class="container-fluid">
+						<h1><span id="default"></span>ts-time/errors</h1>
+						
+						<h3>Consumption</h3>
+						<pre class="doc-consumption">import * as errors from "ts-time/errors";</pre>
+						
+<h3><span id="TemporalError"></span>TemporalError<a class="anchorjs-link" href="#TemporalError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="TemporalError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#TemporalError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+<li><span style="margin-left: 0em"></span>class <b>TemporalError</b></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#TemporalParsingError">TemporalParsingError</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#InvalidTemporalFormatError">InvalidTemporalFormatError</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#InvalidTimeZoneError">InvalidTimeZoneError</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#MismatchingOffsetError">MismatchingOffsetError</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#InvalidDayOfWeekError">InvalidDayOfWeekError</a></li>
+
+<li><span style="margin-left: 2em"></span>class <a href="#InvalidMonthError">InvalidMonthError</a></li>
+
+</ul>
+<h4><span id="TemporalError---description"></span>Description<a class="anchorjs-link" href="#TemporalError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Base error class. Message of this error is designed to be user-friendly, thus can be displayed to the end user.
+Extends standard <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Error" target="_blank">Error</a>.
+
+
+
+
+<h4><span id="TemporalError---properties"></span>Fields<a class="anchorjs-link" href="#TemporalError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="TemporalError--message"></span>message<a class="anchorjs-link" href="#TemporalError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="TemporalParsingError"></span>TemporalParsingError<a class="anchorjs-link" href="#TemporalParsingError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="TemporalParsingError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#TemporalParsingError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>TemporalParsingError</b></li>
+
+</ul>
+<h4><span id="TemporalParsingError---description"></span>Description<a class="anchorjs-link" href="#TemporalParsingError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Error thrown by various temporal parsing methods.
+
+
+
+
+<h4><span id="TemporalParsingError---properties"></span>Fields<a class="anchorjs-link" href="#TemporalParsingError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="TemporalParsingError--str"></span>str<a class="anchorjs-link" href="#TemporalParsingError--str" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly str: string</code></p>
+Original string that was being parsed.
+</div>
+
+<h5><span id="TemporalParsingError--cls"></span>cls<a class="anchorjs-link" href="#TemporalParsingError--cls" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly cls: string</code></p>
+User-friendly temporal class name, such as "a local date", "local time" etc.
+</div>
+
+<h5><span id="TemporalParsingError--reason"></span>reason<a class="anchorjs-link" href="#TemporalParsingError--reason" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly reason: string</code></p>
+User-friendly error reason.
+</div>
+
+<h5><span id="TemporalParsingError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#TemporalParsingError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="InvalidTemporalFormatError"></span>InvalidTemporalFormatError<a class="anchorjs-link" href="#InvalidTemporalFormatError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="InvalidTemporalFormatError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#InvalidTemporalFormatError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>InvalidTemporalFormatError</b></li>
+
+</ul>
+<h4><span id="InvalidTemporalFormatError---description"></span>Description<a class="anchorjs-link" href="#InvalidTemporalFormatError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Provided string doesn't match ISO 8601 standard. One of possible reasons for <a href="#TemporalParsingError" target="_parent">TemporalParsingError</a>.
+
+
+
+
+<h4><span id="InvalidTemporalFormatError---properties"></span>Fields<a class="anchorjs-link" href="#InvalidTemporalFormatError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="InvalidTemporalFormatError--expectedFormat"></span>expectedFormat<a class="anchorjs-link" href="#InvalidTemporalFormatError--expectedFormat" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly expectedFormat: string</code></p>
+User-friendly name of the expected ISO 8601 format.
+</div>
+
+<h5><span id="InvalidTemporalFormatError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#InvalidTemporalFormatError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="InvalidTimeZoneError"></span>InvalidTimeZoneError<a class="anchorjs-link" href="#InvalidTimeZoneError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="InvalidTimeZoneError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#InvalidTimeZoneError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>InvalidTimeZoneError</b></li>
+
+</ul>
+<h4><span id="InvalidTimeZoneError---description"></span>Description<a class="anchorjs-link" href="#InvalidTimeZoneError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Provided string contains an invalid or unrecognized time zone ID or offset.
+One of possible reasons for <a href="#TemporalParsingError" target="_parent">TemporalParsingError</a>.
+
+
+
+
+<h4><span id="InvalidTimeZoneError---properties"></span>Fields<a class="anchorjs-link" href="#InvalidTimeZoneError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="InvalidTimeZoneError--id"></span>id<a class="anchorjs-link" href="#InvalidTimeZoneError--id" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly id: string</code></p>
+Time zone ID attempted to be parsed.
+</div>
+
+<h5><span id="InvalidTimeZoneError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#InvalidTimeZoneError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="MismatchingOffsetError"></span>MismatchingOffsetError<a class="anchorjs-link" href="#MismatchingOffsetError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="MismatchingOffsetError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#MismatchingOffsetError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>MismatchingOffsetError</b></li>
+
+</ul>
+<h4><span id="MismatchingOffsetError---description"></span>Description<a class="anchorjs-link" href="#MismatchingOffsetError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Provided string contains an offset that doesn't match the specified time zone at a given date/time. For example,
+"2019-07-05T18:30:15.225Z[Europe/Berlin]", because Europe/Berlin time zone has +01:00 offset in summer.
+One of possible reasons for <a href="#TemporalParsingError" target="_parent">TemporalParsingError</a>.
+
+
+
+
+<h4><span id="MismatchingOffsetError---properties"></span>Fields<a class="anchorjs-link" href="#MismatchingOffsetError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="MismatchingOffsetError--offset"></span>offset<a class="anchorjs-link" href="#MismatchingOffsetError--offset" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly offset: any</code></p>
+The specified time zone offset.
+</div>
+
+<h5><span id="MismatchingOffsetError--zonedDateTime"></span>zonedDateTime<a class="anchorjs-link" href="#MismatchingOffsetError--zonedDateTime" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly zonedDateTime: any</code></p>
+Mismatching date/time with a time zone.
+</div>
+
+<h5><span id="MismatchingOffsetError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#MismatchingOffsetError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="InvalidDayOfWeekError"></span>InvalidDayOfWeekError<a class="anchorjs-link" href="#InvalidDayOfWeekError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="InvalidDayOfWeekError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#InvalidDayOfWeekError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>InvalidDayOfWeekError</b></li>
+
+</ul>
+<h4><span id="InvalidDayOfWeekError---description"></span>Description<a class="anchorjs-link" href="#InvalidDayOfWeekError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Provided day of week number is NaN, fractional or out of 1-7 bounds.
+
+
+
+
+<h4><span id="InvalidDayOfWeekError---properties"></span>Fields<a class="anchorjs-link" href="#InvalidDayOfWeekError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="InvalidDayOfWeekError--value"></span>value<a class="anchorjs-link" href="#InvalidDayOfWeekError--value" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly value: any</code></p>
+The provided invalid value.
+</div>
+
+<h5><span id="InvalidDayOfWeekError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#InvalidDayOfWeekError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+<h3><span id="InvalidMonthError"></span>InvalidMonthError<a class="anchorjs-link" href="#InvalidMonthError" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h3>
+<div class="doc-section">
+
+<h4><span id="InvalidMonthError---hierarchy"></span>Hierarchy<a class="anchorjs-link" href="#InvalidMonthError---hierarchy" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+<ul class="doc-hierarchy">
+
+
+<li><span style="margin-left: 0em"></span>class <a href="#TemporalError">TemporalError</a></li>
+<li><span style="margin-left: 2em"></span>class <b>InvalidMonthError</b></li>
+
+</ul>
+<h4><span id="InvalidMonthError---description"></span>Description<a class="anchorjs-link" href="#InvalidMonthError---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+Provided month number is NaN, fractional or out of 1-12 bounds. One of possible reasons for <a href="#TemporalParsingError" target="_parent">TemporalParsingError</a>.
+
+
+
+
+<h4><span id="InvalidMonthError---properties"></span>Fields<a class="anchorjs-link" href="#InvalidMonthError---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
+
+<h5><span id="InvalidMonthError--value"></span>value<a class="anchorjs-link" href="#InvalidMonthError--value" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member">
+<p><code>readonly value: any</code></p>
+The provided invalid value.
+</div>
+
+<h5><span id="InvalidMonthError--message"></span><i>message</i> <span class="doc-inherit-mark">(inherited from <a href="#TemporalError" target="_parent">TemporalError</a>)</span><a class="anchorjs-link" href="#InvalidMonthError--message" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+<div class="doc-member doc-inherited">
+<p><code>readonly message: string</code></p>
+User-friendly user message.
+</div>
+
+
+
+</div>
+					</div>
+					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
+				</div>
+			
+		</div>
+		
+		<div id="index-dropdown" class="doc-dropdown" style="display: none"><div class="container-fluid">
+  <div class="row">
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time" target="_blank">ts-time</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="constants.html" target="_parent">constants</a></li>
+        <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
+        <li><a href="Duration.html" target="_parent">Duration</a></li>
+        <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><b>errors</b></li>
+        <li><a href="Instant.html" target="_parent">Instant</a></li>
+        <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
+        <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
+        <li><a href="LocalTime.html" target="_parent">LocalTime</a></li>
+        <li><a href="Month.html" target="_parent">Month</a></li>
+        <li><a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a></li>
+        <li><a href="Period.html" target="_parent">Period</a></li>
+        <li><a href="TimeField.html" target="_parent">TimeField</a></li>
+        <li><a href="utils.html" target="_parent">utils</a></li>
+        <li><a href="Zone.html" target="_parent">Zone</a></li>
+        <li><a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></li>
+      </ul>
+    </div>
+    <div class="col-6">
+      <h5><a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></h5>
+      <ul class="list-unstyled">
+        <li><a href="../ts-time-format/constants.html" target="_parent">constants</a></li>
+        <li><a href="../ts-time-format/DateFormatter.html" target="_parent">DateFormatter</a></li>
+        <li><a href="../ts-time-format/DateTimeFormatter.html" target="_parent">DateTimeFormatter</a></li>
+        <li><a href="../ts-time-format/OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a></li>
+        <li><a href="../ts-time-format/OffsetFormatter.html" target="_parent">OffsetFormatter</a></li>
+        <li><a href="../ts-time-format/TemporalCompiler.html" target="_parent">TemporalCompiler</a></li>
+        <li><a href="../ts-time-format/TemporalFormatter.html" target="_parent">TemporalFormatter</a></li>
+        <li><a href="../ts-time-format/TimeFormatter.html" target="_parent">TimeFormatter</a></li>
+        <li><a href="../ts-time-format/utils.html" target="_parent">utils</a></li>
+        <li><a href="../ts-time-format/ZonedDateTimeFormatter.html" target="_parent">ZonedDateTimeFormatter</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+</div>
+		<script type="text/javascript" src="../jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="../bootstrap.bundle.min.js"></script>
+		<script type="text/javascript" src="../scripts.js"></script>
+	</body>
+</html>

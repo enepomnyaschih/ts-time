@@ -103,13 +103,13 @@
 variable-length interval such as month. Month <b>duration</b> varies from 28 to 31 days, but in terms of
 <b>periods</b>, month is a valid unit. <b>Period</b> is mainly involved to manipulate date/time-related objects such as
 <a href="LocalDate.html" target="_parent">LocalDate</a>, <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>, <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> and <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>. In particular, <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--plusPeriod" target="_parent">plusPeriod</a> method
-adds the period to a respective date/time, not instant. It means that if you add <a href="#DAY_PERIOD" target="_parent">DAY_PERIOD</a> to a <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>,
-the real time shift will not be 24 hours if time zone offset changes during this day, while <a href="LocalTime.html" target="_parent">LocalTime</a> will truly
+adds a period to the respective date/time, not instant. It means that if you add <a href="#DAY_PERIOD" target="_parent">DAY_PERIOD</a> to a <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>,
+the real time shift won't be 24 hours if time zone offset changes during this day, while <a href="LocalTime.html" target="_parent">LocalTime</a> will truly
 stay the same:</p>
 <pre>
-const start = <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--parse-static" target="_parent">parse</a>(&quot;2019-10-27T00:00:00.000+02:00[Europe/Berlin]&quot;),
+const start = <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>.<a href="ZonedDateTime.html#default--parse-static" target="_parent">parse</a>(&quot;2019-10-27T00:00:00.000+02:00[Europe/Berlin]&quot;), // Summer time
   end = start.<a href="ZonedDateTime.html#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="#DAY_PERIOD" target="_parent">DAY_PERIOD</a>);
-expect(end.<a href="ZonedDateTime.html#default--toString" target="_parent">toString</a>()).toBe(&quot;2019-10-28T00:00:00.000+01:00[Europe/Berlin]&quot;);
+expect(end.<a href="ZonedDateTime.html#default--toString" target="_parent">toString</a>()).toBe(&quot;2019-10-28T00:00:00.000+01:00[Europe/Berlin]&quot;); // Winter time
 expect(end.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a> - start.<a href="ZonedDateTime.html#default--epochMs" target="_parent">epochMs</a>).toBe(25 * <a href="constants.html#MS_PER_HOUR" target="_parent">MS_PER_HOUR</a>);</pre>
 <p>To ascertain a predictable fixed real time shift, you are supposed to add a <a href="Duration.html" target="_parent">Duration</a>.</p>
 <p><b>Period</b> doesn't support alignment out of the box. For example, <a href="#WEEK_PERIOD" target="_parent">WEEK_PERIOD</a> won't automatically snap your
@@ -273,6 +273,7 @@ Period representing a calendar year.
         <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><a href="Instant.html" target="_parent">Instant</a></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>

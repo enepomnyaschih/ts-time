@@ -41,7 +41,13 @@
 <nav class="nav nav-pills flex-column">
 <a class="nav-link" href="#default---hierarchy">Hierarchy</a>
 <a class="nav-link" href="#default---description">Description</a>
-
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#construct">Construct</a>
+<a class="nav-link" href="#parse">Parse</a>
+<a class="nav-link" href="#inspect">Inspect</a>
+<a class="nav-link" href="#compare">Compare</a>
+<a class="nav-link" href="#manipulation">Manipulate</a>
+<a class="nav-link" href="#conversion">Convert</a>
+<a class="nav-link" href="#format">Format</a></nav>
 
 
 <a class="nav-link" href="#default---properties">Properties</a>
@@ -95,12 +101,136 @@
 </ul>
 <h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
 
-Represents an instant of time. Lacking time zone and offset information, it doesn't return any particular
-date/time indication. In order to obtain a particular date/time, you must call <a href="#default--atZone" target="_parent">atZone</a> or <a href="#default--atOffset" target="_parent">atOffset</a> method.
+<p>Represents an instant of time. Lacking time zone and offset information, it doesn't indicate any particular
+date/time. In order to obtain a particular date/time, you must call <a href="#default--atZone" target="_parent">atZone</a> or <a href="#default--atOffset" target="_parent">atOffset</a> method.
 <b>Instant</b> object is determined by <a href="#default--epochMs" target="_parent">epochMs</a> - number of milliseconds since ECMAScript epoch (1st of <a href="Month.html#JANUARY" target="_parent">JANUARY</a> 1970
-UTC).
+UTC).</p>
 
 
+		<h5><span id="construct"></span>Construct<a class="anchorjs-link" href="#construct" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Primary <b>Instant</b> constructor accepts number of milliseconds since epoch as an argument. For example,
+the following <b>Instant</b> instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+15th of February, 2022 (UTC):</p>
+<pre>
+const msSinceEpoch: number = <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>.UTC(2022, 1, 15, 18, 30, 15, 225);
+<b>Instant</b>.<a href="#default--ofEpochMs-static" target="_parent">ofEpochMs</a>(msSinceEpoch);</pre>
+<p><b>Instant</b> is the only class in ts-time library that allows you to obtain current moment of time:</p>
+<pre>
+<b>Instant</b>.<a href="#default--now-static" target="_parent">now</a>();</pre>
+<p>Other classes don't have such a method. For example, in order to get the current instance of <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>,
+you must get the current <b>Instant</b> and then convert it to <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>:</p>
+<pre>
+<b>Instant</b>.<a href="#default--now-static" target="_parent">now</a>().<a href="LocalDateTime.html#default--atZone" target="_parent">atZone</a>(<a href="Zone.html#UTC" target="_parent">UTC</a>);              // Current <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in <a href="Zone.html#UTC" target="_parent">UTC</a>
+<b>Instant</b>.<a href="#default--now-static" target="_parent">now</a>().<a href="LocalDateTime.html#default--atZone" target="_parent">atZone</a>(<a href="ZoneId.html#LOCAL_ZONE_ID" target="_parent">LOCAL_ZONE_ID</a>);    // Current <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in the local time zone
+<b>Instant</b>.<a href="#default--now-static" target="_parent">now</a>().<a href="LocalDateTime.html#default--atZone" target="_parent">atZone</a>(zone);             // Current <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></pre>
+<p>It makes ts-time API more robust.
+It leaves less room for a mistake.</p>
+<p>You can convert instances of other ts-time classes to <b>Instant</b> via their properties and methods:</p>
+<pre>
+zonedDateTime.<a href="ZonedDateTime.html#default--instant" target="_parent">instant</a>;                  // From <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>
+offsetDateTime.<a href="OffsetDateTime.html#default--instant" target="_parent">instant</a>;                 // From <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a>
+localDateTime.<a href="LocalDateTime.html#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--instant" target="_parent">instant</a>;     // From <a href="LocalDateTime.html" target="_parent">LocalDateTime</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>
+localDateTime.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset).<a href="OffsetDateTime.html#default--instant" target="_parent">instant</a>; // From <a href="LocalDateTime.html" target="_parent">LocalDateTime</a> in a given <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></pre>
+<p>Please notice that conversion from <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> and <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> results in a partial data loss
+(original time zone/offset).</p>
+<p>A common way to convert a native JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> object to a ts-time object is to call <b>fromNative*</b>
+static method:</p>
+<pre>
+<b>Instant</b>.<a href="#default--fromNative-static" target="_parent">fromNative</a>(date);               // <b>Instant</b> from a given <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a></pre>
+
+	
+
+		<h5><span id="parse"></span>Parse<a class="anchorjs-link" href="#parse" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to parse an ISO 8601 compliant string in ts-time is to call <a href="#default--parse-static" target="_parent">parse</a> static method. For example,
+the following <b>Instant</b> instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+15th of February, 2022 in New York:</p></p>
+<pre>
+<b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-05:00[America/New_York]&quot;);</pre>
+<p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+
+	
+
+		<h5><span id="inspect"></span>Inspect<a class="anchorjs-link" href="#inspect" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Since <b>Instant</b> doesn't represent a particular date and time, the only thing you can inspect is <a href="#default--epochMs" target="_parent">epochMs</a>.
+For inspection of other date/time properties, you must convert it to <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> or <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a>
+first:</p>
+<pre>
+const instant       = Instant.parse(&quot;2022-02-15T18:30:15.225Z&quot;);
+const zonedDateTime = instant.<a href="#default--atZone" target="_parent">atZone</a>(<a href="Zone.html#UTC" target="_parent">UTC</a>);
+const hour          = zonedDateTime.<a href="ZonedDateTime.html#default--hour" target="_parent">hour</a>;            // 18
+const minute        = zonedDateTime.<a href="ZonedDateTime.html#default--minute" target="_parent">minute</a>;          // 30</pre>
+
+	
+
+		<h5><span id="compare"></span>Compare<a class="anchorjs-link" href="#compare" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to compare objects in ts-time is to call <a href="#default--equals" target="_parent">equals</a>, <a href="#default--isBefore" target="_parent">isBefore</a>, <a href="#default--isAfter" target="_parent">isAfter</a>, <a href="#default--compareTo" target="_parent">compareTo</a> methods:</p>
+<pre>
+const d1 = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225Z&quot;);
+const d2 = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.226Z&quot;);
+d1.<a href="#default--equals" target="_parent">equals</a>(d2);    // false
+d1.<a href="#default--isBefore" target="_parent">isBefore</a>(d2);  // true
+d1.<a href="#default--isAfter" target="_parent">isAfter</a>(d2);   // false
+d1.<a href="#default--compareTo" target="_parent">compareTo</a>(d2); // -1</pre>
+<p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+except each other:</p>
+<pre>
+const d1: <b>Instant</b> = null;
+const d2 = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.226Z&quot;);
+<b>Instant</b>.<a href="#default--equal-static" target="_parent">equal</a>(d1, d2);     // false
+<b>Instant</b>.<a href="#default--isBefore-static" target="_parent">isBefore</a>(d1, d2);  // true
+<b>Instant</b>.<a href="#default--isAfter-static" target="_parent">isAfter</a>(d1, d2);   // false
+<b>Instant</b>.<a href="#default--compare-static" target="_parent">compare</a>(d1, d2);   // -1</pre>
+
+	
+
+		<h5><span id="manipulation"></span>Manipulate<a class="anchorjs-link" href="#manipulation" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+<p>To add/subtract a <a href="Duration.html" target="_parent">Duration</a>, call <a href="#default--plus" target="_parent">plus</a>/<a href="#default--minus" target="_parent">minus</a> method:</p>
+<pre>
+const instant = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225Z&quot;);
+const d1 = instant.<a href="#default--plus" target="_parent">plus</a>(<a href="Duration.html#MINUTE_DURATION" target="_parent">MINUTE_DURATION</a>);         // 2022-02-15T18:31:15.225Z
+const d2 = instant.<a href="#default--plus" target="_parent">plus</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofHours-static" target="_parent">ofHours</a>(10));    // 2022-02-16T04:30:15.225Z
+const d3 = instant.<a href="#default--minus" target="_parent">minus</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofSeconds-static" target="_parent">ofSeconds</a>(30)); // 2022-02-15T18:29:45.225Z</pre>
+<p>You can't add/subtract a <a href="Period.html" target="_parent">Period</a>, because sometimes the respective date/time differs in different time
+zones so much that it is impossible to determine the exact time duration to add/subtract. If you know the
+exact time zone/offset to work with, call <a href="#default--atZone" target="_parent">atZone</a>/<a href="#default--atOffset" target="_parent">atOffset</a> method and then you'll be able to add/subtract
+a <a href="Period.html" target="_parent">Period</a> to/from the returned <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>/<a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a>. For difference between <a href="Period.html" target="_parent">Period</a> and <a href="Duration.html" target="_parent">Duration</a>,
+see their documentation.</p>
+
+	
+
+		<h5><span id="conversion"></span>Convert<a class="anchorjs-link" href="#conversion" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>You can convert <b>Instant</b> to other kinds of objects via its methods:</p>
+<pre>
+const instant = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225Z&quot;);
+const zone    = <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>.<a href="Zone.html#ZoneId--of-static" target="_parent">of</a>(&quot;Europe/Berlin&quot;);
+const offset  = <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>.<a href="Zone.html#ZoneOffset--ofComponents-static" target="_parent">ofComponents</a>(2);
+instant.<a href="#default--atZone" target="_parent">atZone</a>(zone);              // To <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>  in a given time zone: 2022-02-15T19:30:15.225+01:00[Europe/Berlin]
+instant.<a href="#default--atOffset" target="_parent">atOffset</a>(offset);          // To <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> in a given offset:    2022-02-15T20:30:15.225+02:00
+instant.<a href="#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;     // To <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>  in a given time zone: 2022-02-15T19:30:15.225
+instant.<a href="#default--atOffset" target="_parent">atOffset</a>(offset).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>; // To <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>  in a given offset:    2022-02-15T20:30:15.225</pre>
+<p>Please notice that conversion to <a href="LocalDateTime.html" target="_parent">LocalDateTime</a> results in a partial data loss
+(instant becomes ambiguous due to lack of time zone/offset attachment).</p>
+<p>You can as well convert <b>Instant</b> to a native JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>:</p>
+<pre>
+const instant = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225Z&quot;);
+instant.<a href="#default--native" target="_parent">native</a>;                    // <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> representing 18:30:15.225 on 15th of February, 2022 (UTC)</pre>
+<p>Please notice that native <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> is always stored in UTC or local time zone, so you can see a different
+date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
+<p>For backward conversion, see <a href="#construct" target="_parent">Construct</a>.</p>
+
+	
+
+		<h5><span id="format"></span>Format<a class="anchorjs-link" href="#format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every class in ts-time has ISO 8601 compliant <a href="#default--toString" target="_parent">toString</a> method:</p>
+<pre>
+const instant = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-05:00[America/New_York]&quot;);
+instant.<a href="#default--toString" target="_parent">toString</a>(); // &quot;2022-02-15T23:30:15.225Z&quot;</pre>
+<p>Please notice that the instant is always formatted in <a href="Zone.html#UTC" target="_parent">UTC</a>, because <b>Instant</b> doesn't have a time zone.</p>
+<p>For more sophisticated string formatting, you must first convert the <b>Instant</b> to <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> or
+<a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> and then use their formatting functionality.</p>
+
+	
 
 
 <h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
@@ -367,6 +497,7 @@ Null and undefined are considered less than anything, except each other.
         <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><b>Instant</b></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>

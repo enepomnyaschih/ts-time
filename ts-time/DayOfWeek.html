@@ -183,7 +183,7 @@ So, if your variable may contain null or undefined, use the respective static me
 
 <h5><span id="default--of-static"></span>of<a class="anchorjs-link" href="#default--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
 <div class="doc-member">
-<p><code>(value: number | <b>DayOfWeek</b>): <b>DayOfWeek</b>
+<p><code>(value: number | <b>DayOfWeek</b>): <b>DayOfWeek</b> throws <a href="errors.html#InvalidDayOfWeekError" target="_parent">InvalidDayOfWeekError</a>
 </code></p>
 <dl class="row">
 <dt class="col-lg-2 col-sm-3">value</dt><dd class="col-lg-10 col-sm-9">Numeric value of the day.</dd>
@@ -289,6 +289,7 @@ Array of all days of week, from <a href="#MONDAY" target="_parent">MONDAY</a> to
         <li><b>DayOfWeek</b></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><a href="Instant.html" target="_parent">Instant</a></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>

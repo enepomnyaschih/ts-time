@@ -170,7 +170,7 @@ overlap caused by offset shift), returns the earlier offset (i.e. one right befo
 
 <h5><span id="ZoneId--of-static"></span>of<a class="anchorjs-link" href="#ZoneId--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
 <div class="doc-member">
-<p><code>(id: string): <b>ZoneId</b>
+<p><code>(id: string): <b>ZoneId</b> throws <a href="errors.html#TemporalParsingError" target="_parent">TemporalParsingError</a>
 </code></p>
 <dl class="row">
 <dt class="col-lg-2 col-sm-3">id</dt><dd class="col-lg-10 col-sm-9">Zone text identifier.</dd>
@@ -314,7 +314,7 @@ overlap caused by offset shift), returns the earlier offset (i.e. one right befo
 
 <h5><span id="ZoneOffset--of-static"></span>of<a class="anchorjs-link" href="#ZoneOffset--of-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
 <div class="doc-member">
-<p><code>(id: string): <b>ZoneOffset</b>
+<p><code>(id: string): <b>ZoneOffset</b> throws <a href="errors.html#TemporalParsingError" target="_parent">TemporalParsingError</a>
 </code></p>
 <dl class="row">
 <dt class="col-lg-2 col-sm-3">id</dt><dd class="col-lg-10 col-sm-9">Time zone offset identifier.</dd>
@@ -428,6 +428,7 @@ Local browser/system time zone.
         <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><a href="Instant.html" target="_parent">Instant</a></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>

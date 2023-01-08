@@ -41,7 +41,13 @@
 <nav class="nav nav-pills flex-column">
 <a class="nav-link" href="#default---hierarchy">Hierarchy</a>
 <a class="nav-link" href="#default---description">Description</a>
-
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#construct">Construct</a>
+<a class="nav-link" href="#parse">Parse</a>
+<a class="nav-link" href="#inspect">Inspect</a>
+<a class="nav-link" href="#compare">Compare</a>
+<a class="nav-link" href="#manipulation">Manipulate</a>
+<a class="nav-link" href="#conversion">Convert</a>
+<a class="nav-link" href="#format">Format</a></nav>
 
 
 <a class="nav-link" href="#default---properties">Properties</a>
@@ -134,9 +140,189 @@
 <h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
 
 Comprises a specific date/time, without time zone relation. In other words, this is a tuple of (<a href="LocalDate.html" target="_parent">LocalDate</a>,
-<a href="LocalTime.html" target="_parent">LocalTime</a>). You may bind this date/time to a time zone or an offset using <a href="#default--atZone" target="_parent">atZone</a> and <a href="#default--atOffset" target="_parent">atOffset</a> methods.
+<a href="LocalTime.html" target="_parent">LocalTime</a>).
 
 
+		<h5><span id="construct"></span>Construct<a class="anchorjs-link" href="#construct" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to construct an object in ts-time is to call its <b>of*</b> static method. For example, the
+following <b>LocalDateTime</b> instances represent 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+15th of February, 2022:</p>
+<pre>
+<b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+<b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, 2, 15, 18, 30, 15, 225);</pre>
+<p>As opposed to Java API, there's no common way to get the current instance of <b>LocalDateTime</b> in ts-time,
+because ts-time doesn't have a concept of default time zone. Instead, you must get the current <a href="Instant.html" target="_parent">Instant</a>
+and convert it to an object that you need, taking time zone into consideration.</p>
+<pre>
+<a href="Instant.html" target="_parent">Instant</a>.<a href="Instant.html#default--now-static" target="_parent">now</a>().<a href="Instant.html#default--atZone" target="_parent">atZone</a>(<a href="Zone.html#UTC" target="_parent">UTC</a>).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;             // Current <b>LocalDateTime</b> in <a href="Zone.html#UTC" target="_parent">UTC</a>
+<a href="Instant.html" target="_parent">Instant</a>.<a href="Instant.html#default--now-static" target="_parent">now</a>().<a href="Instant.html#default--atZone" target="_parent">atZone</a>(<a href="ZoneId.html#LOCAL_ZONE_ID" target="_parent">LOCAL_ZONE_ID</a>).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;   // Current <b>LocalDateTime</b> in the local time zone
+<a href="Instant.html" target="_parent">Instant</a>.<a href="Instant.html#default--now-static" target="_parent">now</a>().<a href="Instant.html#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;            // Current <b>LocalDateTime</b> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></pre>
+<p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
+<p>A common way to convert a native JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> object to a ts-time object is to call <b>fromNative*</b>
+static method:</p>
+<pre>
+<b>LocalDateTime</b>.<a href="#default--fromNativeUtc-static" target="_parent">fromNativeUtc</a>(date);              // <b>LocalDateTime</b> from a given <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> in <a href="Zone.html#UTC" target="_parent">UTC</a>
+<b>LocalDateTime</b>.<a href="#default--fromNativeLocal-static" target="_parent">fromNativeLocal</a>(date);            // <b>LocalDateTime</b> from a given <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> in the local time zone
+<a href="Instant.html" target="_parent">Instant</a>.<a href="Instant.html#default--fromNative" target="_parent">fromNative</a>(date).<a href="Instant.html#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>; // <b>LocalDateTime</b> from a given <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></pre>
+<p>You can convert instances of other ts-time classes to <b>LocalDateTime</b> via their properties and methods:</p>
+<pre>
+<b>LocalDateTime</b>.<a href="#default--of-static" target="_parent">of</a>(date, time);                   // From a pair of <a href="LocalDate.html" target="_parent">LocalDate</a> and <a href="LocalTime.html" target="_parent">LocalTime</a>
+date.<a href="LocalDate.html#default--atTime" target="_parent">atTime</a>(time);                              // Equivalent
+instant.<a href="Instant.html#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;                  // From <a href="Instant.html" target="_parent">Instant</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>
+offsetDateTime.<a href="OffsetDateTime.html#default--dateTime" target="_parent">dateTime</a>;                        // From <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> in the same <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>
+zonedDateTime.<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;                         // From <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in the same <a href="Zone.html#ZoneId" target="_parent">ZoneId</a></pre>
+<p>Please notice that conversions from <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> and <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> result in a partial data
+loss (offset and time zone respectively).</p>
+<p>Another sophisticated constructor: <a href="#default--ofEpochMsUtc-static" target="_parent">ofEpochMsUtc</a>. Also check sophisticated constructors of <a href="LocalDate.html" target="_parent">LocalDate</a> and
+<a href="LocalTime.html" target="_parent">LocalTime</a>, as <b>LocalDateTime</b> is essentially a pair of them.</p>
+
+	
+
+		<h5><span id="parse"></span>Parse<a class="anchorjs-link" href="#parse" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to parse an ISO 8601 compliant string in ts-time is to call <a href="#default--parse-static" target="_parent">parse</a> static method. For example,
+the following <b>LocalDateTime</b> instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+15th of February, 2022:</p></p>
+<pre>
+<b>LocalDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225&quot;);</pre>
+<p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+
+	
+
+		<h5><span id="inspect"></span>Inspect<a class="anchorjs-link" href="#inspect" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>In the following example, we inspect various properties of a <b>LocalDateTime</b> object. Please notice
+the difference in return value types:</p>
+<pre>
+const dateTime       = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const year           = dateTime.<a href="#default--year" target="_parent">year</a>;            // 2022
+const month          = dateTime.<a href="#default--month" target="_parent">month</a>;           // <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>
+const monthValue     = dateTime.<a href="#default--month" target="_parent">month</a>.<a href="Month.html#default--value" target="_parent">value</a>;     // 2
+const dayOfMonth     = dateTime.<a href="#default--dayOfMonth" target="_parent">dayOfMonth</a>;      // 15
+const dayOfWeek      = dateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>;       // <a href="DayOfWeek.html#TUESDAY" target="_parent">TUESDAY</a>
+const dayOfWeekValue = dateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="DayOfWeek.html#default--value" target="_parent">value</a>; // 2
+const hour           = dateTime.<a href="#default--hour" target="_parent">hour</a>;            // 18
+const minute         = dateTime.<a href="#default--minute" target="_parent">minute</a>;          // 30
+const second         = dateTime.<a href="#default--second" target="_parent">second</a>;          // 15
+const ms             = dateTime.<a href="#default--ms" target="_parent">ms</a>;              // 225</pre>
+<p>Other sophisticated features for <b>LocalDateTime</b> inspection: <a href="#default--epochMsUtc" target="_parent">epochMsUtc</a>, <a href="#default--era" target="_parent">era</a>, <a href="#default--yearOfEra" target="_parent">yearOfEra</a>, <a href="#default--weekBasedYear" target="_parent">weekBasedYear</a>,
+<a href="#default--weekOfWeekBasedYear" target="_parent">weekOfWeekBasedYear</a>, <a href="#default--dayOfYear" target="_parent">dayOfYear</a>, <a href="#default--dayOfWeekBasedYear" target="_parent">dayOfWeekBasedYear</a>, <a href="#default--epochDay" target="_parent">epochDay</a>, <a href="#default--quarterOfYear" target="_parent">quarterOfYear</a>, <a href="#default--isLeapYear" target="_parent">isLeapYear</a>,
+<a href="#default--lengthOfYear" target="_parent">lengthOfYear</a>.</p>
+
+	
+
+		<h5><span id="compare"></span>Compare<a class="anchorjs-link" href="#compare" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to compare objects in ts-time is to call <a href="#default--equals" target="_parent">equals</a>, <a href="#default--isBefore" target="_parent">isBefore</a>, <a href="#default--isAfter" target="_parent">isAfter</a>, <a href="#default--compareTo" target="_parent">compareTo</a> methods:</p>
+<pre>
+const d1 = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const d2 = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 226);
+d1.<a href="#default--equals" target="_parent">equals</a>(d2);    // false
+d1.<a href="#default--isBefore" target="_parent">isBefore</a>(d2);  // true
+d1.<a href="#default--isAfter" target="_parent">isAfter</a>(d2);   // false
+d1.<a href="#default--compareTo" target="_parent">compareTo</a>(d2); // -1</pre>
+<p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+except each other:</p>
+<pre>
+const d1: <b>LocalDateTime</b> = null;
+const d2 = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 226);
+<b>LocalDateTime</b>.<a href="#default--equal-static" target="_parent">equal</a>(d1, d2);     // false
+<b>LocalDateTime</b>.<a href="#default--isBefore-static" target="_parent">isBefore</a>(d1, d2);  // true
+<b>LocalDateTime</b>.<a href="#default--isAfter-static" target="_parent">isAfter</a>(d1, d2);   // false
+<b>LocalDateTime</b>.<a href="#default--compare-static" target="_parent">compare</a>(d1, d2);   // -1</pre>
+
+	
+
+		<h5><span id="manipulation"></span>Manipulate<a class="anchorjs-link" href="#manipulation" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+<p>To add/subtract a <a href="Period.html" target="_parent">Period</a>, call <a href="#default--plusPeriod" target="_parent">plusPeriod</a>/<a href="#default--minusPeriod" target="_parent">minusPeriod</a> method:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const d1 = dateTime.<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html#DAY_PERIOD" target="_parent">DAY_PERIOD</a>);                // 18:30:15.225 on 16th of February, 2022
+const d2 = dateTime.<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html" target="_parent">Period</a>.<a href="Period.html#default--ofDays-static" target="_parent">ofDays</a>(2));          // 18:30:15.225 on 17th of February, 2022
+const d3 = dateTime.<a href="#default--minusPeriod" target="_parent">minusPeriod</a>(<a href="Period.html#MONTH_PERIOD" target="_parent">MONTH_PERIOD</a>);             // 18:30:15.225 on 15th of January, 2022</pre>
+<p>To add/subtract a duration, call <a href="#default--plusDuration" target="_parent">plusDuration</a>/<a href="#default--minusDuration" target="_parent">minusDuration</a> method:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const d1 = dateTime.<a href="#default--plusDuration" target="_parent">plusDuration</a>(<a href="Duration.html#MINUTE_DURATION" target="_parent">MINUTE_DURATION</a>);         // 18:31:15.225 on 15th of February, 2022
+const d2 = dateTime.<a href="#default--plusDuration" target="_parent">plusDuration</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofHours-static" target="_parent">ofHours</a>(10));    // 04:30:15.225 on 16th of February, 2022
+const d3 = dateTime.<a href="#default--minusDuration" target="_parent">minusDuration</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofSeconds-static" target="_parent">ofSeconds</a>(30)); // 18:29:45.225 on 15th of February, 2022</pre>
+<p>For difference between <a href="Period.html" target="_parent">Period</a> and <a href="Duration.html" target="_parent">Duration</a>, see their documentation. For <b>LocalDateTime</b>, they are
+interchangeable - apart for the list of supported date/time components.</p>
+<p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const d1 = dateTime.<a href="#default--withYear" target="_parent">withYear</a>(2025);                        // 18:30:15.225 on 15th of February, 2025
+const d2 = dateTime.<a href="#default--withMonth" target="_parent">withMonth</a>(<a href="Month.html#APRIL" target="_parent">APRIL</a>);                      // 18:30:15.225 on 15th of April, 2022
+const d3 = dateTime.<a href="#default--withDayOfMonth" target="_parent">withDayOfMonth</a>(10);                    // 18:30:15.225 on 10th of February, 2022
+const d4 = dateTime.<a href="#default--withDayOfWeek" target="_parent">withDayOfWeek</a>(<a href="DayOfWeek.html#SUNDAY" target="_parent">SUNDAY</a>);                 // 18:30:15.225 on 20th of February, 2022, Sunday
+const d5 = dateTime.<a href="#default--withHour" target="_parent">withHour</a>(20);                          // 20:30:15.225 on 15th of February, 2022
+const d6 = dateTime.<a href="#default--withMinute" target="_parent">withMinute</a>(20);                        // 18:20:15.225 on 15th of February, 2022
+const d7 = dateTime.<a href="#default--withSecond" target="_parent">withSecond</a>(20);                        // 18:30:20.225 on 15th of February, 2022
+const d8 = dateTime.<a href="#default--withMs" target="_parent">withMs</a>(20);                            // 18:30:15.020 on 15th of February, 2022</pre>
+<p>To truncate all the least-significant components, call <b>truncate*</b> methods:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+const d1 = dateTime.<a href="#default--truncateToYear" target="_parent">truncateToYear</a>;                        // Midnight on 1st of January, 2022
+const d2 = dateTime.<a href="#default--truncateToMonth" target="_parent">truncateToMonth</a>;                       // Midnight on 1st of February, 2022
+const d3 = dateTime.<a href="#default--truncateToWeek" target="_parent">truncateToWeek</a>;                        // Midnight on 14th of February, 2022, Monday
+const d4 = dateTime.<a href="#default--truncateToDay" target="_parent">truncateToDay</a>;                         // Midnight on 15th of February, 2022
+const d5 = dateTime.<a href="#default--truncateToHour" target="_parent">truncateToHour</a>;                        // 18:00:00.000 on 15th of February, 2022
+const d6 = dateTime.<a href="#default--truncateToMinute" target="_parent">truncateToMinute</a>;                      // 18:30:00.000 on 15th of February, 2022
+const d7 = dateTime.<a href="#default--truncateToSecond" target="_parent">truncateToSecond</a>;                      // 18:30:15.000 on 15th of February, 2022</pre>
+<p><span class="text-danger">The library doesn't yet support Sunday as the 1st day of the week.</span>
+But there's a workaround:</p>
+<pre>
+const d8 = dateTime.<a href="#default--truncateToDay" target="_parent">truncateToDay</a>.<a href="#default--minusPeriod" target="_parent">minusPeriod</a>(<a href="Period.html" target="_parent">Period</a>.<a href="Period.html#default--ofDays-static" target="_parent">ofDays</a>(dateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="DayOfWeek.html#default--value" target="_parent">value</a> % 7)); // Midnight on 13th of February, 2022, Sunday</pre>
+<p>Or a flexible solution, where firstDayOfWeek is 1 for Monday, and 7 for Sunday:
+<pre>
+const d8 = dateTime.<a href="#default--truncateToDay" target="_parent">truncateToDay</a>.<a href="#default--minusPeriod" target="_parent">minusPeriod</a>(<a href="Period.html" target="_parent">Period</a>.<a href="Period.html#default--ofDays-static" target="_parent">ofDays</a>((dateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="DayOfWeek.html#default--value" target="_parent">value</a> + 7 - firstDayOfWeek) % 7));</pre>
+<p>Other sophisticated features for <b>LocalDateTime</b> manipulation: <a href="#default--withDayOfYear" target="_parent">withDayOfYear</a>, <a href="#default--truncateToWeekBasedYear" target="_parent">truncateToWeekBasedYear</a>.</p>
+
+	
+
+		<h5><span id="conversion"></span>Convert<a class="anchorjs-link" href="#conversion" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>You can convert <b>LocalDateTime</b> to other kinds of objects via its properties and methods:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+dateTime.<a href="#default--date" target="_parent">date</a>;                 // To <a href="LocalDate.html" target="_parent">LocalDate</a>: 2022-02-15
+dateTime.<a href="#default--time" target="_parent">time</a>;                 // To <a href="LocalTime.html" target="_parent">LocalTime</a>: 18:30:15.225
+dateTime.<a href="#default--atOffset" target="_parent">atOffset</a>(offset);     // To <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a> in a given <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>: 2022-02-15T18:30:15.225+01:00
+dateTime.<a href="#default--atZone" target="_parent">atZone</a>(zone);         // To <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>: 2022-02-15T18:30:15.225+01:00[Europe/Berlin]
+dateTime.<a href="#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--instant" target="_parent">instant</a>; // To <a href="Instant.html" target="_parent">Instant</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>: 2022-02-15T17:30:15.225Z</pre>
+<p>Please notice that - when converting to <a href="Instant.html" target="_parent">Instant</a> - string presentation may change depending on the selected
+time zone.</p>
+<p>In order to convert <b>LocalDateTime</b> from one <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a> to another, you must first convert it to
+an <a href="Instant.html" target="_parent">Instant</a>:</p>
+<pre>
+dateTime.<a href="#default--atZone" target="_parent">atZone</a>(sourceZone).<a href="ZonedDateTime.html#default--instant" target="_parent">instant</a>.<a href="#default--atZone" target="_parent">atZone</a>(targetZone).<a href="ZonedDateTime.html#default--dateTime" target="_parent">dateTime</a>;</pre>
+<p>You can as well convert <b>LocalDateTime</b> to a native JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+dateTime.<a href="#default--nativeUtc" target="_parent">nativeUtc</a>;            // Date representing 18:30:15.225 on 15th of February, 2022 in <a href="Zone.html#UTC" target="_parent">UTC</a>
+dateTime.<a href="#default--nativeLocal" target="_parent">nativeLocal</a>;          // Date representing 18:30:15.225 on 15th of February, 2022 in the local time zone
+dateTime.<a href="#default--atZone" target="_parent">atZone</a>(zone).<a href="ZonedDateTime.html#default--native" target="_parent">native</a>;  // Date representing 18:30:15.225 on 15th of February, 2022 in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>/<a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a></pre>
+<p>For backward conversion, see <a href="#construct" target="_parent">Construct</a>.</p>
+
+	
+
+		<h5><span id="format"></span>Format<a class="anchorjs-link" href="#format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every class in ts-time has ISO 8601 compliant <a href="#default--toString" target="_parent">toString</a> method:</p>
+<pre>
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+dateTime.<a href="#default--toString" target="_parent">toString</a>(); // &quot;2022-02-15T18:30:15.225&quot;</pre>
+<p>For more sophisticated string formatting, add <a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a> library to your list of dependencies:</p>
+<pre>
+npm install --save <a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></pre>
+<p>Now you can construct an instance of <a href="../ts-time-format/DateTimeFormatter.html" target="_parent">DateTimeFormatter</a> in order to format arbitrary <b>LocalDateTime</b>
+instances:</p>
+<pre>
+const formatter = <a href="../ts-time-format/DateTimeFormatter.html" target="_parent">DateTimeFormatter</a>.<a href="../ts-time-format/DateTimeFormatter.html#default--ofPattern-static" target="_parent">ofPattern</a>(&quot;dd.MMM''yy, hh:mm a&quot;);
+const dateTime = <b>LocalDateTime</b>.<a href="#default--ofComponents-static" target="_parent">ofComponents</a>(2022, <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>, 15, 18, 30, 15, 225);
+formatter.<a href="../ts-time-format/DateTimeFormatter.html#default--format" target="_parent">format</a>(dateTime); // &quot;15.Feb'22, 06:30 PM&quot;</pre>
+<p>You can define a custom <a href="../ts-time-format/constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">context</a> object to internationalize the formatted strings:</p>
+<pre>
+const context = {monthShortNames: [&quot;Янв&quot;, &quot;Фев&quot;, &quot;Мар&quot;]};
+formatter.<a href="../ts-time-format/DateTimeFormatter.html#default--format" target="_parent">format</a>(dateTime, context); // &quot;15.Фев'22, 06:30 PM&quot;</pre>
+
+	
 
 
 <h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
@@ -656,7 +842,7 @@ for compatibility with native and third party API.
 
 <h5><span id="default--parse-static"></span>parse<a class="anchorjs-link" href="#default--parse-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
 <div class="doc-member">
-<p><code>(str: string): <b>LocalDateTime</b>
+<p><code>(str: string): <b>LocalDateTime</b> throws <a href="errors.html#TemporalParsingError" target="_parent">TemporalParsingError</a>
 </code></p>
 <dl class="row">
 <dt class="col-lg-2 col-sm-3">str</dt><dd class="col-lg-10 col-sm-9">String representation of a local date/time in ISO format, such as '2019-12-30T18:30:15.225'.</dd>
@@ -734,6 +920,7 @@ Null and undefined are considered less than anything, except each other.
         <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><a href="Instant.html" target="_parent">Instant</a></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><b>LocalDateTime</b></li>

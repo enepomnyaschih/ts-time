@@ -41,7 +41,13 @@
 <nav class="nav nav-pills flex-column">
 <a class="nav-link" href="#default---hierarchy">Hierarchy</a>
 <a class="nav-link" href="#default---description">Description</a>
-
+<nav class="nav nav-pills flex-column"><a class="nav-link" href="#construct">Construct</a>
+<a class="nav-link" href="#parse">Parse</a>
+<a class="nav-link" href="#inspect">Inspect</a>
+<a class="nav-link" href="#compare">Compare</a>
+<a class="nav-link" href="#manipulation">Manipulate</a>
+<a class="nav-link" href="#conversion">Convert</a>
+<a class="nav-link" href="#format">Format</a></nav>
 
 
 <a class="nav-link" href="#default---properties">Properties</a>
@@ -74,8 +80,6 @@
 <a class="nav-link" href="#default---methods">Methods</a>
 <nav class="nav nav-pills flex-column"><a class="nav-link" href="#default--compareTo">compareTo</a>
 <a class="nav-link" href="#default--equals">equals</a>
-<a class="nav-link" href="#default--isBefore">isBefore</a>
-<a class="nav-link" href="#default--isAfter">isAfter</a>
 <a class="nav-link" href="#default--plusDuration">plusDuration</a>
 <a class="nav-link" href="#default--plusPeriod">plusPeriod</a>
 <a class="nav-link" href="#default--minusDuration">minusDuration</a>
@@ -97,9 +101,7 @@
 <a class="nav-link" href="#default--ofDateTime-static">ofDateTime</a>
 <a class="nav-link" href="#default--parse-static">parse</a>
 <a class="nav-link" href="#default--compare-static">compare</a>
-<a class="nav-link" href="#default--equal-static">equal</a>
-<a class="nav-link" href="#default--isBefore-static">isBefore</a>
-<a class="nav-link" href="#default--isAfter-static">isAfter</a></nav>
+<a class="nav-link" href="#default--equal-static">equal</a></nav>
 </nav>
 						<div class="py-3"></div>
 					</nav>
@@ -122,10 +124,190 @@
 </ul>
 <h4><span id="default---description"></span>Description<a class="anchorjs-link" href="#default---description" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
 
-Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
-(<a href="Instant.html" target="_parent">Instant</a>, <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>). Unambiguously identifies a <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>.
+<p>Comprises a specific instant bound to a specific time zone offset. In other words, this is a tuple of
+(<a href="Instant.html" target="_parent">Instant</a>, <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>). Unambiguously identifies a <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>.</p>
 
 
+		<h5><span id="construct"></span>Construct<a class="anchorjs-link" href="#construct" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p><b>OffsetDateTime</b> has a very limited number of usage scenarios, so it has a limited number of ways to be
+constructed to avoid its misuse. Always consider using other data structures (<a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a>, <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>,
+<a href="Instant.html" target="_parent">Instant</a>) before <b>OffsetDateTime</b>.</p>
+<p>Typically you don't construct <b>OffsetDateTime</b> directly, but create it from other data structures:</p>
+<pre>
+<b>OffsetDateTime</b>.<a href="#default--ofInstant-static" target="_parent">ofInstant</a>(instant, offset);   // From <a href="Instant.html" target="_parent">Instant</a> in a given <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>
+instant.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(offset);                    // Equivalent
+<b>OffsetDateTime</b>.<a href="#default--ofDateTime-static" target="_parent">ofDateTime</a>(dateTime, offset); // From <a href="LocalDateTime.html" target="_parent">LocalDateTime</a> in a given <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>
+dateTime.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset);                   // Equivalent
+zonedDateTime.<a href="ZonedDateTime.html#default--offsetDateTime" target="_parent">offsetDateTime</a>;                // From <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a></pre>
+<p>Please notice that:</p>
+<ul>
+<li>Conversion from <a href="Instant.html" target="_parent">Instant</a> may be counter-intuitive, as string presentation of the date/time may change:
+<pre>
+const offset  = <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>.<a href="Zone.html#ZoneOffset--ofComponents-static" target="_parent">ofComponents</a>(-2);
+const instant = <a href="Instant.html" target="_parent">Instant</a>.<a href="Instant.html#default--parse-static" target="_parent">parse</a>(&quot;2022-06-14T00:00:00.000Z&quot;);
+console.log(instant.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(offset));           // &quot;2022-06-13T22:00:00.000-02:00&quot;</pre>
+It happens, because <b>OffsetDateTime</b> preserves its <a href="#default--instant" target="_parent">instant</a> component in this case, not <a href="#default--dateTime" target="_parent">dateTime</a>:
+<pre>
+console.log(instant.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(offset).<a href="#default--instant" target="_parent">instant</a>);   // &quot;2022-06-14T00:00:00.000Z&quot;
+console.log(instant.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(offset).<a href="#default--dateTime" target="_parent">dateTime</a>);  // &quot;2022-06-13T22:00:00.000&quot;</pre></li>
+<li>Conversion from <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>, on the contrary, preserves <a href="#default--dateTime" target="_parent">dateTime</a> component:
+<pre>
+const dateTime = <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>.<a href="LocalDateTime.html#default--parse-static" target="_parent">parse</a>(&quot;2022-06-14T00:00:00.000&quot;);
+console.log(dateTime.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset));          // &quot;2022-06-14T00:00:00.000-02:00&quot;
+console.log(dateTime.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset).<a href="#default--dateTime" target="_parent">dateTime</a>); // &quot;2022-06-14T00:00:00.000&quot;
+console.log(dateTime.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset).<a href="#default--instant" target="_parent">instant</a>);  // &quot;2022-06-14T02:00:00.000Z&quot;</pre></li>
+<li>Conversion from <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> may result in a partial data loss (if the time zone has dynamic offset).</li>
+</ul>
+
+	
+
+		<h5><span id="parse"></span>Parse<a class="anchorjs-link" href="#parse" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to parse an ISO 8601 compliant string in ts-time is to call <a href="#default--parse-static" target="_parent">parse</a> static method. For example,
+the following <b>OffsetDateTime</b> instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+15th of February, 2022, UTC-2 offset:</p></p>
+<pre>
+<b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);</pre>
+<p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+
+	
+
+		<h5><span id="inspect"></span>Inspect<a class="anchorjs-link" href="#inspect" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>In the following example, we inspect various properties of a <b>OffsetDateTime</b> object. Please notice
+the difference in return value types:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+const year           = offsetDateTime.<a href="#default--year" target="_parent">year</a>;            // 2022
+const month          = offsetDateTime.<a href="#default--month" target="_parent">month</a>;           // <a href="Month.html#FEBRUARY" target="_parent">FEBRUARY</a>
+const monthValue     = offsetDateTime.<a href="#default--month" target="_parent">month</a>.<a href="Month.html#default--value" target="_parent">value</a>;     // 2
+const dayOfMonth     = offsetDateTime.<a href="#default--dayOfMonth" target="_parent">dayOfMonth</a>;      // 15
+const dayOfWeek      = offsetDateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>;       // <a href="DayOfWeek.html#TUESDAY" target="_parent">TUESDAY</a>
+const dayOfWeekValue = offsetDateTime.<a href="#default--dayOfWeek" target="_parent">dayOfWeek</a>.<a href="DayOfWeek.html#default--value" target="_parent">value</a>; // 2
+const hour           = offsetDateTime.<a href="#default--hour" target="_parent">hour</a>;            // 18
+const minute         = offsetDateTime.<a href="#default--minute" target="_parent">minute</a>;          // 30
+const second         = offsetDateTime.<a href="#default--second" target="_parent">second</a>;          // 15
+const ms             = offsetDateTime.<a href="#default--ms" target="_parent">ms</a>;              // 225
+const offset         = offsetDateTime.<a href="#default--offset" target="_parent">offset</a>;          // Instance of <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>
+const offsetHours    = offsetDateTime.<a href="#default--offset" target="_parent">offset</a>.<a href="Zone.html#ZoneOffset--hours" target="_parent">hours</a>;    // -2
+const offsetMinutes  = offsetDateTime.<a href="#default--offset" target="_parent">offset</a>.<a href="Zone.html#ZoneOffset--minutes" target="_parent">minutes</a>;  // 0
+const offsetSeconds  = offsetDateTime.<a href="#default--offset" target="_parent">offset</a>.<a href="Zone.html#ZoneOffset--seconds" target="_parent">seconds</a>;  // 0</pre>
+<p>Other sophisticated features for <b>OffsetDateTime</b> inspection: <a href="#default--epochMs" target="_parent">epochMs</a>, <a href="#default--era" target="_parent">era</a>, <a href="#default--yearOfEra" target="_parent">yearOfEra</a>, <a href="#default--weekBasedYear" target="_parent">weekBasedYear</a>,
+<a href="#default--weekOfWeekBasedYear" target="_parent">weekOfWeekBasedYear</a>, <a href="#default--dayOfYear" target="_parent">dayOfYear</a>, <a href="#default--dayOfWeekBasedYear" target="_parent">dayOfWeekBasedYear</a>, <a href="#default--epochDay" target="_parent">epochDay</a>, <a href="#default--quarterOfYear" target="_parent">quarterOfYear</a>, <a href="#default--isLeapYear" target="_parent">isLeapYear</a>,
+<a href="#default--lengthOfYear" target="_parent">lengthOfYear</a>.</p>
+
+	
+
+		<h5><span id="compare"></span>Compare<a class="anchorjs-link" href="#compare" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>A common way to compare objects in ts-time is to call <a href="#default--equals" target="_parent">equals</a>, <a href="#default--compareTo" target="_parent">compareTo</a> methods:</p>
+<pre>
+const d1 = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+const d2 = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.226-02:00&quot;);
+d1.<a href="#default--equals" target="_parent">equals</a>(d2);    // false
+d1.<a href="#default--compareTo" target="_parent">compareTo</a>(d2); // -1</pre>
+<p>The objects are first compared by <a href="#default--instant" target="_parent">instant</a>, and then by <a href="#default--offset" target="_parent">offset</a>.</p>
+<p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+except each other:</p>
+<pre>
+const d1: <b>OffsetDateTime</b> = null;
+const d2 = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.226-02:00&quot;);
+<b>OffsetDateTime</b>.<a href="#default--equal-static" target="_parent">equal</a>(d1, d2);   // false
+<b>OffsetDateTime</b>.<a href="#default--compare-static" target="_parent">compare</a>(d1, d2); // -1</pre>
+<p>As opposed to the majority of objects in ts-time, <b>OffsetDateTime</b> doesn't have <b>isBefore</b> and
+<b>isAfter</b> methods. You must explicitly specify which component you want to compare: <a href="#default--instant" target="_parent">instant</a> or
+<a href="#default--dateTime" target="_parent">dateTime</a>.</p>
+<pre>
+const d1 = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-05:00&quot;);
+const d2 = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T20:30:15.226+01:00&quot;);
+d1.<a href="#default--instant" target="_parent">instant</a>.<a href="Instant.html#default--isBefore" target="_parent">isBefore</a>(d2.<a href="#default--instant" target="_parent">instant</a>);   // false
+d1.<a href="#default--dateTime" target="_parent">dateTime</a>.<a href="LocalDateTime.html#default--isBefore" target="_parent">isBefore</a>(d2.<a href="#default--dateTime" target="_parent">dateTime</a>); // true</pre>
+
+	
+
+		<h5><span id="manipulation"></span>Manipulate<a class="anchorjs-link" href="#manipulation" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+<p>To add/subtract a <a href="Period.html" target="_parent">Period</a>, call <a href="#default--plusPeriod" target="_parent">plusPeriod</a>/<a href="#default--minusPeriod" target="_parent">minusPeriod</a> method:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+const d1 = offsetDateTime.<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html#DAY_PERIOD" target="_parent">DAY_PERIOD</a>);                // 18:30:15.225 on 16th of February, 2022, UTC-2
+const d2 = offsetDateTime.<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html" target="_parent">Period</a>.<a href="Period.html#default--ofDays-static" target="_parent">ofDays</a>(2));          // 18:30:15.225 on 17th of February, 2022, UTC-2
+const d3 = offsetDateTime.<a href="#default--minusPeriod" target="_parent">minusPeriod</a>(<a href="Period.html#MONTH_PERIOD" target="_parent">MONTH_PERIOD</a>);             // 18:30:15.225 on 15th of January, 2022, UTC-2</pre>
+<p>The algorithm respects <a href="#default--dateTime" target="_parent">dateTime</a> to align periods, not <a href="#default--instant" target="_parent">instant</a>. In the following example, offsetDateTime
+is the 1st of March in UTC+2, but still 28th of February in UTC. When adding a month, the library considers
+offsetDateTime to be the 1st of March, so it adds 31 days, not 28:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-03-01T00:00:00.000+02:00&quot;);
+const d1 = offsetDateTime.<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html#MONTH_PERIOD" target="_parent">MONTH_PERIOD</a>);              // Midnight on 1st of April, 2022, UTC+2</pre>
+<p>If you expect a month to be added in <a href="Zone.html#UTC" target="_parent">UTC</a>, convert the <a href="#default--instant" target="_parent">instant</a> explicitly to <a href="Zone.html#UTC" target="_parent">UTC</a> first:</p>
+<pre>
+const d2 = offsetDateTime.<a href="#default--instant" target="_parent">instant</a>.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(<a href="Zone.html#UTC" target="_parent">UTC</a>).<a href="#default--plusPeriod" target="_parent">plusPeriod</a>(<a href="Period.html#MONTH_PERIOD" target="_parent">MONTH_PERIOD</a>); // 22:00 on 28th of March, 2022, UTC</pre>
+<p>To add/subtract a <a href="Duration.html" target="_parent">Duration</a>, call <a href="#default--plusDuration" target="_parent">plusDuration</a>/<a href="#default--minusDuration" target="_parent">minusDuration</a> method:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+const d1 = offsetDateTime.<a href="#default--plusDuration" target="_parent">plusDuration</a>(<a href="Duration.html#MINUTE_DURATION" target="_parent">MINUTE_DURATION</a>);         // 18:31:15.225 on 15th of February, 2022, UTC-2
+const d2 = offsetDateTime.<a href="#default--plusDuration" target="_parent">plusDuration</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofHours-static" target="_parent">ofHours</a>(10));    // 04:30:15.225 on 16th of February, 2022, UTC-2
+const d3 = offsetDateTime.<a href="#default--minusDuration" target="_parent">minusDuration</a>(<a href="Duration.html" target="_parent">Duration</a>.<a href="Duration.html#default--ofSeconds-static" target="_parent">ofSeconds</a>(30)); // 18:29:45.225 on 15th of February, 2022, UTC-2</pre>
+<p>For difference between <a href="Period.html" target="_parent">Period</a> and <a href="Duration.html" target="_parent">Duration</a>, see their documentation. For <b>OffsetDateTime</b>, they are
+interchangeable - apart for the list of supported date/time components.</p>
+<p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+const d1 = offsetDateTime.<a href="#default--withYear" target="_parent">withYear</a>(2025);                        // 18:30:15.225 on 15th of February, 2025, UTC-2
+const d2 = offsetDateTime.<a href="#default--withMonth" target="_parent">withMonth</a>(<a href="Month.html#APRIL" target="_parent">APRIL</a>);                      // 18:30:15.225 on 15th of April, 2022, UTC-2
+const d3 = offsetDateTime.<a href="#default--withDayOfMonth" target="_parent">withDayOfMonth</a>(10);                    // 18:30:15.225 on 10th of February, 2022, UTC-2
+const d4 = offsetDateTime.<a href="#default--withDayOfWeek" target="_parent">withDayOfWeek</a>(<a href="DayOfWeek.html#SUNDAY" target="_parent">SUNDAY</a>);                 // 18:30:15.225 on 20th of February, 2022, Sunday, UTC-2
+const d5 = offsetDateTime.<a href="#default--withHour" target="_parent">withHour</a>(20);                          // 20:30:15.225 on 15th of February, 2022, UTC-2
+const d6 = offsetDateTime.<a href="#default--withMinute" target="_parent">withMinute</a>(20);                        // 18:20:15.225 on 15th of February, 2022, UTC-2
+const d7 = offsetDateTime.<a href="#default--withSecond" target="_parent">withSecond</a>(20);                        // 18:30:20.225 on 15th of February, 2022, UTC-2
+const d8 = offsetDateTime.<a href="#default--withMs" target="_parent">withMs</a>(20);                            // 18:30:15.020 on 15th of February, 2022, UTC-2</pre>
+<p>For manipulating <a href="#default--offset" target="_parent">offset</a> component, see <a href="#conversion" target="_parent">Convert</a>.</p>
+<p><span class="text-danger">The library doesn't yet support <b>OffsetDateTime</b> truncating.</span> Truncate its
+<a href="#default--dateTime" target="_parent">dateTime</a> component instead.</p>
+<p>Another sophisticated feature for <b>OffsetDateTime</b> manipulation: <a href="#default--withDayOfYear" target="_parent">withDayOfYear</a>.</p>
+
+	
+
+		<h5><span id="conversion"></span>Convert<a class="anchorjs-link" href="#conversion" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>You can convert <b>OffsetDateTime</b> to other kinds of objects via its properties:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+offsetDateTime.<a href="#default--instant" target="_parent">instant</a>;                   // To <a href="Instant.html" target="_parent">Instant</a>: 2022-02-15T20:30:15.225Z
+offsetDateTime.<a href="#default--date" target="_parent">date</a>;                      // To <a href="LocalDate.html" target="_parent">LocalDate</a>: 2022-02-15
+offsetDateTime.<a href="#default--time" target="_parent">time</a>;                      // To <a href="LocalTime.html" target="_parent">LocalTime</a>: 18:30:15.225
+offsetDateTime.<a href="#default--dateTime" target="_parent">dateTime</a>;                  // To <a href="LocalDateTime.html" target="_parent">LocalDateTime</a>: 2022-02-15T18:30:15.225
+offsetDateTime.<a href="#default--instant" target="_parent">instant</a>.<a href="Instant.html#default--atOffset" target="_parent">atOffset</a>(offset);  // To <b>OffsetDateTime</b> with another <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>, preserving <a href="#default--instant" target="_parent">instant</a> component: 2022-02-16T00:30:15.225+04:00
+offsetDateTime.<a href="#default--dateTime" target="_parent">dateTime</a>.<a href="LocalDateTime.html#default--atOffset" target="_parent">atOffset</a>(offset); // To <b>OffsetDateTime</b> with another <a href="Zone.html#ZoneOffset" target="_parent">ZoneOffset</a>, preserving <a href="#default--dateTime" target="_parent">dateTime</a> component: 2022-02-15T18:30:15.225+04:00
+offsetDateTime.<a href="#default--instant" target="_parent">instant</a>.<a href="Instant.html#default--atZone" target="_parent">atZone</a>(zone);      // To <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>, preserving <a href="#default--instant" target="_parent">instant</a> component: 2022-02-15T20:30:15.225Z
+offsetDateTime.<a href="#default--dateTime" target="_parent">dateTime</a>.<a href="LocalDateTime.html#default--atZone" target="_parent">atZone</a>(zone);     // To <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> in a given <a href="Zone.html#ZoneId" target="_parent">ZoneId</a>, preserving <a href="#default--dateTime" target="_parent">dateTime</a> component: 2022-02-15T18:30:15.225Z</pre>
+<p>Please notice that all conversions result in a partial data loss (date, time, original offset).</p>
+<p>You can as well convert <b>OffsetDateTime</b> to a native JavaScript <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a>:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+offsetDateTime.<a href="#default--native" target="_parent">native</a>;                    // Date representing 20:30:15.225 on 15th of February, 2022 (UTC)</pre>
+<p>Please notice that native <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date" target="_blank">Date</a> is always stored in UTC or local time zone, so you can see a different
+date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
+<p>For backward conversion, see <a href="#construct" target="_parent">Construct</a>.</p>
+
+	
+
+		<h5><span id="format"></span>Format<a class="anchorjs-link" href="#format" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
+		<p>Every class in ts-time has ISO 8601 compliant <a href="#default--toString" target="_parent">toString</a> method:</p>
+<pre>
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+offsetDateTime.<a href="#default--toString" target="_parent">toString</a>(); // &quot;2022-02-15T18:30:15.225-02:00&quot;</pre>
+<p>For more sophisticated string formatting, add <a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a> library to your list of dependencies:</p>
+<pre>
+npm install --save <a href="https://www.npmjs.com/package/ts-time-format" target="_blank">ts-time-format</a></pre>
+<p>Now you can construct an instance of <a href="../ts-time-format/OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a> in order to format arbitrary <b>OffsetDateTime</b>
+instances:</p>
+<pre>
+const formatter = <a href="../ts-time-format/OffsetDateTimeFormatter.html" target="_parent">OffsetDateTimeFormatter</a>.<a href="../ts-time-format/OffsetDateTimeFormatter.html#default--ofPattern-static" target="_parent">ofPattern</a>(&quot;dd.MMM''yy, hh:mm a ('UTC'x)&quot;);
+const offsetDateTime = <b>OffsetDateTime</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225-02:00&quot;);
+formatter.<a href="../ts-time-format/OffsetDateTimeFormatter.html#default--format" target="_parent">format</a>(offsetDateTime); // &quot;15.Feb'22, 06:30 PM (UTC-02)&quot;</pre>
+<p>You can define a custom <a href="../ts-time-format/constants.html#DEFAULT_TEMPORAL_CONTEXT" target="_parent">context</a> object to internationalize the formatted strings:</p>
+<pre>
+const context = {monthShortNames: [&quot;Янв&quot;, &quot;Фев&quot;, &quot;Мар&quot;]};
+formatter.<a href="../ts-time-format/OffsetDateTimeFormatter.html#default--format" target="_parent">format</a>(offsetDateTime, context); // &quot;15.Фев'22, 06:30 PM (UTC-02)&quot;</pre>
+
+	
 
 
 <h4><span id="default---properties"></span>Fields<a class="anchorjs-link" href="#default---properties" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h4>
@@ -316,38 +498,6 @@ So, if your variable may contain null or undefined, use the respective static me
 <dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
 <dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time is equal to <b>other</b>, i.e. all components are equal.
 Null and undefined are only equal to each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
-So, if your variable may contain null or undefined, use the respective static method instead.</p>
-
-</dd>
-</dl>
-
-</div>
-
-<h5><span id="default--isBefore"></span>isBefore<a class="anchorjs-link" href="#default--isBefore" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
-<div class="doc-member">
-<p><code>(other: <b>OffsetDateTime</b>): boolean
-</code></p>
-<dl class="row">
-<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
-<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time goes before <b>other</b>.
-The objects are first compared by instant, and then by offset.
-Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
-So, if your variable may contain null or undefined, use the respective static method instead.</p>
-
-</dd>
-</dl>
-
-</div>
-
-<h5><span id="default--isAfter"></span>isAfter<a class="anchorjs-link" href="#default--isAfter" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
-<div class="doc-member">
-<p><code>(other: <b>OffsetDateTime</b>): boolean
-</code></p>
-<dl class="row">
-<dt class="col-lg-2 col-sm-3">other</dt><dd class="col-lg-10 col-sm-9">Offset date/time to compare to.</dd>
-<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if this offset date/time goes after <b>other</b>.
-The objects are first compared by instant, and then by offset.
-Null and undefined go before anything, except each other. <p class="text-secondary">Note that a method call on null or undefined always leads to an error.
 So, if your variable may contain null or undefined, use the respective static method instead.</p>
 
 </dd>
@@ -547,7 +697,7 @@ shifted to 30th of <a href="Month.html#APRIL" target="_parent">APRIL</a>, 18:30,
 
 <h5><span id="default--parse-static"></span>parse<a class="anchorjs-link" href="#default--parse-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
 <div class="doc-member">
-<p><code>(str: string): <b>OffsetDateTime</b>
+<p><code>(str: string): <b>OffsetDateTime</b> throws <a href="errors.html#TemporalParsingError" target="_parent">TemporalParsingError</a>
 </code></p>
 <dl class="row">
 <dt class="col-lg-2 col-sm-3">str</dt><dd class="col-lg-10 col-sm-9">String representation of offset date/time in ISO format, such as '2019-12-30T18:30:15.225+03:00'.</dd>
@@ -588,36 +738,6 @@ Null and undefined are only equal to each other.
 </dl>
 
 </div>
-
-<h5><span id="default--isBefore-static"></span>isBefore<a class="anchorjs-link" href="#default--isBefore-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
-<div class="doc-member">
-<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): boolean
-</code></p>
-<dl class="row">
-<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
-<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
-<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes before <b>y</b>.
-The objects are first compared by instant, and then by offset.
-Null and undefined go before anything, except each other.
-</dd>
-</dl>
-
-</div>
-
-<h5><span id="default--isAfter-static"></span>isAfter<a class="anchorjs-link" href="#default--isAfter-static" aria-label="Anchor" style="padding-left: 0.375em;">#</a></h5>
-<div class="doc-member">
-<p><code>(x: <b>OffsetDateTime</b>, y: <b>OffsetDateTime</b>): boolean
-</code></p>
-<dl class="row">
-<dt class="col-lg-2 col-sm-3">x</dt><dd class="col-lg-10 col-sm-9">One offset date/time.</dd>
-<dt class="col-lg-2 col-sm-3">y</dt><dd class="col-lg-10 col-sm-9">Another offset date/time.</dd>
-<dt class="col-lg-2 col-sm-3"><span class="doc-returns">returns</span></dt><dd class="col-lg-10 col-sm-9">True if <b>x</b> goes after <b>y</b>.
-The objects are first compared by instant, and then by offset.
-Null and undefined go before anything, except each other.
-</dd>
-</dl>
-
-</div>
 </div>
 					</div>
 					<footer>&copy; <script>document.write(new Date().getFullYear())</script> Copyright: Egor Nepomnyaschih</footer>
@@ -634,6 +754,7 @@ Null and undefined go before anything, except each other.
         <li><a href="DayOfWeek.html" target="_parent">DayOfWeek</a></li>
         <li><a href="Duration.html" target="_parent">Duration</a></li>
         <li><a href="Era.html" target="_parent">Era</a></li>
+        <li><a href="errors.html" target="_parent">errors</a></li>
         <li><a href="Instant.html" target="_parent">Instant</a></li>
         <li><a href="LocalDate.html" target="_parent">LocalDate</a></li>
         <li><a href="LocalDateTime.html" target="_parent">LocalDateTime</a></li>
