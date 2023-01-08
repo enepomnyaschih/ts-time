@@ -822,7 +822,7 @@ describe("LocalDateTime", () => {
 				expect(dateTime.toString()).equal("2022-02-15T18:30:15.225");
 			});
 
-			it("should construct from native Date 1", () => {
+			it("should construct from native Date 3", () => {
 				const date = new Date(Date.UTC(2022, 1, 15, 18, 30, 15, 225));
 				const zone = ZoneId.of("Europe/Berlin");
 				const dateTime = Instant.fromNative(date).atZone(zone).dateTime;

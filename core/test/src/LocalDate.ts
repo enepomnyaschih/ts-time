@@ -26,7 +26,9 @@ import {expect} from "chai";
 import {utc} from "ts-time/_internal";
 import {FRIDAY, MONDAY, SATURDAY, SUNDAY, THURSDAY, TUESDAY, WEDNESDAY} from "ts-time/DayOfWeek";
 import {AD, BC} from "ts-time/Era";
+import Instant from "ts-time/Instant";
 import LocalDate, {EPOCH_DATE} from "ts-time/LocalDate";
+import LocalDateTime from "ts-time/LocalDateTime";
 import LocalTime, {MIDNIGHT, NOON} from "ts-time/LocalTime";
 import {
 	APRIL,
@@ -42,7 +44,10 @@ import {
 	OCTOBER,
 	SEPTEMBER
 } from "ts-time/Month";
+import OffsetDateTime from "ts-time/OffsetDateTime";
 import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "ts-time/Period";
+import {ZoneId, ZoneOffset} from "ts-time/Zone";
+import ZonedDateTime from "ts-time/ZonedDateTime";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 // TODO: Add numeric month/weekday tests
@@ -656,5 +661,324 @@ describe("LocalDate", () => {
 
 	it("should convert itself to string", () => {
 		expect(july5.toString()).equal("2019-07-05");
+	});
+
+	describe("examples", () => {
+		describe("construct", () => {
+			it("should construct from components 1", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from components 2", () => {
+				const date = LocalDate.of(2022, 2, 15);
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from native Date 1", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 15, 30, 225));
+				const result = LocalDate.fromNativeUtc(date);
+				expect(result).instanceof(LocalDate);
+				expect(result.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from native Date 2", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 15, 30, 225));
+				const result = LocalDate.fromNativeLocal(date);
+				expect(result).instanceof(LocalDate);
+				expect(result.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from native Date 3", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 15, 30, 225));
+				const zone = ZoneId.of("Europe/Berlin");
+				const result = Instant.fromNative(date).atZone(zone).date;
+				expect(result).instanceof(LocalDate);
+				expect(result.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from Instant", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const zone = ZoneId.of("Europe/Berlin");
+				const date = instant.atZone(zone).date;
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from LocalDateTime", () => {
+				const localDateTime = LocalDateTime.parse("2022-02-15T18:30:15.225");
+				const date = localDateTime.date;
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from OffsetDateTime", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225+01:00");
+				const date = offsetDateTime.date;
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should construct from ZonedDateTime", () => {
+				const zonedDateTime = ZonedDateTime.parse("2022-02-15T18:30:15.225+01:00[Europe/Berlin]");
+				const date = zonedDateTime.date;
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+		});
+
+		describe("parse", () => {
+			it("should parse ISO 8601", () => {
+				const date = LocalDate.parse("2022-02-15");
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+		});
+
+		describe("inspect", () => {
+			it("should return various properties", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const year = date.year;
+				const month = date.month;
+				const monthValue = date.month.value;
+				const dayOfMonth = date.dayOfMonth;
+				const dayOfWeek = date.dayOfWeek;
+				const dayOfWeekValue = date.dayOfWeek.value;
+				expect(year).equal(2022);
+				expect(month).equal(FEBRUARY);
+				expect(monthValue).equal(2);
+				expect(dayOfMonth).equal(15);
+				expect(dayOfWeek).equal(TUESDAY);
+				expect(dayOfWeekValue).equal(2);
+			});
+		});
+
+		describe("compare", () => {
+			it("should compare non-null instances", () => {
+				const d1 = LocalDate.of(2022, FEBRUARY, 15);
+				const d2 = LocalDate.of(2022, FEBRUARY, 16);
+				expect(d1.equals(d2)).equal(false);
+				expect(d1.isBefore(d2)).equal(true);
+				expect(d1.isAfter(d2)).equal(false);
+				expect(d1.compareTo(d2)).lessThan(0);
+			});
+
+			it("should compare nullable instances", () => {
+				const d1: LocalDate = null;
+				const d2 = LocalDate.of(2022, FEBRUARY, 16);
+				expect(LocalDate.equal(d1, d2)).equal(false);
+				expect(LocalDate.isBefore(d1, d2)).equal(true);
+				expect(LocalDate.isAfter(d1, d2)).equal(false);
+				expect(LocalDate.compare(d1, d2)).lessThan(0);
+			});
+		});
+
+		describe("manipulate", () => {
+			it("should add/subtract period", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d1 = date.plus(DAY_PERIOD);
+				const d2 = date.plus(Period.ofDays(2));
+				const d3 = date.minus(MONTH_PERIOD);
+				expect(d1).instanceof(LocalDate);
+				expect(d2).instanceof(LocalDate);
+				expect(d3).instanceof(LocalDate);
+				expect(d1.toString()).equal("2022-02-16");
+				expect(d2.toString()).equal("2022-02-17");
+				expect(d3.toString()).equal("2022-01-15");
+			});
+
+			it("should change year", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d1 = date.withYear(2025);
+				expect(d1).instanceof(LocalDate);
+				expect(d1.toString()).equal("2025-02-15");
+			});
+
+			it("should change month", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d2 = date.withMonth(APRIL);
+				expect(d2).instanceof(LocalDate);
+				expect(d2.toString()).equal("2022-04-15");
+			});
+
+			it("should change day of month", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d3 = date.withDayOfMonth(10);
+				expect(d3).instanceof(LocalDate);
+				expect(d3.toString()).equal("2022-02-10");
+			});
+
+			it("should change day of week", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d4 = date.withDayOfWeek(SUNDAY);
+				expect(d4).instanceof(LocalDate);
+				expect(d4.toString()).equal("2022-02-20");
+				expect(d4.dayOfWeek).equal(SUNDAY);
+			});
+
+			it("should truncate to year", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d1 = date.truncateToYear;
+				expect(d1).instanceof(LocalDate);
+				expect(d1.toString()).equal("2022-01-01");
+			});
+
+			it("should truncate to month", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d2 = date.truncateToMonth;
+				expect(d2).instanceof(LocalDate);
+				expect(d2.toString()).equal("2022-02-01");
+			});
+
+			it("should truncate to week", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d3 = date.truncateToWeek;
+				expect(d3).instanceof(LocalDate);
+				expect(d3.toString()).equal("2022-02-14");
+				expect(d3.dayOfWeek).equal(MONDAY);
+			});
+
+			it("should truncate to Sunday 1", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const d4 = date.minus(Period.ofDays(date.dayOfWeek.value % 7));
+				expect(d4).instanceof(LocalDate);
+				expect(d4.toString()).equal("2022-02-13");
+				expect(d4.dayOfWeek).equal(SUNDAY);
+			});
+
+			it("should truncate to Sunday 2", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 13);
+				const d4 = date.minus(Period.ofDays(date.dayOfWeek.value % 7));
+				expect(d4).instanceof(LocalDate);
+				expect(d4.toString()).equal("2022-02-13");
+				expect(d4.dayOfWeek).equal(SUNDAY);
+			});
+
+			it("should truncate to Sunday 3", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 19);
+				const d4 = date.minus(Period.ofDays(date.dayOfWeek.value % 7));
+				expect(d4).instanceof(LocalDate);
+				expect(d4.toString()).equal("2022-02-13");
+				expect(d4.dayOfWeek).equal(SUNDAY);
+			});
+
+			it("should truncate to arbitrary day of week 1", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const firstDayOfWeek = 1;
+				const d5 = date.minus(Period.ofDays((date.dayOfWeek.value + 7 - firstDayOfWeek) % 7));
+				expect(d5).instanceof(LocalDate);
+				expect(d5.toString()).equal("2022-02-14");
+				expect(d5.dayOfWeek).equal(MONDAY);
+			});
+
+			it("should truncate to arbitrary day of week 2", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const firstDayOfWeek = 2;
+				const d5 = date.minus(Period.ofDays((date.dayOfWeek.value + 7 - firstDayOfWeek) % 7));
+				expect(d5).instanceof(LocalDate);
+				expect(d5.toString()).equal("2022-02-15");
+				expect(d5.dayOfWeek).equal(TUESDAY);
+			});
+
+			it("should truncate to arbitrary day of week 2", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const firstDayOfWeek = 3;
+				const d5 = date.minus(Period.ofDays((date.dayOfWeek.value + 7 - firstDayOfWeek) % 7));
+				expect(d5).instanceof(LocalDate);
+				expect(d5.toString()).equal("2022-02-09");
+				expect(d5.dayOfWeek).equal(WEDNESDAY);
+			});
+		});
+
+		describe("convert", () => {
+			it("should convert to LocalDateTime 1", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const dateTime = date.atStartOfDay;
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T00:00:00.000");
+			});
+
+			it("should convert to LocalDateTime 2", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const dateTime = date.atTime(MIDNIGHT);
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T00:00:00.000");
+			});
+
+			it("should convert to LocalDateTime 3", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225)
+				const dateTime = date.atTime(time);
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T18:30:15.225");
+			});
+
+			it("should convert to OffsetDateTime", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225)
+				const offset = ZoneOffset.ofComponents(1);
+				const offsetDateTime = date.atTime(time).atOffset(offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-02-15T18:30:15.225+01:00");
+			});
+
+			it("should convert to ZonedDateTime", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225)
+				const zone = ZoneId.of("Europe/Berlin");
+				const zonedDateTime = date.atTime(time).atZone(zone);
+				expect(zonedDateTime).instanceof(ZonedDateTime);
+				expect(zonedDateTime.toString()).equal("2022-02-15T18:30:15.225+01:00[Europe/Berlin]");
+			});
+
+			it("should convert to Instant", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225)
+				const zone = ZoneId.of("Europe/Berlin");
+				const instant = date.atTime(time).atZone(zone).instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T17:30:15.225Z");
+			});
+
+			it("should convert to native Date in UTC", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const result = date.nativeUtc;
+				expect(result).instanceof(Date);
+				expect(result.getTime()).equal(Date.UTC(2022, 1, 15));
+			});
+
+			it("should convert to native Date in local time zone", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const result = date.nativeLocal;
+				expect(result).instanceof(Date);
+				expect(result.getTime()).equal(new Date(2022, 1, 15).getTime());
+			});
+
+			it("should convert to native Date in a given ZoneId", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const zone = ZoneId.of("Europe/Berlin");
+				const result = date.atStartOfDay.atZone(zone).native;
+				expect(result).instanceof(Date);
+				expect(result.getTime()).equal(Date.UTC(2022, 1, 14, 23));
+			});
+
+			it("should convert to native Date at a given time in a given ZoneId", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225)
+				const zone = ZoneId.of("Europe/Berlin");
+				const result = date.atTime(time).atZone(zone).native;
+				expect(result).instanceof(Date);
+				expect(result.getTime()).equal(Date.UTC(2022, 1, 15, 17, 30, 15, 225));
+			});
+		});
+
+		describe("format", () => {
+			it("should format in ISO 8601", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				expect(date.toString()).equal("2022-02-15");
+			});
+		});
 	});
 });

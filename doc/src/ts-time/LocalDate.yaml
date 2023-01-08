@@ -135,7 +135,7 @@ symbols:
           d1.%equals(d2);    // false
           d1.%isBefore(d2);  // true
           d1.%isAfter(d2);   // false
-          d1.%compareTo(d2); // -1
+          d1.%compareTo(d2); // < 0
           </pre>
           <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
           except each other:</p>
@@ -145,7 +145,7 @@ symbols:
           %LocalDate.%equal(d1, d2);     // false
           %LocalDate.%isBeforeStatic(d1, d2);  // true
           %LocalDate.%isAfterStatic(d1, d2);   // false
-          %LocalDate.%compare(d1, d2);   // -1
+          %LocalDate.%compare(d1, d2);   // < 0
           </pre>
         references:
           isBeforeStatic:
