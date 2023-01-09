@@ -1,3 +1,10 @@
+### 0.2.2
+
+* Added [ts-time/errors](https://enepomnyaschih.github.io/ts-time/ts-time/errors.html) module. Before, all errors
+were thrown as regular Error objects.
+* Made error messages clearer and friendlier to the user.
+* Extended documentation with a rich set of examples.
+
 ### 0.2.1
 
 * Fixed *"TypeError: Invalid attempt to destructure non-iterable instance. In order to be iterable, non-array objects

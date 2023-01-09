@@ -105,7 +105,7 @@ symbols:
           For inspection of other date/time properties, you must convert it to %ZonedDateTime or %OffsetDateTime
           first:</p>
           <pre>
-          const instant       = Instant.parse("2022-02-15T18:30:15.225Z");
+          const instant       = %Instant.%parse("2022-02-15T18:30:15.225Z");
           const zonedDateTime = instant.%atZone(%UTC);
           const hour          = zonedDateTime.%hour;            // 18
           const minute        = zonedDateTime.%minute;          // 30
