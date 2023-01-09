@@ -230,8 +230,7 @@ class CustomZone extends ZoneId {
 
 function getComponents(formatter: Intl.DateTimeFormat, date: Date): Date {
 	// en-US format changed on February V8 update, so here we try to parse both old and new formats.
-	const matches = /^(\d+)\/(\d+)\/(\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)) ||
-			/^(\d+) (\d+), (\d+) ([AB]), (\d+):(\d+):(\d+)$/.exec(formatter.format(date)),
+	const matches = /(\d+)[^\d]+(\d+)[^\d]+(\d+)[^AB]*([AB])[^\d]+(\d+)[^\d]+(\d+)[^\d]+(\d+)/.exec(formatter.format(date)),
 		[, month, dayOfMonth, year, era, hour, minute, second] = matches;
 	return utc((era === "A") ? +year : (-year + 1),
 		+month - 1, +dayOfMonth, +hour, +minute, +second, date.getUTCMilliseconds());
