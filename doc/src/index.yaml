@@ -80,6 +80,63 @@ description: |
     Java API for date/time formatting way too loose and error-prone. Implementation of ts-time-format is more strict -
     for every class of ts-time there's a specialized implementation of %TemporalFormatter supporting its own set of
     features. The library doesn't support date/time parsing by an arbitrary pattern.</p>
+    <h3>Examples</h3>
+    <h4>1. %LocalDate, %DateFormatter, %Period: Print a calendar for June 2022</h4>
+    <p>%LocalDate stores a date without attachment to time or a time zone. It works the best when you want to build
+    a time zone agnostic calendar.</p>
+    <pre>
+    const startDate = %LocalDate.%ofOfLocalDate(2022, %JUNE);
+    const formatter = %DateFormatter.%ofPatternOfDateFormatter("d - EE");
+    for (let date = startDate; date.%monthOfLocalDate === startDate.%monthOfLocalDate; date = date.%plusOfLocalDate(%DAY_PERIOD)) {
+      console.log(formatter.%formatOfDateFormatter(date));
+    }
+    </pre>
+    <p>Prints:</p>
+    <pre>
+    1 - Wednesday
+    2 - Thursday
+    3 - Friday
+    ...
+    30 - Thursday
+    </pre>
+    <h4>2. %LocalTime, %Duration: School scheduling</h4>
+    <p>%LocalTime stores time without attachment to a date or a time zone. It works the best when you want to build
+    a schedule for a day that can be reused all across the school semester.</p>
+    <pre>
+    const startTime = %LocalTime.%ofOfLocalTime(9); // 9:00 AM
+    const schedule: %Duration[] = [
+      %Duration.%ofMinutes(90), // First lesson
+      %Duration.%ofMinutes(10), // Break
+      %Duration.%ofMinutes(90), // Second lesson
+      %Duration.%ofHours(1),    // Lunch time
+      %Duration.%ofHours(2),    // Third lesson
+    ];
+    const endTime = schedule.reduce((time, duration) => time.%plusOfLocalTime(duration), startTime);
+
+    // Alternatively:
+    const totalDuration = schedule.reduce((x, y) => x.%plusOfDuration(y), %NULL_DURATION);
+    const endTime = startTime.%plusOfLocalTime(totalDuration);
+
+    console.log(endTime.%toStringOfLocalTime()); // Prints: 15:10:00.000
+    </pre>
+    <h4>3. %ZonedDateTime, %ZoneId, %Instant: Compute plane arrival time</h4>
+    <p>%ZonedDateTime stores date and time attached to a specific time zone. When converting it to a different time
+    zone, you must make a decision: do you want to preserve an %instantOfZonedDateTime or a %dateTimeOfZonedDateTime.
+    In this example, we preserve an %instantOfZonedDateTime, because that's what is important for us.</p>
+    <pre>
+    const departureTime = %ZonedDateTime.%parseOfZonedDateTime("2022-06-15T18:30:00.000+02:00[Europe/Berlin]");
+    const arrivalTimeZone = %ZoneId.%ofOfZoneId("Europe/London");
+    const flightDuration = %Duration.%ofComponentsOfDuration(0, 1, 50); // 0 days 1 hour 50 minutes
+
+    const arrivalTime = departureTime.%instantOfZonedDateTime.%plusOfInstant(flightDuration).%atZoneOfInstant(arrivalTimeZone);
+
+    // Alternatively (less intuitive, but still correct):
+    const arrivalTime = departureTime.%plusDuration(flightDuration).%instantOfZonedDateTime.%atZoneOfInstant(arrivalTimeZone);
+
+    console.log(arrivalTime.%toStringOfZonedDateTime()); // Prints: 2022-06-15T19:20:00.000+01:00[Europe/London]
+    </pre>
+    <p>%OffsetDateTime is similar to %ZonedDateTime, but it doesn't take time zone shifts (such as daylight saving time)
+    into consideration, thus typically shouldn't be used.</p>
     <h3>Browser support</h3>
     <p>Microsoft Edge, Google Chrome, Mozilla Firefox, NodeJS: full support.</p>
     <p>Internet Explorer 11: all features except local time zones are supported. All local time zones have zero offset.</p>
@@ -92,7 +149,94 @@ references:
   isBefore:
     file: ts-time/LocalDate
     member: isBefore
-
   plus:
     file: ts-time/LocalDate
     member: plus
+  ofOfLocalDate:
+    file: ts-time/LocalDate
+    member: of
+    static: true
+    label: of
+  ofPatternOfDateFormatter:
+    file: ts-time-format/DateFormatter
+    member: ofPattern
+    static: true
+    label: ofPattern
+  plusOfLocalDate:
+    file: ts-time/LocalDate
+    member: plus
+    label: plus
+  monthOfLocalDate:
+    file: ts-time/LocalDate
+    member: month
+    label: month
+  formatOfDateFormatter:
+    file: ts-time-format/DateFormatter
+    member: format
+    static: true
+    label: format
+  ofOfLocalTime:
+    file: ts-time/LocalTime
+    member: of
+    static: true
+    label: of
+  ofMinutes:
+    file: ts-time/Duration
+    member: ofMinutes
+  ofHours:
+    file: ts-time/Duration
+    member: ofHours
+  plusOfLocalTime:
+    file: ts-time/LocalTime
+    member: plus
+    label: plus
+  plusOfDuration:
+    file: ts-time/Duration
+    member: plus
+    label: plus
+  NULL_DURATION:
+    file: ts-time/Duration
+    symbol: NULL_DURATION
+  toStringOfLocalTime:
+    file: ts-time/LocalTime
+    member: toString
+    label: toString
+  parseOfZonedDateTime:
+    file: ts-time/ZonedDateTime
+    member: parse
+    static: true
+    label: parse
+  ofOfZoneId:
+    file: ts-time/Zone
+    symbol: ZoneId
+    member: of
+    static: true
+    label: of
+  ofComponentsOfDuration:
+    file: ts-time/Duration
+    member: ofComponents
+    static: true
+    label: ofComponents
+  instantOfZonedDateTime:
+    file: ts-time/ZonedDateTime
+    member: instant
+    label: instant
+  dateTimeOfZonedDateTime:
+    file: ts-time/ZonedDateTime
+    member: dateTime
+    label: dateTime
+  plusOfInstant:
+    file: ts-time/Instant
+    member: plus
+    label: plus
+  plusDuration:
+    file: ts-time/ZonedDateTime
+    member: plusDuration
+  atZoneOfInstant:
+    file: ts-time/Instant
+    member: atZone
+    label: atZone
+  toStringOfZonedDateTime:
+    file: ts-time/ZonedDateTime
+    member: toString
+    label: toString
