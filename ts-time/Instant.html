@@ -155,7 +155,7 @@ the following <b>Instant</b> instance represents 18 hours, 30 minutes, 15 second
 For inspection of other date/time properties, you must convert it to <a href="ZonedDateTime.html" target="_parent">ZonedDateTime</a> or <a href="OffsetDateTime.html" target="_parent">OffsetDateTime</a>
 first:</p>
 <pre>
-const instant       = Instant.parse(&quot;2022-02-15T18:30:15.225Z&quot;);
+const instant       = <b>Instant</b>.<a href="#default--parse-static" target="_parent">parse</a>(&quot;2022-02-15T18:30:15.225Z&quot;);
 const zonedDateTime = instant.<a href="#default--atZone" target="_parent">atZone</a>(<a href="Zone.html#UTC" target="_parent">UTC</a>);
 const hour          = zonedDateTime.<a href="ZonedDateTime.html#default--hour" target="_parent">hour</a>;            // 18
 const minute        = zonedDateTime.<a href="ZonedDateTime.html#default--minute" target="_parent">minute</a>;          // 30</pre>
