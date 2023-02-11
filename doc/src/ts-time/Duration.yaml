@@ -24,18 +24,18 @@ symbols:
   default:
     kind: class
     description: |
-      Comprises a fixed time interval in milliseconds. As opposed to %Period, it can't comprise a variable-length
+      <p>Comprises a fixed time interval in milliseconds. As opposed to %Period, it can't comprise a variable-length
       interval such as month, because month duration varies from 28 to 31 days. %Duration is mainly involved to
-      manipulate %Instant objects. In particular, %ZonedDateTime.%plusDuration method adds the duration to a respective
+      manipulate %Instant objects. In particular, %ZonedDateTime.%plusDuration method adds a duration to the respective
       instant, not date/time. It means that if you add %DAY_DURATION to a %ZonedDateTime, you may receive a different
-      %LocalTime if time zone offset changes during this day, while real time difference will truly be 24 hours:
+      %LocalTime if time zone offset changes during this day, while real time difference will truly be 24 hours:</p>
       <pre>
-      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"), // Summer time
         end = start.%plusDuration(%DAY_DURATION);
-      expect(end.%toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]");
+      expect(end.%toString()).toBe("2019-10-27T23:00:00.000+01:00[Europe/Berlin]"); // Winter time
       expect(end.%epochMs - start.%epochMs).toBe(24 * %MS_PER_HOUR);
       </pre>
-      To ascertain same %LocalTime, you are supposed to add a %Period.
+      <p>To ascertain the same %LocalTime, you are supposed to add a %Period.</p>
 
     properties:
       ms:

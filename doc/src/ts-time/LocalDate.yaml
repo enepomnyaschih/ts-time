@@ -24,7 +24,267 @@ symbols:
   default:
     kind: class
     description: |
-      Comprises a specific date, merely as a tuple of (absolute year, month, day of month).
+      <p>Comprises a specific date, merely as a tuple of (absolute year, month, day of month).</p>
+    topics:
+      construct:
+        header: Construct
+        text: |
+          <p>A common way to construct an object in ts-time is to call its %of static method. For example, the
+          following %LocalDate instances represent 15th of February, 2022:</p>
+          <pre>
+          %LocalDate.%of(2022, %FEBRUARY, 15);
+          %LocalDate.%of(2022, 2, 15);
+          </pre>
+          <p>As opposed to Java API, there's no common way to get the current instance of an object in ts-time,
+          because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
+          and convert it to an object that you need, taking time zone into consideration.</p>
+          <pre>
+          %Instant.%now().%atZone(%UTC).%date;             // Current LocalDate in %UTC
+          %Instant.%now().%atZone(%LOCAL_ZONE_ID).%date;   // Current LocalDate in the local time zone
+          %Instant.%now().%atZone(zone).%date;            // Current LocalDate in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          static method:</p>
+          <pre>
+          %LocalDate.%fromNativeUtc(date);              // LocalDate from a given %Date in %UTC
+          %LocalDate.%fromNativeLocal(date);            // LocalDate from a given %Date in the local time zone
+          %Instant.%fromNative(date).%atZone(zone).%date; // LocalDate from a given %Date in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>You can convert instances of other ts-time classes to %LocalDate via their properties and methods:</p>
+          <pre>
+          instant.%atZone(zone).%date;                  // From %Instant in a given %ZoneId/%ZoneOffset
+          localDateTime.%dateOfLocal;                         // From %LocalDateTime
+          offsetDateTime.%dateOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
+          zonedDateTime.%date;                         // From %ZonedDateTime in the same %ZoneId
+          </pre>
+          <p>Please notice that all these conversions result in a partial data loss (time, zone, offset).</p>
+          <p>Other sophisticated constructors: %ofEpochDay, %ofYearDay, %ofWeek, %ofWeekBasedYearDay.</p>
+        references:
+          dateOfLocal:
+            file: ts-time/LocalDateTime
+            member: date
+            label: date
+          now:
+            file: ts-time/Instant
+            member: now
+            static: true
+          atZone:
+            file: ts-time/Instant
+            member: atZone
+          fromNative:
+            file: ts-time/Instant
+            member: fromNative
+          dateOfOffset:
+            file: ts-time/OffsetDateTime
+            member: date
+            label: date
+          date:
+            file: ts-time/ZonedDateTime
+            member: date
+
+      parse:
+        header: Parse
+        text: |
+          <p>A common way to parse an ISO 8601 compliant string in ts-time is to call %parse static method. For example,
+          the following %LocalDate instance represents 15th of February, 2022:</p></p>
+          <pre>
+          %LocalDate.%parse("2022-02-15");
+          </pre>
+          <p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+        references:
+          parse:
+            file: ts-time/LocalDate
+            member: parse
+            static: true
+
+      inspect:
+        header: Inspect
+        text: |
+          <p>In the following example, we inspect various properties of a %LocalDate object. Please notice
+          the difference in return value types:</p>
+          <pre>
+          const date           = %LocalDate.%of(2022, %FEBRUARY, 15);
+          const year           = date.%year;            // 2022
+          const month          = date.%month;           // %FEBRUARY
+          const monthValue     = date.%month.%valueOfMonth;     // 2
+          const dayOfMonth     = date.%dayOfMonth;      // 15
+          const dayOfWeek      = date.%dayOfWeek;       // %TUESDAY
+          const dayOfWeekValue = date.%dayOfWeek.%valueOfDay; // 2
+          </pre>
+          <p>Other sophisticated features for %LocalDate inspection: %era, %yearOfEra, %weekBasedYear,
+          %weekOfWeekBasedYear, %dayOfYear, %dayOfWeekBasedYear, %epochDay, %quarterOfYear, %isLeapYear,
+          %lengthOfYear.</p>
+        references:
+          valueOfMonth:
+            file: ts-time/Month
+            member: value
+            label: value
+          valueOfDay:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+
+      compare:
+        header: Compare
+        text: |
+          <p>A common way to compare objects in ts-time is to call %equals, %isBefore, %isAfter, %compareTo methods:</p>
+          <pre>
+          const d1 = %LocalDate.%of(2022, %FEBRUARY, 15);
+          const d2 = %LocalDate.%of(2022, %FEBRUARY, 16);
+          d1.%equals(d2);    // false
+          d1.%isBefore(d2);  // true
+          d1.%isAfter(d2);   // false
+          d1.%compareTo(d2); // < 0
+          </pre>
+          <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+          except each other:</p>
+          <pre>
+          const d1: %LocalDate = null;
+          const d2 = %LocalDate.%of(2022, %FEBRUARY, 16);
+          %LocalDate.%equal(d1, d2);     // false
+          %LocalDate.%isBeforeStatic(d1, d2);  // true
+          %LocalDate.%isAfterStatic(d1, d2);   // false
+          %LocalDate.%compare(d1, d2);   // < 0
+          </pre>
+        references:
+          isBeforeStatic:
+            file: ts-time/LocalDate
+            member: isBefore
+            static: true
+            label: isBefore
+          isAfterStatic:
+            file: ts-time/LocalDate
+            member: isAfter
+            static: true
+            label: isAfter
+          compare:
+            file: ts-time/LocalDate
+            member: compare
+            static: true
+
+      manipulation:
+        header: Manipulate
+        text: |
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+          <p>To add/subtract a %Period, call %plus/%minus method:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          const d1 = date.%plus(%DAY_PERIOD);       // 16th of February, 2022
+          const d2 = date.%plus(%Period.%ofDays(2)); // 17th of February, 2022
+          const d3 = date.%minus(%MONTH_PERIOD);    // 15th of January, 2022
+          </pre>
+          <p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          const d1 = date.%withYear(2025);         // 15th of February, 2025
+          const d2 = date.%withMonth(%APRIL);       // 15th of April, 2022
+          const d3 = date.%withDayOfMonth(10);     // 10th of February, 2022
+          const d4 = date.%withDayOfWeek(%SUNDAY);  // 20th of February, 2022, Sunday
+          </pre>
+          <p>To truncate all the least-significant components, call <b>truncate*</b> methods:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          const d1 = date.%truncateToYear;         // 1st of January, 2022
+          const d2 = date.%truncateToMonth;        // 1st of February, 2022
+          const d3 = date.%truncateToWeek;         // 14th of February, 2022, Monday
+          </pre>
+          <p><span class="text-danger">The library doesn't yet support Sunday as the 1st day of the week.</span>
+          But there's a workaround:</p>
+          <pre>
+          const d4 = date.%minus(%Period.%ofDays(date.%dayOfWeek.%valueOfDayOfWeek % 7)); // 13th of February, 2022, Sunday
+          </pre>
+          <p>Or a flexible solution, where firstDayOfWeek is 1 for Monday, and 7 for Sunday:
+          <pre>
+          const d5 = date.%minus(%Period.%ofDays((date.%dayOfWeek.%valueOfDayOfWeek + 7 - firstDayOfWeek) % 7));
+          </pre>
+          <p>Other sophisticated features for %LocalDate manipulation: %withDayOfYear, %truncateToWeekBasedYear.</p>
+        references:
+          ofDays:
+            file: ts-time/Period
+            member: ofDays
+            static: true
+          valueOfDayOfWeek:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+
+      conversion:
+        header: Convert
+        text: |
+          <p>You can convert %LocalDate to other kinds of objects via its properties and methods:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          date.%atStartOfDay;                      // To %LocalDateTime at midnight
+          date.%atTime(%MIDNIGHT);                  // Equivalent
+          date.%atTime(time);                      // To %LocalDateTime at a given %LocalTime
+          date.%atTime(time).%atOffset(offset);     // To %OffsetDateTime at a given %LocalTime in a given %ZoneOffset
+          date.%atTime(time).%atZone(zone);         // To %ZonedDateTime at a given %LocalTime in a given %ZoneId
+          date.%atTime(time).%atZone(zone).%instant; // To %Instant at a given %LocalTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>You can as well convert %LocalDate to a native JavaScript %Date:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          date.%nativeUtc;                         // Date representing 15th of February, 2022, midnight in %UTC
+          date.%nativeLocal;                       // Date representing 15th of February, 2022, midnight in the local time zone
+          date.%atStartOfDay.%atZone(zone).%native;  // Date representing 15th of February, 2022, midnight in a given %ZoneId/%ZoneOffset
+          date.%atTime(time).%atZone(zone).%native;  // Date representing 15th of February, 2022, at a given %LocalTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>For backward conversion, see %construct.</p>
+        references:
+          atOffset:
+            file: ts-time/LocalDateTime
+            member: atOffset
+          atZone:
+            file: ts-time/LocalDateTime
+            member: atZone
+          instant:
+            file: ts-time/ZonedDateTime
+            member: instant
+          native:
+            file: ts-time/ZonedDateTime
+            member: native
+          construct:
+            href: '#construct'
+            label: Construct
+
+      format:
+        header: Format
+        text: |
+          <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
+          <pre>
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          date.%toString(); // "2022-02-15"
+          </pre>
+          <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
+          <pre>
+          npm install --save %tsTimeFormat
+          </pre>
+          <p>Now you can construct an instance of %DateFormatter in order to format arbitrary %LocalDate instances:</p>
+          <pre>
+          const formatter = %DateFormatter.%ofPattern("dd.MMM''yy");
+          const date = %LocalDate.%of(2022, %FEBRUARY, 15);
+          formatter.%format(date); // "15.Feb'22"
+          </pre>
+          <p>You can define a custom %context object to internationalize the formatted strings:</p>
+          <pre>
+          const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+          formatter.%format(date, context); // "15.Фев'22"
+          </pre>
+        references:
+          toString:
+            file: ts-time/LocalDate
+            member: toString
+          ofPattern:
+            file: ts-time-format/DateFormatter
+            member: ofPattern
+            static: true
+          format:
+            file: ts-time-format/DateFormatter
+            member: format
+          context:
+            file: ts-time-format/constants
+            symbol: DEFAULT_TEMPORAL_CONTEXT
 
     properties:
       nativeLocal:

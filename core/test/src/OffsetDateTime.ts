@@ -35,7 +35,9 @@ import Duration, {
 } from "ts-time/Duration";
 import {AD, BC} from "ts-time/Era";
 import Instant from "ts-time/Instant";
+import LocalDate from "ts-time/LocalDate";
 import LocalDateTime from "ts-time/LocalDateTime";
+import LocalTime from "ts-time/LocalTime";
 import {
 	APRIL,
 	AUGUST,
@@ -53,6 +55,7 @@ import {
 import OffsetDateTime from "ts-time/OffsetDateTime";
 import Period, {DAY_PERIOD, MONTH_PERIOD, NULL_PERIOD, QUARTER_PERIOD, WEEK_PERIOD, YEAR_PERIOD} from "ts-time/Period";
 import {UTC, ZoneOffset} from "ts-time/Zone";
+import ZonedDateTime from "ts-time/ZonedDateTime";
 
 describe("OffsetDateTime", () => {
 	const offset = ZoneOffset.ofComponents(3),
@@ -613,5 +616,290 @@ describe("OffsetDateTime", () => {
 			.equal("2019-07-05T18:30:15.225+03:15:10");
 		expect(OffsetDateTime.ofDateTime(LocalDateTime.ofComponents(2019, JULY, 5, 18, 30, 15, 225), ZoneOffset.ofComponents(-3, -15, -10)).toString())
 			.equal("2019-07-05T18:30:15.225-03:15:10");
+	});
+
+	describe("examples", () => {
+		describe("construct", () => {
+			it("should construct from Instant 1", () => {
+				const instant = Instant.parse("2022-06-14T00:00:00.000Z");
+				const offset = ZoneOffset.ofComponents(-2);
+				const offsetDateTime = OffsetDateTime.ofInstant(instant, offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-06-13T22:00:00.000-02:00");
+			});
+
+			it("should construct from Instant 2", () => {
+				const instant = Instant.parse("2022-06-14T00:00:00.000Z");
+				const offset = ZoneOffset.ofComponents(-2);
+				const offsetDateTime = instant.atOffset(offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-06-13T22:00:00.000-02:00");
+				expect(offsetDateTime.instant.toString()).equal("2022-06-14T00:00:00.000Z");
+				expect(offsetDateTime.dateTime.toString()).equal("2022-06-13T22:00:00.000");
+			});
+
+			it("should construct from LocalDateTime 1", () => {
+				const dateTime = LocalDateTime.parse("2022-06-14T00:00:00.000");
+				const offset = ZoneOffset.ofComponents(-2);
+				const offsetDateTime = OffsetDateTime.ofDateTime(dateTime, offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-06-14T00:00:00.000-02:00");
+			});
+
+			it("should construct from LocalDateTime 2", () => {
+				const dateTime = LocalDateTime.parse("2022-06-14T00:00:00.000");
+				const offset = ZoneOffset.ofComponents(-2);
+				const offsetDateTime = dateTime.atOffset(offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-06-14T00:00:00.000-02:00");
+				expect(offsetDateTime.dateTime.toString()).equal("2022-06-14T00:00:00.000");
+				expect(offsetDateTime.instant.toString()).equal("2022-06-14T02:00:00.000Z");
+			});
+
+			it("should construct from ZonedDateTime", () => {
+				const zonedDateTime = ZonedDateTime.parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+				const offsetDateTime = zonedDateTime.offsetDateTime;
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-02-15T18:30:15.225-05:00");
+			});
+		});
+
+		describe("parse", () => {
+			it("should parse ISO 8601", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-02-15T18:30:15.225-02:00");
+			});
+		});
+
+		describe("inspect", () => {
+			it("should return various properties", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const year = offsetDateTime.year;
+				const month = offsetDateTime.month;
+				const monthValue = offsetDateTime.month.value;
+				const dayOfMonth = offsetDateTime.dayOfMonth;
+				const dayOfWeek = offsetDateTime.dayOfWeek;
+				const dayOfWeekValue = offsetDateTime.dayOfWeek.value;
+				const hour = offsetDateTime.hour;
+				const minute = offsetDateTime.minute;
+				const second = offsetDateTime.second;
+				const ms = offsetDateTime.ms;
+				const offset = offsetDateTime.offset;
+				const offsetHours = offsetDateTime.offset.hours;
+				const offsetMinutes = offsetDateTime.offset.minutes;
+				const offsetSeconds = offsetDateTime.offset.seconds;
+				expect(year).equal(2022);
+				expect(month).equal(FEBRUARY);
+				expect(monthValue).equal(2);
+				expect(dayOfMonth).equal(15);
+				expect(dayOfWeek).equal(TUESDAY);
+				expect(dayOfWeekValue).equal(2);
+				expect(hour).equal(18);
+				expect(minute).equal(30);
+				expect(second).equal(15);
+				expect(ms).equal(225);
+				expect(offset).instanceof(ZoneOffset);
+				expect(offsetHours).equal(-2);
+				expect(offsetMinutes).equal(0);
+				expect(offsetSeconds).equal(0);
+			});
+		});
+
+		describe("compare", () => {
+			it("should compare non-null instances", () => {
+				const d1 = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d2 = OffsetDateTime.parse("2022-02-15T18:30:15.226-02:00");
+				expect(d1.equals(d2)).equal(false);
+				expect(d1.compareTo(d2)).equal(-1);
+			});
+
+			it("should compare nullable instances", () => {
+				const d1: OffsetDateTime = null;
+				const d2 = OffsetDateTime.parse("2022-02-15T18:30:15.226-02:00");
+				expect(OffsetDateTime.equal(d1, d2)).equal(false);
+				expect(OffsetDateTime.compare(d1, d2)).equal(-1);
+			});
+
+			it("should compare specific components", () => {
+				const d1 = OffsetDateTime.parse("2022-02-15T18:30:15.225-05:00");
+				const d2 = OffsetDateTime.parse("2022-02-15T20:30:15.226+01:00");
+				expect(d1.instant.isBefore(d2.instant)).equal(false);
+				expect(d1.dateTime.isBefore(d2.dateTime)).equal(true);
+			});
+		});
+
+		describe("manipulate", () => {
+			it("should add/subtract period", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d1 = offsetDateTime.plusPeriod(DAY_PERIOD);                // 18:30:15.225 on 16th of February, 2022, UTC-2
+				const d2 = offsetDateTime.plusPeriod(Period.ofDays(2));          // 18:30:15.225 on 17th of February, 2022, UTC-2
+				const d3 = offsetDateTime.minusPeriod(MONTH_PERIOD);             // 18:30:15.225 on 15th of January, 2022, UTC-2
+				expect(d1).instanceof(OffsetDateTime);
+				expect(d2).instanceof(OffsetDateTime);
+				expect(d3).instanceof(OffsetDateTime);
+				expect(d1.toString()).equal("2022-02-16T18:30:15.225-02:00");
+				expect(d2.toString()).equal("2022-02-17T18:30:15.225-02:00");
+				expect(d3.toString()).equal("2022-01-15T18:30:15.225-02:00");
+			});
+
+			it("should align periods by date/time 1", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-03-01T00:00:00.000+02:00");
+				const d1 = offsetDateTime.plusPeriod(MONTH_PERIOD);
+				expect(d1).instanceof(OffsetDateTime);
+				expect(d1.toString()).equal("2022-04-01T00:00:00.000+02:00");
+			});
+
+			it("should align periods by date/time 2", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-03-01T00:00:00.000+02:00");
+				const d2 = offsetDateTime.instant.atOffset(UTC).plusPeriod(MONTH_PERIOD);
+				expect(d2).instanceof(OffsetDateTime);
+				expect(d2.toString()).equal("2022-03-28T22:00:00.000Z");
+			});
+
+			it("should add/subtract duration", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d1 = offsetDateTime.plusDuration(MINUTE_DURATION);
+				const d2 = offsetDateTime.plusDuration(Duration.ofHours(10));
+				const d3 = offsetDateTime.minusDuration(Duration.ofSeconds(30));
+				expect(d1).instanceof(OffsetDateTime);
+				expect(d2).instanceof(OffsetDateTime);
+				expect(d3).instanceof(OffsetDateTime);
+				expect(d1.toString()).equal("2022-02-15T18:31:15.225-02:00");
+				expect(d2.toString()).equal("2022-02-16T04:30:15.225-02:00");
+				expect(d3.toString()).equal("2022-02-15T18:29:45.225-02:00");
+			});
+
+			it("should change year", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d1 = offsetDateTime.withYear(2025);
+				expect(d1).instanceof(OffsetDateTime);
+				expect(d1.toString()).equal("2025-02-15T18:30:15.225-02:00");
+			});
+
+			it("should change month", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d2 = offsetDateTime.withMonth(APRIL);
+				expect(d2).instanceof(OffsetDateTime);
+				expect(d2.toString()).equal("2022-04-15T18:30:15.225-02:00");
+			});
+
+			it("should change day of month", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d3 = offsetDateTime.withDayOfMonth(10);
+				expect(d3).instanceof(OffsetDateTime);
+				expect(d3.toString()).equal("2022-02-10T18:30:15.225-02:00");
+			});
+
+			it("should change day of week", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d4 = offsetDateTime.withDayOfWeek(SUNDAY);
+				expect(d4).instanceof(OffsetDateTime);
+				expect(d4.toString()).equal("2022-02-20T18:30:15.225-02:00");
+				expect(d4.dayOfWeek).equal(SUNDAY);
+			});
+
+			it("should change hour", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d5 = offsetDateTime.withHour(20);
+				expect(d5).instanceof(OffsetDateTime);
+				expect(d5.toString()).equal("2022-02-15T20:30:15.225-02:00");
+			});
+
+			it("should change minute", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d6 = offsetDateTime.withMinute(20);
+				expect(d6).instanceof(OffsetDateTime);
+				expect(d6.toString()).equal("2022-02-15T18:20:15.225-02:00");
+			});
+
+			it("should change second", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d7 = offsetDateTime.withSecond(20);
+				expect(d7).instanceof(OffsetDateTime);
+				expect(d7.toString()).equal("2022-02-15T18:30:20.225-02:00");
+			});
+
+			it("should change millisecond", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const d8 = offsetDateTime.withMs(20);
+				expect(d8).instanceof(OffsetDateTime);
+				expect(d8.toString()).equal("2022-02-15T18:30:15.020-02:00");
+			});
+		});
+
+		describe("convert", () => {
+			it("should convert to Instant", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const instant = offsetDateTime.instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T20:30:15.225Z");
+			});
+
+			it("should convert to LocalDate", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const date = offsetDateTime.date;
+				expect(date).instanceof(LocalDate);
+				expect(date.toString()).equal("2022-02-15");
+			});
+
+			it("should convert to LocalTime", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const time = offsetDateTime.time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should convert to LocalDateTime", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const dateTime = offsetDateTime.dateTime;
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T18:30:15.225");
+			});
+
+			it("should convert to OffsetDateTime with another ZoneOffset preserving instant component", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const offset = ZoneOffset.ofComponents(4);
+				const result = offsetDateTime.instant.atOffset(offset);
+				expect(result).instanceof(OffsetDateTime);
+				expect(result.toString()).equal("2022-02-16T00:30:15.225+04:00");
+			});
+
+			it("should convert to OffsetDateTime with another ZoneOffset preserving dateTime component", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const offset = ZoneOffset.ofComponents(4);
+				const result = offsetDateTime.dateTime.atOffset(offset);
+				expect(result).instanceof(OffsetDateTime);
+				expect(result.toString()).equal("2022-02-15T18:30:15.225+04:00");
+			});
+
+			it("should convert to ZonedDateTime preserving instant component", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const result = offsetDateTime.instant.atZone(UTC);
+				expect(result).instanceof(ZonedDateTime);
+				expect(result.toString()).equal("2022-02-15T20:30:15.225Z");
+			});
+
+			it("should convert to ZonedDateTime preserving dateTime component", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const result = offsetDateTime.dateTime.atZone(UTC);
+				expect(result).instanceof(ZonedDateTime);
+				expect(result.toString()).equal("2022-02-15T18:30:15.225Z");
+			});
+
+			it("should convert to native Date", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				const date = offsetDateTime.native;
+				expect(date).instanceof(Date);
+				expect(date.getTime()).equal(Date.UTC(2022, 1, 15, 20, 30, 15, 225));
+			});
+		});
+
+		describe("format", () => {
+			it("should format in ISO 8601", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225-02:00");
+				expect(offsetDateTime.toString()).equal("2022-02-15T18:30:15.225-02:00");
+			});
+		});
 	});
 });

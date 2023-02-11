@@ -24,10 +24,227 @@ symbols:
   default:
     kind: class
     description: |
-      Represents an instant of time. Lacking time zone and offset information, it doesn't return any particular
-      date/time indication. In order to obtain a particular date/time, you must call %atZone or %atOffset method.
+      <p>Represents an instant of time. Lacking time zone and offset information, it doesn't indicate any particular
+      date/time. In order to obtain a particular date/time, you must call %atZone or %atOffset method.
       %Instant object is determined by %epochMs - number of milliseconds since ECMAScript epoch (1st of %JANUARY 1970
-      UTC).
+      UTC).</p>
+    topics:
+      construct:
+        header: Construct
+        text: |
+          <p>Primary %Instant constructor accepts number of milliseconds since epoch as an argument. For example,
+          the following %Instant instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+          15th of February, 2022 (UTC):</p>
+          <pre>
+          const msSinceEpoch: number = %Date.UTC(2022, 1, 15, 18, 30, 15, 225);
+          %Instant.%ofEpochMs(msSinceEpoch);
+          </pre>
+          <p>%Instant is the only class in ts-time library that allows you to obtain current moment of time:</p>
+          <pre>
+          %Instant.%now();
+          </pre>
+          <p>Other classes don't have such a method. For example, in order to get the current instance of %ZonedDateTime,
+          you must get the current %Instant and then convert it to %ZonedDateTime:</p>
+          <pre>
+          %Instant.%now().%atZone(%UTC);              // Current %ZonedDateTime in %UTC
+          %Instant.%now().%atZone(%LOCAL_ZONE_ID);    // Current %ZonedDateTime in the local time zone
+          %Instant.%now().%atZone(zone);             // Current %ZonedDateTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>It makes ts-time API more robust.
+          It leaves less room for a mistake.</p>
+          <p>You can convert instances of other ts-time classes to %Instant via their properties and methods:</p>
+          <pre>
+          zonedDateTime.%instantOfZonedDateTime;                  // From %ZonedDateTime
+          offsetDateTime.%instantOfOffsetDateTime;                 // From %OffsetDateTime
+          localDateTime.%atZone(zone).%instantOfZonedDateTime;     // From %LocalDateTime in a given %ZoneId
+          localDateTime.%atOffset(offset).%instantOfOffsetDateTime; // From %LocalDateTime in a given %ZoneOffset
+          </pre>
+          <p>Please notice that conversion from %ZonedDateTime and %OffsetDateTime results in a partial data loss
+          (original time zone/offset).</p>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          static method:</p>
+          <pre>
+          %Instant.%fromNative(date);               // %Instant from a given %Date
+          </pre>
+        references:
+          instantOfZonedDateTime:
+            file: ts-time/ZonedDateTime
+            member: instant
+            label: instant
+          instantOfOffsetDateTime:
+            file: ts-time/OffsetDateTime
+            member: instant
+            label: instant
+          atZone:
+            file: ts-time/LocalDateTime
+            member: atZone
+          atOffset:
+            file: ts-time/LocalDateTime
+            member: atOffset
+
+      parse:
+        header: Parse
+        text: |
+          <p>A common way to parse an ISO 8601 compliant string in ts-time is to call %parse static method. For example,
+          the following %Instant instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+          15th of February, 2022 in New York:</p></p>
+          <pre>
+          %Instant.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          </pre>
+          <p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+        references:
+          parse:
+            file: ts-time/Instant
+            member: parse
+            static: true
+
+      inspect:
+        header: Inspect
+        text: |
+          <p>Since %Instant doesn't represent a particular date and time, the only thing you can inspect is %epochMs.
+          For inspection of other date/time properties, you must convert it to %ZonedDateTime or %OffsetDateTime
+          first:</p>
+          <pre>
+          const instant       = %Instant.%parse("2022-02-15T18:30:15.225Z");
+          const zonedDateTime = instant.%atZone(%UTC);
+          const hour          = zonedDateTime.%hour;            // 18
+          const minute        = zonedDateTime.%minute;          // 30
+          </pre>
+        references:
+          hour:
+            file: ts-time/ZonedDateTime
+            member: hour
+          minute:
+            file: ts-time/ZonedDateTime
+            member: minute
+
+      compare:
+        header: Compare
+        text: |
+          <p>A common way to compare objects in ts-time is to call %equals, %isBefore, %isAfter, %compareTo methods:</p>
+          <pre>
+          const d1 = %Instant.%parse("2022-02-15T18:30:15.225Z");
+          const d2 = %Instant.%parse("2022-02-15T18:30:15.226Z");
+          d1.%equals(d2);    // false
+          d1.%isBefore(d2);  // true
+          d1.%isAfter(d2);   // false
+          d1.%compareTo(d2); // -1
+          </pre>
+          <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+          except each other:</p>
+          <pre>
+          const d1: %Instant = null;
+          const d2 = %Instant.%parse("2022-02-15T18:30:15.226Z");
+          %Instant.%equal(d1, d2);     // false
+          %Instant.%isBeforeStatic(d1, d2);  // true
+          %Instant.%isAfterStatic(d1, d2);   // false
+          %Instant.%compare(d1, d2);   // -1
+          </pre>
+        references:
+          isBeforeStatic:
+            file: ts-time/Instant
+            member: isBefore
+            static: true
+            label: isBefore
+          isAfterStatic:
+            file: ts-time/Instant
+            member: isAfter
+            static: true
+            label: isAfter
+          compare:
+            file: ts-time/Instant
+            member: compare
+            static: true
+
+      manipulation:
+        header: Manipulate
+        text: |
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+          <p>To add/subtract a %Duration, call %plus/%minus method:</p>
+          <pre>
+          const instant = %Instant.%parse("2022-02-15T18:30:15.225Z");
+          const d1 = instant.%plus(%MINUTE_DURATION);         // 2022-02-15T18:31:15.225Z
+          const d2 = instant.%plus(%Duration.%ofHours(10));    // 2022-02-16T04:30:15.225Z
+          const d3 = instant.%minus(%Duration.%ofSeconds(30)); // 2022-02-15T18:29:45.225Z
+          </pre>
+          <p>You can't add/subtract a %Period, because sometimes the respective date/time differs in different time
+          zones so much that it is impossible to determine the exact time duration to add/subtract. If you know the
+          exact time zone/offset to work with, call %atZone/%atOffset method and then you'll be able to add/subtract
+          a %Period to/from the returned %ZonedDateTime/%OffsetDateTime. For difference between %Period and %Duration,
+          see their documentation.</p>
+        references:
+          ofHours:
+            file: ts-time/Duration
+            member: ofHours
+            static: true
+          ofSeconds:
+            file: ts-time/Duration
+            member: ofSeconds
+            static: true
+
+      conversion:
+        header: Convert
+        text: |
+          <p>You can convert %Instant to other kinds of objects via its methods:</p>
+          <pre>
+          const instant = %Instant.%parse("2022-02-15T18:30:15.225Z");
+          const zone    = %ZoneId.%ofOfZoneId("Europe/Berlin");
+          const offset  = %ZoneOffset.%ofOfOffset(2);
+          instant.%atZone(zone);              // To %ZonedDateTime  in a given time zone: 2022-02-15T19:30:15.225+01:00[Europe/Berlin]
+          instant.%atOffset(offset);          // To %OffsetDateTime in a given offset:    2022-02-15T20:30:15.225+02:00
+          instant.%atZone(zone).%dateTimeOfZonedDateTime;     // To %LocalDateTime  in a given time zone: 2022-02-15T19:30:15.225
+          instant.%atOffset(offset).%dateTimeOfOffsetDateTime; // To %LocalDateTime  in a given offset:    2022-02-15T20:30:15.225
+          </pre>
+          <p>Please notice that conversion to %LocalDateTime results in a partial data loss
+          (instant becomes ambiguous due to lack of time zone/offset attachment).</p>
+          <p>You can as well convert %Instant to a native JavaScript %Date:</p>
+          <pre>
+          const instant = %Instant.%parse("2022-02-15T18:30:15.225Z");
+          instant.%native;                    // %Date representing 18:30:15.225 on 15th of February, 2022 (UTC)
+          </pre>
+          <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
+          date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
+          <p>For backward conversion, see %construct.</p>
+        references:
+          ofOfZoneId:
+            file: ts-time/Zone
+            symbol: ZoneId
+            member: of
+            static: true
+            label: of
+          ofOfOffset:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: ofComponents
+            static: true
+            label: ofComponents
+          dateTimeOfZonedDateTime:
+            file: ts-time/ZonedDateTime
+            member: dateTime
+            label: dateTime
+          dateTimeOfOffsetDateTime:
+            file: ts-time/ZonedDateTime
+            member: dateTime
+            label: dateTime
+          construct:
+            href: '#construct'
+            label: Construct
+
+      format:
+        header: Format
+        text: |
+          <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
+          <pre>
+          const instant = %Instant.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          instant.%toString(); // "2022-02-15T23:30:15.225Z"
+          </pre>
+          <p>Please notice that the instant is always formatted in %UTC, because %Instant doesn't have a time zone.</p>
+          <p>For more sophisticated string formatting, you must first convert the %Instant to %ZonedDateTime or
+          %OffsetDateTime and then use their formatting functionality.</p>
+        references:
+          toString:
+            file: ts-time/Instant
+            member: toString
 
     properties:
       epochMs:

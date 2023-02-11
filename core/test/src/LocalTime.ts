@@ -31,10 +31,15 @@ import Duration, {
 	NULL_DURATION,
 	SECOND_DURATION
 } from "ts-time/Duration";
+import Instant from "ts-time/Instant";
 import LocalDate from "ts-time/LocalDate";
+import LocalDateTime from "ts-time/LocalDateTime";
 import LocalTime, {MAX_TIME, MAX_TIME12, MIDNIGHT, NOON} from "ts-time/LocalTime";
-import {SEPTEMBER} from "ts-time/Month";
+import {FEBRUARY, SEPTEMBER} from "ts-time/Month";
+import OffsetDateTime from "ts-time/OffsetDateTime";
 import {HOUR12_FIELD, HOUR_FIELD, MINUTE_FIELD, MS_FIELD, SECOND_FIELD} from "ts-time/TimeField";
+import {ZoneId, ZoneOffset} from "ts-time/Zone";
+import ZonedDateTime from "ts-time/ZonedDateTime";
 
 // TODO: Add out of bounds tests (e.g. constructors)
 describe("LocalTime", () => {
@@ -289,5 +294,244 @@ describe("LocalTime", () => {
 
 	it("should truncate itself to second", () => {
 		expect(time.truncateToSecond.toString()).equal("18:30:15.000");
+	});
+
+	describe("examples", () => {
+		describe("construct", () => {
+			it("should construct from components", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should construct from native Date 1", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 30, 15, 225));
+				const time = LocalTime.fromNativeUtc(date);
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should construct from native Date 2", () => {
+				const date = new Date(2022, 1, 15, 18, 30, 15, 225);
+				const time = LocalTime.fromNativeLocal(date);
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should construct from native Date 3", () => {
+				const date = new Date(Date.UTC(2022, 1, 15, 18, 30, 15, 225));
+				const zone = ZoneId.of("Europe/Berlin");
+				const time = Instant.fromNative(date).atZone(zone).time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("19:30:15.225");
+			});
+
+			it("should construct from Instant", () => {
+				const instant = Instant.parse("2022-02-15T18:30:15.225Z");
+				const zone = ZoneId.of("Europe/Berlin");
+				const time = instant.atZone(zone).time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("19:30:15.225");
+			});
+
+			it("should construct from LocalDateTime", () => {
+				const localDateTime = LocalDateTime.ofComponents(2022, FEBRUARY, 15, 18, 30, 15, 225);
+				const time = localDateTime.time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should construct from OffsetDateTime", () => {
+				const offsetDateTime = OffsetDateTime.parse("2022-02-15T18:30:15.225+01:00");
+				const time = offsetDateTime.time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+
+			it("should construct from ZonedDateTime", () => {
+				const zonedDateTime = ZonedDateTime.parse("2022-02-15T18:30:15.225+01:00[Europe/Berlin]");
+				const time = zonedDateTime.time;
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+		});
+
+		describe("parse", () => {
+			it("should parse ISO 8601", () => {
+				const time = LocalTime.parse("18:30:15.225");
+				expect(time).instanceof(LocalTime);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+		});
+
+		describe("inspect", () => {
+			it("should return various properties", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const hour = time.hour;
+				const minute = time.minute;
+				const second = time.second;
+				const ms = time.ms;
+				expect(hour).equal(18);
+				expect(minute).equal(30);
+				expect(second).equal(15);
+				expect(ms).equal(225);
+			});
+		});
+
+		describe("compare", () => {
+			it("should compare non-null instances", () => {
+				const t1 = LocalTime.of(18, 30, 15, 225);
+				const t2 = LocalTime.of(18, 30, 15, 226);
+				expect(t1.equals(t2)).equal(false);
+				expect(t1.isBefore(t2)).equal(true);
+				expect(t1.isAfter(t2)).equal(false);
+				expect(t1.compareTo(t2)).equal(-1);
+			});
+
+			it("should compare nullable instances", () => {
+				const t1: LocalTime = null;
+				const t2 = LocalTime.of(18, 30, 15, 225);
+				expect(LocalTime.equal(t1, t2)).equal(false);
+				expect(LocalTime.isBefore(t1, t2)).equal(true);
+				expect(LocalTime.isAfter(t1, t2)).equal(false);
+				expect(LocalTime.compare(t1, t2)).equal(-1);
+			});
+		});
+
+		describe("manipulate", () => {
+			it("should add/subtract duration", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t1 = time.plus(MINUTE_DURATION);
+				const t2 = time.plus(Duration.ofHours(10));
+				const t3 = time.minus(Duration.ofSeconds(30));
+				expect(t1).instanceof(LocalTime);
+				expect(t2).instanceof(LocalTime);
+				expect(t3).instanceof(LocalTime);
+				expect(t1.toString()).equal("18:31:15.225");
+				expect(t2.toString()).equal("04:30:15.225");
+				expect(t3.toString()).equal("18:29:45.225");
+			});
+
+			it("should change hour", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t1 = time.withHour(20);
+				expect(t1).instanceof(LocalTime);
+				expect(t1.toString()).equal("20:30:15.225");
+			});
+
+			it("should change minute", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t2 = time.withMinute(20);
+				expect(t2).instanceof(LocalTime);
+				expect(t2.toString()).equal("18:20:15.225");
+			});
+
+			it("should change second", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t3 = time.withSecond(20);
+				expect(t3).instanceof(LocalTime);
+				expect(t3.toString()).equal("18:30:20.225");
+			});
+
+			it("should change millisecond", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t4 = time.withMs(20);
+				expect(t4).instanceof(LocalTime);
+				expect(t4.toString()).equal("18:30:15.020");
+			});
+
+			it("should truncate to hour", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t1 = time.truncateToHour;
+				expect(t1).instanceof(LocalTime);
+				expect(t1.toString()).equal("18:00:00.000");
+			});
+
+			it("should truncate to minute", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t2 = time.truncateToMinute;
+				expect(t2).instanceof(LocalTime);
+				expect(t2.toString()).equal("18:30:00.000");
+			});
+
+			it("should truncate to second", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const t3 = time.truncateToSecond;
+				expect(t3).instanceof(LocalTime);
+				expect(t3.toString()).equal("18:30:15.000");
+			});
+		});
+
+		describe("convert", () => {
+			it("should convert to LocalDateTime", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const dateTime = time.atDate(date);
+				expect(dateTime).instanceof(LocalDateTime);
+				expect(dateTime.toString()).equal("2022-02-15T18:30:15.225");
+			});
+
+			it("should convert to OffsetDateTime", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const offset = ZoneOffset.ofComponents(1);
+				const offsetDateTime = time.atDate(date).atOffset(offset);
+				expect(offsetDateTime).instanceof(OffsetDateTime);
+				expect(offsetDateTime.toString()).equal("2022-02-15T18:30:15.225+01:00");
+			});
+
+			it("should convert to ZonedDateTime", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const zone = ZoneId.of("Europe/Berlin");
+				const zonedDateTime = time.atDate(date).atZone(zone);
+				expect(zonedDateTime).instanceof(ZonedDateTime);
+				expect(zonedDateTime.toString()).equal("2022-02-15T18:30:15.225+01:00[Europe/Berlin]");
+			});
+
+			it("should convert to Instant", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const zone = ZoneId.of("Europe/Berlin");
+				const instant = time.atDate(date).atZone(zone).instant;
+				expect(instant).instanceof(Instant);
+				expect(instant.toString()).equal("2022-02-15T17:30:15.225Z");
+			});
+
+			it("should convert to LocalTime in another ZoneId", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const sourceZone = ZoneId.of("Europe/Berlin");
+				const targetZone = ZoneId.of("America/New_York");
+				const result = time.atDate(date).atZone(sourceZone).instant.atZone(targetZone).time;
+				expect(result).instanceof(LocalTime);
+				expect(result.toString()).equal("12:30:15.225");
+			});
+
+			it("should convert to LocalTime in another ZoneOffset", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				const sourceOffset = ZoneOffset.ofComponents(1);
+				const targetOffset = ZoneOffset.ofComponents(-5);
+				const result = time.minus(Duration.ofSeconds(sourceOffset.totalSeconds)).plus(Duration.ofSeconds(targetOffset.totalSeconds));
+				expect(result).instanceof(LocalTime);
+				expect(result.toString()).equal("12:30:15.225");
+			});
+
+			it("should convert to native Date", () => {
+				const date = LocalDate.of(2022, FEBRUARY, 15);
+				const time = LocalTime.of(18, 30, 15, 225);
+				const zone = ZoneId.of("Europe/Berlin");
+				const result = LocalDateTime.of(date, time).atZone(zone).native;
+				expect(result).instanceof(Date);
+				expect(result.getTime()).equal(Date.UTC(2022, 1, 15, 17, 30, 15, 225));
+			});
+		});
+
+		describe("format", () => {
+			it("should format in ISO 8601", () => {
+				const time = LocalTime.of(18, 30, 15, 225);
+				expect(time.toString()).equal("18:30:15.225");
+			});
+		});
 	});
 });

@@ -25,7 +25,7 @@ SOFTWARE.
 import {expect} from "chai";
 import DateTimeFormatter, {DATE_TIME_COMPILERS} from "ts-time-format/DateTimeFormatter";
 import LocalDateTime from "ts-time/LocalDateTime";
-import {DECEMBER} from "ts-time/Month";
+import {DECEMBER, FEBRUARY} from "ts-time/Month";
 import {buildPattern} from "./_utils";
 
 describe("DateTimeFormatter", () => {
@@ -56,5 +56,16 @@ describe("DateTimeFormatter", () => {
 			"22 22\n" +
 			"PM"
 		);
+	});
+
+	it("should be properly documented", () => {
+		const formatter = DateTimeFormatter.ofPattern("dd.MMM''yy, hh:mm a");
+		const dateTime = LocalDateTime.ofComponents(2022, FEBRUARY, 15, 18, 30, 15, 225);
+		const str = formatter.format(dateTime);
+		expect(str).equal("15.Feb'22, 06:30 PM");
+
+		const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+		const str2 = formatter.format(dateTime, context);
+		expect(str2).equal("15.Фев'22, 06:30 PM");
 	});
 });

@@ -28,13 +28,13 @@ symbols:
       variable-length interval such as month. Month <b>duration</b> varies from 28 to 31 days, but in terms of
       <b>periods</b>, month is a valid unit. %Period is mainly involved to manipulate date/time-related objects such as
       %LocalDate, %LocalDateTime, %OffsetDateTime and %ZonedDateTime. In particular, %ZonedDateTime.%plusPeriod method
-      adds the period to a respective date/time, not instant. It means that if you add %DAY_PERIOD to a %ZonedDateTime,
-      the real time shift will not be 24 hours if time zone offset changes during this day, while %LocalTime will truly
+      adds a period to the respective date/time, not instant. It means that if you add %DAY_PERIOD to a %ZonedDateTime,
+      the real time shift won't be 24 hours if time zone offset changes during this day, while %LocalTime will truly
       stay the same:</p>
       <pre>
-      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"),
+      const start = %ZonedDateTime.%parse("2019-10-27T00:00:00.000+02:00[Europe/Berlin]"), // Summer time
         end = start.%plusPeriod(%DAY_PERIOD);
-      expect(end.%toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]");
+      expect(end.%toString()).toBe("2019-10-28T00:00:00.000+01:00[Europe/Berlin]"); // Winter time
       expect(end.%epochMs - start.%epochMs).toBe(25 * %MS_PER_HOUR);
       </pre>
       <p>To ascertain a predictable fixed real time shift, you are supposed to add a %Duration.</p>

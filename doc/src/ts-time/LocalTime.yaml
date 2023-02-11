@@ -26,7 +26,259 @@ symbols:
     description: |
       Comprises a specific time, without date and time zone relation. In other words, this is a tuple of (hour, minute,
       second, millisecond), or a number of milliseconds since day start (from 0 inclusive to %MS_PER_DAY exclusive).
-      You may bind time to a date with %atDate method.
+    topics:
+      construct:
+        header: Construct
+        text: |
+          <p>A common way to construct an object in ts-time is to call its %of static method. For example, the
+          following %LocalTime instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds:</p>
+          <pre>
+          %LocalTime.%of(18, 30, 15, 225);
+          </pre>
+          <p>As opposed to Java API, there's no common way to get the current instance of an object in ts-time,
+          because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
+          and convert it to an object that you need, taking time zone into consideration.</p>
+          <pre>
+          %Instant.%now().%atZone(%UTC).%time;             // Current LocalTime in %UTC
+          %Instant.%now().%atZone(%LOCAL_ZONE_ID).%time;   // Current LocalTime in the local time zone
+          %Instant.%now().%atZone(zone).%time;            // Current LocalTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          static method:</p>
+          <pre>
+          %LocalTime.%fromNativeUtc(date);              // LocalTime from a given %Date in %UTC
+          %LocalTime.%fromNativeLocal(date);            // LocalTime from a given %Date in the local time zone
+          %Instant.%fromNative(date).%atZone(zone).%time; // LocalTime from a given %Date in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>You can convert instances of other ts-time classes to %LocalTime via their properties and methods:</p>
+          <pre>
+          instant.%atZone(zone).%time;                  // From %Instant in a given %ZoneId/%ZoneOffset
+          localDateTime.%timeOfLocal;                         // From %LocalDateTime
+          offsetDateTime.%timeOfOffset;                        // From %OffsetDateTime in the same %ZoneOffset
+          zonedDateTime.%time;                         // From %ZonedDateTime in the same %ZoneId
+          </pre>
+          <p>Please notice that all these conversions result in a partial data loss (date, time zone, offset).</p>
+          <p>For some commonly used time moments, there are predefined %LocalTime instances: %MIDNIGHT, %NOON,
+          %MIN_TIME, %MAX_TIME, %MAX_TIME12.</p>
+          <p>Another sophisticated constructor: %ofTotalMs.</p>
+        references:
+          timeOfLocal:
+            file: ts-time/LocalDateTime
+            member: time
+            label: time
+          now:
+            file: ts-time/Instant
+            member: now
+            static: true
+          atZone:
+            file: ts-time/Instant
+            member: atZone
+          fromNative:
+            file: ts-time/Instant
+            member: fromNative
+          timeOfOffset:
+            file: ts-time/OffsetDateTime
+            member: time
+            label: time
+          time:
+            file: ts-time/ZonedDateTime
+            member: time
+
+      parse:
+        header: Parse
+        text: |
+          <p>A common way to parse an ISO 8601 compliant string in ts-time is to call %parse static method. For example,
+          the following %LocalTime instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds:</p></p>
+          <pre>
+          %LocalTime.%parse("18:30:15.225");
+          </pre>
+          <p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+        references:
+          parse:
+            file: ts-time/LocalTime
+            member: parse
+            static: true
+
+      inspect:
+        header: Inspect
+        text: |
+          <p>In the following example, we inspect various properties of a %LocalTime object:</p>
+          <pre>
+          const time   = %LocalTime.%of(18, 30, 15, 225);
+          const hour   = time.%hour;   // 18
+          const minute = time.%minute; // 30
+          const second = time.%second; // 15
+          const ms     = time.%ms;     // 225
+          </pre>
+          <p>Another sophisticated feature for %LocalTime inspection: %totalMs.</p>
+
+      compare:
+        header: Compare
+        text: |
+          <p>A common way to compare objects in ts-time is to call %equals, %isBefore, %isAfter, %compareTo methods:</p>
+          <pre>
+          const t1 = %LocalTime.%of(18, 30, 15, 225);
+          const t2 = %LocalTime.%of(18, 30, 15, 226);
+          t1.%equals(t2);    // false
+          t1.%isBefore(t2);  // true
+          t1.%isAfter(t2);   // false
+          t1.%compareTo(t2); // -1
+          </pre>
+          <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+          except each other:</p>
+          <pre>
+          const t1: %LocalTime = null;
+          const t2 = %LocalTime.%of(18, 30, 15, 225);
+          %LocalTime.%equal(t1, t2);     // false
+          %LocalTime.%isBeforeStatic(t1, t2);  // true
+          %LocalTime.%isAfterStatic(t1, t2);   // false
+          %LocalTime.%compare(t1, t2);   // -1
+          </pre>
+        references:
+          isBeforeStatic:
+            file: ts-time/LocalTime
+            member: isBefore
+            static: true
+            label: isBefore
+          isAfterStatic:
+            file: ts-time/LocalTime
+            member: isAfter
+            static: true
+            label: isAfter
+          compare:
+            file: ts-time/LocalTime
+            member: compare
+            static: true
+
+      manipulation:
+        header: Manipulate
+        text: |
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+          <p>To add/subtract a %Duration, call %plus/%minus method. Please notice that the result is always between
+          00:00:00.000 inclusive and 24:00:00.000 exclusive:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          const t1 = time.%plus(%MINUTE_DURATION);         // 18:31:15.225
+          const t2 = time.%plus(%Duration.%ofHours(10));    // 04:30:15.225
+          const t3 = time.%minus(%Duration.%ofSeconds(30)); // 18:29:45.225
+          </pre>
+          <p>If you need to take full days (positive or negative) into consideration, use %Duration or %LocalDateTime
+          instead of %LocalTime.</p>
+          <p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          const t1 = time.%withHour(20);                  // 20:30:15.225
+          const t2 = time.%withMinute(20);                // 18:20:15.225
+          const t3 = time.%withSecond(20);                // 18:30:20.225
+          const t4 = time.%withMs(20);                    // 18:30:15.020
+          </pre>
+          <p>To truncate all the least-significant components, call <b>truncate*</b> methods:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          const t1 = time.%truncateToHour;                // 18:00:00.000
+          const t2 = time.%truncateToMinute;              // 18:30:00.000
+          const t3 = time.%truncateToSecond;              // 18:30:15.000
+          </pre>
+        references:
+          ofHours:
+            file: ts-time/Duration
+            member: ofHours
+            static: true
+          ofSeconds:
+            file: ts-time/Duration
+            member: ofSeconds
+            static: true
+
+      conversion:
+        header: Convert
+        text: |
+          <p>You can convert %LocalTime to other kinds of objects via its methods:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          time.%atDate(date);                      // To %LocalDateTime on a given %LocalDate
+          time.%atDate(date).%atOffset(offset);     // To %OffsetDateTime on a given %LocalDate in a given %ZoneOffset
+          time.%atDate(date).%atZone(zone);         // To %ZonedDateTime on a given %LocalDate in a given %ZoneId
+          time.%atDate(date).%atZone(zone).%instant; // To %Instant on a given %LocalDate in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>In order to convert %LocalTime from one %ZoneId to another, you must explicitly specify the date
+          of conversion (as certain time zones have varying offsets over the time line), get an %Instant and
+          then convert it to the target %ZoneId:</p>
+          <pre>
+          time.%atDate(date).%atZone(sourceZone).%instant.%atZone(targetZone).%time;
+          </pre>
+          <p>Conversion of %ZoneOffset doesn't depend on a date:</p>
+          <pre>
+          time.%minus(%Duration.%ofSeconds(sourceOffset.%totalSeconds)).%plus(%Duration.%ofSeconds(targetOffset.%totalSeconds));
+          </pre>
+          <p>You can as well convert %LocalTime to a native JavaScript %Date, provided you know a %LocalDate and
+          a %ZoneId/%ZoneOffset:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          %LocalDateTime.%ofDateTime(date, time).%atZone(zone).%native; // Date representing 18:30:15.225 on a given %LocalDate in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>For backward conversion, see %construct.</p>
+        references:
+          ofSeconds:
+            file: ts-time/Duration
+            member: ofSeconds
+            static: true
+          atOffset:
+            file: ts-time/LocalDateTime
+            member: atOffset
+          atZone:
+            file: ts-time/LocalDateTime
+            member: atZone
+          instant:
+            file: ts-time/ZonedDateTime
+            member: instant
+          time:
+            file: ts-time/ZonedDateTime
+            member: time
+          native:
+            file: ts-time/ZonedDateTime
+            member: native
+          ofDateTime:
+            file: ts-time/LocalDateTime
+            member: of
+            static: true
+            label: of
+          totalSeconds:
+            file: ts-time/ZoneOffset
+            member: totalSeconds
+          construct:
+            href: '#construct'
+            label: Construct
+
+      format:
+        header: Format
+        text: |
+          <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
+          <pre>
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          time.%toString(); // "18:30:15.225"
+          </pre>
+          <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
+          <pre>
+          npm install --save %tsTimeFormat
+          </pre>
+          <p>Now you can construct an instance of %TimeFormatter in order to format arbitrary %LocalTime instances:</p>
+          <pre>
+          const formatter = %TimeFormatter.%ofPattern("hh:mm a");
+          const time = %LocalTime.%of(18, 30, 15, 225);
+          formatter.%format(time); // "06:30 PM"
+          </pre>
+        references:
+          toString:
+            file: ts-time/LocalTime
+            member: toString
+          ofPattern:
+            file: ts-time-format/TimeFormatter
+            member: ofPattern
+            static: true
+          format:
+            file: ts-time-format/TimeFormatter
+            member: format
 
     properties:
       totalMs:

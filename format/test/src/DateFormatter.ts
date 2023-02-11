@@ -87,4 +87,15 @@ describe("DateFormatter", () => {
 			"4 04 Thu Thursday T"
 		);
 	});
+
+	it("should be properly documented", () => {
+		const formatter = DateFormatter.ofPattern("dd.MMM''yy");
+		const date = LocalDate.of(2022, FEBRUARY, 15);
+		const str = formatter.format(date);
+		expect(str).equal("15.Feb'22");
+
+		const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+		const str2 = formatter.format(date, context);
+		expect(str2).equal("15.Фев'22");
+	});
 });

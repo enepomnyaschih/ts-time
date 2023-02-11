@@ -24,8 +24,376 @@ symbols:
   default:
     kind: class
     description: |
-      Comprises a specific instant bound to a specific time zone. In other words, this is a tuple of
-      (%Instant, %ZoneId). Unambiguously identifies a %LocalDateTime and %ZoneOffset.
+      <p>Comprises a specific instant bound to a specific time zone. In other words, this is a tuple of
+      (%Instant, %ZoneId). Unambiguously identifies an %OffsetDateTime, i.e. %LocalDateTime and %ZoneOffset.</p>
+    topics:
+      construct:
+        header: Construct
+        text: |
+          <p>Typically you don't construct %ZonedDateTime directly, but create it from other data structures:</p>
+          <pre>
+          %ZonedDateTime.%ofInstant(instant, zone);   // From %Instant in a given %ZoneId
+          instant.%atZoneOfInstant(zone);                     // Equivalent
+          %ZonedDateTime.%ofDateTime(dateTime, zone); // From %LocalDateTime in a given %ZoneId
+          dateTime.%atZoneOfDateTime(zone);                    // Equivalent
+          offsetDateTime.%instantOfOffsetDateTime.%atZoneOfInstant(zone);      // From %OffsetDateTime in a given %ZoneId, preserving %instantOfOffsetDateTime component
+          offsetDateTime.%dateTimeOfOffsetDateTime.%atZoneOfDateTime(zone);     // From %OffsetDateTime in a given %ZoneId, preserving %dateTimeOfOffsetDateTime component
+          </pre>
+          <p>Please notice that:</p>
+          <ul>
+          <li>Conversion from %Instant may be counter-intuitive, as string presentation of the date/time may change:
+          <pre>
+          const zone    = %ZoneId.%ofOfZoneId("America/New_York");
+          const instant = %Instant.%parseOfInstant("2022-06-14T00:00:00.000Z");
+          console.log(instant.%atZoneOfInstant(zone));           // "2022-06-13T20:00:00.000-04:00[America/New_York]"
+          </pre>
+          It happens, because %ZonedDateTime preserves its %instant component in this case, not %dateTime:
+          <pre>
+          console.log(instant.%atZoneOfInstant(zone).%instant);   // "2022-06-14T00:00:00.000Z"
+          console.log(instant.%atZoneOfInstant(zone).%dateTime);  // "2022-06-13T20:00:00.000"
+          </pre></li>
+          <li>Conversion from %LocalDateTime, on the contrary, preserves %dateTime component:
+          <pre>
+          const dateTime = %LocalDateTime.%parseOfDateTime("2022-06-14T00:00:00.000");
+          console.log(dateTime.%atZoneOfDateTime(zone));          // "2022-06-14T00:00:00.000-04:00[America/New_York]"
+          console.log(dateTime.%atZoneOfDateTime(zone).%dateTime); // "2022-06-14T00:00:00.000"
+          console.log(dateTime.%atZoneOfDateTime(zone).%instant);  // "2022-06-14T04:00:00.000Z"
+          </pre></li>
+          <li>Conversion from %OffsetDateTime results in loss of the original offset.</li>
+          </ul>
+          <p>As opposed to Java API, there's no common way to get the current instance of %ZonedDateTime in ts-time,
+          because ts-time doesn't have a concept of default time zone. Instead, you must get the current %Instant
+          and convert it to an object that you need, taking time zone into consideration.</p>
+          <pre>
+          %Instant.%now().%atZoneOfInstant(%UTC);             // Current %ZonedDateTime in %UTC
+          %Instant.%now().%atZoneOfInstant(%LOCAL_ZONE_ID);   // Current %ZonedDateTime in the local time zone
+          %Instant.%now().%atZoneOfInstant(zone);            // Current %ZonedDateTime in a given %ZoneId/%ZoneOffset
+          </pre>
+          <p>It makes ts-time API more robust. It leaves less room for a mistake.</p>
+          <p>A common way to convert a native JavaScript %Date object to a ts-time object is to call <b>fromNative*</b>
+          static method:</p>
+          <pre>
+          %Instant.%fromNative(date).%atZoneOfInstant(zone); // %ZonedDateTime from a given %Date in a given %ZoneId/%ZoneOffset
+          </pre>
+        references:
+          parseOfInstant:
+            file: ts-time/Instant
+            member: parse
+            static: true
+            label: parse
+          parseOfDateTime:
+            file: ts-time/LocalDateTime
+            member: parse
+            static: true
+            label: parse
+          atZoneOfInstant:
+            file: ts-time/Instant
+            member: atZone
+            label: atZone
+          atZoneOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atZone
+            label: atZone
+          instantOfOffsetDateTime:
+            file: ts-time/OffsetDateTime
+            member: instant
+            label: instant
+          dateTimeOfOffsetDateTime:
+            file: ts-time/OffsetDateTime
+            member: dateTime
+            label: dateTime
+          ofOfZoneId:
+            file: ts-time/Zone
+            symbol: ZoneId
+            member: of
+            static: true
+            label: of
+          now:
+            file: ts-time/Instant
+            member: now
+            static: true
+          fromNative:
+            file: ts-time/Instant
+            member: fromNative
+            static: true
+
+      parse:
+        header: Parse
+        text: |
+          <p>A common way to parse an ISO 8601 compliant string in ts-time is to call %parse static method. For example,
+          the following %ZonedDateTime instance represents 18 hours, 30 minutes, 15 seconds, 225 milliseconds on
+          15th of February, 2022 in New York:</p></p>
+          <pre>
+          %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          </pre>
+          <p class="text-danger">The library doesn't yet support parsing non-compliant strings.</p>
+        references:
+          parse:
+            file: ts-time/ZonedDateTime
+            member: parse
+            static: true
+
+      inspect:
+        header: Inspect
+        text: |
+          <p>In the following example, we inspect various properties of a %ZonedDateTime object. Please notice
+          the difference in return value types:</p>
+          <pre>
+          const zonedDateTime  = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const year           = zonedDateTime.%year;            // 2022
+          const month          = zonedDateTime.%month;           // %FEBRUARY
+          const monthValue     = zonedDateTime.%month.%valueOfMonth;     // 2
+          const dayOfMonth     = zonedDateTime.%dayOfMonth;      // 15
+          const dayOfWeek      = zonedDateTime.%dayOfWeek;       // %TUESDAY
+          const dayOfWeekValue = zonedDateTime.%dayOfWeek.%valueOfDay; // 2
+          const hour           = zonedDateTime.%hour;            // 18
+          const minute         = zonedDateTime.%minute;          // 30
+          const second         = zonedDateTime.%second;          // 15
+          const ms             = zonedDateTime.%ms;              // 225
+          const zone           = zonedDateTime.%zone;            // Instance of %ZoneId
+          const zoneId         = zonedDateTime.%zone.%id;         // "America/New_York"
+          const offset         = zonedDateTime.%offset;          // Instance of %ZoneOffset
+          const offsetHours    = zonedDateTime.%offset.%hours;    // -5
+          const offsetMinutes  = zonedDateTime.%offset.%minutes;  // 0
+          const offsetSeconds  = zonedDateTime.%offset.%seconds;  // 0
+          </pre>
+          <p>Other sophisticated features for %ZonedDateTime inspection: %epochMs, %era, %yearOfEra, %weekBasedYear,
+          %weekOfWeekBasedYear, %dayOfYear, %dayOfWeekBasedYear, %epochDay, %quarterOfYear, %isLeapYear,
+          %lengthOfYear.</p>
+        references:
+          valueOfMonth:
+            file: ts-time/Month
+            member: value
+            label: value
+          valueOfDay:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+          id:
+            file: ts-time/Zone
+            symbol: ZoneId
+            member: id
+          hours:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: hours
+          minutes:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: minutes
+          seconds:
+            file: ts-time/Zone
+            symbol: ZoneOffset
+            member: seconds
+
+      compare:
+        header: Compare
+        text: |
+          <p>A common way to compare objects in ts-time is to call %equals, %compareTo methods:</p>
+          <pre>
+          const d1 = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const d2 = %ZonedDateTime.%parse("2022-02-15T18:30:15.226-05:00[America/New_York]");
+          d1.%equals(d2);    // false
+          d1.%compareTo(d2); // -1
+          </pre>
+          <p>The objects are first compared by %instant, and then by %zone text identifier.</p>
+          <p>For nullable objects, use static methods instead. Null and undefined are considered less than anything,
+          except each other:</p>
+          <pre>
+          const d1: %ZonedDateTime = null;
+          const d2 = %ZonedDateTime.%parse("2022-02-15T18:30:15.226-05:00[America/New_York]");
+          %ZonedDateTime.%equal(d1, d2);   // false
+          %ZonedDateTime.%compare(d1, d2); // -1
+          </pre>
+          <p>As opposed to the majority of objects in ts-time, %ZonedDateTime doesn't have <b>isBefore</b> and
+          <b>isAfter</b> methods. You must explicitly specify which component you want to compare: %instant or
+          %dateTime.</p>
+          <pre>
+          const d1 = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const d2 = %ZonedDateTime.%parse("2022-02-15T20:30:15.226+01:00[Europe/Berlin]");
+          d1.%instant.%isBeforeOfInstant(d2.%instant);   // false
+          d1.%dateTime.%isBeforeOfDateTime(d2.%dateTime); // true
+          </pre>
+        references:
+          isBeforeOfInstant:
+            file: ts-time/Instant
+            member: isBefore
+            label: isBefore
+          isBeforeOfDateTime:
+            file: ts-time/LocalDateTime
+            member: isBefore
+            label: isBefore
+          compare:
+            file: ts-time/ZonedDateTime
+            member: compare
+            static: true
+
+      manipulation:
+        header: Manipulate
+        text: |
+          <p>Every object in ts-time is immutable. Therefore every manipulation returns a new object.</p>
+          <p>To add/subtract a %Period, call %plusPeriod/%minusPeriod method:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const d1 = zonedDateTime.%plusPeriod(%DAY_PERIOD);                // 18:30:15.225 on 16th of February, 2022 in New York
+          const d2 = zonedDateTime.%plusPeriod(%Period.%ofDays(2));          // 18:30:15.225 on 17th of February, 2022 in New York
+          const d3 = zonedDateTime.%minusPeriod(%MONTH_PERIOD);             // 18:30:15.225 on 15th of January, 2022 in New York
+          </pre>
+          <p>The algorithm respects %dateTime to align periods, not %instant. In the following example, zonedDateTime
+          is the 1st of March in Berlin, but still 28th of February in UTC. When adding a month, the library considers
+          zonedDateTime to be the 1st of March, so it adds 31 days, not 28:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-03-01T00:00:00.000+01:00[Europe/Berlin]");
+          const d1 = zonedDateTime.%plusPeriod(%MONTH_PERIOD);              // Midnight on 1st of April, 2022 in Berlin
+          </pre>
+          <p>If you expect a month to be added in %UTC, convert the %instant explicitly to %UTC first:</p>
+          <pre>
+          const d2 = zonedDateTime.%instant.%atZone(%UTC).%plusPeriod(%MONTH_PERIOD); // 23:00 on 28th of March, 2022, UTC
+          </pre>
+          <p>If the date/time jumps over daylight saving borderline, the result will have a different offset:</p>
+          <pre>
+          const winterTime = %ZonedDateTime.%parse("2022-03-01T00:00:00.000+01:00[Europe/Berlin]");
+          const summerTime = winterTime.%plusPeriod(%Period.%ofMonths(3));
+          console.log(summerTime);            // "2022-06-01T00:00:00.000+02:00[Europe/Berlin]"
+          </pre>
+          <p>The same may happen in rare cases of historical time zone rule changes (i.e. regulations of local
+          governments).</p>
+          <p>To add/subtract a %Duration, call %plusDuration/%minusDuration method:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const d1 = zonedDateTime.%plusDuration(%MINUTE_DURATION);         // 18:31:15.225 on 15th of February in New York
+          const d2 = zonedDateTime.%plusDuration(%Duration.%ofHours(10));    // 04:30:15.225 on 16th of February in New York
+          const d3 = zonedDateTime.%minusDuration(%Duration.%ofSeconds(30)); // 18:29:45.225 on 15th of February in New York
+          </pre>
+          <p>For difference between %Period and %Duration, see their documentation. When manipulating %ZonedDateTime,
+          this difference is important to understand.</p>
+          <p>To change one of the components, preserving all the rest, call <b>with*</b> methods:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          const d1 = zonedDateTime.%withYear(2025);                        // 18:30:15.225 on 15th of February, 2025 in New York
+          const d2 = zonedDateTime.%withMonth(%APRIL);                      // 18:30:15.225 on 15th of April, 2022 in New York
+          const d3 = zonedDateTime.%withDayOfMonth(10);                    // 18:30:15.225 on 10th of February, 2022 in New York
+          const d4 = zonedDateTime.%withDayOfWeek(%SUNDAY);                 // 18:30:15.225 on 20th of February, 2022, Sunday in New York
+          const d5 = zonedDateTime.%withHour(20);                          // 20:30:15.225 on 15th of February, 2022 in New York
+          const d6 = zonedDateTime.%withMinute(20);                        // 18:20:15.225 on 15th of February, 2022 in New York
+          const d7 = zonedDateTime.%withSecond(20);                        // 18:30:20.225 on 15th of February, 2022 in New York
+          const d8 = zonedDateTime.%withMs(20);                            // 18:30:15.020 on 15th of February, 2022 in New York
+          </pre>
+          <p>For manipulating %zone component, see %convert.</p>
+          <p><span class="text-danger">The library doesn't yet support %ZonedDateTime truncating.</span> Truncate its
+          %dateTime component instead.</p>
+          <p>Another sophisticated feature for %ZonedDateTime manipulation: %withDayOfYear.</p>
+        references:
+          atZone:
+            file: ts-time/Instant
+            member: atZone
+          ofHours:
+            file: ts-time/Duration
+            member: ofHours
+            static: true
+          ofSeconds:
+            file: ts-time/Duration
+            member: ofSeconds
+            static: true
+          ofDays:
+            file: ts-time/Period
+            member: ofDays
+            static: true
+          ofMonths:
+            file: ts-time/Period
+            member: ofMonths
+            static: true
+          valueOfDayOfWeek:
+            file: ts-time/DayOfWeek
+            member: value
+            label: value
+          convert:
+            href: '#conversion'
+            label: Convert
+
+      conversion:
+        header: Convert
+        text: |
+          <p>You can convert %ZonedDateTime to other kinds of objects via its properties:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          zonedDateTime.%instant;                   // To %Instant: 2022-02-15T23:30:15.225Z
+          zonedDateTime.%date;                      // To %LocalDate: 2022-02-15
+          zonedDateTime.%time;                      // To %LocalTime: 18:30:15.225
+          zonedDateTime.%dateTime;                  // To %LocalDateTime: 2022-02-15T18:30:15.225
+          zonedDateTime.%instant.%atOffsetOfInstant(offset);  // To %OffsetDateTime in a given %ZoneOffset, preserving %instant component: 2022-02-16T03:30:15.225+04:00
+          zonedDateTime.%dateTime.%atOffsetOfDateTime(offset); // To %OffsetDateTime in a given %ZoneOffset, preserving %dateTime component: 2022-02-15T18:30:15.225+04:00
+          zonedDateTime.%instant.%atZoneOfInstant(zone);      // To %ZonedDateTime with another %ZoneId, preserving %instant component: 2022-02-16T00:30:15.225+01:00[Europe/Berlin]
+          zonedDateTime.%dateTime.%atZoneOfDateTime(zone);     // To %ZonedDateTime with another %ZoneId, preserving %dateTime component: 2022-02-15T18:30:15.225+01:00[Europe/Berlin]
+          </pre>
+          <p>Please notice that all conversions result in a partial data loss (date, time, original time zone).</p>
+          <p>You can as well convert %ZonedDateTime to a native JavaScript %Date:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          zonedDateTime.%native;                    // %Date representing 23:30:15.225 on 15th of February, 2022 (UTC)
+          </pre>
+          <p>Please notice that native %Date is always stored in UTC or local time zone, so you can see a different
+          date/time when printing it as a string. It will be the same instant, just a different time zone.</p>
+          <p>For backward conversion, see %construct.</p>
+        references:
+          atOffsetOfInstant:
+            file: ts-time/Instant
+            member: atOffset
+            label: atOffset
+          atOffsetOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atOffset
+            label: atOffset
+          atZoneOfInstant:
+            file: ts-time/Instant
+            member: atZone
+            label: atZone
+          atZoneOfDateTime:
+            file: ts-time/LocalDateTime
+            member: atZone
+            label: atZone
+          construct:
+            href: '#construct'
+            label: Construct
+
+      format:
+        header: Format
+        text: |
+          <p>Every class in ts-time has ISO 8601 compliant %toString method:</p>
+          <pre>
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          zonedDateTime.%toString(); // "2022-02-15T18:30:15.225-05:00[America/New_York]"
+          </pre>
+          <p>For more sophisticated string formatting, add %tsTimeFormat library to your list of dependencies:</p>
+          <pre>
+          npm install --save %tsTimeFormat
+          </pre>
+          <p>Now you can construct an instance of %ZonedDateTimeFormatter in order to format arbitrary %ZonedDateTime
+          instances:</p>
+          <pre>
+          const formatter = %ZonedDateTimeFormatter.%ofPattern("dd.MMM''yy, hh:mm a ('UTC'x, V)");
+          const zonedDateTime = %ZonedDateTime.%parse("2022-02-15T18:30:15.225-05:00[America/New_York]");
+          formatter.%format(zonedDateTime); // "15.Feb'22, 06:30 PM (UTC-05, America/New_York)"
+          </pre>
+          <p>You can define a custom %context object to internationalize the formatted strings:</p>
+          <pre>
+          const context = {monthShortNames: ["Янв", "Фев", "Мар"]};
+          formatter.%format(zonedDateTime, context); // "15.Фев'22, 06:30 PM (UTC-05, America/New_York)"
+          </pre>
+        references:
+          toString:
+            file: ts-time/ZonedDateTime
+            member: toString
+          ofPattern:
+            file: ts-time-format/ZonedDateTimeFormatter
+            member: ofPattern
+            static: true
+          format:
+            file: ts-time-format/ZonedDateTimeFormatter
+            member: format
+          context:
+            file: ts-time-format/constants
+            symbol: DEFAULT_TEMPORAL_CONTEXT
 
     properties:
       dateTime:
@@ -187,26 +555,6 @@ symbols:
           True if this zoned date/time is equal to %other, i.e. all components are equal.
           Null and undefined are only equal to each other. %%null
 
-      isBefore:
-        signature: |
-          (other: %ZonedDateTime): boolean
-        params:
-          other: Zoned date/time to compare to.
-        returns: |
-          True if this zoned date/time goes before %other.
-          The objects are first compared by instant, and then by zone text identifier.
-          Null and undefined go before anything, except each other. %%null
-
-      isAfter:
-        signature: |
-          (other: %ZonedDateTime): boolean
-        params:
-          other: Zoned date/time to compare to.
-        returns: |
-          True if this zoned date/time goes after %other.
-          The objects are first compared by instant, and then by zone text identifier.
-          Null and undefined go before anything, except each other. %%null
-
       plusDuration:
         signature: |
           (duration: %Duration): %ZonedDateTime
@@ -367,25 +715,3 @@ symbols:
         returns: |
           True if %x is equal to %y, i.e. all components are equal.
           Null and undefined are only equal to each other.
-
-      isBefore:
-        signature: |
-          (x: %ZonedDateTime, y: %ZonedDateTime): boolean
-        params:
-          x: One zoned date/time.
-          y: Another zoned date/time.
-        returns: |
-          True if %x goes before %y.
-          The objects are first compared by instant, and then by zone text identifier.
-          Null and undefined go before anything, except each other.
-
-      isAfter:
-        signature: |
-          (x: %ZonedDateTime, y: %ZonedDateTime): boolean
-        params:
-          x: One zoned date/time.
-          y: Another zoned date/time.
-        returns: |
-          True if %x goes after %y.
-          The objects are first compared by instant, and then by zone text identifier.
-          Null and undefined go before anything, except each other.
