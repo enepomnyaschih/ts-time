@@ -26,6 +26,7 @@ import {expect} from "chai";
 import DateFormatter from "ts-time-format/DateFormatter";
 import Duration, {NULL_DURATION} from "ts-time/Duration";
 import LocalDate from "ts-time/LocalDate";
+import LocalDateTime from "ts-time/LocalDateTime";
 import LocalTime from "ts-time/LocalTime";
 import {JUNE} from "ts-time/Month";
 import {DAY_PERIOD} from "ts-time/Period";
@@ -104,7 +105,14 @@ describe("Home page examples", () => {
 		expect(endTime.toString()).equal("15:10:00.000");
 	});
 
-	it("example 3.a", () => {
+	it("example 3", () => {
+		const startInGameTime = LocalDateTime.parse("2200-01-01T00:00:00.000");
+		const inGameTimeElapsed = Duration.ofComponents(45, 3, 12, 44); // 45 days 3 hours 12 minutes 44 seconds
+		const currentInGameTime = startInGameTime.plusDuration(inGameTimeElapsed);
+		expect(currentInGameTime.toString()).equal("2200-02-15T03:12:44.000");
+	});
+
+	it("example 4.a", () => {
 		const departureTime = ZonedDateTime.parse("2022-06-15T18:30:00.000+02:00[Europe/Berlin]");
 		const arrivalTimeZone = ZoneId.of("Europe/London");
 		const flightDuration = Duration.ofComponents(0, 1, 50); // 0 days 1 hour 50 minutes
@@ -114,7 +122,7 @@ describe("Home page examples", () => {
 		expect(arrivalTime.toString()).equal("2022-06-15T19:20:00.000+01:00[Europe/London]");
 	});
 
-	it("example 3.b", () => {
+	it("example 4.b", () => {
 		const departureTime = ZonedDateTime.parse("2022-06-15T18:30:00.000+02:00[Europe/Berlin]");
 		const arrivalTimeZone = ZoneId.of("Europe/London");
 		const flightDuration = Duration.ofComponents(0, 1, 50); // 0 days 1 hour 50 minutes

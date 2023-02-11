@@ -119,7 +119,16 @@ description: |
 
     console.log(endTime.%toStringOfLocalTime()); // Prints: 15:10:00.000
     </pre>
-    <h4>3. %ZonedDateTime, %ZoneId, %Instant: Compute plane arrival time</h4>
+    <h4>3. %LocalDateTime: Simple in-game clock</h4>
+    <p>%LocalDateTime is a simple date and time presentation perfect for scenarios when you don't care about time zones.
+    For example, when you develop a game like town construction simulator.<p>
+    <pre>
+    const startInGameTime = %LocalDateTime.%parseOfLocalDateTime("2200-01-01T00:00:00.000");
+    const inGameTimeElapsed = %Duration.%ofComponentsOfDuration(45, 3, 12, 44); // 45 days 3 hours 12 minutes 44 seconds
+    const currentInGameTime = startInGameTime.%plusDurationOfLocalDateTime(inGameTimeElapsed);
+    console.log(currentInGameTime.%toStringOfLocalDateTime()); // Prints: 2200-02-15T03:12:44.000
+    </pre>
+    <h4>4. %ZonedDateTime, %ZoneId, %Instant: Compute plane arrival time</h4>
     <p>%ZonedDateTime stores date and time attached to a specific time zone. When converting it to a different time
     zone, you must make a decision: do you want to preserve an %instantOfZonedDateTime or a %dateTimeOfZonedDateTime.
     In this example, we preserve an %instantOfZonedDateTime, because that's what is important for us.</p>
@@ -238,5 +247,18 @@ references:
     label: atZone
   toStringOfZonedDateTime:
     file: ts-time/ZonedDateTime
+    member: toString
+    label: toString
+  parseOfLocalDateTime:
+    file: ts-time/LocalDateTime
+    member: parse
+    static: true
+    label: parse
+  plusDurationOfLocalDateTime:
+    file: ts-time/LocalDateTime
+    member: plusDuration
+    label: plusDuration
+  toStringOfLocalDateTime:
+    file: ts-time/LocalDateTime
     member: toString
     label: toString
